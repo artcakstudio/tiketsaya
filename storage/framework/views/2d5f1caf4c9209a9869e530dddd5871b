@@ -1,0 +1,28 @@
+<?php $__env->startSection('content'); ?>
+<?php echo Form::open(array('url'=>'user')); ?>
+
+	<div class="form-group">	
+	<?php echo Form::label('username','username',array('class'=>'label-input')); ?>
+
+	<?php echo Form::input('text','username',null,['class'=>'form-control']); ?>
+
+	</div>
+	<div class="form-group">		
+	<?php echo Form::label('password','Password'); ?>
+
+	<?php echo Form::input('password','password',null,['class'=>'form-control']); ?>
+
+	</div>
+	<div class="form-group">		
+	<?php echo Form::label('nama','Nama',array('class'=>'label-input')); ?>
+
+	<?php echo Form::input('text','nama',null,['class'=>'form-control']); ?>
+
+	</div>
+	<div class="form-group">		
+	<?php echo Form::input('submit',null,'Tambah', ['class'=>'btn btn-default']); ?>
+
+	</div>
+<?php echo Form::close(); ?>	
+
+<?php echo $__env->make('template', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

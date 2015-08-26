@@ -1,0 +1,115 @@
+<?php $__env->startSection('content'); ?>
+	@parent
+<div class="matter" id="formAddUser">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget wgreen">	
+                <div class="widget-content">
+                  <div class="padd">
+                    <br />
+                    <!-- Form starts.  -->
+                     <?php echo Form::open(['url'=>'vehicle/edit', 'METHOD'=>'POST','class'=>'form-horizontal', 'enctype'=>'multipart/form-data'] ); ?>
+
+                     <input type="hidden" value="<?php echo e($id); ?>" name="VEHICLE_ID">
+				        <div class="form-group">
+				          <label class="col-lg-2 control-label">Vehicle Name</label>
+				          <div class="col-lg-5">
+				            	<input type="text" name="VEHICLE_NAME" class="form-control" value="<?php echo e($vehicle['VEHICLE_NAME']); ?>">
+				          </div>
+				        </div>
+				        <div class="form-group">
+				          <label class="col-lg-2 control-label">Vehicle Capacity</label>
+				          <div class="col-lg-5">
+				            	<input type="text" name="VEHICLE_CAPACITY" class="form-control" value="<?php echo e($vehicle['VEHICLE_CAPACITY']); ?>">
+				          </div>
+				        </div>
+
+				        <div class="form-group">
+				          <label class="col-lg-2 control-label">Vehicle Description</label>
+				          <div class="col-lg-5">
+				            	<textarea name="VEHICLE_DESCRIPTION" class="form-control form-group" style="margin-left:0px"><?php echo e($vehicle['VEHICLE_DESCRIPTION']); ?></textarea>
+				          </div>
+				        </div>
+
+				        <div class="form-group">
+			              <label class="col-lg-2 control-label">Vehicle Price/Day</label>
+			              <div class="col-lg-5">
+			                    <input type="text" name="VEHICLE_PRICE" class="form-control" value="<?php echo e($vehicle['VEHICLE_PRICE']); ?>">
+			              </div>
+			            </div>
+
+				        <div class="form-group">
+				          <label class="col-lg-2 control-label">Vehicle Photo</label>
+				          <div class="col-lg-5">
+				            	<input type="file" name="VEHICLE_PHOTO" class="form-control" value="<?php echo e($vehicle['VEHICLE_PHOTO']); ?>">
+				          </div>
+				        </div>
+
+				         <div class="form-group">
+				          <label class="col-lg-2 control-label">Vehicle Partner</label>
+				          <div class="col-lg-5">
+				            	<select name="PARTNER_ID" class="form-control">
+				            	<?php foreach($partner as $row): ?>
+				            		<option value="<?php echo e($row['PARTNER_ID']); ?>" <?php if($vehicle['PARTNER_ID']==$row['PARTNER_ID'] ): ?>selected="selected" <?php endif; ?> )><?php echo e($row['PARTNER_NAME']); ?></option>
+				            	<?php endforeach; ?>
+				            	</select>
+				          </div>
+				        </div>
+
+				        <div class="form-group">
+				          <label class="col-lg-2 control-label">City</label>
+				          <div class="col-lg-5">
+				            	<select name="CITY_ID" class="form-control">
+				            	<?php foreach($city as $row): ?>
+				            		<option value="<?php echo e($row['CITY_ID']); ?>" <?php if($vehicle['CITY_ID']==$row['CITY_ID']): ?> selected="selected" <?php endif; ?> ><?php echo e($row['CITY_NAME']); ?></option>
+				            	<?php endforeach; ?>
+				            	</select>
+				          </div>
+				        </div>
+
+				        <div class="form-group">
+				          <label class="col-lg-2 control-label">Type</label>
+				          <div class="col-lg-5">
+				            	<select name="VEHICLE_TYPE_ID" class="form-control">
+				            	<?php foreach($type as $row): ?>
+				            		<option value="<?php echo e($row['VEHICLE_TYPE_ID']); ?>" <?php if($vehicle['VEHICLE_TYPE_ID']==$row['VEHICLE_TYPE_ID']): ?> selected="selected" <?php endif; ?> ><?php echo e($row['VEHICLE_TYPE_NAME']); ?></option>
+				            	<?php endforeach; ?>
+				            	</select>
+				          </div>
+				        </div>
+
+				        <div class="form-group">    
+				        <label></label>
+				        <div class="form-group">
+				          <div class="col-lg-offset-2 col-lg-6">
+				            <button type="submit"  class="btn btn-sm btn-primary">Edit Vehicle</button>
+          				   </div>
+        				</div>
+      				<?php echo Form::close(); ?>
+
+      				<?php echo Form::close(); ?>
+
+                  </div>
+                </div>
+                  <div class="widget-foot">
+                    <!-- Footer goes here -->
+                  </div>
+              </div>  
+
+            </div>
+
+          </div>
+
+        </div>
+		  </div>
+
+
+    
+      </div>
+      </div>      
+      <div class="widget-foot">
+      </div>
+	<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

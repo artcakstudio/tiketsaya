@@ -18,4 +18,8 @@ class RentpageController extends Controller {
 		$city=City::all();
 		return view('rentpage::hasil-search', compact('vehicle','city','duration'));
 	}
+	function transaksi($id)
+	{
+		return view('rentpage::transaksi');
+	}
 }

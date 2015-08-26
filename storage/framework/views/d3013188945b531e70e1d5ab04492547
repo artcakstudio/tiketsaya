@@ -1,0 +1,18 @@
+<?php $__env->startSection('search-column'); ?>
+<?php $__env->startSection('content'); ?>
+            
+            <!-- CONTENT OPEN -->
+         <div class="hasil-search">
+            <div class="row">
+                
+            </div>   
+         </div>
+            
+            
+            
+            <div class="row subscribe_" style="background: #eee; height: 80px;margin-bottom: 10px;">
+                
+            </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('page_template', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
