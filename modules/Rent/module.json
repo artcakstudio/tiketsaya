@@ -1,0 +1,15 @@
+{
+    "name": "Rent",
+    "alias": "rent",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Rent\\Providers\\RentServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

@@ -2,7 +2,7 @@
 
 
 @section('content')
-<?php echo '<script> var token="'.csrf_token().'"</script>\r\n'?>
+<?php echo '<script> var token="'.csrf_token().'"</script>'?>
 <script type="text/javascript">
 function AddUser() {
   $( "#formAddUser" ).dialog({

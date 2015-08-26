@@ -1,0 +1,433 @@
+@charset "UTF-8";
+/* Background-Styles */
+*{
+    box-sizing: border-box;
+} 
+
+body {
+    font-family: Lucida Sans Unicode;
+    margin:0px;
+    padding:0px
+}
+
+.container-large_{
+    width: 100%;
+    background: url(../images/background-1.jpg) center top no-repeat;
+    min-height: 600px;
+    margin: 0 auto;
+}
+
+.container-large_1{
+    width: 100%;
+    background: url(../images/background-2.jpg) center top no-repeat;
+    min-height: 600px;
+    margin: 0 auto;
+}
+
+.container-large_2{
+    width: 100%;
+    background: url(../images/background-3.jpg) center top no-repeat;
+    min-height: 600px;
+    margin: 0 auto;
+}
+
+.footer_large{
+    width: 100%;
+    background: #16ac59;
+}
+
+
+.footer_page{
+    min-height: 250px;
+    width: 940px;
+    margin: 0 auto;
+}
+
+.container{
+    width:940px;
+/*    border: 1px solid #eee;*/
+    min-height: 400px;
+}
+
+.header_{
+    /*background: #444;*/
+}
+
+.logoimg{
+    position: absolute;
+    z-index: 20;
+}
+
+.header-top{
+    width: 100%;
+    height: 30px;
+    background: url(../images/head-black.png) right top ;
+    color: #fff;
+    padding-top: 5px;
+}
+
+.menu{
+    width: 100%;
+    height: 40px;
+    background: url(../images/head-white.png) right top ;
+    padding-top: 10px;
+}
+
+.slider{
+    width: 100%;
+    height: 300px;
+}
+
+.searchbox{
+    width: 100%;
+    background: #282828;
+    min-height:250px; 
+}
+
+.nav_{
+    height: 55px;
+    border: none;
+}
+
+.nav_ li a{
+    height: 55px;
+    width: 130px;
+    color: #fff;
+    text-align: center;
+    text-height: 55px;
+    padding-top: 18px;
+    border-right: 1px solid #999;
+    border-radius: inherit;
+    margin: 0;
+}
+
+
+.nav_ li a:hover, 
+        .nav_ > li.active > a,
+        .nav_ > li.active > a:hover,
+        .nav_ > li.active > a:focus{
+            background: #16ac59;
+    color: #fff;
+    border:none;
+    border-radius: inherit;
+        } 
+
+.tabcontent_{
+}
+
+.padding10{
+    padding: 10px;
+}
+
+.konten3_{
+    background: #1f1c1c;
+    padding: 0;
+    margin: 0;
+    min-height: 30px;
+}
+
+.head_konten3{
+    color: #eee;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    height: 40px;
+}
+
+.isi_konten3{
+    padding: 10px;
+}
+
+.themecolor{
+    background: #16ac59;
+    color: #fff;
+    border-radius: inherit;
+    height: 35px;
+}
+
+.button_theme{
+    background: #16ac59;
+    border-radius: inherit;
+    color: #ffffff;
+}
+
+.remove_border{
+    border-radius: inherit;
+    height: 35px;
+}
+
+.remove_padding{
+    margin:0; padding:0;
+}
+
+.tescolor1{
+    background: #ff0;
+}
+
+.tescolor2{
+    background: #f00;
+}
+
+.content_{
+    width: 100%;
+    padding-top: 15px;
+    min-height: 600px;
+    background: #ffffff;
+/*    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;*/
+}
+
+
+.kotakrekom{
+    width: 14.28%;
+    height: 60px;
+    float: left;
+    padding: 1px;
+}
+
+.rekom_harga{
+    background: #eee;
+    height: 60px;
+}
+
+.rekom_harga:hover{
+    background: #ddd;
+    height: 60px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.rekom_harga h4{
+    padding: 0;
+    padding-top: 12px;
+    margin: 0;
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+.rekom_harga h5{
+    padding: 0;
+    padding-top: 10px;
+    margin: 0;
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+    color: #16ac59;
+}
+
+.rekom_harga_selected{
+    background: #16ac59;
+    height: 60px;
+}
+
+.rekom_harga_selected h4{
+    padding: 0;
+    padding-top: 12px;
+    margin: 0;
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+.rekom_harga_selected h5{
+    padding: 0;
+    padding-top: 10px;
+    margin: 0;
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.kotakfilter{
+    width: 20%;
+    height: 35px;
+    float: left;
+    padding: 1px;
+}
+
+.filter_data{
+    background: #333;
+    height: 35px;
+}
+
+.filter_data:hover{
+    background: #16ac59;
+    height: 35px;
+}
+
+.filter_data h4{
+    padding: 0;
+    padding-top: 12px;
+    margin: 0;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+}
+
+.kotakdata{
+    margin-bottom: 5px;
+    width: 98%;
+    border: 1px solid #eee;
+}
+
+.kotakdata:hover,.kotakdata:active,.kotakdata:focus{
+    border: 1px solid #16ac59;
+    background: url(../images/hoverdata.png) right top repeat-y ;
+    cursor: pointer;
+}
+
+.kotak_datatabel{
+    height: 60px;
+    border-bottom: 1px solid #eee;
+}
+
+.kotak_colaps{
+    min-height: 70px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    
+}
+
+.data_maskapai{
+    width: 11.11%;
+    height: 50px;
+    float: left;
+    padding: 1px;
+}
+
+.data_maskapai2{
+    width: 16%;
+    height: 50px;
+    float: left;
+    padding: 1px;
+}
+
+.button_pesan{
+    width: 6%;
+    height: 50px;
+    float: left;
+    padding: 1px;
+}
+
+.button_pesan div.butpesawat{
+    position: absolute;
+    margin-left: 3px;
+    height: 70px;
+    width: 130px;
+    background: url(../images/pesan.png) right top no-repeat;
+}
+
+.button_pesan div.buttravel{
+    position: absolute;
+    margin-left: 15px;
+    height: 70px;
+    width: 130px;
+    background: url(../images/pesantravel.png) right top no-repeat;
+}
+
+.button_pesan div.butpesawat:hover{
+    position: absolute;
+    margin-left: 3px;
+    height: 70px;
+    width: 130px;
+    background: url(../images/pesanh.png) right top no-repeat;
+    cursor: pointer;
+}
+
+.button_pesan div.buttravel:hover{
+    position: absolute;
+    margin-left: 15px;
+    height: 70px;
+    width: 130px;
+    background: url(../images/pesantravelh.png) right top no-repeat;
+    cursor: pointer;
+}
+
+
+
+
+.data_maskapai div, .data_maskapai2 div{
+    height: 50px;
+    
+    line-height: 50px;
+    
+}
+
+.data_maskapai div h2, .data_maskapai2 div h2{
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+    line-height: 7px;
+    color: #16ac59;
+}
+
+.data_maskapai div h3, .data_maskapai2 div h3{
+    font-weight: bold;
+    text-align: center;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.data_maskapai div h4, .data_maskapai2 div h4{
+    font-weight: bold;
+    text-align: center;
+    font-size: 12px;
+}
+
+.data_maskapai div h5, .data_maskapai2 div h5{
+    font-weight: bold;
+    text-align: center;
+    font-size: 10px;
+    color: #16ac59;
+}
+
+.data_maskapai div h6, .data_maskapai2 div h6{
+    font-weight: bold;
+    text-align: center;
+    font-size: 10px;
+    color: #333;
+    text-decoration-color: linen;
+}
+
+.group_list_{
+    padding: 0;margin: 0;
+}
+
+.group_list_item_{
+    height: 25px;
+    line-height: 25px;
+    list-style: none;
+    color: #fff;
+    font-size: 11px;
+}
+
+.group_list_item_head_{
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #eee;
+    list-style: none;
+    color: #fff;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.subscribe_{
+    line-height: 80px;
+}
+
+.subscribe_ div h3{
+    padding-top: 10px;
+    font-size: 16px;
+}
+
+.subscribe_ div input{
+    margin-top: 25px;
+}
+
+.detilpenerbangan_ div{
+    font-size: 11px;
+    border-right: 1px solid #eee;
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Travelpage",
+    "alias": "travelpage",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Travelpage\\Providers\\TravelpageServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

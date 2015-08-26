@@ -10,11 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/',function(){
-	if(Session::get('name')==NULL){
-		return redirect('auth'	);
-	}
-});
+Route::get('/','pageCtrl@index');
 
 
 

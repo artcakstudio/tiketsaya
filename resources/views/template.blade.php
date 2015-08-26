@@ -14,9 +14,6 @@
 
 
 {!! Html::style('assets/css/jquery.dataTables.min.css')!!}
-{!! Html::style('assets/css/jquery.dataTables.min.css') !!}
-  <!-- Stylesheets -->
-{!! Html::style('assets/css/bootstrap.min.css') !!}  
   <!-- Font awesome icon -->
   {!! Html::style('assets/css/font-awesome.min.css')!!}
   <!-- jQuery UI -->
@@ -40,6 +37,9 @@
   <!-- Widgets stylesheet -->
   {!! Html::style('assets/css/widgets.css')!!}
   <!-- datatables stylesheet -->
+  <!-- Stylesheets -->
+{!! Html::style('assets/css/bootstrap.min.css') !!}  
+  
   
   <!-- JS -->
 {!! HTML::script('assets/js/jquery-1.10.2.min.js')!!}
@@ -88,7 +88,7 @@
 
 <body>
 <?php echo '<script>var token="'.csrf_token().'"</script>\r\n'?>
-<div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
+<div class="navbar navbar-fixed-top bs-docs-nav" role="banner" style="position: absolute; widht:98%">
 
 
 @section('header')
@@ -99,7 +99,7 @@
         <div class="col-md-4">
           <!-- Logo. -->
           <div class="logo">
-            <h1><a href="#"><span class="bold">Admin</span></a></h1>
+            <h1><a href="#"><span class="bold">{{Session::get('name')}}</span></a></h1>
           </div>
           <!-- Logo ends -->
         </div>
@@ -147,28 +147,23 @@
 			      <a href="#"><i class="fa fa-list-alt"></i> Vehicle<span class="pull-right"><i class="fa fa-chevron-right"></i></span></a>
             <ul>
               <li>{!!Html::link('/vehicle', 'Vehicle')!!}</li>
+              <li>{!!Html::link('/vehicle/city', 'City')!!}</li>
+              <li>{!!Html::link('/vehicle/partner', 'Partner')!!}</li>
             </ul>
           </li>  
           <li class="has_sub">
-			<a href="#"><i class="fa fa-file-o"></i>Rent Schedule<span class="pull-right"><i class="fa fa-chevron-right"></i></span></a>
+			<a href="#"><i class="fa fa-file-o"></i>Travel<span class="pull-right"><i class="fa fa-chevron-right"></i></span></a>
             <ul>
-              <li><a href="post.html">List Schedule</a></li>
-              <li><a href="login.html">Login</a></li>
-              <li><a href="register.html">Register</a></li>
-              <li><a href="support.html">Support</a></li>
-              <li><a href="invoice.html">Invoice</a></li>
-              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="{!!url('travel')!!}">List Schedule</a></li>
+              <li><a href="{!!url('travel/route')!!}">Route</a></li>
+              <li><a href="{!!url('travel/transaction')!!}">Transaction</a></li>
             </ul>
           </li> 
           <li class="has_sub">
-			<a href="#"><i class="fa fa-file-o"></i>Travel Schedule<span class="pull-right"><i class="fa fa-chevron-right"></i></span></a>
+			<a href="#"><i class="fa fa-file-o"></i>Rent Schedule<span class="pull-right"><i class="fa fa-chevron-right"></i></span></a>
             <ul>
-              <li><a href="media.html">Media</a></li>
-              <li><a href="statement.html">Statement</a></li>
-              <li><a href="error.html">Error</a></li>
-              <li><a href="error-log.html">Error Log</a></li>
-              <li><a href="calendar.html">Calendar</a></li>
-              <li><a href="grid.html">Grid</a></li>
+              <li><a href="{!!url('rent')!!}">List Schedule</a></li>
+              <li><a href="{!!url('rent/transaction')!!}">Transaction</a></li>
             </ul>
           </li>    
 		  <li class="has_sub"><a href="#"><i class="fa fa-table"></i> Tables  <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a>

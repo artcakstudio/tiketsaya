@@ -1807,5 +1807,8 @@ footer .copy{
 	header .logo{
 		padding: 0px;
 		display: none;
-	}
+	}	
+}
+.dropdown-no-type{
+	list-style-type: none;
 }
