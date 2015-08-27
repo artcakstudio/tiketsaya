@@ -4,5 +4,6 @@ Route::group(['prefix' => 'rentpage', 'namespace' => 'Modules\Rentpage\Http\Cont
 {
 	Route::get('/', 'RentpageController@index');
 	Route::post('searchRent',['as'=>'rent.search','uses'=>'RentpageController@scheduleSearch']);
-	Route::get('transaksi','RentpageController@transaksi');
+	Route::get('transaksi/{id}','RentpageController@transaksipage');
+	Route::post('transaksi',['as'=>'rentpage.transaksi','uses'=>'RentpageController@transaksiSubmit']);
 });

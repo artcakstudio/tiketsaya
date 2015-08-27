@@ -8,8 +8,12 @@
             <tr>
                 <th>Transaction Code</th>
                 <th>Costumer Name</th>
-                <th>Date Of Rent</th>
+                <th>Departure Time</th>
+                <th>Departure</th>
+                <th>Destination</th>
                 <th>Status</th>
+                <th>Amount Of Passenger</th>
+                <th>Price</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -126,9 +130,13 @@ $(function() {
         ajax: "<?php echo url('travel/transaction/getAllTransaction')?>",
         columns: [
             { data: 'TRAVEL_TRANSACTION_CODE', name: 'TRAVEL_TRANSACTION_CODE' },
-            { data: 'MEMBER_NAME', name: 'MEMBER_NAME' },
-            { data: 'TRAVEL_TRANSACTION_UPDATE', name: 'TRAVEL_TRANSACTION_UPDATE' },
+            { data: 'COSTUMER_NAME', name: 'COSTUMER_NAME' },
+            { data: 'TRAVEL_SCHEDULE_DEPARTTIME', name: 'TRAVEL_SCHEDULE_DEPARTTIME' },
+            { data: 'ROUTE_DEPARTURE', name: 'ROUTE_DEPARTURE' },
+            { data: 'ROUTE_DEST', name: 'ROUTE_DEST' },
             { data: 'TRAVEL_TRANSACTION_STATUS_NAME', name: 'TRAVEL_TRANSACTION_STATUS_NAME' },
+            { data: 'TRAVEL_TRANSACTION_PASSENGER', name: 'TRAVEL_TRANSACTION_PASSENGER' },
+            { data: 'TRAVEL_TRANSACTION_PRICE', name: 'TRAVEL_TRANSACTION_PRICE' },
             { data: 'action', name: 'action',orderable: false, searchable: false}
         ],
         initComplete: function () {

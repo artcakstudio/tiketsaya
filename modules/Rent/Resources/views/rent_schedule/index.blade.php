@@ -7,7 +7,7 @@
 <div class="col-lg-5">
   <select class="bulan">
     @for($i=0; $i < 11; $i++)
-      <option value="{{$i}}">{{$bulan[$i]}}</option>
+      <option value="{{$i}}"  <?php if( ($i+1)==date('m')) { echo 'selected : selected';}?> >{{$bulan[$i]}}</option>
       @endfor
   </select>
 

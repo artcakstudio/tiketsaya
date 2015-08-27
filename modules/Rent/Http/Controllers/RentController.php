@@ -33,7 +33,7 @@ class RentController extends Controller {
 		$path=url('public/Assets/vehiclePhoto/');
         return Datatables::of($schedule)
          ->addColumn('action', function ($schedule) {
-         		return '<li class="dropdown dropdown-no-type"><a data-toggle="dropdown" class="dropdown-toggle btn btn-xs btn-primary" href="#" > Pilihan <b class="caret"></b></a><ul class="dropdown-menu"><li><button class="btn btn-danger" id="'.$schedule->RENT_SCHEDULE_ID.'" data-target="#hapusUser">Hapus</button></li></ul></li>';
+         		return '<li class="dropdown dropdown-no-type"><a data-toggle="dropdown" class="dropdown-toggle btn btn-xs btn-primary" href="#" > Pilihan <b class="caret"></b></a><ul class="dropdown-menu"><li><button class="btn btn-danger" id="'.$schedule->RENT_SCHEDULE_ID.'" data-target="#hapusUser">Hapus</button></li><li><button class="btn btn-primary edit" id="'.$schedule->RENT_SCHEDULE_ID.'" data-target="#editSchedule">Edit</button></li></ul></li>';
             })
          ->addColumn('picture', function ($vehicle) use ($path) {
          		return "<img src=".$path."/".$vehicle['VEHICLE_PHOTO']." style='width:50px; height:50px'>";
@@ -47,6 +47,14 @@ class RentController extends Controller {
 		$rent_schedule=rentschedule::findRentSchedule($data['RENT_SCHEDULE_ID']);
 		print_r($data);
 		$rent_schedule->delete();
+		return back();
+	}
+	function update()
+	{
+		$data=Input::all();
+		unset($data['_token']);
+		$schedule=RentSchedule::where('RENT_SCHEDULE_ID','=',$data['RENT_SCHEDULE_ID']);
+		$schedule->update($data);
 		return back();
 	}
 }

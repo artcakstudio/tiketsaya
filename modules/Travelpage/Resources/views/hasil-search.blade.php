@@ -1,17 +1,19 @@
 @extends('page_template')
 
-@section('search-column')
-@section('content')
-            
 
+@section('content')
+
+@section('search-colomn')
+  @include('column_search')
  <div class="row">
                 <div class="col-md-12 content_">
                     <div class="row head_table">
                         <div class="col-md-4" style="padding-top: 10px; font-weight: bold" >HASIL PENCARIAN</div>
                         <div class="col-md-8" style="padding: 0;" >
                              <button style="float: right" type="button" class="btn remove_border themecolor">Ubah Pencarian</button>
+                             @if(sizeof($schedule)>0)
                              <p style="float: right;padding-top: 10px; margin-right: 10px;"> Travel | {{$schedule[0]['ROUTE_DEPARTURE']}} Ke {{$schedule[0]['ROUTE_DEST']}}  | <?php echo date('Y-m-d', strtotime($schedule[0]['TRAVEL_SCHEDULE_DEPARTTIME']))?></p>
-                           
+                              @endif
                         </div>
                     </div>
                     
@@ -49,7 +51,9 @@
                     <div class="row" style="margin-top: 30px;">
                        
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            
+                            @if(sizeof($schedule)==0)
+                            <h1 style="text-align:center">Kota yang anda pilih kosong, silahkan cari di kota atau hari lainnya</h1>
+                            @endif
                             <?php foreach ($schedule as$row) { ?>
                             
                             <div class="panel kotakdata" style="border-radius: inherit">
@@ -85,12 +89,12 @@
                                     </div>
                                     <div class="data_maskapai2">
                                         <div>
-                                            <h2>IDR {{$row['ROUTE_PRICE']}},-</h2>
+                                            <h2>IDR {{$row['TRAVEL_SCHEDULE_PRICE']}},-</h2>
                                             <h6><del>IDR 450.000</del></h6>
                                         </div>
                                     </div>
                                     <div class="button_pesan" >
-                                        <div class="buttravel"></div>
+                                       <a href="<?php echo url('travelpage/transaksi/'.$row['TRAVEL_SCHEDULE_ID'])?>"> <div class="buttravel"></div></a>
                                     </div>
                                     
                                 </div>

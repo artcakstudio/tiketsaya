@@ -3,14 +3,16 @@
 use Pingpong\Modules\Routing\Controller;
 use Modules\Vehicle\Entities\City;
 use Modules\Vehicle\Entities\Partner;
+use Modules\Vehicle\Entities\PartnerType;
+use Modules\Registrasi\Entities\Member;
 use Input;
 use Redirect;
 class RegistrasiController extends Controller {
 	
 	public function index()
 	{
-		$city=[];
-		return view('registrasi::partner_registrasi',compact('city'));
+		$partner_type=PartnerType::all();
+		return view('registrasi::partner_registrasi',compact('city','partner_type'));
 	}
 	public function store()
 	{
@@ -30,8 +32,15 @@ class RegistrasiController extends Controller {
 	function checkLogin()
 	{
 		$data=Input::all();
+		print_r($data);
 		$partner=Partner::check_login($data['PARTNER_USERNAME'],md5($data['PARTNER_PASSWORD']))->get();
+		print_r($partner);
 		if(sizeof($partner)>0) echo "sukses";
-		else echo "fail";
+		else{
+			$member=['MEMBER_USERNAME'=>$data['PARTNER_USERNAME'], 'MEMBER_PASSWORD'=>md5($data['PARTNER_PASSWORD'])];
+			$member=Member::check_login($member)->get();
+			if (sizeof($member)>0) echo "member";
+			else echo "login gagal";
+		}
 	}
 }

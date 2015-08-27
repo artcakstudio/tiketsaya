@@ -1,7 +1,10 @@
 @extends('page_template')
 
-@section('search-column')
+
 @section('content')
+
+@section('search-colomn')
+	@include('column_search')
             
             <!-- CONTENT OPEN -->
          <div class="hasil-search">

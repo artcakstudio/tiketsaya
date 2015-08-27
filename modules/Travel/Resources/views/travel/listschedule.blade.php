@@ -3,6 +3,18 @@
 
 @section('content')
     @parent
+     <div class="row col-md-12" style="margin-bottom:20px">
+    <div class="col-md-6">      
+      <a href="<?php echo date('Y-m-d', strtotime(' -1 day',strtotime($tanggal)))?>"><img src="<?php echo url('assets/images/back.png')?>"></a>
+    </div>
+    <div class="col-md-6" >
+    <div style="float:right">
+      <a href="<?php echo date('Y-m-d', strtotime(' +1 day',strtotime($tanggal)))?>"><img src="<?php echo url('assets/images/next.png')?>"></a>
+      <h4>Next</h4>      
+    </div>
+
+    </div>
+    </div>
     <table class=" table table-bordered" id="schedule-table">
         <thead>
             <tr>
@@ -97,6 +109,7 @@
         var depart_date="<?php echo $tanggal?>";
         $("#addSchedule form [name='date']").val(depart_date);
         $("#addSchedule form [name='depart_date']").val(depart_date);
+        $("#addSchedule form [name='arrive_date']").val(depart_date);
         $("#addSchedule form [name='depart_date']").attr('disabled','disabled');
         $("#addSchedule").modal("show");
 

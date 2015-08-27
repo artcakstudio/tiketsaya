@@ -4,7 +4,7 @@
 <div class="col-lg-5">
   <select class="bulan">
     <?php for($i=0; $i < 11; $i++): ?>
-      <option value="<?php echo e($i); ?>"><?php echo e($bulan[$i]); ?></option>
+      <option value="<?php echo e($i); ?>"  <?php if( ($i+1)==date('m')) { echo 'selected : selected';}?> ><?php echo e($bulan[$i]); ?></option>
       <?php endfor; ?>
   </select>
 

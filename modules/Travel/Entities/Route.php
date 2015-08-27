@@ -17,4 +17,5 @@ class route extends Model {
     {
     	return $query->where('ROUTE_ID','=',$id);
     }
+    
 }

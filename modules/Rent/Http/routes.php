@@ -7,6 +7,7 @@ Route::group(['prefix' => 'rent', 'namespace' => 'Modules\Rent\Http\Controllers'
 	Route::get('show/{id}','RentController@show');
 	Route::get('getScheduleDay/{tanggal}','RentController@getScheduleDay');
 	Route::post('destroy',['as'=>'rent.destroy','uses'=>'RentController@destroy']);
+	Route::post('edit','RentController@update');
 	Route::group(['after'=>'transaction'], function(){
 		Route::get('transaction','RenttransactionController@index');
 		Route::get('transaction/getAllTransaction','RenttransactionController@getAllTransaction');

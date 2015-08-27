@@ -32,5 +32,10 @@ class vehicle extends Model {
     {
         return $query->where('VEHICLE_ID','=',$id);
     }
-
+    function scopegetCapacity($query,$id_schedule)
+    {
+        return $query->select(['VEHICLE_CAPACITY'])
+                    ->join('TRAVEL_SCHEDULE','TRAVEL_SCHEDULE.VEHICLE_ID','=','VEHICLE.VEHICLE_ID')
+                    ->where('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID','=',$id_schedule);
+    }
 }

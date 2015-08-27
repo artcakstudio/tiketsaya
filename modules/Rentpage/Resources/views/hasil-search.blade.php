@@ -1,6 +1,10 @@
 @extends('page_template')
 
-@section('search-column')
+@section('search-colomn')
+    @parent
+        @include('column_search')
+    @stop
+
 @section('content')
             
 
@@ -11,8 +15,10 @@
                         <div class="col-md-4" style="padding-top: 10px; font-weight: bold" >HASIL PENCARIAN</div>
                         <div class="col-md-8" style="padding: 0;" >
                              <button style="float: right" type="button" class="btn remove_border themecolor">Ubah Pencarian</button>
+                             @if(sizeof($vehicle)>0)
                              <p style="float: right;padding-top: 10px; margin-right: 10px;"> Sewa Mobil | {{$vehicle[0]['CITY_NAME']}}| {{$vehicle[0]['RENT_SCHEDULE_DATE']}}</p>
-                           
+                                @endif
+
                         </div>
                     </div>
                     
@@ -50,7 +56,9 @@
                     <div class="row" style="margin-top: 30px;">
                        
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            
+                            @if(sizeof($vehicle)==0)
+                            <h1 style="text-align:center">Kota yang anda pilih kosong, silahkan cari di kota atau hari lainnya</h1>
+                            @endif
                             <?php foreach ($vehicle as $row) { ?>
                             <div class="panel kotakdata" style="border-radius: inherit">
                                 <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $row['RENT_SCHEDULE_ID'] ?>">
@@ -81,12 +89,12 @@
                                     </div>
                                     <div class="data_maskapai2">
                                         <div>
-                                            <h2>IDR {{$row['VEHICLE_PRICE']}}/Day</h2>
+                                            <h2>IDR {{$row['RENT_SCHEDULE_PRICE']}}/Day</h2>
                                             <h6><del>IDR 450.000</del></h6>
                                         </div>
                                     </div>
                                     <div class="button_pesan" >
-                                        <a href="<?php echo url('rentpage/transaksi/'.$row['RENT_SCHEDULE_ID'])?>"><div class="buttravel"></div>
+                                        <a href="<?php echo url('rentpage/transaksi/'.$row['RENT_SCHEDULE_ID'])?>"><div class="buttravel"></div></a>
                                     </div>
                                     
                                 </div>
