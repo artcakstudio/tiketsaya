@@ -6,4 +6,5 @@ Route::group(['prefix' => 'travelpage', 'namespace' => 'Modules\Travelpage\Http\
 	Route::post('searchTravel',['as'=>'travelpage.search','uses'=>'TravelpageController@scheduleSearch']);
 	Route::get('transaksi/{id}','TravelpageController@transaksi');
 	Route::post('transaksi',['as'=>'travelpage.transaksi','uses'=>'TravelpageController@transaksiSubmit']);
+	Route::post('preview',['as'=>'travelpage.transaksi.preview','uses'=>'TravelpageController@preview']);
 });

@@ -431,3 +431,172 @@ body {
     font-size: 11px;
     border-right: 1px solid #eee;
 }
+
+/*=============================================flight_step_1=========================================================*/
+
+.kotak_step{
+    width: 20%;
+    height: 60px;
+    float: left;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.step{
+    background: #eee;
+    height: 60px;
+}
+
+.step h4{
+    padding-top: 20px;
+    text-align: center;
+    background-color:#00b400
+}
+
+.step_selected{
+    background: #00b400;
+    height: 60px;
+}
+
+.step_selected h4{
+    padding-top: 20px;
+    text-align: center;
+    background-color:#00b400;
+}
+
+.info_maskapai_logo{
+    padding-left: 25px;
+    padding-top:25px;
+}
+
+.info_maskapai{
+    padding-left: 110px;
+    margin-top: -80px; 
+}
+
+.tulisan_rincian_harga{
+    padding-left:15px;
+}
+
+.judul{
+    color:#00b400;
+}
+
+.form_data_penumpang label{
+    font-size: 16px;
+}
+
+.form_data_penumpang input{
+    height: 30px;
+}
+
+.kotak_nama p{
+    color:#bbb;
+}
+
+.rincian_harga div span{
+    float: left;
+}
+
+.daftar_harga div p{
+    text-align: right;
+}
+
+.pembatas_rincian_harga{
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+    width: 290px;
+}
+
+.notes_data_tambahan_penumpang p{
+    padding:10px;
+    padding-bottom: 5px;
+}
+
+.form_data_penumpang_tambahan label{
+    font-size: 14px
+}
+
+.kotak_nama_tambahan p{
+    color:#bbb
+}
+
+/*=============================================flight_step_2=========================================================*/
+
+.tulisan_no_pesanan{
+    font-size: 15px
+}
+
+.no_pesanan{
+    font-size: 15px   
+}
+
+.daftar_harga_total div p{
+    text-align: right;
+}
+
+.gambar_batas_daftar_penumpang{
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+}
+
+
+/*=============================================travel_step_1=========================================================*/
+
+
+.kotak_step_travel{
+    width: 25%;
+    height: 60px;
+    float: left;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.step{
+    background: #eee;
+    height: 60px;
+}
+
+.step h4{
+    padding-top: 20px;
+    text-align: center;
+    background-color:#eee
+}
+
+.step_selected{
+    background: #00b400;
+    height: 60px;
+}
+
+.step_selected h4{
+    padding-top: 20px;
+    text-align: center;
+    background-color:#00b400;
+}
+
+
+.info_logo_merk_travel{
+    padding-left: 25px;
+    padding-top:25px;
+}
+
+.kotak_nohp p{
+    color:#bbb;
+}
+
+.kotak_email p{
+    color:#bbb;
+}
+
+/*=============================================travel_step_2=========================================================*/
+
+.tulisan_rincian_penerbangan{
+    margin-top: 20px;
+}
+.tulisan_rincian_penerbangan h2{
+    color: black;
+}
+.tulisan_penting h3{
+    color: white;
+    font-size: 25px;
+}

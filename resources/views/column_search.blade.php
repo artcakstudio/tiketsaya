@@ -2,6 +2,7 @@
                 <div class="col-md-12 slider"></div>
 </div>            
 <div class="row">
+              
                 <div class="col-md-12 searchbox" >
                 
                         <!-- Nav tabs -->

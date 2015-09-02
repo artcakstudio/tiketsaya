@@ -1,7 +1,7 @@
 @extends('page_template')
 @section('content')
 @parent
-	@include('rent_partner.sidebar')
+	@include('travel_partner.sidebar')
                  <div class="row main-body col-md-9">
            
                     <div class="row col-md-12">

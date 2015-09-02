@@ -5,17 +5,15 @@
     <title>Travelbaik | pelayanan baik dengan harga terbaik</title>
     <?php echo Html::style('assets/css/bootstrap.min.css'); ?>
 
-    <?php echo Html::style('assets/css/jquery.dataTables.min.css'); ?>
-
     <?php echo Html::style('assets/css/jquery.dataTables.css'); ?>
 
     <?php echo Html::style('assets/css/jquery-ui.css'); ?>
 
-    <?php echo Html::style('assets/css/travel.css'); ?>
-
     <?php echo Html::style('assets/css/partner.css'); ?>
 
     <?php echo Html::style('assets/css/style-page.css'); ?>
+
+    <?php echo Html::style('assets/css/travel.css'); ?>
 
     <?php echo Html::script('assets/js/script.js'); ?>
 

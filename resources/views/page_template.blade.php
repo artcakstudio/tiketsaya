@@ -4,12 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Travelbaik | pelayanan baik dengan harga terbaik</title>
     {!! Html::style('assets/css/bootstrap.min.css')!!}
-    {!! Html::style('assets/css/jquery.dataTables.min.css')!!}
     {!! Html::style('assets/css/jquery.dataTables.css')!!}
     {!! Html::style('assets/css/jquery-ui.css')!!}
-    {!! Html::style('assets/css/travel.css')!!}
     {!! Html::style('assets/css/partner.css')!!}
     {!! Html::style('assets/css/style-page.css')!!}
+    {!! Html::style('assets/css/travel.css')!!}
     {!! Html::script('assets/js/script.js')!!}
     {!! Html::script('assets/js/jquery.min.js')!!}
     {!! Html::script('assets/js/bootstrap.min.js')!!}
