@@ -125,27 +125,27 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
 	                                                <tr>
 	                                                    <td class="box_logo_penerbangan_asal">
 	                                                        <div class="logo_penerbangan_asal">
-	                                                            <img src="<?php echo url('assets/images/cipaganti.png')?>">
+	                                                            <img src="<?php echo url('public\Assets\partnerPhoto/'.Session::get('DATA_TRAVEL')['PARTNER_PHOTO'].'')?>" width=90 height=52>
 	                                                        </div>
 	                                                    </td>
 	                                                    <td class="kode_penerbangan_asal_1">
-	                                                        QG-800
+	                                                        
 	                                                    </td>
 	                                                    <td class="waktu_penerbangan_asal_1">
-	                                                        <b>05:55</b> | Kamis
+	                                                        <b><?php echo date('h:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME'])))-1]?>
 	                                                    </td>
 	                                                    
 	                                                </tr>
 	                                                <tr>
 	                                                    <td class="waktu_penerbangan_tujuan_1">
 	                                                        <div class="tulisan_waktu_tujuan_1">
-	                                                            <b>07.15</b> | Kamis
+	                                                            <b><?php echo date('h:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME'])))-1]?>
 	                                                        </div>
 	                                                    </td>
 	                                                </tr>
 	                                                <tr>
 	                                                    <td class="kota_tujuan_1">
-	                                                        <b>Malang</b>
+	                                                        <b>{{Session::get('DATA_TRAVEL')['ROUTE_DEST']}}</b>
 	                                                    </td>
 	                                                </tr>
 	                                            </tbody>
@@ -193,16 +193,10 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                             </div>
                             <div class="rincian_harga col-md-4" style=" width:28%;padding-left:10px">
                                 <div class="rincian_harga_1_a">
-                                    <p>Cipaganti (Dewasa) x1:</p>
+                                    <p><b>{{Session::get('DATA_TRAVEL')['VEHICLE_NAME']}}</b> (Dewasa) x {{Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER']}} :</p>
                                 </div>
                                 <div class="rincian_harga_2_a">
                                     <p>Biaya Tambahan 1</p>
-                                </div>
-                                <div class="rincian_harga_1_b">
-                                    <p>Cipaganti (Anak) x1:</p>
-                                </div>
-                                <div class="rincian_harga_2_b">
-                                    <p>Biaya Tambahan 2</p>
                                 </div>
                                 <div class="rincian_harga_3" style="color:#00b400">
                                     <p>Convenience Fee</p>
@@ -221,17 +215,11 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                 <div class="harga_2_a">
                                     <span style="float:left">Rp</span><p><b>0</b></p>
                                 </div>
-                                <div class="harga_1_b">
-                                    <span style="float:left">Rp</span><p><b>436.600</b></p>
-                                </div>
-                                <div class="harga_2_b">
-                                    <span style="float:left">Rp</span><p><b>0</b></p>
-                                </div>
                                 <div class="harga_3" style="color:#00b400">
                                     <span style="float:left">Rp</span><p><b>-321</b></p>
                                 </div>
                                 <div class="harga_4" style="font-size:16px">
-                                    <span style="float:left"><b>Rp</b></span><p><b>1.007.579</b></p>
+                                    <span style="float:left"><b>Rp</b></span><p><b>{{Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PRICE']}}</b></p>
                                 </div>
                             </div>
                             <!-- Tulisan Lanjut Ke Pembayaran -->
