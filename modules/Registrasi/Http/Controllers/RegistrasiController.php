@@ -32,10 +32,20 @@ class RegistrasiController extends Controller {
 	function checkLogin()
 	{
 		$data=Input::all();
-		print_r($data);
-		$partner=Partner::check_login($data['PARTNER_USERNAME'],md5($data['PARTNER_PASSWORD']))->get();
-		print_r($partner);
-		if(sizeof($partner)>0) echo "sukses";
+		
+		$partner=Partner::check_login($data['PARTNER_USERNAME'],md5($data['PARTNER_PASSWORD']))->first();
+		
+		if(sizeof($partner)>0) {
+			print_r($partner);
+			if ($partner['PARTNER_TYPE_ID']==1){
+				Session(['id'=>$partner['PARTNER_ID'], 'hak'=>'partner_travel']);
+				return redirect::to('travelpartner');
+			}
+			else{
+				Session(['id'=>$partner['PARTNER_ID'], 'hak'=>'partner_rent']);
+				return redirect::to('rentpartner');	
+			}
+		}
 		else{
 			$member=['MEMBER_USERNAME'=>$data['PARTNER_USERNAME'], 'MEMBER_PASSWORD'=>md5($data['PARTNER_PASSWORD'])];
 			$member=Member::check_login($member)->get();

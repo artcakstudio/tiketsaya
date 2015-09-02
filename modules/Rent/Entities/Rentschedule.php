@@ -1,7 +1,7 @@
 <?php namespace Modules\Rent\Entities;
    
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 class rentschedule extends Model {
 
     protected $fillable = [];
@@ -32,4 +32,23 @@ class rentschedule extends Model {
                 ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
                 ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID');
     }
+
+    function scopepartnerSchedule($query,$partner_id,$tanggal)
+    {
+        return $query->select(['RENT_SCHEDULE.*','VEHICLE.*','CITY.*']) 
+                    ->where('RENT_SCHEDULE_DATE',  'LIKE',$tanggal.'%' )
+                    ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')
+                    ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
+                    ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
+                    ->where('PARTNER.PARTNER_ID','=',$partner_id)        
+                    ->join('CITY','CITY.CITY_ID','=','VEHICLE.CITY_ID')            
+                    ->orderBy('RENT_SCHEDULE_DATE');
+    }
+    /*function scopegetScheduleDayPartner($query,$tanggal,$partner_id){
+        return $query->select('RENT_SCHEDULE.*','VEHICLE_NAME','CITY.*'])
+                ->where('RENT_SCHEDULE_DEPARTTIME','LIKE',$tanggal.'%')
+                ->join('ROUTE','ROUTE.ROUTE_ID','=','RENT_SCHEDULE.ROUTE_ID')
+                ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')
+                ->where('VEHICLE.PARTNER_ID','=',$partner_id);
+    }*/
 }

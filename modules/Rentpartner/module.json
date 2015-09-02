@@ -1,0 +1,15 @@
+{
+    "name": "Rentpartner",
+    "alias": "rentpartner",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Rentpartner\\Providers\\RentpartnerServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

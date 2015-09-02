@@ -29,5 +29,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'partnercheck'=> \Modules\TravelPartner\Http\Middleware\Partnercheck::class,
+        'rentcheck'=> \Modules\Rentpartner\Http\Middleware\Partnercheck::class,
     ];
 }

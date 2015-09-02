@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label class="col-lg-2">Partner Type</label>
                               <div class="col-lg-6">
-                                  <select class="form-group form-control" style="margin-left:0px">
+                                  <select class="form-group form-control" style="margin-left:0px" name="PARTNER_TYPE_ID">
                                     @foreach($partner_type as $row)
                                       <option value="{{$row['PARTNER_TYPE_ID']}}">{{$row['PARTNER_TYPE_NAME']}}</option>
                                       @endforeach

@@ -5,7 +5,15 @@
     <title>Travelbaik | pelayanan baik dengan harga terbaik</title>
     <?php echo Html::style('assets/css/bootstrap.min.css'); ?>
 
+    <?php echo Html::style('assets/css/jquery.dataTables.min.css'); ?>
+
+    <?php echo Html::style('assets/css/jquery.dataTables.css'); ?>
+
+    <?php echo Html::style('assets/css/jquery-ui.css'); ?>
+
     <?php echo Html::style('assets/css/travel.css'); ?>
+
+    <?php echo Html::style('assets/css/partner.css'); ?>
 
     <?php echo Html::style('assets/css/style-page.css'); ?>
 
@@ -15,10 +23,16 @@
 
     <?php echo Html::script('assets/js/bootstrap.min.js'); ?>
 
-    <?php echo Html::script('assets/js/jquery-1.10.2.min.js'); ?>
+    
+    <?php echo HTML::script('assets/js/jquery.dataTables.min.js'); ?> <!-- Data tables -->
+    <?php echo HTML::script('assets/js/jquery-ui.js'); ?> <!-- jQuery UI -->
+
+
+
 
 </head>
 <body>
+<?php echo '<script>var token="'.csrf_token().'"</script>'?>
     <div class="container-large_">
         <div class="container">
             <!-- HEADER OPEN --> 

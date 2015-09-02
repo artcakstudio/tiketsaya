@@ -26,7 +26,7 @@ class RouteController extends Controller {
 	{
 		$data=Input::all();
 		unset($data['_token']);
-		$data['ROUTE_CREATE']=session::get('id');
+		$data['ROUTE_CREATEBY']=session::get('id');
 		Route::insert($data);
 		return back();
 	}

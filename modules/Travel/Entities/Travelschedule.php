@@ -26,8 +26,7 @@ class travelschedule extends Model {
                 ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
                 ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
                 ->where('ROUTE.ROUTE_DEPARTURE','=',$depart)
-                ->where('ROUTE.ROUTE_DEST','=',$dest)
-                ->join('CITY','CITY.CITY_ID','=','ROUTE.ROUTE_ID')
+                ->where('ROUTE.ROUTE_DEST','=',$dest)   
                 ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
             /*    ->where('VEHICLE.VEHICLE_CAPACITY', '>', function($query) use($date){
                     $query->select('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID')
@@ -36,5 +35,23 @@ class travelschedule extends Model {
                         ->where('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME','LIKE',$date.'%')
                         ->sum('TRAVEL_SSCHEDULE.TRAVEL_SCHEDULE_ID');
                 })*/;
+    }
+
+    function scopepartnerSchedule($query,$partner_id)
+    {
+        return $query->select([DB::raw('DATE(TRAVEL_SCHEDULE_DEPARTTIME) AS DATE'), DB::raw('TIME(TRAVEL_SCHEDULE_DEPARTTIME) AS TIME'),'TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST') ]) 
+                    ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
+                    ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
+                    ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
+                    ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
+                    ->where('PARTNER.PARTNER_ID','=',$partner_id)
+                    ->orderBy('TRAVEL_SCHEDULE_DEPARTTIME');
+    }
+    function scopegetScheduleDayPartner($query,$tanggal,$partner_id){
+        return $query->select([DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'TRAVEL_SCHEDULE.*','VEHICLE_NAME'])
+                ->where('TRAVEL_SCHEDULE_DEPARTTIME','LIKE',$tanggal.'%')
+                ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
+                ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
+                ->where('VEHICLE.PARTNER_ID','=',$partner_id);
     }
 }

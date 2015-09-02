@@ -38,4 +38,13 @@ class vehicle extends Model {
                     ->join('TRAVEL_SCHEDULE','TRAVEL_SCHEDULE.VEHICLE_ID','=','VEHICLE.VEHICLE_ID')
                     ->where('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID','=',$id_schedule);
     }
+    function scopegetarmada($query,$partner_id)
+    {
+        return $query->select(['CITY_NAME','VEHICLE_NAME','VEHICLE_CAPACITY','PARTNER_NAME','VEHICLE_DESCRIPTION','VEHICLE_PHOTO','VEHICLE_TYPE_NAME','VEHICLE_STATUS_NAME','VEHICLE_ID'])
+            ->where('PARTNER.PARTNER_ID','=',$partner_id)
+            ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
+            ->join('CITY','CITY.CITY_ID','=','VEHICLE.CITY_ID')
+            ->join('VEHICLE_STATUS','VEHICLE_STATUS.VEHICLE_STATUS_ID','=','VEHICLE.VEHICLE_STATUS_ID')
+            ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID');
+    }
 }

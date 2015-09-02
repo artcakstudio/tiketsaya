@@ -36,8 +36,7 @@
   <?php echo Html::style('assets/css/jquery.cleditor.css'); ?>
 
   <!-- Data tables -->
-  <?php echo Html::style('assets/css/jquery.dataTables.css'); ?>
-
+  
   <!-- Bootstrap toggle -->
   <?php echo Html::style('assets/css/jquery.onoff.css'); ?>
 

@@ -13,10 +13,13 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
-    protected $dontReport = [
+  /*  protected $dontReport = [
         HttpException::class,
     ];
-
+*/
+    protected $dontReport = [
+        'Symfony\Component\HttpKernel\Exception\HttpException'
+    ];
     /**
      * Report or log an exception.
      *
@@ -37,8 +40,23 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $e)
+    /*public function render($request, Exception $e)
     {
         return parent::render($request, $e);
+    }*/
+    public function render($request, Exception $e)
+    {
+        if ($this->isHttpException($e))
+        {
+            return $this->renderHttpException($e);
+        }
+        else if($e instanceof NotFoundHttpException)
+        {
+            return response()->view('errors.503', [], 404);
+        }
+        else
+        {
+            return parent::render($request, $e);
+        }
     }
 }

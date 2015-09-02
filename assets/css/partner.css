@@ -1,0 +1,31 @@
+.panel-left{
+	background: red;
+	height: 100px;
+}
+.sub-menu{
+	background: blue;
+	height: 30px;
+	border:1px solid grey	;
+}
+.sub-menu h4{
+	color: white;
+	font-size: 20px;
+}
+.sub h4{
+	padding-left: 20px;
+}
+.main-body{
+	background: white;
+	margin-left: 10px;
+	height:785px;
+	border: 1px grey solid;
+}
+.nonaktif td{
+	background-color: red	;
+}
+.jadwal{
+	background-color: white;
+	margin: 0px 5px 0px 0px;
+	border: 1px solid black;
+	padding: 0px 5px 0px 5px;
+}

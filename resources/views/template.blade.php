@@ -29,7 +29,7 @@
   <!-- CLEditor -->
   {!! Html::style('assets/css/jquery.cleditor.css')!!}
   <!-- Data tables -->
-  {!! Html::style('assets/css/jquery.dataTables.css')!!}
+  
   <!-- Bootstrap toggle -->
   {!! Html::style('assets/css/jquery.onoff.css')!!}
   <!-- Main stylesheet -->

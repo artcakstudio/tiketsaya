@@ -61,7 +61,7 @@ class VehicleController extends Controller {
 		$data['VEHICLE_CREATEBY']=session::get('id');
 		print_r($data);
 		Vehicle::insert($data);
-		return redirect::to('vehicle');
+		return back();
 	}
 	function update(){
 		$data=Input::all();
@@ -80,7 +80,7 @@ class VehicleController extends Controller {
 		}
 		$data['VEHICLE_UPDATEBY']=session::get('id');
 		$vehicle->update($data);
-		return redirect::to('vehicle');
+		return back();
 	}
 	function destroy()
 	{

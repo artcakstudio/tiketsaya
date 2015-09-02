@@ -17,5 +17,11 @@ class route extends Model {
     {
     	return $query->where('ROUTE_ID','=',$id);
     }
+    function scopegetRoutePartner($query, $partner_id)
+    {
+        return $query->select([DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), 'ROUTE_ID', DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST')])
+            ->from('ROUTE')
+            ->where('ROUTE_CREATEBY','=',$partner_id);
+    }
     
 }
