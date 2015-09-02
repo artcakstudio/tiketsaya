@@ -54,4 +54,13 @@ class travelschedule extends Model {
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
                 ->where('VEHICLE.PARTNER_ID','=',$partner_id);
     }
+    function scopegetSchedule($query)
+    {
+        return $query->select([DB::raw('DATE(TRAVEL_SCHEDULE_DEPARTTIME) AS DATE'), DB::raw('TIME(TRAVEL_SCHEDULE_DEPARTTIME) AS TIME'),'TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'PARTNER.*','VEHICLE.*' ]) 
+                    ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
+                    ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
+                    ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
+                    ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
+                    ->orderBy('TRAVEL_SCHEDULE_DEPARTTIME');
+    }
 }

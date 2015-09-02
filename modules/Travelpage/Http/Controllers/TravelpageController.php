@@ -28,12 +28,14 @@ class TravelpageController extends Controller {
 	}
 	function transaksi($id_schedule)
 	{
+
 		$passenger_count=Traveltransaction::where('TRAVEL_SCHEDULE_ID','=',$id_schedule)->sum('TRAVEL_TRANSACTION_PASSENGER');
-		$schedule=Travelschedule::partnerSchedule(Session::get('id'))->where('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID','=',$id_schedule);
+
+		$schedule=Travelschedule::getSchedule()->where('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID','=',$id_schedule);
 		$jadwal=$schedule->first();
 		session(['DATA_TRAVEL'=>['ROUTE_DEPARTURE'=>$jadwal['ROUTE_DEPARTURE'],'ROUTE_DEST'=>$jadwal['ROUTE_DEST'],'TRAVEL_SCHEDULE_ARRIVETIME'=>$jadwal['TRAVEL_SCHEDULE_ARRIVETIME'], 'TRAVEL_SCHEDULE_DEPARTTIME'=>$jadwal['TRAVEL_SCHEDULE_DEPARTTIME'] ,'TRAVEL_SCHEDULE_PRICE'=>$jadwal['TRAVEL_SCHEDULE_PRICE'],'VEHICLE_NAME'=>$jadwal['VEHICLE_NAME'],'VEHICLE_PHOTO'=>$jadwal['VEHICLE_PHOTO'], 'PARTNER_NAME'=>$jadwal['PARTNER_NAME'], 'PARTNER_PHOTO'=>$jadwal['PARTNER_PHOTO'] ] ]);
 		$sisa=$jadwal['VEHICLE_CAPACITY']-$passenger_count;
-
+	
 		return view('travelpage::transaksi',compact('id_schedule','sisa','harga'));
 	}
 	function transaksiSubmit()
