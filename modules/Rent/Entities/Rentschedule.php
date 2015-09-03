@@ -15,7 +15,12 @@ class rentschedule extends Model {
 
     }
     function scopefindRentSchedule($query,$id){
-    	return $query->where('RENT_SCHEDULE_ID','=',$id);
+    	return $query->select(['RENT_SCHEDULE.*', 'VEHICLE.*','PARTNER.*','CITY.*'])
+                    ->where('RENT_SCHEDULE.RENT_SCHEDULE_ID','=',$id)
+                    ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')
+                    ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
+                    ->join('CITY','CITY.CITY_ID','=','VEHICLE.CITY_ID');
+
     }
      function scoperentSchedule($query,$city, $date,$finish){
         return $query->select(['RENT_SCHEDULE.*','VEHICLE.*', 'PARTNER.*','CITY_NAME','VEHICLE_TYPE_NAME'])

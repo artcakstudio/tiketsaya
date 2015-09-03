@@ -57,6 +57,12 @@
                 <input type="date" class="form-control" name="date">
               </div>
             </div>
+               <div class="form-group">
+              <label class="col-lg-3 control-label">Price</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" name="RENT_SCHEDULE_PRICE">
+              </div>
+            </div>
   
       </div>
       <div class="modal-footer">

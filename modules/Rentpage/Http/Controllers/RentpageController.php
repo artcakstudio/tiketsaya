@@ -28,10 +28,12 @@ class RentpageController extends Controller {
 		session(['duration'=>$duration]);
 		return view('rentpage::hasil-search', compact('vehicle','city','duration'));
 	}
-	function transaksipage($id)
+	function transaksipage($id_schedule)
 	{
-		
-		return view('rentpage::transaksi',compact('id'));
+		$schedule=Rentschedule::findRentschedule($id_schedule);
+		$jadwal=$schedule->first();
+		session(['DATA_RENT'=>$jadwal]);
+		return view('rentpage::transaksi',compact('id_schedule'));
 	}
 	function transaksiSubmit()
 	{
@@ -62,5 +64,13 @@ class RentpageController extends Controller {
 		$detail_transaksi=['RENT_TRANSACTION_ID'=>DB::getPdo()->lastInsertId(),'RENT_SCHEDULE_ID'=>$schedule_id];
 		Renttransactiondetail::insert($detail_transaksi);
 		return redirect::to('/');
+	}
+	function preview()
+	{
+		$data=Input::all();
+		$no_pemesanan=DB::select('select rent_code() as code_pesan')[0]->code_pesan;
+		
+		session(['DATA_COSTUMER'=>$data,'NO_PEMESANAN'=>$no_pemesanan]);
+		return view('rentpage::preview');
 	}
 }

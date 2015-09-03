@@ -14,6 +14,7 @@
 
 
 {!! Html::style('assets/css/jquery.dataTables.min.css')!!}
+{!! Html::style('assets/css/jquery.dataTables.css')!!}
   <!-- Font awesome icon -->
   {!! Html::style('assets/css/font-awesome.min.css')!!}
   <!-- jQuery UI -->
@@ -88,7 +89,7 @@
 
 <body>
 <?php echo '<script>var token="'.csrf_token().'"</script>\r\n'?>
-<div class="navbar navbar-fixed-top bs-docs-nav" role="banner" style="position: absolute; widht:98%">
+<div class="navbar navbar-fixed-top bs-docs-nav" role="banner" style="overflow-x:hidden; position:absolute">
 
 
 @section('header')
@@ -166,15 +167,7 @@
               <li><a href="{!!url('rent/transaction')!!}">Transaction</a></li>
             </ul>
           </li>    
-		  <li class="has_sub"><a href="#"><i class="fa fa-table"></i> Tables  <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a>
-            <ul>
-              <li><a href="tables.html">Tables</a></li>
-              <li><a href="dynamic-tables.html">Dynamic Tables</a></li>
-            </ul>
-          </li>		  
-          <li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Charts</a></li> 
-          <li><a href="forms.html"><i class="fa fa-tasks"></i> Forms</a></li>
-          <li><a href="ui.html"><i class="fa fa-magic"></i> User Interface</a></li>
+          <li><a href="{{url('auth/logout')}}"><i class="fa fa-magic"></i> Logout</a></li>
         </ul>
     </div>
 

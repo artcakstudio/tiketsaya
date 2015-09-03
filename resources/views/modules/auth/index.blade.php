@@ -31,7 +31,7 @@
   <div class="container">
 
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-lg-12">
         <!-- Widget starts -->
             <div class="widget worange">
               <!-- Widget head -->
@@ -42,10 +42,10 @@
               <div class="widget-content">
                 <div class="padd">
                   <!-- Login form -->
-                  {!!Form::open(['url'=>'auth/login', 'method'=>'post'])!!}
+                  {!!Form::open(['url'=>'auth/login', 'method'=>'post','class'=>'form-horizontal'])!!}
                     <!-- Email -->
                     <div class="form-group">
-                      <label class="control-label col-lg-3" for="inputEmail">username</label>
+                      <label class="control-label col-lg-3">username</label>
                       <div class="col-lg-9">
                         <input type="text" class="form-control"  placeholder="Username" name="username">
                       </div>
@@ -62,7 +62,7 @@
 					<div class="col-lg-9 col-lg-offset-3">
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox"> Remember me
+                          <input type="checkbox" style="position: absolute;margin-top: -7px;"> Remember me
                         </label>
 						</div>
 					</div>
@@ -78,7 +78,7 @@
 
                 </div>
               
-                <div class="widget-foot">
+                <div class="widget-foot" style="margin-top:inherit">
                   Not Registred? <a href="#">Register here</a>
                 </div>
             </div>  

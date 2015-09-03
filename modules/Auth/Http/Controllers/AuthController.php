@@ -24,7 +24,7 @@ class AuthController extends Controller {
 		if (sizeof($user)>0){
 			$rule=User::getHakAkses($user[0]['USERS_ID'])->get();
 
-			session(['hak'=>$rule, 'name'=>$user[0]['USERS_NAME'], 'id'=>$user[0]['USERS_ID']]); 
+			session(['hak'=>'admin', 'name'=>$user[0]['USERS_NAME'], 'id'=>$user[0]['USERS_ID']]); 
 	
 		return redirect::to('usermanagement');
 		}
@@ -33,5 +33,10 @@ class AuthController extends Controller {
 
 			return redirect::back();
 		}
+	}
+	function logout()
+	{
+		Session::flush();
+		return Redirect::to('auth');
 	}
 }

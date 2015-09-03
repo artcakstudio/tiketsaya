@@ -4,4 +4,5 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Modules\Auth\Http\Controllers'
 {
 	Route::get('/', 'AuthController@index');
 	Route::post('login','AuthController@login');
+	Route::get('logout','AuthController@logout');
 });

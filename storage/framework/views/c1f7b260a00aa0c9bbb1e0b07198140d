@@ -50,26 +50,26 @@ function hapusUser(id)
 
           <div class="form-group">
             <label class="col-lg-2 control-label">Nama User</label>
-            <div class="col-lg-5">
+            <div class="col-lg-8">
               <input type="text" class="form-control" placeholder="Nama User" name="USERS_NAME">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-2 control-label">Username</label>
-            <div class="col-lg-5">
+            <div class="col-lg-8">
               <input type="text" class="form-control" placeholder="Username" name="USERS_USERNAME">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-2 control-label">Password</label>
-            <div class="col-lg-5">
+            <div class="col-lg-8">
               <input type="password" class="form-control" placeholder="Password" name="USERS_PASSWORD">
             </div>
           </div>
           
           <div class="form-group">
             <label class="col-lg-2 control-label">Email</label>
-            <div class="col-lg-5">
+            <div class="col-lg-8">
               <input class="form-control" placeholder="email" name="USERS_EMAIL" type="email">
             </div>
           </div>    

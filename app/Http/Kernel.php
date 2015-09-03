@@ -31,5 +31,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'partnercheck'=> \Modules\TravelPartner\Http\Middleware\Partnercheck::class,
         'rentcheck'=> \Modules\Rentpartner\Http\Middleware\Partnercheck::class,
+        'admincheck'=> \Modules\Usermanagement\Http\Middleware\Admincheck::class,
     ];
 }

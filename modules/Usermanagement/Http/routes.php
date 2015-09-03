@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'usermanagement', 'namespace' => 'Modules\Usermanagement\Http\Controllers'], function()
+Route::group(['prefix' => 'usermanagement', 'namespace' => 'Modules\Usermanagement\Http\Controllers', 'middleware'=>'admincheck'], function()
 {
 	Route::post('hapus','UsermanagementController@hapus');
 	Route::controller('user', 'UsermanagementController', ['getUser' => 'datatables',]);
