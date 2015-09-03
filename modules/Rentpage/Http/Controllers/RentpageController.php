@@ -14,7 +14,8 @@ class RentpageController extends Controller {
 	
 	public function index()
 	{
-		return view('rentpage::index');
+		$city=City::all();
+		return view('rentpage::index','city');
 	}
 	public function scheduleSearch()
 	{

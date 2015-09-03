@@ -18,8 +18,10 @@
                     </tr>
                 </thead>
             </table>    
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahVehicle">Add Vehicle</button>
                     </div>
+            <div class="row col-md-5" style="margin-left:5%; margin-top:1%">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahVehicle">Add Vehicle</button>
+            </div>
                 </div>
             </div>
         </div>

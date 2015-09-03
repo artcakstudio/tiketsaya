@@ -1,6 +1,7 @@
 <?php $__env->startSection('search-column'); ?>
 <?php $__env->startSection('content'); ?>
-            
+	@parent
+            <?php echo $__env->make('column_search', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
             <!-- CONTENT OPEN -->
          <div class="hasil-search">
             <div class="row">

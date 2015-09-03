@@ -1,24 +1,34 @@
 .panel-left{
-	background: red;
-	height: 100px;
+	 background: #16AC59;
+    height: 390px;
+    margin-left: 0px;
+    border-radius: 5px;
+
 }
 .sub-menu{
-	background: blue;
-	height: 30px;
-	border:1px solid grey	;
+    height: 40px;
+    border: 1px solid #DCD6D6;
+    margin-left: -6%;
+    font-size: 21px;
+    border-radius: 8px;
+    margin-bottom: 1px;
+    width: 110%;
 }
 .sub-menu h4{
-	color: white;
-	font-size: 20px;
+    color: #FFEBEB;
+    font-size: 18px;
+    margin-left: 5%;
 }
 .sub h4{
 	padding-left: 20px;
 }
 .main-body{
 	background: white;
-	margin-left: 10px;
-	height:785px;
-	border: 1px grey solid;
+    margin-left: 15px;
+    height: inherit;
+    width: 76%;
+    /* border: 1px grey solid; */
+    padding-right: 0px;
 }
 .nonaktif td{
 	background-color: red	;
@@ -28,4 +38,14 @@
 	margin: 0px 5px 0px 0px;
 	border: 1px solid black;
 	padding: 0px 5px 0px 5px;
+}
+.sub-menu:hover{
+	background: #1A5735;
+}
+.sub-menu a{
+	text-decoration: none;
+}
+.body-panel{
+	height: inherit;
+	background-color: aliceblue;
 }

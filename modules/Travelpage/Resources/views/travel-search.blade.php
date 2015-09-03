@@ -2,7 +2,8 @@
 
 @section('search-column')
 @section('content')
-            
+	@parent
+            @include('column_search')
             <!-- CONTENT OPEN -->
          <div class="hasil-search">
             <div class="row">

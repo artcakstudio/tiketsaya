@@ -6,7 +6,7 @@
 	@include('travel_partner.sidebar')
 	                  <div class="row main-body col-md-9">
 	                  <label><h1 style="text-align:center">Profile</h1></label>
-	                  <div class="row">
+	                  <div class="row" style="padding-right:0px">
 	                  		<div class="col-md-4" >Name :</div>
 	                  		<div class="col-md-8">{{$partner['PARTNER_NAME']}}</div>
 	                  </div>

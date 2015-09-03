@@ -4,7 +4,7 @@
 	@include('travel_partner.sidebar')
                  <div class="row main-body col-md-9">
            
-                    <div class="row col-md-12">
+                    <div class="row col-md-12" style="padding-right: 0px;width: 100%;">
 
                     <div class="col-md-6">      
                       <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img src="<?php echo url('assets/images/back.png')?>"></a>
