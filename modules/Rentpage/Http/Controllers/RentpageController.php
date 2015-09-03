@@ -28,8 +28,10 @@ class RentpageController extends Controller {
 		session(['duration'=>$duration]);
 		return view('rentpage::hasil-search', compact('vehicle','city','duration'));
 	}
-	function transaksipage($id_schedule)
+	function transaksipage()
 	{
+		
+		$id_schedule=Input::get('RENT_SCHEDULE_ID');
 		$schedule=Rentschedule::findRentschedule($id_schedule);
 		$jadwal=$schedule->first();
 		session(['DATA_RENT'=>$jadwal]);

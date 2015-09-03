@@ -21,7 +21,12 @@
 
 </head>
 <body>
-<?php echo '<script>var token="'.csrf_token().'"</script>'?>
+
+<?php echo '<script>var token="'.csrf_token().'"</script>';
+
+
+?>
+
     <div class="container-large_">
         <div class="container">
             <!-- HEADER OPEN --> 

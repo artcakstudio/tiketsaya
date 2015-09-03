@@ -1,6 +1,14 @@
 @extends('page_template')
 @section('content')
     @parent
+<?php
+ function dateFormat($tanggal)
+{
+    $month=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus", "September","Oktober","Nopember","Desember"];
+    $bulan=substr($tanggal, 4,2);
+    $tanggal=substr($tanggal, 0,2)." ".$month[$bulan-1]." ".substr($tanggal, 6,4);
+    return $tanggal;
+};?>
    <div class="row">
 <?php
 $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
@@ -15,7 +23,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                     <div class="row head_table">
                         <div class="col-md-4" style="padding-top: 0px"><h4><b>PROSES PEMESANAN</b><h4></div>
                         <div class="col-md-8" style="padding: 0;">
-                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Travel | {{Session::get('DATA_RENT')['CITY_NAME']}}  | <?php  echo date('d-m-Y', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></p>
+                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Travel | {{Session::get('DATA_RENT')['CITY_NAME']}}  | <?php  echo dateFormat(date('d-m-Y', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))?></p>
                         </div>
                     </div>
 
@@ -106,7 +114,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
 	                                <div class="box_tanggal_rincian_penerbangan" style="background-color:#eee;border: 1px solid #ddd; border-left: 4px solid #00cd00; width:320px; margin-bottom:10px">
 	                                    <div class="tulisan_tanggal_rincian_penerbangan" style="padding:10px">
 	                                        Tanggal Penyewaaan :
-	                                        <p><b> <?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]; echo ", ".date('d-m-Y', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></b></p>
+	                                        <p><b> <?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]; echo ", ".dateFormat(date('d-m-Y', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))?></b></p>
 	                                    </div>
                                         <div class="tulisan_tanggal_rincian_penerbangan" style="padding:10px">
                                             Lama Penyewaaan :

@@ -6,7 +6,6 @@
     @stop
 
 @section('content')
-            
 
 <!-- CONTENT OPEN -->
             <div class="row">
@@ -16,7 +15,7 @@
                         <div class="col-md-8" style="padding: 0;" >
                              <button style="float: right" type="button" class="btn remove_border themecolor">Ubah Pencarian</button>
                              @if(sizeof($vehicle)>0)
-                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Sewa Mobil | {{$vehicle[0]['CITY_NAME']}}| {{$vehicle[0]['RENT_SCHEDULE_DATE']}}</p>
+                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Sewa Mobil | {{$vehicle[0]['CITY_NAME']}}| {{dateFormat(date('d-m-Y',strtotime($vehicle[0]['RENT_SCHEDULE_DATE'])))}}</p>
                                 @endif
 
                         </div>
@@ -93,10 +92,12 @@
                                             <h6><del>IDR 450.000</del></h6>
                                         </div>
                                     </div>
+                                    {!!Form::open(['route'=>'rentpage.transaksi.step1', 'method'=>'POST','name'=>'form_jadwal'])!!}
+                                    <input type="hidden" name="RENT_SCHEDULE_ID" value="{{$row['RENT_SCHEDULE_ID']}}">
                                     <div class="button_pesan" >
-                                        <a href="<?php echo url('rentpage/transaksi/'.$row['RENT_SCHEDULE_ID'])?>"><div class="buttravel"></div></a>
+                                        <div class="buttravel"></div>
                                     </div>
-                                    
+                                    {!!Form::close()!!}
                                 </div>
                                 <div id="data<?php echo $row['RENT_SCHEDULE_ID'] ?>" class="collapse" >
                                   <div class="kotak_colaps">
@@ -114,7 +115,7 @@
                                           </div>
                                           
                                           <div class="col-md-6">
-                                               <p><?php echo date('D',strtotime($row['RENT_SCHEDULE_DATE']))."     ".date('d-m-Y',strtotime($row['RENT_SCHEDULE_DATE']))?> </p>
+                                               <p><?php echo date('D',strtotime($row['RENT_SCHEDULE_DATE']))."     ".dateFormat(date('d-m-Y',strtotime($row['RENT_SCHEDULE_DATE'])))?> </p>
                                               <p>Fasilitas : AC, Wifi, Music, Makan 1x</p>
                                               <p>Berangkat : <?php echo date('h:i',strtotime($row['RENT_SCHEDULE_DATE']))?> WIB </p>
                                               
@@ -144,4 +145,11 @@
                 </div>
                 
             </div>
+<script type="text/javascript">
+    $(".button_pesan").click(function(){
+        var form=$(this.closest("form"));
+        form.submit();
+        
+    });
+</script>
 @stop

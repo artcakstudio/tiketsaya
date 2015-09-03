@@ -1,3 +1,11 @@
+<?php
+ function dateFormat($tanggal)
+{
+    $month=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus", "September","Oktober","Nopember","Desember"];
+    $bulan=substr($tanggal, 4,2);
+    $tanggal=substr($tanggal, 0,2)." ".$month[$bulan-1]." ".substr($tanggal, 6,4);
+    return $tanggal;
+};?>
               <!-- SLIDER -->
             <div class="row">
                 <div class="col-md-12 slider"></div>

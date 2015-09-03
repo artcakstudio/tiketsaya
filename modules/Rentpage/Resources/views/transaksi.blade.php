@@ -11,7 +11,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                         <div class="col-md-4" style="padding-top: 0px; font-weight: bold" ><h4><b>PROSES PEMESANAN</b><h4></div>
                         <div class="col-md-8" style="padding: 0">
                              <button style="float: right" type="button" data-target="#pencarian_data_tabel" data-toggle="collapse" aria-expanded="true" class="btn remove_border themecolor">Ubah Pencarian</button>
-                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Rent | {{Session::get('DATA_RENT')['CITY_NAME']}}| <?php echo date('d-m-Y', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></p>
+                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Rent | {{Session::get('DATA_RENT')['CITY_NAME']}}| <?php echo dateFormat(date('d-m-Y', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))?></p>
                         </div>
                     </div>
 
@@ -50,7 +50,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                             <div class="info_travel" style="background-color: #fff; margin-top:10px; padding-left:20px">
                                 <p>{{Session::get('DATA_RENT')['ROUTE_DEPARTURE']}} ke {{Session::get('DATA_RENT')['ROUTE_DEST']}}</p>
                                 <p>Fasilitas : AC, Wifi, Musik, Makan 1x</p>
-                                <p>{{date('Y-m-d', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))}}   {{Session::get('DATA_RENT')['CITY_NAME']}}</p>                                
+                                <p>{{dateFormat(date('d-m-Y', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))}}   {{Session::get('DATA_RENT')['CITY_NAME']}}</p>                                
                             </div>
                         </div>
                         <!-- Isian  Data Penumpang -->
