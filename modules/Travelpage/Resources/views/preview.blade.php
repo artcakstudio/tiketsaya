@@ -1,4 +1,5 @@
 @extends('page_template')
+@section('class_header','container-large_1')
 @section('content')
     @parent
    <div class="row">
@@ -19,7 +20,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                         </div>
                     </div>
 
-                    <div class="row" style="margin-top: 5px; height: 50px;">
+                    <div class="row" style="margin-top: 5px; height: 50px; margin-bottom: 50px">
                         <div class="kotak_step_travel">
                             <div class="step">
                                 <h4>Isi Data<h4>
@@ -40,22 +41,6 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                 <h4>Konfirmasi<h4>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row" style="margin-top:50px">
-                        <!-- Info No.Pesanan Pojok Kiri Atas -->
-                        <div class="col-md-4 remove_padding"  style="background-color:#eee;border: 1px solid #ddd; border-left: 4px solid #00cd00; width:320px">
-                            <div class="tulisan_no_pesanan" style="padding-left:10px; padding-top:10px">
-                                <p>No. Pesanan</p>
-                            </div>
-                            <div class="no_pesanan" style="margin-left:220px; margin-top:-28px;height:35px">
-                                <p><b>{{Session::get('NO_PEMESANAN')}}</b></p>
-                            </div>
-                        </div>
-                     </div>
-
-                     <!-- Info Lanjut Ke Pembayaran -->
-                    <div class="row">
                     </div>
 
                     <!-- Info Penting -->
@@ -91,105 +76,113 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                         </div>
                     </div>
 
-                     <div class="row" style="">
+                     <div class="row">
                         <!-- Rincian Travel-->
-                        <div class="col-md-8" style="padding-left:30px; margin-top:-355px; margin-left:325px;">
-                            <div class="tulisan_rincian_penerbangan">
+                        <div class="col-md-8" style="padding-left:30px; margin-top:-35%; margin-left:325px;">
+                            <div class="tulisan_rincian_penerbangan" style="text-align:center">
                                 <h2>Rincian Travel</h2>
                             </div>
                             <!-- Kotak Data Rincian Penerbangan -->
-                            <div class="row box_rincian_penerbangan" style="background-color:#fff;border: 1px solid #ddd; border-left: 4px solid #00cd00; padding:20px">
-                            	<div class="row col-md-8">
-                            		
-                            	
-                                <!-- Kotak_1 -->
-	                                <div class="box_tanggal_rincian_penerbangan" style="background-color:#eee;border: 1px solid #ddd; border-left: 4px solid #00cd00; width:320px; margin-bottom:10px">
-	                                    <div class="tulisan_tanggal_rincian_penerbangan" style="padding:10px">
-	                                        Jadwal Berangkat :
-	                                        <p><b> <?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME'])))-1]; echo ", ".date('d-m-Y', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))?></b></p>
+                            <div class="row col-md-12" style="background-color:#fff;border: 4px dotted #ddd; padding:20px">
+                            	<div class="row col-md-7" style="background-color:#fff">
+                                
+	                                <div class="box_tanggal_rincian_travel" style="background-color:#eee;border: 1px solid #ddd; padding:10px; margin-bottom:10px">
+                                        <!-- No_Pesanan -->
+                                        <div class="tulisan_no_pesanan">
+                                            <p>No. Pesanan :<span><b>{{Session::get('NO_PEMESANAN')}}</b></span></p>
+                                        </div>
+                                        <!-- Jadwal_berangkat -->
+	                                    <div class="tulisan_jadwal_berangkat_travel">
+	                                        <p>Jadwal Berangkat :<span><b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME'])))-1]; echo ", ".date('d-m-Y', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))?></b></span></p>
 	                                    </div>
+                                        <!-- Nama_Penumpang -->
+                                        <div class="tulisan_nama_penumpang_travel">
+                                            <p>Nama Penumpang :<span><b>{{Session::get('DATA_COSTUMER')['COSTUMER_NAME']}}</b></span></p>
+                                        </div>
+                                        <!-- No_Telepon -->
+                                        <div class="tulisan_notelp_penumpang_travel">
+                                            <p>No Telepon :<span><b>{{Session::get('DATA_COSTUMER')['nohp_prefix']}}{{Session::get('DATA_COSTUMER')['COSTUMER_TELP']}}</b></span></p>              
+                                        </div>
+                                        <!-- Total_Penumpang -->
+                                        <div class="tulisan_total_penumpang_travel">
+                                            <p>Total Penumpang :<span><b>{{Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER']}} Orang</b></span></p> 
+                                        </div>
+
+                                        <!-- Data_Penumpang_Travel -->
+                                        <div class="data_penumpang_travel">
+                                            
+
+                                            <!-- <table>
+                                            <tr>
+                                                <td>Nama Penumpang</td>
+                                                <td>:</td>
+                                                <td>{{Session::get('DATA_COSTUMER')['COSTUMER_NAME']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>No Telepon</td>
+                                                <td>:</td>
+                                                <td>{{Session::get('DATA_COSTUMER')['nohp_prefix']}}{{Session::get('DATA_COSTUMER')['COSTUMER_TELP']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total Penumpang</td>
+                                                <td>:</td>
+                                                <td>{{Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER']}} Orang</td>
+                                            </tr>
+                                            </table> -->
+                                        </div>
 	                                </div>
-	                                <!-- Penerbangan_1 -->
-	                                <div class="rincian_penerbangan_1">
-	                                    <div class="logo_jangkauan">
-	                                        <img src="<?php echo url('assets/images/gambar_jangkauan.png')?>">
-	                                    </div>
-	                                    <div class="konten_rincian_penerbangan_1" style="margin-left:25px; margin-top:-85px; margin-bottom:10px">
-	                                        <table class="baris_rincian_penerbangan_1">
-	                                            <tbody>
-	                                                <tr>
-	                                                    <td class="kota_asal_1" >
-	                                                        <b>{{Session::get('DATA_TRAVEL')['ROUTE_DEPARTURE']}}</b>
-	                                                    </td>
-	                                                </tr>
-	                                                <tr>
-	                                                    <td class="box_logo_penerbangan_asal">
-	                                                        <div class="logo_penerbangan_asal">
-	                                                            <img src="<?php echo url('public\Assets\partnerPhoto/'.Session::get('DATA_TRAVEL')['PARTNER_PHOTO'].'')?>" width=90 height=52>
-	                                                        </div>
-	                                                    </td>
-	                                                    <td class="kode_penerbangan_asal_1">
-	                                                        
-	                                                    </td>
-	                                                    <td class="waktu_penerbangan_asal_1">
-	                                                        <b><?php echo date('h:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME'])))-1]?>
-	                                                    </td>
-	                                                    
-	                                                </tr>
-	                                                <tr>
-	                                                    <td class="waktu_penerbangan_tujuan_1">
-	                                                        <div class="tulisan_waktu_tujuan_1">
-	                                                            <b><?php echo date('h:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME'])))-1]?>
-	                                                        </div>
-	                                                    </td>
-	                                                </tr>
-	                                                <tr>
-	                                                    <td class="kota_tujuan_1">
-	                                                        <b>{{Session::get('DATA_TRAVEL')['ROUTE_DEST']}}</b>
-	                                                    </td>
-	                                                </tr>
-	                                            </tbody>
-	                                        </table>
-	                                    </div>
-	                                </div>
+	                                
 	                            </div>
 	                            <!--Data Penumpang-->
-	                            <div class="row col-md-5">
-	                            	<table>
-	                            		<tr>
-	                            			<td>Nama Penumpang</td>
-	                            			<td>:</td>
-	                            			<td>{{Session::get('DATA_COSTUMER')['COSTUMER_NAME']}}</td>
-	                            		</tr>
-	                            		<tr>
-	                            			<td>No Telepon</td>
-	                            			<td>:</td>
-	                            			<td>{{Session::get('DATA_COSTUMER')['nohp_prefix']}}{{Session::get('DATA_COSTUMER')['COSTUMER_TELP']}}</td>
-	                            		</tr>
-	                            		<tr>
-	                            			<td>Total Penumpang</td>
-	                            			<td>:</td>
-	                            			<td>{{Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER']}} Orang</td>
-	                            		</tr>
-	                            	</table>
-	                            </div>
-	                                <!-- Keterangan Waktu -->
-	                            <div class="row keterangan_waktu col-md-12" style="margin-left:20px; color:#bbb">
-		                                <p>Semua waktu adalah waktu tempat berangkat travel</p>
-		                          </div>
-	                                
-
-                                <!-- Untuk Travel -->
-                                <div class="box_rincian_travel">
-                                    <div="">
+	                            <div class="row col-md-4" style="padding-left:50px; padding-top:20px">
+                                    <!-- Rute_Travel -->
+                                    <div class="rincian_penerbangan_1">
+                                        <div class="logo_jangkauan">
+                                            <img src="<?php echo url('assets/images/gambar_jangkauan.png')?>">
+                                        </div>
+                                        <div class="konten_rincian_penerbangan_1" style="margin-left:25px; margin-top:-90px; margin-bottom:10px">
+                                            <table class="baris_rincian_penerbangan_1">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="kota_asal_1" >
+                                                            <b>{{Session::get('DATA_TRAVEL')['ROUTE_DEPARTURE']}}</b>
+                                                        </td>
+                                                        <td class="waktu_penerbangan_asal_1">
+                                                            <b><?php echo date('h:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME'])))-1]?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box_logo_penerbangan_asal">
+                                                            <div class="logo_penerbangan_asal">
+                                                                <img src="<?php echo url('public\Assets\partnerPhoto/'.Session::get('DATA_TRAVEL')['PARTNER_PHOTO'].'')?>" width=90 height=52>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="kota_tujuan_1">
+                                                            <b>{{Session::get('DATA_TRAVEL')['ROUTE_DEST']}}</b>
+                                                        </td>
+                                                        <td class="waktu_penerbangan_tujuan_1">
+                                                            <div class="tulisan_waktu_tujuan_1">
+                                                                <b><?php echo date('h:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME'])))-1]?>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+	                            </div>
+                                <!-- Keterangan Waktu -->
+                               <div class="row keterangan_waktu col-md-12" style="color:#bbb">
+	                                <p>Semua waktu adalah waktu tempat berangkat travel</p>
+	                          </div>
                             </div>
                         </div>
                         <!-- Rincian Harga Total -->
-                        <div class="col-md-4 remove_padding"  style="background-color:#eee; margin-top: 0px; margin-left: 340px; margin-bottom:10px; width:580px">
-                            <div class="tulisan_rincian_harga" style="text-align:center"><h3>Rincian Harga<h3>
+                        <div class="col-md-4 remove_padding"  style="background-color:#eee; margin-left: 340px; margin-bottom:10px; width:580px">
+                            <div class="tulisan_rincian_harga" style="text-align:center">
+                                <h3>Rincian Harga<h3>
                             </div>
                             <div class="rincian_harga col-md-4" style=" width:28%;padding-left:10px">
                                 <div class="rincian_harga_1_a">
@@ -228,7 +221,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                 <h3>Lanjut Ke Pembayaran</h3>
                             </div> -->
                             <div class="desc_lanjut" style="margin-bottom:15px">
-                                <p>Dengan mengklik tombol di bawah, Anda menyetujui <u>Syarat & Ketentuan</u> dan <u>Kebijakan Privasi</u> Traveloka</p>
+                                <p>Dengan mengklik tombol di bawah, Anda menyetujui <u>Syarat & Ketentuan</u> dan <u>Kebijakan Privasi</u> Travebaik</p>
                             </div>
                             <div class="logo_lanjut" style="margin-bottom:15px">
                                 <input type="image" value="submit "src="<?php echo url('assets/images/lanjut_ke_pembayaran.png')?>">

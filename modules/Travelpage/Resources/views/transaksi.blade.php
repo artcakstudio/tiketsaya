@@ -1,4 +1,5 @@
 @extends('page_template')
+@section('class_header','container-large_1')
 @section('content')
     @parent
         @include('column_search_hidden')
