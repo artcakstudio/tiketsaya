@@ -19,14 +19,23 @@ class TravelPartnerController extends Controller {
 	 	$data=Input::all();
 	 	$partner=Partner::where('PARTNER_ID','=',$data['PARTNER_ID']);
 	 	unset($data['_token']);
+	 	if (!is_null($data['PARTNER_PHOTO'])){
+	 		$data['PARTNER_PHOTO']=md5(time()).'.png';;
+		 	$destPath=public_path().'\Assets\PartnerPhoto';
+		 	Input::file('PARTNER_PHOTO')->move($destPath,$data['PARTNER_PHOTO']);
+		 	@unlink(public_path().'\Assets\partnerPhoto/'.$partner->first()['PARTNER_PHOTO']);
+	 	}
+	 	else{
+	 		unset($data['PARTNER_PHOTO']);
+	 	}
+
 	 	$partner->update($data);
-	 	
-	 	return back();
+	 	return redirect::back();
 	 }
 	 function updatepassword()
 	 {
 	 	$data=Input::all();
-	 		
+	 			
 	 	$partnerObject=Partner::where('PARTNER_ID','=',$data['PARTNER_ID']);
 	 	$partner=$partnerObject->first();
 	 	
@@ -42,12 +51,12 @@ class TravelPartnerController extends Controller {
 		 	}
 		 	else{
 		 		Session::flash('message', "Password Yang Anda Masukkan Tidak sama, mohon ulang kembali");
-		 		return back();
+		 		return redirect::back();
 		 	}
 	 	}
 	 	else{
 	 		Session::flash('message', "Password Yang Anda Masukkan Salah");
-	 		return back();
+	 		return redirect::back();
 	 	}
 	 }
 	 function logout()

@@ -14,6 +14,8 @@ Route::group(['prefix' => 'usermanagement', 'namespace' => 'Modules\Usermanageme
 		Route::get('roles/listRoles','RolesController@getRoles');
 		Route::post('roles/hapusHakAkses','RolesController@hapusHakAkses');
 		Route::post('roles/tambahHakAkses','RolesController@tambahHakAkses');
+		Route::post('roles/tambahroles',['as'=>'usermanagement.roles.add','uses'=>'RolesController@tambahRoles']);
+		Route::post('roles/delete',['as'=>'roles.delete','uses'=>'RolesController@delete']);
 		Route::resource('roles','RolesController');
 		
 	});

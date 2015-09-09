@@ -13,7 +13,9 @@
 							            </tr>
 							        </thead>
 							    </table>  
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addroute">Add Route</button>
+                    </div>
+                    <div class="col-md-8" style="margin-left:5%">
+							         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addroute">Add Route</button>
                     </div>
                 </div>
             </div>

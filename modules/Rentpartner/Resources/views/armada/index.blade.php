@@ -60,7 +60,7 @@
         $("#hapusUser h2.modalbody").html('Apakah Anda Yakin Menghapus Vehicle '+name+'?');
 
         var id=$(button).get()[0].id;  
-        alert(id);
+        
         $("#hapusUser form input[name='VEHICLE_ID'").val(id);
         $("#hapusUser").modal("show");
 

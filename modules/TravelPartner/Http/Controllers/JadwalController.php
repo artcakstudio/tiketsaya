@@ -51,12 +51,15 @@ public $partner_id;
 		$schedule =travelschedule::getScheduleDayPartner($tanggal,$this->partner_id)->get();
         return Datatables::of($schedule)
          ->addColumn('action', function ($schedule) {
-         		return '<li  class="dropdown dropdown-no-type"><a data-toggle="dropdown" class="dropdown-toggle btn btn-xs btn-primary" href="#" > Pilihan <b class="caret"></b></a><ul class="dropdown-menu"><li><button class="btn btn-primary edit" id="'.$schedule->TRAVEL_SCHEDULE_ID.'">Edit</button></li><li><button class="btn btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_ID.'" data-target="#hapusUser">Hapus</button></li></ul></li>';
+         		//return '<li  class="dropdown dropdown-no-type"><a data-toggle="dropdown" class="dropdown-toggle btn btn-xs btn-primary" href="#" > Pilihan <b class="caret"></b></a><ul class="dropdown-menu"><li><button class="btn btn-primary edit" id="'.$schedule->TRAVEL_SCHEDULE_ID.'">Edit</button></li><li><button class="btn btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_ID.'" data-target="#hapusUser">Hapus</button></li></ul></li>';
+         		return '<button class="btn  btn-xs btn-primary" id="'.$schedule->TRAVEL_SCHEDULE_ID.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_ID.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
             })
             ->make(true);
 	}
 	function jadwal_harian($tanggal)
 	{
+		$route=$this->route;
+		$vehicle=$this->vehicle;
 		return view('travelpartner::jadwal.jadwal_harian',compact('tanggal','route','vehicle'));
 	}
 	function mingguan()

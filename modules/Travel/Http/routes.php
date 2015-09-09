@@ -4,8 +4,8 @@ Route::group(['prefix' => 'travel', 'namespace' => 'Modules\Travel\Http\Controll
 {
 	Route::get('getScheduleDay/{id}','TravelController@getScheduleDay');
 	Route::get('show/{tanggal}','TravelController@show');
-	Route::post('update','TravelController@update');
-	Route::post('destroy','TravelController@destroy');
+	Route::post('update',['as'=>'travel..update', 'uses'=>'TravelController@update']);
+	Route::post('destroy', ['as'=>'travel..delete',  'uses'=>'TravelController@destroy']);
 	Route::resource('/', 'TravelController');
 	Route::group(['after'=>'route'],function(){
 		Route::get('route/getAllRoute','RouteController@getAllRoute');

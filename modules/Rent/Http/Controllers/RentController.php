@@ -6,6 +6,7 @@ use Modules\vehicle\Entities\Vehicle;
 use Input;
 use Session;
 use Datatables;
+use Redirect;
 class RentController extends Controller {
 	
 	public function index()
@@ -21,7 +22,7 @@ class RentController extends Controller {
 		$data['RENT_SCHEDULE_DATE']=date('Y-m-d',strtotime($data['RENT_SCHEDULE_DATE']));
 		print_r($data);
 		rentschedule::insert($data);
-		return back();
+		return redirect::back();
 	}
 	function show($tanggal)
 	{

@@ -3,9 +3,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add City</h4>
+        <h4 class="modal-title" id="myModalLabel">Add Schedule</h4>
       </div>
-      <div class="modal-body">
+      <div class="row modal-body">
             <div class="form-group">
             <label class="control-label col-md-3" for="inputEmail">Kendaraan</label>
             <div class="col-md-9">
@@ -23,10 +23,10 @@
                 <input type="text" class="form-control" name="RENT_SCHEDULE_PRICE" value="0" style="margin-left:15px">
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label col-md-3">Looping Every</label>
-              <div class="col-md-9">
-                <table >
+
+              <label class="control-label col-md-12" style="text-align:center">Looping Every</label>
+              <div class="col-md-9" style="margin:auto">
+                <table style="margin-left:100px" >
                   <tr>
                     <?php
                     $day=["Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
@@ -37,14 +37,14 @@
                   </tr>
                 </table>
               </div>
-            </div>
+            
             <div class="row form-group col-md-12">
               <div class="col-md-6">
-                <label class=" col-md-12">From</label>
+                <label class=" col-md-12" style="text-align:center">From</label>
                   <input type="date" class="form-control" name="date_start"  style="margin-left:15px">
                 </div>
               <div class="col-md-6">
-                <label class="control-label col-md-12">To</label>
+                <label class="control-label col-md-12" style="text-align:center">To</label>
                 <div class="col-md-12">
                   <input type="date" class="form-control" name="date_finish" style="margin-left:15px">
                 </div>

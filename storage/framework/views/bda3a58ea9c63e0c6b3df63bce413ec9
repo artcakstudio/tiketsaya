@@ -53,8 +53,9 @@
   $("#transaction-table").on("click","button.btn.editstatus", function(){
       var button=this;
       var tr=$(button.closest("tr"));
-      var status=tr[0].cells[3].innerHTML;
+      var status=tr[0].cells[5].innerHTML;
       var id=$(button).get()[0].id;
+      alert(status);
 
       $("#editTransaction form [name='TRAVEL_TRANSACTION_ID']").val(id);
       $("#editTransaction form [name='TRAVEL_TRANSACTION_STATUS_ID'] option:contains('"+status+"')").attr("selected", "selected");

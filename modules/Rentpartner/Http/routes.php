@@ -18,5 +18,6 @@ Route::group(['prefix' => 'rentpartner', 'namespace' => 'Modules\Rentpartner\Htt
 		Route::get('jadwal/jadwalharian/{tanggal}','JadwalController@jadwalharian');
 		Route::get('jadwal/harian/{id}','JadwalController@jadwal_harian');
 		Route::post('jadwal/mingguan/','JadwalController@addJadwalMingguan');
+		Route::post('jadwal/harian',['as'=>'rentpartner.jadwal.store','uses'=>'JadwalController@addJadwalHarian']);
 	});
 });

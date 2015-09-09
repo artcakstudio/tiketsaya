@@ -9,7 +9,7 @@ use Modules\Vehicle\Entities\Vehicle;
 use Modules\vehicle\Entities\VehicleType;
 use Datatables;
 use Input;
-
+use Redirect;
 class JadwalController extends Controller {
 private $vehicle;
 public $partner_id;
@@ -43,15 +43,21 @@ public $partner_id;
 	}
 	function jadwalharian($tanggal){		
 		$schedule =rentschedule::partnerSchedule($this->partner_id,$tanggal)->get();
+		$path=url('public/Assets/vehiclePhoto');
         return Datatables::of($schedule)
          ->addColumn('action', function ($schedule) {
-         		return '<li  class="dropdown dropdown-no-type"><a data-toggle="dropdown" class="dropdown-toggle btn btn-xs btn-primary" href="#" > Pilihan <b class="caret"></b></a><ul class="dropdown-menu"><li><button class="btn btn-primary edit" id="'.$schedule->RENT_SCHEDULE_ID.'">Edit</button></li><li><button class="btn btn-danger" id="'.$schedule->RENT_SCHEDULE_ID.'" data-target="#hapusUser">Hapus</button></li></ul></li>';
+         		return '<button class="btn  btn-xs btn-primary" id="'.$schedule->RENT_SCHEDULE_ID.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->RENT_SCHEDULE_ID.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
             })
-            ->make(true);
+        ->addColumn('picture', function ($vehicle) use ($path) {
+         		return "<img src=".$path."/".$vehicle['VEHICLE_PHOTO']." style='width:50px; height:50px'>";
+         	})
+		->make(true);
 	}
 	function jadwal_harian($tanggal)
 	{
-		return view('rentpartner::jadwal.jadwal_harian',compact('tanggal','route','vehicle'));
+		$vehicle=$this->vehicle;
+		
+		return view('rentpartner::jadwal.jadwal_harian',compact('tanggal','vehicle','city'));
 	}
 	function mingguan()
 	{
@@ -76,6 +82,13 @@ public $partner_id;
 			}
 			$start=date('Y-m-d',strtotime('+1 day',strtotime($start)));
 		}
+	}
+	function addJadwalHarian(){
+		$data=Input::all();
+		unset($data['_token']);
+		$data['RENT_SCHEDULE_CREATEBY']=Session::get('id');
+		Rentschedule::insert($data);
+		return Redirect::back();
 	}
 	
 }

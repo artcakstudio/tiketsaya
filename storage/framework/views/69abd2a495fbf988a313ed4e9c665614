@@ -52,12 +52,17 @@
                               <label class="col-lg-2">Username</label>
                               <div class="col-lg-6">
                                   <input type="text" name="PARTNER_USERNAME" class="form-control">
+                                     <div class=" alert alert-info" style="height: 30px;padding: 0px;width: inherit;margin: 0px; visibility:hidden">
+                                      <h4>Username Sudah digunakan</h4>
+                                  </div>
                               </div>
+                              <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="visibility:hidden"></span>
                           </div>
                           <div class="form-group">
                               <label class="col-lg-2">Password</label>
                               <div class="col-lg-6">
                                   <input type="password" name="PARTNER_PASSWORD" class="form-control">
+                                 
                               </div>
                           </div>
                           <div class="form-group">
@@ -74,6 +79,36 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+  $("form input[name='PARTNER_USERNAME']").change(function(){
+    var username=$("form input[name='PARTNER_USERNAME']").val();
+    var type=$("form select[name='PARTNER_TYPE_ID']").val();
+    $("form span.glyphicon").css("visibility","");
+    console.log($("form span.glyphicon"));
+    $.ajax({
+      url : "<?php echo url('registrasi/checkusername')?>",
+      method : "POST",
+      datatype : "json",
+      data : {"PARTNER_USERNAME": username, "PARTNER_TYPE_ID":type,'_token':token},
+      success:function(data){
+        data=jQuery.parseJSON(data);
+        console.log(data);
+        if(data.length>0){
+          $("div.alert h4").html("Username Sudah  digunakan");
+          $("form button.btn.btn-primary").attr("disabled","disabled");
+        }
+        else{
+         $("form button.btn.btn-primary").removeAttr("disabled"); 
+          $("div.alert h4").html("Username bisa digunakan");
+        }
+          $("div.alert").css("visibility","");
+      },
+      complete:function(data){
+        $("form span.glyphicon").css("visibility","hidden");
+      }
+    });
+  });
+</script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('page_template', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

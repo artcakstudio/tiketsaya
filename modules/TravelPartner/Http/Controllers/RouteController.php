@@ -34,7 +34,7 @@ private $partner_id;
 	function armada()
 	{
 
-		$armada=Vehicle::where('VEHICLE_CREATEBY','=',$this->partner_id)->get();
+		$armada=Vehicle::where('RENT_CREATEBY','=',$this->partner_id)->get();
 		$route=Route::getRoutePartner($this->partner_id);
 		$city=City::all();
 		$type=VehicleType::all();
@@ -47,10 +47,10 @@ private $partner_id;
         return Datatables::of($vehicles)
          ->addColumn('action', function ($vehicle){
               //  return '<a href="#edit-'.$user->USERS_ID.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a><a href="#hapus-'.$user->USERS_ID.'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i> Hapus</a>';
-         		return '<li style="decoration:none" class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle btn btn-xs btn-primary" href="#" > Pilihan <b class="caret"></b></a><ul class="dropdown-menu"><li> <button class="btn  btn-primary" id="'.$vehicle->VEHICLE_ID.'">Edit</li><li><button class="btn btn-danger" id="'.$vehicle->VEHICLE_ID.'" data-target="#hapusUser">Hapus</button></li></ul></li>';
+         		return '<button class="btn  btn-xs btn-primary" id="'.$schedule->VEHICLE_SCHEDULE_ID.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->VEHICLE_SCHEDULE_ID.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
             })
          ->addColumn('photo', function ($vehicle) use($path) {
-         		return '<img src="'.$path.'/'.$vehicle['VEHICLE_PHOTO'].'" style="width:50px; height:50px">';
+         		return '<img src="'.$path.'/'.$vehicle['RENT_PHOTO'].'" style="width:50px; height:50px">';
          	
             })
             ->make(true);

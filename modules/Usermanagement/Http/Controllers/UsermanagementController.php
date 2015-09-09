@@ -21,7 +21,8 @@ class UsermanagementController extends Controller {
         return Datatables::of($users)
          ->addColumn('action', function ($user) {
               //  return '<a href="#edit-'.$user->USERS_ID.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a><a href="#hapus-'.$user->USERS_ID.'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i> Hapus</a>';
-         		return '<li class="dropdown-no-type dropdown"><a data-toggle="dropdown" class="dropdown-toggle btn btn-xs btn-primary " href="#" > Pilihan <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="usermanagement/edit/'.$user->USERS_ID.'" style="padding:0px; "><button class="btn  btn-primary" style="width:100%">Edit</button></a></li><li><button class="btn btn-danger" style="width:100%" id="'.$user->USERS_ID.'" data-target="#hapusUser">Hapus</button></li></ul></li>';
+         		//return '<li class="dropdown-no-type dropdown"><a data-toggle="dropdown" class="dropdown-toggle btn btn-xs btn-primary " href="#" > Pilihan <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="usermanagement/edit/'.$user->USERS_ID.'" style="padding:0px; "><button class="btn  btn-primary" style="width:100%">Edit</button></a></li><li><button class="btn btn-danger" style="width:100%" id="'.$user->USERS_ID.'" data-target="#hapusUser">Hapus</button></li></ul></li>';
+             return '<a href="usermanagement/edit/'.$user->USERS_ID.'"><button class="btn  btn-xs btn-primary"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$user->USERS_ID.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
             })
             ->make(true);
     }

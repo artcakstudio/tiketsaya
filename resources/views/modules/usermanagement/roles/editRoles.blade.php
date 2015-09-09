@@ -74,6 +74,9 @@ var submodulename='';
 			}
 		});
 	}
+	function animateAjax(){
+		
+	}
 	$("button.modul").click(function(	){
 		
 		var a=this;

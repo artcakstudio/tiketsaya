@@ -3,9 +3,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Travelbaik | pelayanan baik dengan harga terbaik</title>
-    <?php echo Html::style('assets/css/bootstrap.min.css'); ?>
+    <!-- <?php echo Html::style('assets/css/bootstrap.min.css'); ?> -->
+    <?php echo Html::style('assets/css/bootstrap.css'); ?>
+
+    <?php echo Html::style('assets/css/font-awesome.min.css'); ?>
 
     <?php echo Html::style('assets/css/jquery.dataTables.css'); ?>
+
+    <?php echo Html::style('assets/css/jquery.dataTables.min.css'); ?>
 
     <?php echo Html::style('assets/css/jquery-ui.css'); ?>
 

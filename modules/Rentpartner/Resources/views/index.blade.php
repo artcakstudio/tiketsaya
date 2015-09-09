@@ -6,6 +6,9 @@
 	@include('rent_partner.sidebar')
 	                  <div class="row main-body col-md-9">
 	                  <label><h1 style="text-align:center">Profile</h1></label>
+                    <div class="row">
+                      <img src="<?php echo url('public/Assets/partnerPhoto/'.$partner['PARTNER_PHOTO'])?>" width=180 height=100 >
+                    </div>
 	                  <div class="row">
 	                  		<div class="col-md-4" >Name :</div>
 	                  		<div class="col-md-8">{{$partner['PARTNER_NAME']}}</div>
@@ -48,7 +51,7 @@
         <h4 class="modal-title" id="myModalLabel">Edit Profile</h4>
       </div>
       <div class="modal-body">
-        {!!Form::open(['route'=>'rentpartner.update','METHOD'=>'POST','class'=>'form-horizontal'])!!} 
+        {!!Form::open(['route'=>'rentpartner.update','METHOD'=>'POST','class'=>'form-horizontal','enctype'=>'multipart/form-data'])!!} 
             <input type="hidden" name="PARTNER_ID" value="{{$partner['PARTNER_ID']}}">
             <div class="form-group">
               <label class="col-lg-3 control-label">Name</label>
@@ -80,6 +83,14 @@
                 <input type="text" class="form-control" name="PARTNER_EMAIL" value="{{$partner['PARTNER_EMAIL']}}">
               </div>
             </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label">Foto</label>
+              <div class="col-lg-8">
+                <input type="file" class="form-control" name="PARTNER_PHOTO" value="{{$partner['PARTNER_PHOTO']}}">
+              </div>
+              <div class="col-md-8" style="margin-left:20%">
+                <img src="<?php echo url('public/Assets/partnerPhoto/'.$partner['PARTNER_PHOTO'])?>" width=90 height=50>
+              </div>
   
       </div>
       <div class="modal-footer">

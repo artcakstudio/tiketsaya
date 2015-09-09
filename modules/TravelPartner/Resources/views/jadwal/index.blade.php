@@ -2,32 +2,50 @@
 @section('content')
 @parent
 	@include('travel_partner.sidebar')
-                 <div class="row main-body col-md-9">
+    <?php $bulan=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];?>
+                 <div class="row main-body col-md-8">
            
                     <div class="row col-md-12" style="padding-right: 0px;width: 100%;">
 
-                    <div class="col-md-6">      
+                    <div class="col-md-3">      
                       <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img src="<?php echo url('assets/images/back.png')?>"></a>
                       <h4>back</h4>
                     </div>
-                    <div class="col-md-6" >
+                    <div  class="col-md-5">
+                        <h2 style="text-align:center">   <?php echo $bulan[date('m')*1]?> {{date('Y')}}</h2>
+                    </div>
+
+                    <div class="col-md-3" style="float:right" >
                     <div style="float:right">
                       <a href="<?php echo date('Y-m-d', strtotime(' +1 month',strtotime($date)))?>"><img src="<?php echo url('assets/images/next.png')?>"></a>
                       <h4>Next</h4>      
                     </div>
                     </div>
+                    <div class="row"  style="overflow:auto">                    
                      <table class="table table-striped">
+                     <thead>
+                       <tr>
+                         <td>Sunday</td>
+                         <td>Monday</td>
+                         <td>Tuesday</td>
+                         <td>Wednesday</td>
+                         <td>Thursday</td>
+                         <td>Friday</td>
+                         <td>Saturday</td>
+                       </tr>
+                     </thead>
                      <tr>
                        <?php  
                           $awal=date('N', strtotime(date('l',strtotime($date))));
                           $date_awal=date('Y-m-d',strtotime('-'.$awal.'day', strtotime($date)));
-                        
+                          
                           while(date('m',strtotime($date_awal)) <= date('m',strtotime($date)))
                           {
+                            $tanggal=date('d',strtotime($date_awal));
                             if (date('m',strtotime($date_awal))==date('m',strtotime($date)))
                              {
                               $link=url('travelpartner/jadwal/harian');
-                              echo '<td><a href="'.$link.'/'.$date_awal.'" >'.$date_awal.'</a>';
+                              echo '<td><a href="'.$link.'/'.$date_awal.'" >'.$tanggal.'</a>';
                               foreach ($jadwal as $row) 
                               {
                                 if($row['DATE']==$date_awal)
@@ -46,6 +64,7 @@
                         </tr> 
                      </table>
                      </div>
+                     </div>
                      <button class="btn btn-primary"  data-toggle="modal" data-target="#addSchedule">Tambah Schedule</button>
                      <button class="btn btn-primary"  data-toggle="modal" data-target="#addScheduleMingguan">Tambah Schedule Mingguan</button>
                     </div>
@@ -60,7 +79,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Add Schedule</h4>
       </div>
-      <div class="modal-body">
+      <div class="row modal-body">
             <div class="form-group">
               <table class="table">
               <tr>
@@ -77,8 +96,8 @@
               </table>
             </div>
             <div class="form-group">
-              <label class="control-label col-lg-3">Route</label>
-              <div class="col-lg-9">
+              <label class="control-label col-md-3">Route</label>
+              <div class="col-md-8">
                 <select class="form-group form-control " name="ROUTE_ID" style="margin-left:15px">
                   @foreach($route as $row)
                     <option value="{{$row['ROUTE_ID']}}">{{$row['ROUTE_DEPARTURE']}} Ke {{$row['ROUTE_DEST']}}</option>
@@ -87,8 +106,8 @@
               </div>
             </div>
             <div class="form-group">
-            <label class="control-label col-lg-3" for="inputEmail">Armada</label>
-            <div class="col-lg-9">
+            <label class="control-label col-md-3" for="inputEmail">Armada</label>
+            <div class="col-md-8">
               <select class="form-group form-control " name="VEHICLE_ID" style="margin-left:15px">
                 @foreach($vehicle as $row)
                   <option value="{{$row['VEHICLE_ID']}}">{{$row['VEHICLE_NAME']}}</option>
@@ -97,26 +116,26 @@
             </div>
           </div>
             <div class="form-group">
-              <label class="control-label col-lg-3" >Depart Time</label>
-              <div class="col-lg-9">
+              <label class="control-label col-md-3" >Depart Time</label>
+              <div class="col-md-8">
                 <div class="col-md-3">
                   <input type="text" class="form-control" name="hour_depart" placeholder="HH">
                 </div>
                 <div class="col-md-3"><input type="text" class="form-control" name="minute_depart" placeholder="MM"></div>
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label col-lg-3">Arrive Time</label>
-              <div class="col-lg-9">
+           <div class="form-group">
+              <label class="control-label col-md-3">Estimation Time</label>
+              <div class="col-md-9">
                 <div class="col-md-3">
-                  <input type="text" class="form-control" name="hour_arrive" placeholder="HH">
+                  <input type="text" class="form-control" name="hour_estimate" placeholder="HH">
                 </div>
-                <div class="col-md-3"><input type="text" class="form-control" name="minute_arrive" placeholder="MM"></div>
+                <div class="col-md-3"><input type="text" class="form-control" name="minute_estimate" placeholder="MM"></div>
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-lg-3">Price</label>
-              <div class="col-lg-9">
+              <label class="control-label col-md-3">Price</label>
+              <div class="col-md-8">
                 <input type="text" class="form-control" name="TRAVEL_SCHEDULE_PRICE" value="0" style="margin-left:15px">
               </div>
             </div>

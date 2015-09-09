@@ -1,22 +1,39 @@
 @extends('page_template')
 @section('content')
 @parent
-	@include('travel_partner.sidebar')
-                 <div class="row main-body col-md-9">
+	@include('rent_partner.sidebar')
+                <?php $bulan=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];?>
+                 <div class="row main-body col-md-8">
            
-                    <div class="row col-md-12">
+                    <div class="row col-md-12" style="padding-right: 0px;width: 100%;">
 
-                    <div class="col-md-6">      
+                    <div class="col-md-3">      
                       <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img src="<?php echo url('assets/images/back.png')?>"></a>
                       <h4>back</h4>
                     </div>
-                    <div class="col-md-6" >
+                    <div  class="col-md-5">
+                        <h2 style="text-align:center">   <?php echo $bulan[date('m')*1]?> {{date('Y')}}</h2>
+                    </div>
+
+                    <div class="col-md-3" style="float:right" >
                     <div style="float:right">
                       <a href="<?php echo date('Y-m-d', strtotime(' +1 month',strtotime($date)))?>"><img src="<?php echo url('assets/images/next.png')?>"></a>
                       <h4>Next</h4>      
                     </div>
                     </div>
+                                      
                      <table class="table table-striped">
+                      <thead>
+                       <tr>
+                         <td>Sunday</td>
+                         <td>Monday</td>
+                         <td>Tuesday</td>
+                         <td>Wednesday</td>
+                         <td>Thursday</td>
+                         <td>Friday</td>
+                         <td>Saturday</td>
+                       </tr>
+                     </thead>
                      <tr>
                        <?php  
                           $awal=date('N', strtotime(date('l',strtotime($date))));
@@ -24,10 +41,11 @@
                         
                           while(date('m',strtotime($date_awal)) <= date('m',strtotime($date)))
                           {
+                            $tanggal=date('d',strtotime($date_awal));
                             if (date('m',strtotime($date_awal))==date('m',strtotime($date)))
                              {
                               $link=url('rentpartner/jadwal/harian');
-                              echo '<td><a href="'.$link.'/'.$date_awal.'" >'.$date_awal.'</a>';
+                              echo '<td><a href="'.$link.'/'.$date_awal.'" >'.$tanggal.'</a>';
                               foreach ($jadwal as $row) 
                               {
                                 if($row['RENT_SCHEDULE_DATE']==$date_awal)
@@ -60,7 +78,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Add Schedule</h4>
       </div>
-      <div class="modal-body">
+      <div class="row modal-body">
             <div class="form-group">
               <table class="table">
               <tr>
@@ -89,7 +107,7 @@
             <div class="form-group">
               <label class="control-label col-md-3">Price</label>
               <div class="col-md-9">
-                <input type="text" class="form-control" name="RENT_SCHEDULE_PRICE" value="0" style="margin-left:15px">
+                <input type="text" class="form-control" name="RENT_SCHEDULE_PRICE" value="0">
               </div>
             </div>
       </div>

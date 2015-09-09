@@ -26,9 +26,9 @@ class TravelpageController extends Controller {
 		//print_r($schedule);
 		return view('travelpage::hasil-search', compact('schedule','city'));
 	}
-	function transaksi($id_schedule)
+	function transaksi_step1()
 	{
-
+		$id_schedule=Input::get('TRAVEL_SCHEDULE_ID');
 		$passenger_count=Traveltransaction::where('TRAVEL_SCHEDULE_ID','=',$id_schedule)->sum('TRAVEL_TRANSACTION_PASSENGER');
 
 		$schedule=Travelschedule::getSchedule()->where('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID','=',$id_schedule);

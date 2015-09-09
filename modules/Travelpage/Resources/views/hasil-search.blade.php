@@ -79,7 +79,10 @@
                                         <div>
                                             <h4><?php 
                                             $diff=abs(strtotime($row['TRAVEL_SCHEDULE_ARRIVETIME']) - strtotime($row['TRAVEL_SCHEDULE_DEPARTTIME']) );
-                                            echo $diff/60;?> M
+
+                                            $jam= $diff/3600;
+                                            $menit= $diff%$jam/60;
+                                            echo $jam."Hour ".$menit;?> Menit
                                             </h4>
                                             <h5>Estimasi</h5>
                                         </div>
@@ -93,8 +96,10 @@
                                             <h6><del>IDR 450.000</del></h6>
                                         </div>
                                     </div>
+                                    {!!Form::open(['route'=>'travelpage.transaksi.step1', 'method'=>'POST','name'=>'form_jadwal'])!!}
+                                    <input type="hidden" name="TRAVEL_SCHEDULE_ID" value="{{$row['TRAVEL_SCHEDULE_ID']}}">
                                     <div class="button_pesan" >
-                                       <a href="<?php echo url('travelpage/transaksi/'.$row['TRAVEL_SCHEDULE_ID'])?>"> <div class="buttravel"></div></a>
+                                        <div class="buttravel"></div>
                                     </div>
                                     
                                 </div>
@@ -147,5 +152,11 @@
                 </div>
                 
             </div>
-
+<script type="text/javascript">
+    $(".button_pesan").click(function(){
+        var form=$(this.closest("form"));
+        form.submit();
+        
+    });
+</script>
 @stop

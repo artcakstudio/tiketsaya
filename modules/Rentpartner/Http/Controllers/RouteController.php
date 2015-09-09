@@ -2,7 +2,7 @@
 
 use Pingpong\Modules\Routing\Controller;
 use Session;
-use Modules\Rent\Entities\Rentschedule;
+use Modules\Rent\Entities\Rentvehicle;
 use Modules\Vehicle\Entities\City;
 use Modules\Vehicle\Entities\Vehicle;
 use Modules\vehicle\Entities\VehicleType;
@@ -33,7 +33,7 @@ private $partner_id;
         return Datatables::of($vehicles)
          ->addColumn('action', function ($vehicle){
               //  return '<a href="#edit-'.$user->USERS_ID.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a><a href="#hapus-'.$user->USERS_ID.'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i> Hapus</a>';
-         		return '<li style="decoration:none" class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle btn btn-xs btn-primary" href="#" > Pilihan <b class="caret"></b></a><ul class="dropdown-menu"><li> <button class="btn  btn-primary" id="'.$vehicle->VEHICLE_ID.'">Edit</li><li><button class="btn btn-danger" id="'.$vehicle->VEHICLE_ID.'" data-target="#hapusUser">Hapus</button></li></ul></li>';
+         		return '<button class="btn  btn-xs btn-primary" id="'.$vehicle->VEHICLE_ID.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$vehicle->VEHICLE_ID.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
             })
          ->addColumn('photo', function ($vehicle) use($path) {
          		return '<img src="'.$path.'/'.$vehicle['VEHICLE_PHOTO'].'" style="width:50px; height:50px">';

@@ -91,7 +91,7 @@
       </div>      
       <div class="widget-foot" id="lalaa">
       </div>
-<?php echo '<script> var id_user='.$user['USERS_ID'].'; var token="'.csrf_token().'"</script>\r\n'?>
+<?php echo '<script> var id_user='.$user['USERS_ID'].'; var token="'.csrf_token().'"</script>'?>
 <script type="text/javascript">
 	function hapusRole(id){
 		$.ajax({
