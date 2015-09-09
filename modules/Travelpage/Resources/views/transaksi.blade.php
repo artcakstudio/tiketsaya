@@ -106,7 +106,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                             </div>
                             <div class="rincian_harga col-md-7" style="padding-left:10px">
                                 <div class="rincian_harga_1">
-                                    <p>{{Session::get('DATA_TRAVEL')['PARTNER_NAME']}} (Dewasa) x1:</p>
+                                    <p>{{Session::get('DATA_TRAVEL')['PARTNER_NAME']}}  x <tag id="totalOrang">1</tag> : </p>
                                 </div>
                                 <div class="rincian_harga_2">
                                     <p>Harga Bagasi:</p>
@@ -177,6 +177,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
         harga=parseInt(harga)*parseInt($("#harga")[0].innerHTML);
         $("#totalharga").html(harga);
         $("#totalHargaHidden").val(harga);
+        $("#totalOrang").html($("select[name='TRAVEL_TRANSACTION_PASSENGER']").val());
     }
 </script>
 @stop
