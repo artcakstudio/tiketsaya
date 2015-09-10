@@ -6,9 +6,12 @@ use Modules\Travel\Entities\Travelschedule;
 use Modules\Vehicle\Entities\City;
 use Modules\Vehicle\Entities\Vehicle;
 use Modules\vehicle\Entities\VehicleType;
+use Modules\Travel\Entities\TravelScheduleUmum;
+use Modules\Travel\Entities\TravelScheduleUmumXDay;
 use Modules\Travel\Entities\Route;
 use Datatables;
 use Input;
+use DB;
 
 class JadwalController extends Controller {
 private $route;
@@ -38,15 +41,22 @@ public $partner_id;
 		$tanggal=$data['tanggal'];
 		unset($data['tanggal'],$data['_token']);
 		$data['TRAVEL_SCHEDULE_CREATEBY']=Session::get('id');
-		$hour_depart=$data['hour_depart']; $minute_depart=$data['minute_depart'];
-		$hour_arrive=$data['hour_arrive']; $minute_arrive=$data['minute_arrive'];
-		unset($data['hour_depart'],$data['minute_arrive'],$data['hour_arrive'],$data['minute_depart']);
+		$hour_estimate=$data['hour_estimate']; $minute_estimate=$data['minute_estimate'];
+
+		$hour_depart=date('H:i',strtotime($data['hour_depart'].":".$data['minute_depart']));
+		
+		unset($data['_token']);
+		unset($data['date']);
+		unset($data['depart_hour'],$data['depart_minute'], $data['hour_estimate'], $data['minute_estimate']);
+		unset($data['hour_depart'],$data['minute_depart']);
 		foreach ($tanggal as $row) {
-			$data['TRAVEL_SCHEDULE_DEPARTTIME']=date('Y-m-d h:i', strtotime($row." ".$hour_depart.":".$minute_depart));
-			$data['TRAVEL_SCHEDULE_ARRIVETIME']=date('Y-m-d h:i', strtotime($row." ".$hour_arrive.":".$minute_arrive));
+			$data['TRAVEL_SCHEDULE_DEPARTTIME']=date('Y-m-d H:i', strtotime($row." ".$hour_depart));
+			$hour_arrive=date('Y-m-d H:i', strtotime('+'.$hour_estimate.' hour', strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])));
+			$data['TRAVEL_SCHEDULE_ARRIVETIME']=date('Y-m-d H:i', strtotime('+'.$minute_estimate.' minutes', strtotime($hour_arrive)));
 			Travelschedule::insert($data);
 		}
 	}
+
 	function jadwalharian($tanggal){		
 		$schedule =travelschedule::getScheduleDayPartner($tanggal,$this->partner_id)->get();
         return Datatables::of($schedule)
@@ -74,22 +84,58 @@ public $partner_id;
 		$tanggal=$data['tanggal'];
 		unset($data['tanggal'],$data['_token']);
 		$data['TRAVEL_SCHEDULE_CREATEBY']=Session::get('id');
-		$hour_depart=date('h:i', strtotime($data['hour_depart'].':'.$data['minute_depart']));
+		$hour_depart=date('H:i', strtotime($data['hour_depart'].':'.$data['minute_depart']));
 		$plus=$data['hour_estimate']*60+$data['minute_estimate'];
-		$hour_arrive=date('h:i', strtotime('+'.$plus.' minutes', strtotime($hour_depart)));
+		$hour_arrive=date('H:i', strtotime('+'.$plus.' minutes', strtotime($hour_depart)));
 		unset($data['hour_depart'],$data['minute_estimate'],$data['hour_estimate'],$data['minute_depart'],$data['start'],$data['stop']);
 
+		$data_mingguan=["TRAVEL_SCHEDULE_UMUM_FROM"=>$start,'TRAVEL_SCHEDULE_UMUM_TO'=>$stop];
+		TravelScheduleUmum::insert($data_mingguan);
+		$data['TRAVEL_SCHEDULE_UMUM_ID']=DB::getPdo()->lastInsertId();
 		while($start <=$stop) {
 
 			$index=date('N',strtotime($start))-1;
 			if (in_array($index, $tanggal))
 			{
-				$data['TRAVEL_SCHEDULE_DEPARTTIME']=date('Y-m-d h:i', strtotime($start." ".$hour_depart));
-				$data['TRAVEL_SCHEDULE_ARRIVETIME']=date('Y-m-d h:i', strtotime($start." ".$hour_arrive));
+				$data['TRAVEL_SCHEDULE_DEPARTTIME']=date('Y-m-d H:i', strtotime($start." ".$hour_depart));
+				$data['TRAVEL_SCHEDULE_ARRIVETIME']=date('Y-m-d H:i', strtotime($start." ".$hour_arrive));
 				Travelschedule::insert($data);
 			}
 			$start=date('Y-m-d',strtotime('+1 day',strtotime($start)));
 		}
+		foreach ($tanggal as $key) {
+			$temp=['DAY_ID'=>$key+1,'TRAVEL_SCHEDULE_UMUM_ID'=>$data['TRAVEL_SCHEDULE_UMUM_ID']];
+			TravelScheduleUmumXDay::insert($temp);
+		}
+	}
+
+	function jadwalUmum(){
+		$jadwal=$this->jadwal;
+		$route=$this->route;
+		$vehicle=$this->vehicle;
+		return view('travelpartner::jadwal.umum_index',compact('jadwal','route','vehicle'));
+	}
+	function umum_mingguan(){
+		$path=url('public/Assets\vehiclePhoto');
+		$schedule =TravelScheduleUmum::scheduleMingguan()->distinct()->get();
+        return Datatables::of($schedule)
+         ->addColumn('action', function ($schedule) {
+         		return '<button class="btn  btn-xs btn-primary" id="'.$schedule->TRAVEL_SCHEDULE_UMUM_ID.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_UMUM_ID.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
+            })
+         ->addColumn('photo', function ($schedule) use($path) {
+         		return '<img src="'.$path.'/'.$schedule['VEHICLE_PHOTO'].'" style="width:50px; height:50px">';
+         	
+            })
+            ->make(true);
+	}
+	function mingguan_detail(){
+		$id=Input::get('TRAVEL_SCHEDULE_UMUM_ID');
+		$data=TravelScheduleUmumXDay::where('TRAVEL_SCHEDULE_UMUMXDAY.	TRAVEL_SCHEDULE_UMUM_ID','=',$id)
+									->join('TRAVEL_SCHEDULE_UMUM','TRAVEL_SCHEDULE_UMUM.TRAVEL_SCHEDULE_UMUM_ID','=','TRAVEL_SCHEDULE_UMUMXDAY.TRAVEL_SCHEDULE_UMUM_ID')
+									->join('TRAVEL_SCHEDULE','TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_UMUM_ID','=','TRAVEL_SCHEDULE_UMUM.TRAVEL_SCHEDULE_UMUM_ID')
+									->groupBy('TRAVEL_SCHEDULE_UMUMXDAY.DAY_ID')
+									->get();
+		return  json_encode($data);
 	}
 	
 }

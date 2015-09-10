@@ -56,4 +56,14 @@ class rentschedule extends Model {
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')
                 ->where('VEHICLE.PARTNER_ID','=',$partner_id);
     }*/
+        function scoperentScheduleRentang($query, $city, $start, $finish){
+        return $query->select(['RENT_SCHEDULE.*','VEHICLE.*', 'PARTNER.*', 'VEHICLE_TYPE_NAME','CITY.*'])
+                ->whereBetween('RENT_SCHEDULE.RENT_SCHEDULE_DATE',array($start,$finish))
+                ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')
+                ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
+                ->join('CITY','CITY.CITY_ID','=','VEHICLE.CITY_ID')
+                ->where('CITY.CITY_ID','=',$city)
+                ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
+                ->groupBy('RENT_SCHEDULE.RENT_SCHEDULE_ID');
+    }
 }

@@ -4,6 +4,7 @@ use Pingpong\Modules\Routing\Controller;
 use Modules\Travel\Entities\Travelschedule;
 use Modules\Vehicle\Entities\Vehicle;
 use Modules\Vehicle\Entities\City;
+use Modules\Travel\Entities\LinkTravel;
 use Input;
 use Session;
 use Modules\Registrasi\Entities\Costumer;
@@ -15,7 +16,8 @@ class TravelpageController extends Controller {
 	public function index()
 	{
 		$city=City::all();
-		return view('travelpage::travel-search',compact('city'));
+		$link_travel=LinkTravel::all();
+		return view('travelpage::travel-search',compact('city','link_travel'));
 	}
 	function scheduleSearch()
 	{
@@ -77,5 +79,16 @@ class TravelpageController extends Controller {
 		session(['DATA_COSTUMER'=>$data,'NO_PEMESANAN'=>$no_pemesanan]);
 		return view('travelpage::preview');
 	}
-	
+	function scheduleSearchRentang(){
+		$data=Input::all();
+		$city=City::all();
+		$data=Input::all();
+		$tanggal=$data['TRAVEL_SCHEDULE_DATE'];
+		$start =date('Y-m-d', strtotime(' -7 day',strtotime($tanggal)));
+		$finish =date('Y-m-d', strtotime(' +7 day',strtotime($tanggal)));
+		
+		$schedule=Travelschedule::travelScheduleRentang($data['depart'],$data['dest'],$start,$finish)->get();
+		
+		return view('travelpage::hasil-search', compact('schedule','city'));
+	}
 }

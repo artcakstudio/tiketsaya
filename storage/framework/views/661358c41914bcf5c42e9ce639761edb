@@ -57,15 +57,15 @@
                             <h1 style="text-align:center">Kota yang anda pilih kosong, silahkan cari di kota atau hari lainnya</h1>
                             <?php endif; ?>
                             <?php foreach ($vehicle as $row) { ?>
-                            <div class="panel kotakdata" style="border-radius: inherit">
+                            <div class="row panel kotakdata" style="border-radius: inherit">
                                 <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $row['RENT_SCHEDULE_ID'] ?>">
                                     
-                                    <div class="data_maskapai">
-                                        <div><center><img src="<?php echo url('public\Assets\partnerPhoto/'.$row['PARTNER_PHOTO'])?>" width=80 height=60/></center></div>
+                                    <div class="row data_maskapai">
+                                        <div class="row"><center><img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public\Assets\partnerPhoto/'.$row['PARTNER_PHOTO'])?>" width=80 height=60/></center></div>
                                     </div>
                                     <div class="data_maskapai2">
                                         <div>
-                                            <img src="<?php echo url('public\Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO'])?>" width=250 height=160/>
+                                            <img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public\Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO'])?>" width=250 height=160/>
                                         </div>
                                     </div>
                                     <div class="data_maskapai2">
@@ -99,7 +99,7 @@
                                     <?php echo Form::close(); ?>
 
                                 </div>
-                                <div id="data<?php echo $row['RENT_SCHEDULE_ID'] ?>" class="collapse" >
+                                <div id="data<?php echo $row['RENT_SCHEDULE_ID']?>" class="collapse" >
                                   <div class="kotak_colaps">
                                       <div class="row detilpenerbangan_" >
                                           <div class="col-md-4">

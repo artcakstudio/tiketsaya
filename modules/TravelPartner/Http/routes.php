@@ -16,11 +16,15 @@ Route::group(['prefix' => 'travelpartner', 'namespace' => 'Modules\TravelPartner
 		Route::get('armada/getarmada','RouteController@getarmada');
 	});
 	Route::group(['after'=>'jadwal'],function(){
+
 		Route::get('jadwal/mingguan','JadwalController@mingguan');
+		Route::post('jadwal/mingguan_detail','JadwalController@mingguan_detail');
+		Route::get('jadwal/umum','JadwalController@jadwalUmum');
+		Route::get('jadwal/umum_mingguan','JadwalController@umum_mingguan');
 		Route::get('jadwal/{id}','JadwalController@jadwal');
-		Route::post('jadwal/add',['as'=>'travelpartner.jadwal.add','uses'=>'JadwalController@addJadwal']);
 		Route::get('jadwal/jadwalharian/{tanggal}','JadwalController@jadwalharian');
 		Route::get('jadwal/harian/{id}','JadwalController@jadwal_harian');
+		Route::post('jadwal/add',['as'=>'travelpartner.jadwal.add','uses'=>'JadwalController@addJadwal']);
 		Route::post('jadwal/mingguan/','JadwalController@addJadwalMingguan');
 	});
 });

@@ -11,7 +11,7 @@
                       <h4>back</h4>
                     </div>
                     <div class="col-md-5">
-                        <h2 style="text-align:center"><?php echo date('m',strtotime($tanggal))." ".$bulan[date('d',strtotime($tanggal))*1]?> </h2>
+                        <h2 style="text-align:center"><?php echo date('d',strtotime($tanggal))." ".$bulan[date('m',strtotime($tanggal))-1]?> </h2>
                     </div>
                     <div class="col-md-3" style="float:right">
                     <div style="float:right">
@@ -49,7 +49,7 @@ $(function() {
             { data: 'CITY_NAME', name: 'CITY_NAME' },
             { data: 'RENT_SCHEDULE_PRICE', name: 'RENT_SCHEDULE_PRICE' }, 
             { data: 'RENT_SCHEDULE_DATE', name: 'RENT_SCHEDULE_DATE' },
-            { data: 'picture', name: 'picture' }, 
+            { data: 'photo', name: 'photo' }, 
             { data: 'action', name: 'action',orderable: false, searchable: false}
         ],
         initComplete: function () {

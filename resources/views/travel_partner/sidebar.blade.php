@@ -32,6 +32,9 @@
                             ?>
                             <a href="<?php echo url('travelpartner/jadwal/harian/'.$date)?>"><h4>Harian</h4></a>
                         </div>
+                        <div class=" sub-menu sub">
+                            <a href="<?php echo url('travelpartner/jadwal/umum')?>"><h4>Jadwal Umum</h4></a>
+                        </div>
                         <div class=" sub-menu">
                             <a href="<?php echo url('travelpartner/logout')?>"><h4>Logout</h4></a>
                         </div>

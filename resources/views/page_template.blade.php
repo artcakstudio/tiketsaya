@@ -95,29 +95,35 @@
                 <div class="col-md-3">
                     <ul class="group_list_">
                         <li class="group_list_item_head_">Tiket Travel Murah</li>
-                        <li class="group_list_item_">Tiket Travel Jakarta Bandung</li>
-                        <li class="group_list_item_">Tiket Travel Jakarta Jogjakarta</li>
-                        <li class="group_list_item_">Tiket Travel Surabaya Malang</li>
-                        <li class="group_list_item_">Tiket Travel Malang Surabaya</li>
-                        <li class="group_list_item_">Tiket Travel Jakarta Palembang</li>
-                        <li class="group_list_item_">Tiket Travel Jakarta Bandung</li>
+                        <?php
+                            $link_travel=DB::select('select LINK_TRAVEL_DEPARTURE,LINK_TRAVEL_DEST ,getCityName(LINK_TRAVEL_DEPARTURE) as DEPARTURE, getCityName(LINK_TRAVEL_DEST) as DEST from LINK_TRAVEL');
+                        ?>
+                        <?php $tanggal=date('m/d/Y');?>
+                        @foreach($link_travel as $row)
+                        {!!Form::open(['route'=>'travelpage.search.footer','method'=>'POST'])!!}
+                        <input type="hidden" value="{{$row->LINK_TRAVEL_DEPARTURE}}" name="depart">
+                        <input type="hidden" value="{{$row->LINK_TRAVEL_DEST}}" name="dest">
+                        <input type="hidden" value="{{$tanggal}}" name="TRAVEL_SCHEDULE_DATE">
+                        <a href="#"> <li class="group_list_item_">Tiket Travel {{$row->DEPARTURE}} Ke {{$row->DEST}} </li></a>
+                        {!!Form::close()!!}
+                        @endforeach
                         
                     </ul>
                 </div>
                 <div class="col-md-3">
                     <ul class="group_list_">
                         <li class="group_list_item_head_">Sewa Mobil Murah</li>
-                        <li class="group_list_item_">Sewa Mobil Murah Jakarta</li>
-                        <li class="group_list_item_">Sewa Mobil Murah Bandung</li>
-                        <li class="group_list_item_">Sewa Mobil Murah Surabaya</li>
-                        <li class="group_list_item_">Sewa Mobil Murah Bali</li>
-                        <li class="group_list_item_">Sewa Mobil Murah Malang</li>
-                        <li class="group_list_item_">Sewa Mobil Murah Balikpapan</li>
-                        <li class="group_list_item_">Sewa Mobil Murah Makasar</li>
-                        <li class="group_list_item_">Sewa Mobil Murah Mataram</li>
-                        <li class="group_list_item_">Sewa Mobil Murah Jogjakarta</li>
-                        <li class="group_list_item_">Sewa Mobil Murah Solo</li>
-                        
+                        <?php
+                            $link_rent=DB::select('select LINK_RENT.* ,getCityName(LINK_RENT_CITY) as CITY_NAME from LINK_RENT');
+                        ?>
+                        <?php $tanggal=date('m/d/Y');?>
+                        @foreach($link_rent as $row)
+                        {!!Form::open(['route'=>'rentpage.search.footer','method'=>'POST'])!!}
+                        <input type="hidden" value="{{$row->LINK_RENT_CITY}}" name="CITY_ID">
+                        <input type="hidden" value="{{$tanggal}}" name="RENT_SCHEDULE_DATE">
+                        <a href="#"> <li class="group_list_item_">Tiket Rent {{$row->CITY_NAME}} </li></a>
+                        @endforeach
+                        {!!Form::close()!!}
                     </ul>
                 </div>
                 <div class="col-md-3">
@@ -136,5 +142,14 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+    $(".group_list_item_").click(function(){
+
+        var form=$(this.closest("Form"));
+        
+        form.submit();
+        
+    });
+    </script>
 </body>
 </html>

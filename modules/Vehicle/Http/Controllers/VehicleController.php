@@ -61,7 +61,7 @@ class VehicleController extends Controller {
 		$data['VEHICLE_CREATEBY']=session::get('id');
 		print_r($data);
 		Vehicle::insert($data);
-		return back();
+		return redirect::back();
 	}
 	function update(){
 		$data=Input::all();

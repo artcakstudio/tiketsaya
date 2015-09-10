@@ -102,7 +102,7 @@
 </div>
 
 <script type="text/javascript">
-    $("#route-table").on("click","button.btn.btn-danger",function(){
+    $("#link-table").on("click","button.btn.btn-danger",function(){
         var button=this;
         var tr=$(button.closest("tr")).get();
         var name=tr[0].firstChild.innerHTML;
@@ -120,7 +120,7 @@
 
  <script>
 $(function() {
-    $('#route-table').DataTable({
+    $('#link-table').DataTable({
         processing: true,
         serverSide: true,
         ajax: "<?php echo url('travel/route/getAllRoute')?>",

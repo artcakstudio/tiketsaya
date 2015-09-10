@@ -21,7 +21,7 @@
                       <h4>Next</h4>      
                     </div>
                     </div>
-                    <div class="row"  style="overflow:auto">                    
+                                    
                      <table class="table table-striped">
                      <thead>
                        <tr>
@@ -65,8 +65,11 @@
                      </table>
                      </div>
                      </div>
-                     <button class="btn btn-primary"  data-toggle="modal" data-target="#addSchedule">Tambah Schedule</button>
+                     <div class="col-md-8">
+                       
+                     <button class="btn btn-primary" id="schedule_bulanan" >Tambah Schedule</button>
                      <button class="btn btn-primary"  data-toggle="modal" data-target="#addScheduleMingguan">Tambah Schedule Mingguan</button>
+                     </div>
                     </div>
                 </div>
             </div>
@@ -148,20 +151,24 @@
   </div>
 </div>
 <script type="text/javascript">
-  var jadwal=[];
+
+  var jadwal_bulan=[];
+  $("#schedule_bulanan").click(function(){
+    $("#addSchedule").modal("show");
+  });
   $("#addSchedule").on("click","table tr td", function(){
     var td=$(this).get();
     var tanggal= td[0].innerHTML;
-    if (jadwal.indexOf(tanggal)>=0 ){
-        jadwal.splice(jadwal.indexOf(tanggal),1);
+    if (jadwal_bulan.indexOf(tanggal)>=0 ){
+        jadwal_bulan.splice(jadwal_bulan.indexOf(tanggal),1);
         $(this).css("background-color","");
     }
     else{
-      jadwal.push(tanggal);
+      jadwal_bulan.push(tanggal);
       $(this).css("background-color","red"); 
     }
 
-    console.log(jadwal);
+    console.log(jadwal_bulan);
   });
 
   $("#addSchedule button.btn-primary").click(function(){
@@ -169,13 +176,13 @@
     var vehicle=$("#addSchedule  select[name='VEHICLE_ID']").val();
     var hour_depart=$("#addSchedule  input[name='hour_depart']").val();
     var minute_depart=$("#addSchedule  input[name='minute_depart']").val();
-    var hour_arrive=$("#addSchedule  input[name='hour_arrive']").val();
-    var minute_arrive=$("#addSchedule  input[name='minute_arrive']").val();
+    var hour_estimate=$("#addSchedule  input[name='hour_estimate']").val();
+    var minute_estimate=$("#addSchedule  input[name='minute_estimate']").val();
     var price=$("#addSchedule  input[name='TRAVEL_SCHEDULE_PRICE']").val();
     $.ajax({
       type : "post",
       url : "<?php echo url('travelpartner/jadwal/add')?>",
-      data : {"tanggal":jadwal,"ROUTE_ID":route,'_token':token, "hour_depart":hour_depart,"minute_depart":minute_depart,"hour_arrive":hour_arrive,"minute_arrive":minute_arrive, "TRAVEL_SCHEDULE_PRICE":price,"VEHICLE_ID":vehicle},
+      data : {"tanggal":jadwal_bulan,"ROUTE_ID":route,'_token':token, "hour_depart":hour_depart,"minute_depart":minute_depart,"hour_estimate":hour_estimate,"minute_estimate":minute_estimate, "TRAVEL_SCHEDULE_PRICE":price,"VEHICLE_ID":vehicle},
       datatype : "JSON",
       success:function(data){       
       window.location = window.location.href;

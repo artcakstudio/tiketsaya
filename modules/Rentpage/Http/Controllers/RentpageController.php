@@ -75,4 +75,16 @@ class RentpageController extends Controller {
 		session(['DATA_COSTUMER'=>$data,'NO_PEMESANAN'=>$no_pemesanan]);
 		return view('rentpage::preview');
 	}
+	function scheduleSearchRentang(){
+				$data=Input::all();
+		$city=City::all();
+		$data=Input::all();
+		$tanggal=$data['RENT_SCHEDULE_DATE'];
+		$start =date('Y-m-d', strtotime(' -7 day',strtotime($tanggal)));
+		$finish =date('Y-m-d', strtotime(' +7 day',strtotime($tanggal)));
+		
+		$vehicle=Rentschedule::rentScheduleRentang($data['CITY_ID'],$start,$finish)->distinct()->get();
+		$duration=1;
+		return view('rentpage::hasil-search', compact('vehicle','city','duration'));
+	}
 }
