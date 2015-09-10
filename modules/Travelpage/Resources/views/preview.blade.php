@@ -107,11 +107,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                         <div class="tulisan_total_penumpang_travel">
                                             <p>Total Penumpang :<span><b>{{Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER']}} Orang</b></span></p> 
                                         </div>
-
-                                        <!-- Data_Penumpang_Travel -->
-                                        <div class="data_penumpang_travel">
                                             
-
                                             <!-- <table>
                                             <tr>
                                                 <td>Nama Penumpang</td>
@@ -129,7 +125,6 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                                 <td>{{Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER']}} Orang</td>
                                             </tr>
                                             </table> -->
-                                        </div>
 	                                </div>
 	                                
 	                            </div>
@@ -175,14 +170,14 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
 	                            </div>
                                 <!-- Keterangan Waktu -->
                                <div class="row keterangan_waktu col-md-12" style="color:#bbb">
-	                                <p>Semua waktu adalah waktu tempat berangkat travel</p>
+	                                <p>Harap Datang 30 menit sebelum keberangkatan</p>
 	                          </div>
                             </div>
                         </div>
                         <!-- Rincian Harga Total -->
                         <div class="col-md-4 remove_padding"  style="background-color:#eee; margin-left: 340px; margin-bottom:10px; width:580px">
-                            <div class="tulisan_rincian_harga" style="text-align:center">
-                                <h3>Rincian Harga<h3>
+                            <div class="tulisan_rincian_harga" style="text-align:center; margin-bottom:10px">
+                                <h2>Rincian Harga<h2>
                             </div>
                             <div class="rincian_harga col-md-4" style=" width:28%;padding-left:10px">
                                 <div class="rincian_harga_1_a">
