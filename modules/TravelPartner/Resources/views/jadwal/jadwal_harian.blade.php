@@ -7,7 +7,7 @@
                     <div class="row col-md-12">
 
                     <div class="col-md-3">      
-                      <a href="<?php echo date('Y-m-d', strtotime(' -1 day',strtotime($tanggal)))?>"><img src="<?php echo url('assets/images/back.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' -1 day',strtotime($tanggal)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
                       <h4>back</h4>
                     </div>
                     <div class="col-md-5">
@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-md-3" style="float:right">
                     <div style="float:right">
-                      <a href="<?php echo date('Y-m-d', strtotime(' +1 day',strtotime($tanggal)))?>"><img src="<?php echo url('assets/images/next.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' +1 day',strtotime($tanggal)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/next.png')?>"></a>
                       <h4>Next</h4>      
                     </div>
                     </div>
@@ -27,7 +27,8 @@
                                     <th>Depart Time</th>
                                     <th>Arrive Time</th>
                                     <th>Price</th>
-                                    <th>Action</th>
+                                    <th>Sisa Penumpang</th>
+                                    <th style="min-width:60px">Action</th>
                                 </tr>
                             </thead>
                         </table>    
@@ -189,6 +190,7 @@ $(function() {
             { data: 'TRAVEL_SCHEDULE_DEPARTTIME', name: 'TRAVEL_SCHEDULE_DEPARTTIME' },
             { data: 'TRAVEL_SCHEDULE_ARRIVETIME', name: 'TRAVEL_SCHEDULE_ARRIVETIME' },
             { data: 'TRAVEL_SCHEDULE_PRICE', name: 'TRAVEL_SCHEDULE_PRICE' }, 
+            { data: 'penumpang', name: 'penumpang' }, 
             { data: 'action', name: 'action',orderable: false, searchable: false}
         ],
         initComplete: function () {
@@ -251,7 +253,7 @@ $("#schedule-table").on("click","button.btn-primary",function(){
     $("#schedule-table").on("click","button.btn.btn-danger",function(){
         var button=this;
         
-        $("#hapusSchedule h2.modalbody").html('Apakah Anda Yakin?');
+        $("#hapusSchedule h2.modalbody").html('Jika anda menghapus schedule maka semua transaksi dari schedule ini juga dihapus, Apakah Anda Yakin?');
 
         var id=$(button).get()[0].id;  
         $("#hapusSchedule form input[name='TRAVEL_SCHEDULE_ID'").val(id);
@@ -261,4 +263,80 @@ $("#schedule-table").on("click","button.btn-primary",function(){
 </script>
 <!--Hapus Schedule-->
 
+<!--Tambah Penumpang Schedule-->
+<div class="modal fade" id="tambahPenumpangSchedule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Tambah Penumpang</h4>
+      </div>
+      <div class="modal-body">
+        {!!Form::open(['route'=>'travelpage.transaksi','method'=>'POST','class'=>'form-horizontal'])!!}
+        <div class="form-group">
+              <label class="col-lg-3 control-label">Total Penumpang</label>
+              <div class="col-lg-8">
+                    <select name="TRAVEL_TRANSACTION_PASSENGER" class="form-group form-control" style="margin-left:0px">
+
+                    </select>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-lg-3 control-label">Nama Penumpang</label>
+              <div class="col-lg-8">
+                    <input type="text" name="COSTUMER_NAME" class="form-control"> 
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-lg-3 control-label">Email Penumpang</label>
+              <div class="col-lg-8">
+                    <input type="text" name="COSTUMER_EMAIL" class="form-control">
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-lg-3 control-label">Telepon Penumpang</label>
+              <div class="col-lg-8">
+                    <input type="text" name="COSTUMER_TELP" class="form-control">
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-lg-3 control-label">Harga</label>
+              <div class="col-lg-8">
+                    <input type="text" name="harga" disabled="disabled" class="form-control">
+              </div>
+          </div>
+          <input type="hidden" name="TRAVEL_TRANSACTION_PRICE">
+          <input type="hidden" name="TRAVEL_SCHEDULE_ID">
+          <input type="hidden" name="flag" value="1">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger">Tambah Penumpang</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+        {!!Form::close()!!}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $("#schedule-table").on("click","button.btn.btn-warning",function(){
+        var button=$(this.closest("tr"));
+        console.log(button);
+        var price=button[0].cells[4].innerHTML;
+        var sisa=parseInt(button[0].cells[5].innerHTML);
+        var id=$(this).get()[0].id;  
+        console.log(sisa);
+        $("#tambahPenumpangSchedule form input[name='harga']").val(price);
+        $("#tambahPenumpangSchedule form input[name='TRAVEL_TRANSACTION_PRICE']").val(price);
+        for(i=1; i<=sisa; i++){
+          $("#tambahPenumpangSchedule form select[name='TRAVEL_TRANSACTION_PASSENGER']").append('<option value='+i+'>'+i+' Orang</option>');
+        }
+        $("#tambahPenumpangSchedule form input[name='TRAVEL_SCHEDULE_ID']").val(id);
+        $("#tambahPenumpangSchedule").modal("show");
+  });
+    $("#tambahPenumpangSchedule").on('hidden.bs.modal',function(){
+      $("#tambahPenumpangSchedule form select[name='TRAVEL_SCHEDULE_PASSENGER']").empty();
+    });
+</script>
+<!--Tambah Penumpang Schedule-->
 @stop

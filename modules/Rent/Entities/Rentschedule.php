@@ -38,10 +38,9 @@ class rentschedule extends Model {
                 ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID');
     }
 
-    function scopepartnerSchedule($query,$partner_id,$tanggal)
+    function scopepartnerSchedule($query,$partner_id)
     {
         return $query->select(['RENT_SCHEDULE.*','VEHICLE.*','CITY.*']) 
-                    ->where('RENT_SCHEDULE_DATE',  'LIKE',$tanggal.'%' )
                     ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')
                     ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
                     ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')

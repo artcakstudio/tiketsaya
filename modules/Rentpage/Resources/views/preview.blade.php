@@ -55,7 +55,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                     <div class="row">
                         <div class="col-md-4 remove padding" style ="background-color:#5a5a5a; margin-top:15px; color:#fff; width:320px">
                             <div class="logo_penting col-md-2" style="padding-top:15px">
-                                <img src="<?php echo url('assets/images/logo_info.png')?>">
+                                <img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/logo_info.png')?>">
                             </div>
                             <div class="tulisan_penting" style="margin-left:30px; margin-top:10px">
                                 <h3>Penting</h3>
@@ -146,7 +146,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                     <!-- Rute_Rental -->
                                     <div class="rincian_penerbangan_1">
                                         <div class="logo_jangkauan">
-                                            <img src="<?php echo url('assets/images/gambar_jangkauan.png')?>">
+                                            <img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/gambar_jangkauan.png')?>">
                                         </div>
                                         <div class="konten_rincian_penerbangan_1" style="margin-left:25px; margin-top:-90px; margin-bottom:10px">
                                             <table class="baris_rincian_penerbangan_1">
@@ -162,7 +162,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                                     <tr>
                                                         <td class="box_logo_penerbangan_asal">
                                                             <div class="logo_penerbangan_asal">
-                                                                <img src="<?php echo url('public\Assets\partnerPhoto/'.Session::get('DATA_RENT')['PARTNER_PHOTO'].'')?>" width=90 height=52>
+                                                                <img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('public\Assets\partnerPhoto/'.Session::get('DATA_RENT')['PARTNER_PHOTO'].'')?>" width=90 height=52>
                                                             </div>
                                                         </td>
                                                     </tr>

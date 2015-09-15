@@ -7,7 +7,7 @@
                     <div class="row col-md-12">
 
                     <div class="col-md-3">      
-                      <a href="<?php echo date('Y-m-d', strtotime(' -1 day',strtotime($tanggal)))?>"><img src="<?php echo url('assets/images/back.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' -1 day',strtotime($tanggal)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
                       <h4>back</h4>
                     </div>
                     <div class="col-md-5">
@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-md-3" style="float:right">
                     <div style="float:right">
-                      <a href="<?php echo date('Y-m-d', strtotime(' +1 day',strtotime($tanggal)))?>"><img src="<?php echo url('assets/images/next.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' +1 day',strtotime($tanggal)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/next.png')?>"></a>
                       <h4>Next</h4>      
                     </div>
                     </div>
@@ -49,7 +49,7 @@ $(function() {
             { data: 'CITY_NAME', name: 'CITY_NAME' },
             { data: 'RENT_SCHEDULE_PRICE', name: 'RENT_SCHEDULE_PRICE' }, 
             { data: 'RENT_SCHEDULE_DATE', name: 'RENT_SCHEDULE_DATE' },
-            { data: 'photo', name: 'photo' }, 
+            { data: 'picture', name: 'picture' }, 
             { data: 'action', name: 'action',orderable: false, searchable: false}
         ],
         initComplete: function () {
@@ -85,7 +85,7 @@ $(function() {
               <div class="col-lg-8">
                     <select class="form-control" name="VEHICLE_ID">
                       @foreach($vehicle as $row)
-                        <option value="{{$row['VEHICLE_ID']}}">{{$row['VEHICLE_NAME']}}<img src="<?php echo 'public/Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO']?>" style="width:50px; height:50px"> </option>
+                        <option value="{{$row['VEHICLE_ID']}}">{{$row['VEHICLE_NAME']}}<img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo 'public/Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO']?>" style="width:50px; height:50px"> </option>
                         @endforeach
                     </select>
               </div>
@@ -94,7 +94,8 @@ $(function() {
             <div class="form-group">
               <label class="col-lg-3 control-label">Depart Time</label>
               <div class="col-lg-8">
-                <input type="date" class="form-control" name="date">
+                <input type="text" class="form-control datepicker" name="date">
+                
               </div>
             </div>
             <div class="form-group">
@@ -195,6 +196,7 @@ $(function() {
         $("#hapusSchedule").modal("show");
 
   });
+
 </script>
 <!--Hapus Schedule-->
 @stop

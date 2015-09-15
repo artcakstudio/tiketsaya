@@ -53,7 +53,7 @@
               <div class="col-lg-8">
                     <select class="form-control" name="VEHICLE_ID">
                       @foreach($vehicle as $row)
-                        <option value="{{$row['VEHICLE_ID']}}">{{$row['VEHICLE_NAME']}}<img src="<?php echo 'public/Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO']?>" style="width:50px; height:50px"> </option>
+                        <option value="{{$row['VEHICLE_ID']}}">{{$row['VEHICLE_NAME']}}<img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo 'public/Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO']?>" style="width:50px; height:50px"> </option>
                         @endforeach
                     </select>
               </div>
@@ -61,7 +61,7 @@
             <div class="form-group">
               <label class="col-lg-3 control-label">Depart Time</label>
               <div class="col-lg-8">
-                <input type="date" class="form-control" name="date">
+                <input type="text" class="form-control datepicker" name="date">
               </div>
             </div>
             <div class="form-group">

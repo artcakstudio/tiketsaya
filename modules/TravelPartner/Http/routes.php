@@ -6,6 +6,9 @@ Route::group(['prefix' => 'travelpartner', 'namespace' => 'Modules\TravelPartner
 	Route::post('update',['as'=>'travelpartner.update','uses'=>'TravelPartnerController@update']);
 	Route::post('updatepassword',['as'=>'travelpartner.update.password','uses'=>'TravelPartnerController@updatepassword']);
 	Route::get('logout','TravelPartnerController@logout');
+	Route::post('detail_jadwal','JadwalController@detail_jadwal');
+	Route::get('transaksi','TransaksiController@transaksi');
+	Route::get('transaksi/getTransaksi','TransaksiController@getTransaksi');
 
 	Route::group(['after'=>'route'],function(){
 		Route::get('route','RouteController@index');
@@ -16,7 +19,6 @@ Route::group(['prefix' => 'travelpartner', 'namespace' => 'Modules\TravelPartner
 		Route::get('armada/getarmada','RouteController@getarmada');
 	});
 	Route::group(['after'=>'jadwal'],function(){
-
 		Route::get('jadwal/mingguan','JadwalController@mingguan');
 		Route::post('jadwal/mingguan_detail','JadwalController@mingguan_detail');
 		Route::get('jadwal/umum','JadwalController@jadwalUmum');

@@ -68,12 +68,12 @@
             <div class="row form-group col-md-12">
               <div class="col-md-6">
                 <label class=" col-md-12">From</label>
-                  <input type="date" class="form-control" name="date_start"  style="margin-left:15px">
+                  <input type="text" class="form-control datepicker" name="date_start"  style="margin-left:15px">
                 </div>
               <div class="col-md-6">
                 <label class="control-label col-md-12">To</label>
                 <div class="col-md-12">
-                  <input type="date" class="form-control" name="date_finish" style="margin-left:15px">
+                  <input type="text" class="form-control datepicker" name="date_finish" style="margin-left:15px">
                 </div>
               </div>
             </div>

@@ -43,12 +43,13 @@ class TravelpageController extends Controller {
 	function transaksiSubmit()
 	{
 		$data=Input::all();
+		$flag=$data['flag'];
 		print_r($data);
 		$schedule=Travelschedule::findschedule($data['TRAVEL_SCHEDULE_ID'])->first();
 		unset($data['_token']);
 		$schedule_id=$data['TRAVEL_SCHEDULE_ID'];
+		unset($data['_token'], $data['flag']);
 		$costumer=$data;
-		unset($data['_token']);
 		unset($data['COSTUMER_EMAIL'],$data['COSTUMER_NAME'], $data['COSTUMER_TELP']);
 		
 		if(!is_null(Session::get('id')) and Session::get('hak')=='COSTUMER')
@@ -69,7 +70,10 @@ class TravelpageController extends Controller {
 		$code_transaksi=['TRAVEL_TRANSACTION_CODE'=> $code];
 		$transaksi=Traveltransaction::where('TRAVEL_TRANSACTION_ID','=',$idtransaksi);
 		$transaksi->update($code_transaksi);
-		return redirect::to('/');
+		if ($flag==1){
+			return redirect::back();
+		}
+		else return redirect::to('/');
 	}
 	function preview()
 	{

@@ -29,6 +29,12 @@
                             ?>
                             <a href="<?php echo url('rentpartner/jadwal/harian/'.$date)?>"><h4>Harian</h4></a>
                         </div>
+                          <div class=" sub-menu sub">
+                            <a href="<?php echo url('rentpartner/jadwal/umum')?>"><h4>Jadwal Umum</h4></a>
+                        </div>
+                        <div class="sub-menu">
+                            <a href="<?php echo url('rentpartner/transaksi')?>"><h4>Transaksi</h4></a>
+                        </div>
                         <div class="row sub-menu">
                             <a href="<?php echo url('rentpartner/logout')?>"><h4>Logout</h4></a>
                         </div>

@@ -150,6 +150,7 @@
         form.submit();
         
     });
+    $( ".datepicker" ).datepicker('option',{changeMonth: true,changeYear: true,dateFormat: 'dd/mm/yy',minDate: 0});
     </script>
 </body>
 </html>

@@ -8,7 +8,7 @@
                     <div class="row col-md-12" style="padding-right: 0px;width: 100%;">
 
                     <div class="col-md-3">      
-                      <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img src="<?php echo url('assets/images/back.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
                       <h4>back</h4>
                     </div>
                     <div  class="col-md-5">
@@ -17,12 +17,14 @@
 
                     <div class="col-md-3" style="float:right" >
                     <div style="float:right">
-                      <a href="<?php echo date('Y-m-d', strtotime(' +1 month',strtotime($date)))?>"><img src="<?php echo url('assets/images/next.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' +1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/next.png')?>"></a>
                       <h4>Next</h4>      
                     </div>
                     </div>
-                                    
-                     <table class="table table-striped">
+                    <div style="height: 665px;overflow: auto;width: 100%; margin-bottom:20px">
+                      
+                    
+                     <table class="table table-striped" id="jadwal_bulanan" style="overflow:auto">
                      <thead>
                        <tr>
                          <td>Sunday</td>
@@ -50,7 +52,7 @@
                               {
                                 if($row['DATE']==$date_awal)
                                 {
-                                  echo "<br>".$row['ROUTE_DEPARTURE']." ke ".$row['ROUTE_DEST']." : ".$row['TIME'];
+                                  echo "<br><h6 class='jadwal_harian' id='".$row['TRAVEL_SCHEDULE_ID']."'>".$row['ROUTE_DEPARTURE']." ke ".$row['ROUTE_DEST']." : ".$row['TIME']."</h6>";
                                 }
                               }
                               echo "</td>";
@@ -63,9 +65,10 @@
                             
                         </tr> 
                      </table>
+                     </div>       
                      </div>
                      </div>
-                     <div class="col-md-8">
+                     <div class="col-md-8" style="margin-left:25%">
                        
                      <button class="btn btn-primary" id="schedule_bulanan" >Tambah Schedule</button>
                      <button class="btn btn-primary"  data-toggle="modal" data-target="#addScheduleMingguan">Tambah Schedule Mingguan</button>
@@ -150,6 +153,43 @@
     </div>
   </div>
 </div>
+<!--modal detail_jadwal-->
+<div class="modal fade" id="detail_jadwal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Detail Jadwal</h4>
+      </div>
+      <div class="modal-body">
+            <div class="form-group">
+             <table class="table table-strip">
+                <thead>
+                  <tr>
+                    <td>Keberangkatan</td>
+                    <td>Tujuan</td>
+                    <td>Waktu Berangkat</td>
+                    <td>Waktu Tiba</td>
+                    <td>Mobil</td>
+                    <td>Photo</td>                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    
+                  </tr>
+                </tbody>
+             </table>
+
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        {!!Form::close()!!}
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
 
   var jadwal_bulan=[];
@@ -189,6 +229,27 @@
       }
     });
   });
+  $("#jadwal_bulanan").on("click","h6.jadwal_harian",function(){
+    var jadwal=$(this).get();
+    var id=jadwal[0].id;
+    $.ajax({
+      url : "<?php echo url('travelpartner/detail_jadwal')?>",
+      type : "post",
+      datatype : "JSON",
+      data : {"_token":token, "TRAVEL_SCHEDULE_ID":id},
+      success:function(data){
+        data=jQuery.parseJSON(data);
+        console.log(data);
+        var path="<?php echo url('public/Assets/vehiclePhoto/')?>";
+        var path=path+'/'+data[0].VEHICLE_PHOTO;
+        $("#detail_jadwal table tbody tr").append('<td>'+data[0].ROUTE_DEPARTURE+'</td><td>'+data[0].ROUTE_DEST+'</td><td>'+data[0].TRAVEL_SCHEDULE_DEPARTTIME+'</td><td>'+data[0].TRAVEL_SCHEDULE_ARRIVETIME+'</td><td>'+data[0].VEHICLE_NAME+'</td><td><img src="'+path+'" width=90 height=50');
+        $("#detail_jadwal").modal("show");
+      }
+    });
+    console.log(jadwal);
+
+  });
 </script>
+
 @include('travelpartner::jadwal.mingguan')
 @stop

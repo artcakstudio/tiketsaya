@@ -48,11 +48,13 @@ class travelschedule extends Model {
                     ->orderBy('TRAVEL_SCHEDULE_DEPARTTIME');
     }
     function scopegetScheduleDayPartner($query,$tanggal,$partner_id){
-        return $query->select([DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'TRAVEL_SCHEDULE.*','VEHICLE_NAME'])
+        return $query->select([DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'TRAVEL_SCHEDULE.*','VEHICLE_NAME', DB::raw('vehicle.VEHICLE_CAPACITY-totalpenumpang(TRAVEL_SCHEDULE_ID) as penumpang')])
                 ->where('TRAVEL_SCHEDULE_DEPARTTIME','LIKE',$tanggal.'%')
                 ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
-                ->where('VEHICLE.PARTNER_ID','=',$partner_id);
+                ->where('VEHICLE.PARTNER_ID','=',$partner_id)
+                ->groupBy('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID');
+
     }
     function scopegetSchedule($query)
     {

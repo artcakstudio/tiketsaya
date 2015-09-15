@@ -6,12 +6,15 @@ Route::group(['prefix' => 'rentpartner', 'namespace' => 'Modules\Rentpartner\Htt
 	Route::post('update',['as'=>'rentpartner.update','uses'=>'RentPartnerController@update']);
 	Route::post('updatepassword',['as'=>'rentpartner.update.password','uses'=>'RentPartnerController@updatepassword']);
 	Route::get('logout','RentPartnerController@logout');
-
+	Route::post('detail_jadwal','JadwalController@detail_jadwal');
+	Route::get('transaksi','TransaksiController@transaksi');
+	Route::get('transaksi/getTransaksi','TransaksiController@getTransaksi');
 	Route::group(['after'=>'armada'],function(){
 		Route::get('armada','RouteController@armada');
 		Route::get('armada/getarmada','RouteController@getarmada');
 	});
 	Route::group(['after'=>'jadwal'],function(){
+		Route::get('jadwal/umum','JadwalController@umum');
 		Route::get('jadwal/mingguan','JadwalController@mingguan');
 		Route::get('jadwal/{id}','JadwalController@jadwal');
 		Route::post('jadwal/add',['as'=>'rentpartner.jadwal.add','uses'=>'JadwalController@addJadwal']);

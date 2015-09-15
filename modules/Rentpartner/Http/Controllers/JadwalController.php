@@ -42,7 +42,8 @@ public $partner_id;
 		}
 	}
 	function jadwalharian($tanggal){		
-		$schedule =rentschedule::partnerSchedule($this->partner_id,$tanggal)->get();
+		$schedule =rentschedule::partnerSchedule($this->partner_id)
+								->where('RENT_SCHEDULE_DATE',  'LIKE',$tanggal.'%' )->get();
 		$path=url('public/Assets/vehiclePhoto');
         return Datatables::of($schedule)
          ->addColumn('action', function ($schedule) {
@@ -67,7 +68,7 @@ public $partner_id;
 	{
 		$data=Input::all();
 		print_r($data);
-		$start=$data['start'];
+		/*$start=$data['start'];
 		$stop=$data['stop'];
 		$tanggal=$data['tanggal'];
 		unset($data['tanggal'],$data['_token'],$data['start'],$data['stop']);
@@ -81,7 +82,7 @@ public $partner_id;
 				Rentschedule::insert($data);
 			}
 			$start=date('Y-m-d',strtotime('+1 day',strtotime($start)));
-		}
+		}*/
 	}
 	function addJadwalHarian(){
 		$data=Input::all();
@@ -89,6 +90,14 @@ public $partner_id;
 		$data['RENT_SCHEDULE_CREATEBY']=Session::get('id');
 		Rentschedule::insert($data);
 		return Redirect::back();
+	}
+
+	function detail_jadwal(){
+		$data=Input::all();
+
+		$schedule=rentschedule::partnerSchedule($this->partner_id)
+							->where('RENT_SCHEDULE_ID','=',$data['RENT_SCHEDULE_ID'])->get();
+		return json_encode($schedule);
 	}
 	
 }

@@ -41,12 +41,13 @@
             <div class="row form-group col-md-12">
               <div class="col-md-6">
                 <label class=" col-md-12" style="text-align:center">From</label>
-                  <input type="date" class="form-control" name="date_start"  style="margin-left:15px">
+                  <!-- <input type="text" class="form-control datepicker" name="date_start"  style="margin-left:15px"> -->
+                  <input type="text" class="datepicker" name="date_start">
                 </div>
               <div class="col-md-6">
                 <label class="control-label col-md-12" style="text-align:center">To</label>
                 <div class="col-md-12">
-                  <input type="date" class="form-control" name="date_finish" style="margin-left:15px">
+                  <input type="text" class="form-control datepicker" name="date_finish" style="margin-left:15px">
                 </div>
               </div>
             </div>
@@ -90,8 +91,15 @@
       data : {"tanggal":jadwal,'_token':token, "RENT_SCHEDULE_PRICE":price,"VEHICLE_ID":vehicle,"start":start, "stop":stop},
       datatype : "JSON",
       success:function(data){       
-       window.location = window.location.href;
+      // window.location = window.location.href;
       }
     }); 
   });
+
+var altFormat = $( ".datepicker" ).datepicker( "option", "altFormat" );
+// Setter
+$( ".datepicker" ).datepicker( "option", "altFormat", "dd-mm-yy" );
+  $( ".datepicker" ).datepicker({
+  altFormat: "d/m/Y"
+});
 </script>

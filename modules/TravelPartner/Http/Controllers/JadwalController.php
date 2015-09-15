@@ -62,7 +62,7 @@ public $partner_id;
         return Datatables::of($schedule)
          ->addColumn('action', function ($schedule) {
          		//return '<li  class="dropdown dropdown-no-type"><a data-toggle="dropdown" class="dropdown-toggle btn btn-xs btn-primary" href="#" > Pilihan <b class="caret"></b></a><ul class="dropdown-menu"><li><button class="btn btn-primary edit" id="'.$schedule->TRAVEL_SCHEDULE_ID.'">Edit</button></li><li><button class="btn btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_ID.'" data-target="#hapusUser">Hapus</button></li></ul></li>';
-         		return '<button class="btn  btn-xs btn-primary" id="'.$schedule->TRAVEL_SCHEDULE_ID.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_ID.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
+         		return '<button class="btn  btn-xs btn-primary" id="'.$schedule->TRAVEL_SCHEDULE_ID.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_ID.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button><button class="btn  btn-xs btn-warning" id="'.$schedule->TRAVEL_SCHEDULE_ID.'" data-target="#tambahPenumpang""><i class="fa fa-plus-circle "></i> </button>';
             })
             ->make(true);
 	}
@@ -136,6 +136,12 @@ public $partner_id;
 									->groupBy('TRAVEL_SCHEDULE_UMUMXDAY.DAY_ID')
 									->get();
 		return  json_encode($data);
+	}
+	function detail_jadwal(){
+		$data=Input::all();
+		$schedule=travelschedule::partnerSchedule($this->partner_id)
+							->where('TRAVEL_SCHEDULE_ID','=',$data['TRAVEL_SCHEDULE_ID'])->get();
+		return json_encode($schedule);
 	}
 	
 }
