@@ -26,6 +26,7 @@ class RentpageController extends Controller {
 		$city=City::all();
 		$duration=$data['DURATION'];
 		session(['duration'=>$duration]);
+		Session::flash('search',['type'=>'sewamob','date'=>$data['DATE'], 'city'=>$data['CITY_ID']]);
 		return view('rentpage::hasil-search', compact('vehicle','city','duration'));
 	}
 	function transaksipage()

@@ -42,7 +42,7 @@
               <div class="col-md-6">
                 <label class=" col-md-12" style="text-align:center">From</label>
                   <!-- <input type="text" class="form-control datepicker" name="date_start"  style="margin-left:15px"> -->
-                  <input type="text" class="datepicker" name="date_start">
+                  <input type="text" class="form-control datepicker" name="date_start">
                 </div>
               <div class="col-md-6">
                 <label class="control-label col-md-12" style="text-align:center">To</label>
@@ -96,10 +96,6 @@
     }); 
   });
 
-var altFormat = $( ".datepicker" ).datepicker( "option", "altFormat" );
+
 // Setter
-$( ".datepicker" ).datepicker( "option", "altFormat", "dd-mm-yy" );
-  $( ".datepicker" ).datepicker({
-  altFormat: "d/m/Y"
-});
 </script>

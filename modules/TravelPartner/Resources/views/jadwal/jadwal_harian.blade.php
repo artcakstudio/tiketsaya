@@ -81,7 +81,7 @@
             <div class="form-group">
               <label class="col-lg-3 control-label">Depart Time</label>
               <div class="col-lg-4">
-                <input type="date" name="depart_date" class="form-control" placeholder="HH" value="{{$tanggal}}" disabled="disabled">
+                <input type="text" name="depart_date" class="form-control datepicker" placeholder="HH" value="{{$tanggal}}" disabled="disabled">
               </div>
               <div class="col-lg-2">
                   <input type="text" name="depart_hour" class="form-control" placeholder="HH">
@@ -150,7 +150,7 @@
             <div class="form-group">
               <label class="col-lg-3 control-label">Depart Time</label>
               <div class="col-lg-4">
-                <input type="date" name="depart_date" class="form-control" placeholder="HH" value="{{$tanggal}}" disabled="disabled">
+                <input type="text" name="depart_date" class="form-control datepicker" placeholder="HH" value="{{$tanggal}}" disabled="disabled">
               </div>
               <div class="col-lg-2">
                   <input type="text" name="depart_hour" class="form-control" placeholder="HH">
@@ -276,7 +276,7 @@ $("#schedule-table").on("click","button.btn-primary",function(){
         <div class="form-group">
               <label class="col-lg-3 control-label">Total Penumpang</label>
               <div class="col-lg-8">
-                    <select name="TRAVEL_TRANSACTION_PASSENGER" class="form-group form-control" style="margin-left:0px">
+                    <select name="TRAVEL_TRANSACTION_PASSENGER" class="form-control" style="margin-left:0px">
 
                     </select>
               </div>

@@ -2,11 +2,11 @@
     @parent
      <div class="row col-md-12" style="margin-bottom:20px">
     <div class="col-md-6">      
-      <a href="<?php echo date('Y-m-d', strtotime(' -1 day',strtotime($tanggal)))?>"><img src="<?php echo url('assets/images/back.png')?>"></a>
+      <a href="<?php echo date('Y-m-d', strtotime(' -1 day',strtotime($tanggal)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
     </div>
     <div class="col-md-6" >
     <div style="float:right">
-      <a href="<?php echo date('Y-m-d', strtotime(' +1 day',strtotime($tanggal)))?>"><img src="<?php echo url('assets/images/next.png')?>"></a>
+      <a href="<?php echo date('Y-m-d', strtotime(' +1 day',strtotime($tanggal)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/next.png')?>"></a>
       <h4>Next</h4>      
     </div>
 
@@ -70,7 +70,7 @@
             <div class="form-group">
               <label class="col-lg-3 control-label">Depart Time</label>
               <div class="col-lg-4">
-                <input type="date" name="depart_date" class="form-control" placeholder="HH">
+                <input type="text" name="depart_date" class="form-control datepicker" placeholder="HH">
               </div>
               <div class="col-lg-2">
                   <input type="text" name="depart_hour" class="form-control" placeholder="HH">
@@ -81,8 +81,8 @@
             </div>
             <div class="form-group">
               <label class="col-lg-3 control-label">Arrive Time</label>
-              <div class="col-lg-4">
-                <input type="date" name="arrive_date" class="form-control" placeholder="HH">
+              <div class="col-lg-4"> 
+                <input type="text" name="arrive_date" class=" datepicker form-control ">
               </div>
               <div class="col-lg-2">
                 <input type="text" name="arrive_hour" class="form-control" placeholder="HH">

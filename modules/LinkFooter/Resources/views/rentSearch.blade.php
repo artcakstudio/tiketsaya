@@ -26,7 +26,7 @@
             <div class="form-group">
               <label class="col-lg-3 control-label">Departure</label>
               <div class="col-lg-8">
-              	<select name="LINK_RENT_CITY" class="form-group form-control">
+              	<select name="LINK_RENT_CITY" class="form-control">
               		@foreach($city as $row)
               		<option value="{{$row['CITY_ID']}}">{{$row['CITY_NAME']}}</option>
               		@endforeach

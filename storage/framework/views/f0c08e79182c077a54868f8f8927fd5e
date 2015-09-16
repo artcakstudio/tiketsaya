@@ -20,9 +20,9 @@
 
     <?php echo Html::style('assets/css/travel.css'); ?>
 
-    <?php echo Html::script('assets/js/script.js'); ?>
-
     <?php echo Html::script('assets/js/jquery.min.js'); ?>
+
+    <?php echo Html::script('assets/js/script.js'); ?>
 
     <?php echo Html::script('assets/js/bootstrap.min.js'); ?>
 
@@ -165,7 +165,11 @@
         form.submit();
         
     });
-    $( ".datepicker" ).datepicker('option',{changeMonth: true,changeYear: true,dateFormat: 'dd/mm/yy',minDate: 0});
+    $(".datepicker").datepicker({changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd/mm/yy", 
+        minDate: 0
+    });
     </script>
 </body>
 </html>

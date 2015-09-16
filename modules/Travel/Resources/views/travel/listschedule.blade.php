@@ -73,7 +73,7 @@
             <div class="form-group">
               <label class="col-lg-3 control-label">Depart Time</label>
               <div class="col-lg-4">
-                <input type="date" name="depart_date" class="form-control" placeholder="HH">
+                <input type="text" name="depart_date" class="form-control datepicker" placeholder="HH">
               </div>
               <div class="col-lg-2">
                   <input type="text" name="depart_hour" class="form-control" placeholder="HH">
@@ -84,8 +84,8 @@
             </div>
             <div class="form-group">
               <label class="col-lg-3 control-label">Arrive Time</label>
-              <div class="col-lg-4">
-                <input type="date" name="arrive_date" class="form-control" placeholder="HH">
+              <div class="col-lg-4"> 
+                <input type="text" name="arrive_date" class=" datepicker form-control ">
               </div>
               <div class="col-lg-2">
                 <input type="text" name="arrive_hour" class="form-control" placeholder="HH">

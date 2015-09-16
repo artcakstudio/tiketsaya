@@ -24,6 +24,7 @@ class TravelpageController extends Controller {
 		$city=City::all();
 		$data=Input::all();
 		//print_r($data);
+		Session::flash('search',['depart'=>$data['depart'],'date'=>$data['TRAVEL_SCHEDULE_DATE'], 'dest'=>$data['dest'],'type'=>'travel']);
 		$schedule=Travelschedule::travelSchedule($data['depart'],$data['dest'],$data['TRAVEL_SCHEDULE_DATE'])->get();
 		//print_r($schedule);
 		return view('travelpage::hasil-search', compact('schedule','city'));

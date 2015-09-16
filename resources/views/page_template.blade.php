@@ -12,8 +12,8 @@
     {!! Html::style('assets/css/partner.css')!!}
     {!! Html::style('assets/css/style-page.css')!!}
     {!! Html::style('assets/css/travel.css')!!}
-    {!! Html::script('assets/js/script.js')!!}
     {!! Html::script('assets/js/jquery.min.js')!!}
+    {!! Html::script('assets/js/script.js')!!}
     {!! Html::script('assets/js/bootstrap.min.js')!!}
     
     {!! HTML::script('assets/js/jquery.dataTables.min.js')!!} <!-- Data tables -->
@@ -150,7 +150,11 @@
         form.submit();
         
     });
-    $( ".datepicker" ).datepicker('option',{changeMonth: true,changeYear: true,dateFormat: 'dd/mm/yy',minDate: 0});
+    $(".datepicker").datepicker({changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd/mm/yy", 
+        minDate: 0
+    });
     </script>
 </body>
 </html>

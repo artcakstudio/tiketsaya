@@ -5,7 +5,9 @@
     $bulan=substr($tanggal, 4,2);
     $tanggal=substr($tanggal, 0,2)." ".$month[$bulan-1]." ".substr($tanggal, 6,4);
     return $tanggal;
-};?>
+};
+
+?>
 
 <div class="row">
                 <div class="col-md-12 slider"></div>
@@ -121,7 +123,7 @@
                                           <div class="input-group isi_konten3">
                                             <select class="form-control remove_border" name="depart">
                                                     @foreach($city as $row)
-                                                        <option value="{{$row['CITY_ID']}}" class=" form-control remove_border">{{$row['CITY_NAME']}}</option>
+                                                        <option value="{{$row['CITY_ID']}}" class="remove_border">{{$row['CITY_NAME']}}</option>
                                                     @endforeach
                                             </select>
                                             <div class="input-group-btn">
@@ -139,7 +141,7 @@
                                           <div class="input-group isi_konten3">
                                             <select class="form-control remove_border" name="dest">
                                                     @foreach($city as $row)
-                                                        <option value="{{$row['CITY_ID']}}" class=" form-control remove_border">{{$row['CITY_NAME']}}</option>
+                                                        <option value="{{$row['CITY_ID']}}" class=" remove_border">{{$row['CITY_NAME']}}</option>
                                                     @endforeach
                                             </select>
                                             <div class="input-group-btn">
@@ -152,7 +154,7 @@
                                       <div class="konten3_">
                                           <div class="head_konten3">Tanggal </div>
                                           <div class="input-group isi_konten3">
-                                            <input class="form-control remove_border" type="date" name="TRAVEL_SCHEDULE_DATE" />
+                                            <input class="form-control remove_border datepicker" type="text" name="TRAVEL_SCHEDULE_DATE" />
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
                                             </div>
@@ -189,7 +191,7 @@
                                             <!-- <input type="text" class="form-control remove_border"/> -->
                                                   <select class="form-control remove_border" name="CITY_ID">
                                                     @foreach($city as $row)
-                                                        <option value="{{$row['CITY_ID']}}" class=" form-control remove_border">{{$row['CITY_NAME']}}</option>
+                                                        <option value="{{$row['CITY_ID']}}" class="remove_border">{{$row['CITY_NAME']}}</option>
                                                     @endforeach
                                                   </select>
                                             <div class="input-group-btn">
@@ -207,7 +209,7 @@
                                       <div class="konten3_">
                                           <div class="head_konten3">Tanggal Sewa</div>
                                           <div class="input-group isi_konten3">
-                                            <input type="date" class="form-control remove_border" name="DATE" />
+                                            <input type="text" class="form-control remove_border datepicker" name="DATE" />
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
                                             </div><!-- /btn-group -->
@@ -256,5 +258,30 @@
                         </div>
                     </div>
             </div>            
-            
+<?php
+if (Session::has('search')){
+  if (Session::get('search')['type']=='travel'){
+    echo '<script type="text/javascript">var type="'.Session::get("search")["type"].'"; var date="'.Session::get("search")["date"].'"; var dest='.Session::get("search")["dest"].'; var depart='.Session::get("search")["depart"].';'?>
+ $("#"+type+" form select[name='depart']").val(depart);
+ $("#"+type+" form select[name='dest']").val(dest);
+ console.log(date);
+ $("#"+type+" form input[name='TRAVEL_SCHEDULE_DATE']").val(date);
+</script>
+ <?php }
+ else if(Session::get('search')['type']=='sewamob'){ 
+  print_r(Session::get('search'));
+   echo '<script type="text/javascript">var type="'.Session::get("search")["type"].'"; var date="'.Session::get("search")["date"].'"; var city='.Session::get("search")["city"].'; var duration='.Session::get("duration").';'?>
+ $("#"+type+" form select[name='CITY_ID']").val(city);
+ $("#"+type+" form select[name='DURATION']").val(duration);
+ console.log(date);
+ $("#"+type+" form input[name='DATE']").val(date);
+ <?php }
+ 
+}; ?>
+</script>
+<script type="text/javascript">
+ $(document).ready(function(){
+     $('a[href=#' + type + ']').tab('show');
+});
+</script>
             <!-- SEARCH BOX CLOSE -->
