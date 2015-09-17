@@ -15,4 +15,8 @@ class partner extends Model {
     	return $query->where('PARTNER_USERNAME','=',$username)
     				->where('PARTNER_PASSWORD','=',$password);
     }
+    public function scopepartner($query)
+    {
+        return $query->select(['PARTNER_ID', 'PARTNER_NAME']);
+    }
 }

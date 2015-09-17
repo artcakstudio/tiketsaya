@@ -51,6 +51,9 @@ class Handler extends ExceptionHandler
         {
             return response()->view('errors.503', [], 404);
         }
+        else if($e instanceof TokenMismatchException){
+            return response()->view('errors.404',[],404);
+        }
         else if($e instanceof MethodNotAllowedHttpException)
         {
             return response()->view('errors.404',[],404);

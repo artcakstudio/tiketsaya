@@ -3,21 +3,21 @@
 @parent
 	@include('travel_partner.sidebar')
     <?php $bulan=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];?>
-                 <div class="header_backend">JADWAL TRAVEL BULANAN</div>
+                 <div class="row main-body col-md-8">
            
                     <div class="row col-md-12" style="padding-right: 0px;width: 100%;">
 
                     <div class="col-md-3">      
-                      <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
                       <h4>back</h4>
                     </div>
                     <div  class="col-md-5">
-                        <h2 style="text-align:center">   <?php echo $bulan[date('m',strtotime($date))-1]?> {{date('Y')}}</h2>
+                        <h2 style="text-align:center">   <?php echo $bulan[date('m')-1]?> {{date('Y')}}</h2>
                     </div>
 
                     <div class="col-md-3" style="float:right" >
                     <div style="float:right">
-                      <a href="<?php echo date('Y-m-d', strtotime(' +1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('assets/images/next.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' +1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/next.png')?>"></a>
                       <h4>Next</h4>      
                     </div>
                     </div>
@@ -232,6 +232,7 @@
   $("#jadwal_bulanan").on("click","h6.jadwal_harian",function(){
     var jadwal=$(this).get();
     var id=jadwal[0].id;
+    $("#detail_jadwal table tbody tr").empty();
     $.ajax({
       url : "<?php echo url('travelpartner/detail_jadwal')?>",
       type : "post",

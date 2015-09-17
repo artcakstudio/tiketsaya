@@ -27,7 +27,7 @@ return array(
     'Pingpong\\Generators\\' => array($vendorDir . '/pingpong/generators'),
     'Pingpong\\' => array($vendorDir . '/pingpong/sky/src/Pingpong'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
-    'Modules\\' => array($baseDir . '/Modules'),
+    'Modules\\' => array($baseDir . '/modules'),
     'League\\Fractal\\' => array($vendorDir . '/league/fractal/src'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
     'Illuminate\\Html\\' => array($vendorDir . '/illuminate/html'),
