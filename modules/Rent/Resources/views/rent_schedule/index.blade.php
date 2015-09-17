@@ -53,7 +53,7 @@
               <div class="col-lg-8">
                     <select class="form-control" name="VEHICLE_ID">
                       @foreach($vehicle as $row)
-                        <option value="{{$row['VEHICLE_ID']}}">{{$row['VEHICLE_NAME']}}<img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo 'public/Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO']?>" style="width:50px; height:50px"> </option>
+                        <option value="{{$row['VEHICLE_ID']}}">{{$row['VEHICLE_NAME']}}<img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo 'public/Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO']?>" style="width:50px; height:50px"> </option>
                         @endforeach
                     </select>
               </div>

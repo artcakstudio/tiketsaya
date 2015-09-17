@@ -42,10 +42,10 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                         <!-- Info Maskapai Pojok Kiri Atas -->
                         <div class="col-md-4 remove_padding"  style="background-color:#fff;border: 1px solid #ddd; border-left: 5px solid #00cd00">
                             <div class="info_logo_merk_travel">
-                                <img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('public/Assets/partnerPhoto/'.Session::get('DATA_RENT')['PARTNER_PHOTO'].'')?>" width=92 height=50></img>
+                                <img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public/Assets/partnerPhoto/'.Session::get('DATA_RENT')['PARTNER_PHOTO'].'')?>" width=92 height=50></img>
                             </div>
                             <div clas="info_logo_kendaraan_travel" style="margin-left:170px; margin-top:-50px">
-                                <img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('public/Assets/vehiclePhoto/'.Session::get('DATA_RENT')['VEHICLE_PHOTO'].'')?>" width=92 height=56></img>
+                                <img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public/Assets/vehiclePhoto/'.Session::get('DATA_RENT')['VEHICLE_PHOTO'].'')?>" width=92 height=56></img>
                             </div>
                             <div class="info_travel" style="background-color: #fff; margin-top:10px; padding-left:20px">
                                 <p>{{Session::get('DATA_RENT')['ROUTE_DEPARTURE']}} ke {{Session::get('DATA_RENT')['ROUTE_DEST']}}</p>

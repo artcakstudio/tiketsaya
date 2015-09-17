@@ -63,11 +63,11 @@
                                 <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $row['RENT_SCHEDULE_ID'] ?>">
                                     
                                     <div class="row data_maskapai">
-                                        <div class="row"><center><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public\Assets\partnerPhoto/'.$row['PARTNER_PHOTO'])?>" width=80 height=60/></center></div>
+                                        <div class="row"><center><img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public\Assets\partnerPhoto/'.$row['PARTNER_PHOTO'])?>" width=80 height=60/></center></div>
                                     </div>
                                     <div class="data_maskapai2">
                                         <div>
-                                            <img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public\Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO'])?>" width=250 height=160/>
+                                            <img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public\Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO'])?>" width=250 height=160/>
                                         </div>
                                     </div>
                                     <div class="data_maskapai2">

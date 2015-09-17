@@ -61,7 +61,7 @@
                                 <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $row['TRAVEL_SCHEDULE_ID']?>">
                                     
                                     <div class="data_maskapai">
-                                       <div><center><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('public/Assets\partnerPhoto/'.$row['PARTNER_PHOTO'])?>" width=80 height=55 onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'"/></center></div>
+                                       <div><center><img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public/Assets\partnerPhoto/'.$row['PARTNER_PHOTO'])?>" width=80 height=55 /></center></div>
                                     </div>
                                     <div class="data_maskapai2">
                                         <div>
@@ -90,7 +90,7 @@
                                     </div>
                                     <div class="data_maskapai2">
 
-                                        <div><center><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/travelfacility.png')?>" onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'"/></center></div>
+                                        <div><center><img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('assets/images/travelfacility.png')?>" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'"/></center></div>
                                     </div>
                                     <div class="data_maskapai2">
                                         <div>
@@ -110,7 +110,7 @@
                                       <div class="row detilpenerbangan_" >
                                           <div class="col-md-4">
                                               <center>
-                                              <img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('Public/Assets/vehiclePhoto/'.$row['VEHICLE_PHOTO'])?>" width=300px onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'"/>
+                                              <img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('Public/Assets/vehiclePhoto/'.$row['VEHICLE_PHOTO'])?>" width=300px onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'"/>
                                               </center>
                                           </div>
                                           

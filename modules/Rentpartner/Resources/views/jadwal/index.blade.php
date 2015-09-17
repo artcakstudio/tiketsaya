@@ -4,13 +4,12 @@
   @include('rent_partner.sidebar')
     <?php 
     $bulan=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];?>
-
-                          
                         <div class="row"> 
                          <div class="header_backend">JADWAL RENTAL BULANAN</div>
                     <div class="col-md-12" style="padding-right: 0px;width: 100%;">
                     <div class="col-md-3">      
-                      <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img 
+                       src="<?php echo url('assets/images/back.png')?>"></a>
                       <h4>back</h4>
                     </div>
                     <div  class="col-md-5">
@@ -19,7 +18,7 @@
 
                     <div class="col-md-3" style="float:right" >
                     <div style="float:right">
-                      <a href="<?php echo date('Y-m-d', strtotime(' +1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/next.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' +1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('assets/images/next.png')?>"></a>
                       <h4>Next</h4>      
                     </div>
                     </div>
