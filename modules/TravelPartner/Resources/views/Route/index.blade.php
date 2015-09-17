@@ -13,9 +13,9 @@
 							            </tr>
 							        </thead>
 							    </table>  
+							         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addroute">Add Route</button>
                     </div>
                     <div class="col-md-8" style="margin-left:5%">
-							         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addroute">Add Route</button>
                     </div>
                 </div>
             </div>
@@ -67,10 +67,10 @@
 
 <!--Edit Route-->
 <script type="text/javascript">
-  $("#route-table").on("click","button.btn.btn-primary",function(){
-      var button=this;
+  $("#route-table").on("click","button.btn-primary",function(){
+      var button=this; 
       var id=$(button).get()[0].id;
-      var tr=$(button.closest("tr"));
+      var tr=$(this).closest("tr");
       var departure=tr[0].cells[0].innerHTML;
       var destination=tr[0].cells[1].innerHTML;
       $("#addroute form select.form-control.depart option:contains("+departure+")").attr('selected','selected');
@@ -113,7 +113,7 @@
 <script type="text/javascript">
     $("#route-table").on("click","button.btn.btn-danger",function(){
         var button=this;
-        var tr=$(button.closest("tr")).get();
+        var tr=$(this).closest("tr");
         var name=tr[0].firstChild.innerHTML;
       
         $("#hapusRoute h2.modalbody").html('Apakah Anda Yakin?');

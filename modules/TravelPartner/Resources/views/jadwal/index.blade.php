@@ -3,7 +3,7 @@
 @parent
 	@include('travel_partner.sidebar')
     <?php $bulan=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];?>
-                 <div class="row main-body col-md-8">
+                 <div class="header_backend">JADWAL HARIAN</div> 
            
                     <div class="row col-md-12" style="padding-right: 0px;width: 100%;">
 

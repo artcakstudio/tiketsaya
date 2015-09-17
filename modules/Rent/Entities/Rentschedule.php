@@ -11,7 +11,7 @@ class rentschedule extends Model {
     function scopegetScheduleDay($query,$tanggal){
     	return $query->select(['VEHICLE.*','RENT_SCHEDULE.*'])
     			->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')
-                ->where('RENT_SCHEDULE.RENT_SCHEDULE_DATE','LIKE','%'.$tanggal)	;
+                ->whereDate('RENT_SCHEDULE.RENT_SCHEDULE_DATE','=',date('Y-m-d',strtotime($tanggal)));
 
     }
     function scopefindRentSchedule($query,$id){

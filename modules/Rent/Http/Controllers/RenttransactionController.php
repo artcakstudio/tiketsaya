@@ -27,7 +27,7 @@ class RenttransactionController extends Controller {
 		$data=Input::all();
 		unset($data['_token']);
 		$transaction=Renttransaction::findTransaction($data['RENT_TRANSACTION_ID']);
-		$data['RENT_TRANSACTION_UPDATE']=date('y-m-d h:i:s');
+		$data['RENT_TRANSACTION_UPDATE']=date('y-m-d H:i:s');
 		print_r($data);
 		$transaction->update($data);
 		return back();

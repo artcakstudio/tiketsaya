@@ -20,11 +20,11 @@ class TravelController extends Controller {
 	{
 		$data=Input::all();
 		
-		$data['TRAVEL_SCHEDULE_DEPARTTIME']= date('Y-m-d h:i', strtotime($data['date']." ".$data['depart_hour'].":".$data['depart_minute']));
+		$data['TRAVEL_SCHEDULE_DEPARTTIME']= date('Y-m-d H:i', strtotime($data['date']." ".$data['depart_hour'].":".$data['depart_minute']));
 
 		$plus=$data['hour_estimate']*60+$data['minute_estimate'];
-		$hour_arrive=date('h:i', strtotime('+'.$plus.' minutes', strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])));
-		$data['TRAVEL_SCHEDULE_ARRIVETIME'] =date('Y-m-d h:i', strtotime($hour_arrive));
+		$hour_arrive=date('H:i', strtotime('+'.$plus.' minutes', strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])));
+		$data['TRAVEL_SCHEDULE_ARRIVETIME'] =date('Y-m-d H:i', strtotime($hour_arrive));
 		
 		unset($data['_token']);
 		unset($data['date']);
@@ -54,11 +54,11 @@ class TravelController extends Controller {
 	{
 		$data=Input::all();
 		
-		$data['TRAVEL_SCHEDULE_DEPARTTIME']= date('Y-m-d h:i', strtotime($data['date']." ".$data['depart_hour'].":".$data['depart_minute']));
+		$data['TRAVEL_SCHEDULE_DEPARTTIME']= date('Y-m-d H:i', strtotime($data['date']." ".$data['depart_hour'].":".$data['depart_minute']));
 
 		$plus=$data['hour_estimate']*60+$data['minute_estimate'];
-		$hour_arrive=date('h:i', strtotime('+'.$plus.' minutes', strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])));
-		$data['TRAVEL_SCHEDULE_ARRIVETIME'] =date('Y-m-d h:i', strtotime($hour_arrive));
+		$hour_arrive=date('H:i', strtotime('+'.$plus.' minutes', strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])));
+		$data['TRAVEL_SCHEDULE_ARRIVETIME'] =date('Y-m-d H:i', strtotime($hour_arrive));
 		
 		unset($data['_token']);
 		unset($data['date']);

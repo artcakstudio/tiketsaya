@@ -37,7 +37,7 @@ public $partner_id;
 		unset($data['tanggal'],$data['_token']);
 		$data['RENT_SCHEDULE_CREATEBY']=Session::get('id');
 		foreach ($tanggal as $row) {
-			$data['RENT_SCHEDULE_DATE']=date('Y-m-d h:i', strtotime($row));
+			$data['RENT_SCHEDULE_DATE']=date('Y-m-d H:i', strtotime($row));
 			Rentschedule::insert($data);
 		}
 	}
@@ -78,7 +78,7 @@ public $partner_id;
 			if (in_array($index, $tanggal))
 			{
 				echo 'laal';
-				$data['RENT_SCHEDULE_DATE']=date('Y-m-d h:i', strtotime($start));				
+				$data['RENT_SCHEDULE_DATE']=date('Y-m-d H:i', strtotime($start));				
 				Rentschedule::insert($data);
 			}
 			$start=date('Y-m-d',strtotime('+1 day',strtotime($start)));

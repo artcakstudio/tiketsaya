@@ -89,7 +89,7 @@
                 <input type="file" class="form-control" name="PARTNER_PHOTO" value="{{$partner['PARTNER_PHOTO']}}">
               </div>
               <div class="col-md-8" style="margin-left:20%">
-                <img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public/Assets/partnerPhoto/'.$partner['PARTNER_PHOTO'])?>" width=90 height=50>
+                <img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public/Assets/partnerPhoto/'.$partner['PARTNER_PHOTO'])?>" width=90 height=50 class="foto">
               </div>
             </div>
   
@@ -173,5 +173,22 @@ $("#message h1.message").html("'.Session::get('message').'");
 	$("button.btn.editPassword").click(function(){
 		$("#editPassword").modal("show");
 	});
+  $("input[name='PARTNER_PHOTO']").change(function(){
+    var input=this;
+     if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('img.foto').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+  });
+
+$("#editProfile").on("hidden.bs.modal",function(){
+  
+  $("img.foto").attr("src","<?php echo url('public/Assets/partnerPhoto/'.$partner['PARTNER_PHOTO'])?>");
+});
 </script>
 @stop

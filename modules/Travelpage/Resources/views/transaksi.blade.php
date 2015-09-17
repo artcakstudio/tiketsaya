@@ -51,8 +51,8 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                             <div class="info_travel" style="background-color: #fff; margin-top:10px; padding-left:20px">
                                 <p>{{Session::get('DATA_TRAVEL')['ROUTE_DEPARTURE']}} ke {{Session::get('DATA_TRAVEL')['ROUTE_DEST']}}</p>
                                 <p>Fasilitas : AC, Wifi, Musik, Makan 1x</p>
-                                <p>{{date('h:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))}} {{$day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME'])))-1]}}    {{Session::get('DATA_TRAVEL')['ROUTE_DEPARTURE']}}</p>
-                                <p>{{date('h:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME']))}} {{$day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME'])))-1]}}    {{Session::get('DATA_TRAVEL')['ROUTE_DEST']}}</p>
+                                <p>{{date('H:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))}} {{$day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME'])))-1]}}    {{Session::get('DATA_TRAVEL')['ROUTE_DEPARTURE']}}</p>
+                                <p>{{date('H:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME']))}} {{$day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME'])))-1]}}    {{Session::get('DATA_TRAVEL')['ROUTE_DEST']}}</p>
                             </div>
                         </div>
                         <!-- Isian  Data Penumpang -->

@@ -4,7 +4,8 @@
 @section('content')
 @parent
   @include('travel_partner.sidebar')
-                    <div class="row main-body col-md-9">
+                    
+                    <div class="header_backend">LIST TRANSAKSI</div> 
                       <table class=" table table-bordered" id="transaction-table">
                           <thead>
                               <tr>

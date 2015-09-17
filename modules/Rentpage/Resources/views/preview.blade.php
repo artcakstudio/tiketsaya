@@ -156,7 +156,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                                             <b>{{Session::get('DATA_RENT')['ROUTE_DEPARTURE']}}</b>
                                                         </td>
                                                         <td class="waktu_penerbangan_asal_1">
-                                                            <b><?php echo date('h:i', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></b><?php echo "  ". $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]?>
+                                                            <b><?php echo date('H:i', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></b><?php echo "  ". $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]?>
                                                         </td>
                                                     </tr> -->
                                                     <tr>
@@ -172,7 +172,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                                         </td>
                                                         <td class="waktu_penerbangan_tujuan_1">
                                                             <div class="tulisan_waktu_tujuan_1">
-                                                                <b><?php echo date('h:i', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]?>
+                                                                <b><?php echo date('H:i', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]?>
                                                             </div>
                                                         </td>
                                                     </tr> -->

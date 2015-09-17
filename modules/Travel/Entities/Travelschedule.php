@@ -2,6 +2,7 @@
    
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Carbon;
 class travelschedule extends Model {
 
 	protected $fillable = [];
@@ -11,7 +12,7 @@ class travelschedule extends Model {
 
     function scopegetScheduleDay($query,$tanggal){
     	return $query->select([DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'TRAVEL_SCHEDULE.*','VEHICLE_NAME'])
-                ->where('TRAVEL_SCHEDULE_DEPARTTIME','LIKE',$tanggal.'%')
+                ->whereDate('TRAVEL_SCHEDULE_DEPARTTIME','=',date('Y-m-d', strtotime($tanggal)))
     			->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID');
 
@@ -21,7 +22,7 @@ class travelschedule extends Model {
     }
     function scopetravelSchedule($query,$depart, $dest, $date){
         return $query->select(['TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'), 'PARTNER.*', 'VEHICLE_TYPE_NAME'])
-                ->where('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME','LIKE',$date.'%')
+                ->whereDate('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME','=', date('Y-m-d',strtotime($date)))
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
                 ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
                 ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
@@ -49,7 +50,7 @@ class travelschedule extends Model {
     }
     function scopegetScheduleDayPartner($query,$tanggal,$partner_id){
         return $query->select([DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'TRAVEL_SCHEDULE.*','VEHICLE_NAME', DB::raw('vehicle.VEHICLE_CAPACITY-totalpenumpang(TRAVEL_SCHEDULE_ID) as penumpang')])
-                ->where('TRAVEL_SCHEDULE_DEPARTTIME','LIKE',$tanggal.'%')
+                ->whereDate('TRAVEL_SCHEDULE_DEPARTTIME','=',date('Y-m-d',strtotime($tanggal)))
                 ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
                 ->where('VEHICLE.PARTNER_ID','=',$partner_id)
