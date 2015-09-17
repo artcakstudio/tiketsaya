@@ -3,7 +3,7 @@
 @parent
 	@include('travel_partner.sidebar')
     <?php $bulan=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];?>
-                 <div class="row main-body col-md-8">
+                 <div class="header_backend">JADWAL TRAVEL BULANAN</div>
            
                     <div class="row col-md-12" style="padding-right: 0px;width: 100%;">
 
@@ -12,7 +12,7 @@
                       <h4>back</h4>
                     </div>
                     <div  class="col-md-5">
-                        <h2 style="text-align:center">   <?php echo $bulan[date('m')*1]?> {{date('Y')}}</h2>
+                        <h2 style="text-align:center">   <?php echo $bulan[date('m',strtotime($date))-1]?> {{date('Y')}}</h2>
                     </div>
 
                     <div class="col-md-3" style="float:right" >

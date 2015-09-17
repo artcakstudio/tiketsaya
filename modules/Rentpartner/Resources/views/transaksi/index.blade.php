@@ -4,7 +4,7 @@
 @section('content')
 @parent
   @include('rent_partner.sidebar')
-                    <div class="row main-body col-md-9">
+                    <div class="header_backend">DAFTAR TRANSAKSI</div>
                       <table class=" table table-bordered" id="transaction-table">
                         <thead>
                             <tr>

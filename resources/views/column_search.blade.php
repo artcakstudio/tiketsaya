@@ -269,7 +269,6 @@ if (Session::has('search')){
 </script>
  <?php }
  else if(Session::get('search')['type']=='sewamob'){ 
-  print_r(Session::get('search'));
    echo '<script type="text/javascript">var type="'.Session::get("search")["type"].'"; var date="'.Session::get("search")["date"].'"; var city='.Session::get("search")["city"].'; var duration='.Session::get("duration").';'?>
  $("#"+type+" form select[name='CITY_ID']").val(city);
  $("#"+type+" form select[name='DURATION']").val(duration);

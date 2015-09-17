@@ -4,8 +4,7 @@
 @section('content')
 @parent
 	@include('rent_partner.sidebar')
-	                  <div class="row main-body col-md-9">
-	                  <label><h1 style="text-align:center">Profile</h1></label>
+	                  <div class="header_backend">PROFIL RENTAL PARTNER</div>
                     <div class="row">
                       <img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('public/Assets/partnerPhoto/'.$partner['PARTNER_PHOTO'])?>" width=180 height=100 >
                     </div>

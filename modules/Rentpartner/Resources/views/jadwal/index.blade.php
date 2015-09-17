@@ -4,10 +4,11 @@
   @include('rent_partner.sidebar')
     <?php 
     $bulan=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];?>
-                 <div class="row main-body col-md-8">
-           
-                    <div class="row col-md-12" style="padding-right: 0px;width: 100%;">
 
+                          
+                        <div class="row"> 
+                         <div class="header_backend">JADWAL RENTAL BULANAN</div>
+                    <div class="col-md-12" style="padding-right: 0px;width: 100%;">
                     <div class="col-md-3">      
                       <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
                       <h4>back</h4>
@@ -66,13 +67,13 @@
                             
                         </tr> 
                      </table>
+                     <button class="btn btn-primary" id="schedule_bulanan" >Tambah Schedule</button>
+                     <button class="btn btn-primary"  data-toggle="modal" data-target="#addScheduleMingguan">Tambah Schedule Mingguan</button>
                      </div>       
                      </div>
                      </div>
                      <div class="col-md-8" style="margin-left:25%">
                        
-                     <button class="btn btn-primary" id="schedule_bulanan" >Tambah Schedule</button>
-                     <button class="btn btn-primary"  data-toggle="modal" data-target="#addScheduleMingguan">Tambah Schedule Mingguan</button>
                      </div>
                     </div>
                 </div>

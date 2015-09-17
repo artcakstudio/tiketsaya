@@ -224,7 +224,11 @@
 
 <!-- Script for this page -->
 <script type="text/javascript">
-$( ".datepicker" ).datepicker('option',{changeMonth: true,changeYear: true,dateFormat: 'dd/mm/yy',minDate: 0});
+    $(".datepicker").datepicker({changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd/mm/yy", 
+        minDate: 0
+    });
 /* Curve chart ends */
 </script>
 

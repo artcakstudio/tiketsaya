@@ -3,7 +3,7 @@
 @section('content')
 @parent
   @include('rent_partner.sidebar')
-          <div class="row main-body col-md-9">
+          <div class="header_backend">DAFTAR ARMADA </div>
             <table class=" table table-bordered" id="vehicle-table">
               <thead>
                     <tr>

@@ -3,9 +3,10 @@
 @parent
     @include('rent_partner.sidebar')
     <?php $bulan=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];?>
-                <div class="row main-body col-md-9">        
-                    <div class="row col-md-12">
-
+               
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="header_backend">JADWAL RENTAL HARIAN</div>
                     <div class="col-md-3">      
                       <a href="<?php echo date('Y-m-d', strtotime(' -1 day',strtotime($tanggal)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
                       <h4>back</h4>
