@@ -14,9 +14,10 @@
     {!! Html::style('assets/css/travel.css')!!}
     {!! Html::script('assets/js/jquery.min.js')!!}
     {!! Html::script('assets/js/bootstrap.min.js')!!}
-    
+    @yield('custom_css')
     {!! HTML::script('assets/js/jquery.dataTables.min.js')!!} <!-- Data tables -->
     {!! HTML::script('assets/js/jquery-ui.js')!!} <!-- jQuery UI -->
+    @yield('custom_js')
 </head>
 <body>
 
