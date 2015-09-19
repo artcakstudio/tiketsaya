@@ -1,129 +1,266 @@
-/*
-SQLyog Enterprise - MySQL GUI v8.1 
-MySQL - 5.6.21 : Database - travelaja
-*********************************************************************
-*/
+-- phpMyAdmin SQL Dump
+-- version 4.4.14
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Sep 20, 2015 at 01:21 AM
+-- Server version: 5.6.26
+-- PHP Version: 5.6.12
 
-/*!40101 SET NAMES utf8 */;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
-/*!40101 SET SQL_MODE=''*/;
 
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`travelaja` /*!40100 DEFAULT CHARACTER SET latin1 */;
+--
+-- Database: `travelaja`
+--
 
-USE `travelaja`;
+DELIMITER $$
+--
+-- Functions
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `getCityName`(ID varchar(100)) RETURNS varchar(100) CHARSET latin1
+BEGIN
+	DECLARE NAMA VARCHAR(100);
+	SELECT CITY_NAME INTO NAMA FROM CITY WHERE CITY_ID=ID;
+	RETURN NAMA;
+    END$$
 
-/*Table structure for table `city` */
+CREATE DEFINER=`root`@`localhost` FUNCTION `rent_code`() RETURNS varchar(20) CHARSET latin1
+BEGIN
+	DECLARE transaksicode VARCHAR(20);
+	DECLARE temp VARCHAR(20);
+	SELECT MAX(RENT_TRANSACTION_CODE) INTO transaksicode FROM RENT_TRANSACTION;
+	
+	IF transaksicode IS NULL THEN SET transaksicode='1';
+	ELSE  SET transaksicode=SUBSTR(transaksicode,5,1)+1;
+	END IF;
+	
+	SET transaksicode=CONCAT('RENT_',transaksicode);
+	RETURN transaksicode;
+    END$$
 
-DROP TABLE IF EXISTS `city`;
+CREATE DEFINER=`root`@`localhost` FUNCTION `travel_code`() RETURNS varchar(20) CHARSET latin1
+BEGIN
+	DECLARE transaksicode VARCHAR(20);
+	DECLARE temp VARCHAR(20);
+	SELECT MAX(TRAVEL_TRANSACTION_CODE) INTO transaksicode FROM TRAVEL_TRANSACTION;
+	
+	iF transaksicode IS NULL THEN SET transaksicode='1';
+	ELSE  SET transaksicode=SUBSTR(transaksicode,8,1)+1;
+	END IF;
+	
+	SET transaksicode=CONCAT('TRAVEL_',transaksicode);
+	RETURN transaksicode;
+    END$$
 
-CREATE TABLE `city` (
-  `CITY_ID` int(11) NOT NULL AUTO_INCREMENT,
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `city`
+--
+
+CREATE TABLE IF NOT EXISTS `city` (
+  `CITY_ID` int(11) NOT NULL,
   `CITY_NAME` varchar(100) DEFAULT NULL,
   `CITY_UPDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `CITY_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `CITY_UPDATEBY` int(11) DEFAULT NULL,
-  `CITY_CREATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`CITY_ID`)
+  `CITY_CREATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
-/*Data for the table `city` */
+--
+-- Dumping data for table `city`
+--
 
-insert  into `city`(CITY_ID,CITY_NAME,CITY_UPDATE,CITY_CREATE,CITY_UPDATEBY,CITY_CREATEBY) values (1,'surabaya','2015-08-27 03:40:14','0000-00-00 00:00:00',NULL,NULL),(2,'malang','2015-08-18 20:21:46','2015-08-18 20:21:46',NULL,NULL),(3,'jakarta','2015-08-27 10:39:53','2015-08-27 10:39:53',NULL,NULL),(4,'jogjakarta','2015-08-27 10:40:00','2015-08-27 10:40:00',NULL,NULL),(5,'Bali','2015-08-27 10:40:06','2015-08-27 10:40:06',NULL,NULL),(6,'Banyuwangi','2015-08-27 10:40:22','2015-08-27 10:40:22',NULL,NULL);
+INSERT INTO `city` (`CITY_ID`, `CITY_NAME`, `CITY_UPDATE`, `CITY_CREATE`, `CITY_UPDATEBY`, `CITY_CREATEBY`) VALUES
+(1, 'surabaya', '2015-08-26 20:40:14', '0000-00-00 00:00:00', NULL, NULL),
+(2, 'malang', '2015-08-18 13:21:46', '2015-08-18 13:21:46', NULL, NULL),
+(3, 'jakarta', '2015-08-27 03:39:53', '2015-08-27 03:39:53', NULL, NULL),
+(4, 'jogjakarta', '2015-08-27 03:40:00', '2015-08-27 03:40:00', NULL, NULL),
+(5, 'Bali', '2015-08-27 03:40:06', '2015-08-27 03:40:06', NULL, NULL),
+(6, 'Banyuwangi', '2015-08-27 03:40:22', '2015-08-27 03:40:22', NULL, NULL);
 
-/*Table structure for table `costumer` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `costumer`;
+--
+-- Table structure for table `costumer`
+--
 
-CREATE TABLE `costumer` (
+CREATE TABLE IF NOT EXISTS `costumer` (
   `COSTUMER_NAME` varchar(100) DEFAULT NULL,
   `COSTUMER_EMAIL` varchar(100) DEFAULT NULL,
   `COSTUMER_TELP` varchar(100) DEFAULT NULL,
-  `COSTUMER_ID` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`COSTUMER_ID`)
+  `COSTUMER_ID` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
 
-/*Data for the table `costumer` */
+--
+-- Dumping data for table `costumer`
+--
 
-insert  into `costumer`(COSTUMER_NAME,COSTUMER_EMAIL,COSTUMER_TELP,COSTUMER_ID) values ('RIPAS','ripas@gmail.com','123',1),('RIPAS','ripas@gmail.com','123',2),('RIPAS','ripas@gmail.com','123',3),('RIPAS','ripas@gmail.com','123',4),('RIPAS','ripas@gmail.com','123',5),('RIPAS','ripas@gmail.com','123',6),('RIPAS','ripas@gmail.com','123',7),('RIPAS','ripas@gmail.com','123',8),('RIPAS','ripas@gmail.com','123',9),('RIPAS','ripas@gmail.com','123',10),('RIPAS','ripas@gmail.com','123',11),('RIPAS','ripas@gmail.com','123',12),('RIPAS','ripas@gmail.com','123',13),('RIPAS','ripas@gmail.com','123',14),('RIPAS','ripas@gmail.com','123',15),('RIPAS','ripas@gmail.com','123',16),('RIPAS','ripas@gmail.com','123',17),('RIPAS','ripas@gmail.com','123',18),('RIPAS','ripas@gmail.com','123',19),('RIPAS','ripas@gmail.com','123',20),('RIPAS','ripas@gmail.com','123',21),('RIPAS','ripas@gmail.com','123',22),('RIPAS','ripas@gmail.com','123',23),('RIPAS','ripas@gmail.com','123',24),('RIPAS','ripas@gmail.com','123',25),('RIPAS','ripas@gmail.com','123',26),('RIPAS','ripas@gmail.com','123',27),('RIPAS','ripas@gmail.com','123',28),('RIPAS','ripas@gmail.com','123',29),('RIPAS','ripas@gmail.com','123',30),('RIPAS','ripas@gmail.com','123',31),('RIPAS','ripas@gmail.com','123',32),('RIPAS','ripas@gmail.com','123',33),('RIPAS','ripas@gmail.com','123',34),('RIPAS','ripas@gmail.com','123',35),('RIPAS','ripas@gmail.com','123',36),('RIPAS','ripas@gmail.com','123',37),('RIPAS','ripas@gmail.com','123',38),('RIPAS','ripas@gmail.com','123',39),('RIPAS','ripas@gmail.com','123',40),('RIPAS','ripas@gmail.com','123',41),('RIPAS','ripas@gmail.com','123',42),('RIPAS','ripas@gmail.com','123',43),('RIPAS','ripas@gmail.com','123',44),('RIPAS','ripas@gmail.com','123',45),('Ripas','ripas@gmail.com','080',46),('RIPAS','ripas@gmail.com','123',47),('RIPAS','ripas@gmail.com','123',48),('LAVE','VELA@LALA.COM','9080',49),('Ripas','VELA@LALA.COM','123',50),('RIPAS','VELA@LALA.COM','9080',51),('Ripas','VELA@LALA.COM','123',52),('Ripas Filqadar','ripas@gmail.com','8238816053',53);
+INSERT INTO `costumer` (`COSTUMER_NAME`, `COSTUMER_EMAIL`, `COSTUMER_TELP`, `COSTUMER_ID`) VALUES
+('RIPAS', 'ripas@gmail.com', '123', 1),
+('RIPAS', 'ripas@gmail.com', '123', 2),
+('RIPAS', 'ripas@gmail.com', '123', 3),
+('RIPAS', 'ripas@gmail.com', '123', 4),
+('RIPAS', 'ripas@gmail.com', '123', 5),
+('RIPAS', 'ripas@gmail.com', '123', 6),
+('RIPAS', 'ripas@gmail.com', '123', 7),
+('RIPAS', 'ripas@gmail.com', '123', 8),
+('RIPAS', 'ripas@gmail.com', '123', 9),
+('RIPAS', 'ripas@gmail.com', '123', 10),
+('RIPAS', 'ripas@gmail.com', '123', 11),
+('RIPAS', 'ripas@gmail.com', '123', 12),
+('RIPAS', 'ripas@gmail.com', '123', 13),
+('RIPAS', 'ripas@gmail.com', '123', 14),
+('RIPAS', 'ripas@gmail.com', '123', 15),
+('RIPAS', 'ripas@gmail.com', '123', 16),
+('RIPAS', 'ripas@gmail.com', '123', 17),
+('RIPAS', 'ripas@gmail.com', '123', 18),
+('RIPAS', 'ripas@gmail.com', '123', 19),
+('RIPAS', 'ripas@gmail.com', '123', 20),
+('RIPAS', 'ripas@gmail.com', '123', 21),
+('RIPAS', 'ripas@gmail.com', '123', 22),
+('RIPAS', 'ripas@gmail.com', '123', 23),
+('RIPAS', 'ripas@gmail.com', '123', 24),
+('RIPAS', 'ripas@gmail.com', '123', 25),
+('RIPAS', 'ripas@gmail.com', '123', 26),
+('RIPAS', 'ripas@gmail.com', '123', 27),
+('RIPAS', 'ripas@gmail.com', '123', 28),
+('RIPAS', 'ripas@gmail.com', '123', 29),
+('RIPAS', 'ripas@gmail.com', '123', 30),
+('RIPAS', 'ripas@gmail.com', '123', 31),
+('RIPAS', 'ripas@gmail.com', '123', 32),
+('RIPAS', 'ripas@gmail.com', '123', 33),
+('RIPAS', 'ripas@gmail.com', '123', 34),
+('RIPAS', 'ripas@gmail.com', '123', 35),
+('RIPAS', 'ripas@gmail.com', '123', 36),
+('RIPAS', 'ripas@gmail.com', '123', 37),
+('RIPAS', 'ripas@gmail.com', '123', 38),
+('RIPAS', 'ripas@gmail.com', '123', 39),
+('RIPAS', 'ripas@gmail.com', '123', 40),
+('RIPAS', 'ripas@gmail.com', '123', 41),
+('RIPAS', 'ripas@gmail.com', '123', 42),
+('RIPAS', 'ripas@gmail.com', '123', 43),
+('RIPAS', 'ripas@gmail.com', '123', 44),
+('RIPAS', 'ripas@gmail.com', '123', 45),
+('Ripas', 'ripas@gmail.com', '080', 46),
+('RIPAS', 'ripas@gmail.com', '123', 47),
+('RIPAS', 'ripas@gmail.com', '123', 48),
+('LAVE', 'VELA@LALA.COM', '9080', 49),
+('Ripas', 'VELA@LALA.COM', '123', 50),
+('RIPAS', 'VELA@LALA.COM', '9080', 51),
+('Ripas', 'VELA@LALA.COM', '123', 52),
+('Ripas Filqadar', 'ripas@gmail.com', '8238816053', 53);
 
-/*Table structure for table `day` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `day`;
+--
+-- Table structure for table `day`
+--
 
-CREATE TABLE `day` (
-  `DAY_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `DAY_NAME` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`DAY_ID`)
+CREATE TABLE IF NOT EXISTS `day` (
+  `DAY_ID` int(11) NOT NULL,
+  `DAY_NAME` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
-/*Data for the table `day` */
+--
+-- Dumping data for table `day`
+--
 
-insert  into `day`(DAY_ID,DAY_NAME) values (1,'MONDAY'),(2,'TUESDAY'),(3,'WEDNESDAY'),(4,'THURSDAY'),(5,'FRIDAY'),(6,'SATURDAY'),(7,'SUNDAY');
+INSERT INTO `day` (`DAY_ID`, `DAY_NAME`) VALUES
+(1, 'MONDAY'),
+(2, 'TUESDAY'),
+(3, 'WEDNESDAY'),
+(4, 'THURSDAY'),
+(5, 'FRIDAY'),
+(6, 'SATURDAY'),
+(7, 'SUNDAY');
 
-/*Table structure for table `hak_akses` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `hak_akses`;
+--
+-- Table structure for table `hak_akses`
+--
 
-CREATE TABLE `hak_akses` (
+CREATE TABLE IF NOT EXISTS `hak_akses` (
   `ROLES_ID` int(11) NOT NULL,
   `MODULES_ID` int(11) NOT NULL,
   `SUB_MODULES_ID` int(11) DEFAULT NULL,
-  `HAK_AKSES` int(11) DEFAULT NULL,
-  KEY `FK_hak_akses` (`ROLES_ID`),
-  CONSTRAINT `FK_hak_akses` FOREIGN KEY (`ROLES_ID`) REFERENCES `roles` (`ROLES_ID`) ON DELETE CASCADE
+  `HAK_AKSES` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `hak_akses` */
+--
+-- Dumping data for table `hak_akses`
+--
 
-insert  into `hak_akses`(ROLES_ID,MODULES_ID,SUB_MODULES_ID,HAK_AKSES) values (2,2,3,NULL),(2,2,2,NULL);
+INSERT INTO `hak_akses` (`ROLES_ID`, `MODULES_ID`, `SUB_MODULES_ID`, `HAK_AKSES`) VALUES
+(2, 2, 3, NULL),
+(2, 2, 2, NULL);
 
-/*Table structure for table `link_rent` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `link_rent`;
+--
+-- Table structure for table `link_rent`
+--
 
-CREATE TABLE `link_rent` (
-  `LINK_RENT_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `link_rent` (
+  `LINK_RENT_ID` int(11) NOT NULL,
   `LINK_RENT_NAME` varchar(1000) DEFAULT NULL,
   `LINK_RENT_CITY` int(11) DEFAULT NULL,
   `LINK_RENT_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `LINK_RENT_CREATEBY` int(11) DEFAULT NULL,
   `LINK_RENT_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `LINK_RENT_UPDATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`LINK_RENT_ID`)
+  `LINK_RENT_UPDATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
-/*Data for the table `link_rent` */
+--
+-- Dumping data for table `link_rent`
+--
 
-insert  into `link_rent`(LINK_RENT_ID,LINK_RENT_NAME,LINK_RENT_CITY,LINK_RENT_CREATE,LINK_RENT_CREATEBY,LINK_RENT_UPDATE,LINK_RENT_UPDATEBY) values (2,NULL,1,'2015-09-10 16:23:40',1,'0000-00-00 00:00:00',NULL);
+INSERT INTO `link_rent` (`LINK_RENT_ID`, `LINK_RENT_NAME`, `LINK_RENT_CITY`, `LINK_RENT_CREATE`, `LINK_RENT_CREATEBY`, `LINK_RENT_UPDATE`, `LINK_RENT_UPDATEBY`) VALUES
+(2, NULL, 1, '2015-09-10 09:23:40', 1, '0000-00-00 00:00:00', NULL);
 
-/*Table structure for table `link_travel` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `link_travel`;
+--
+-- Table structure for table `link_travel`
+--
 
-CREATE TABLE `link_travel` (
-  `LINK_TRAVEL_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `link_travel` (
+  `LINK_TRAVEL_ID` int(11) NOT NULL,
   `LINK_TRAVEL_NAME` varchar(100) DEFAULT NULL,
   `LINK_TRAVEL_DEST` int(11) DEFAULT NULL,
   `LINK_TRAVEL_DEPARTURE` int(11) DEFAULT NULL,
   `LINK_TRAVEL_CREATEBY` int(11) DEFAULT NULL,
   `LINK_TRAVEL_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `LINK_TRAVEL_UPDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`LINK_TRAVEL_ID`)
+  `LINK_TRAVEL_UPDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
-/*Data for the table `link_travel` */
+--
+-- Dumping data for table `link_travel`
+--
 
-insert  into `link_travel`(LINK_TRAVEL_ID,LINK_TRAVEL_NAME,LINK_TRAVEL_DEST,LINK_TRAVEL_DEPARTURE,LINK_TRAVEL_CREATEBY,LINK_TRAVEL_CREATE,LINK_TRAVEL_UPDATE) values (1,'bandung ke malang',1,2,NULL,'2015-09-10 13:58:46','2015-09-10 13:58:46'),(2,NULL,3,1,1,'2015-09-10 14:12:15','2015-09-10 14:12:15'),(4,NULL,5,6,1,'2015-09-10 15:43:59','2015-09-10 15:43:59');
+INSERT INTO `link_travel` (`LINK_TRAVEL_ID`, `LINK_TRAVEL_NAME`, `LINK_TRAVEL_DEST`, `LINK_TRAVEL_DEPARTURE`, `LINK_TRAVEL_CREATEBY`, `LINK_TRAVEL_CREATE`, `LINK_TRAVEL_UPDATE`) VALUES
+(1, 'bandung ke malang', 1, 2, NULL, '2015-09-10 06:58:46', '2015-09-10 06:58:46'),
+(2, NULL, 3, 1, 1, '2015-09-10 07:12:15', '2015-09-10 07:12:15'),
+(4, NULL, 5, 6, 1, '2015-09-10 08:43:59', '2015-09-10 08:43:59');
 
-/*Table structure for table `log_transaction` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `log_transaction`;
+--
+-- Table structure for table `log_transaction`
+--
 
-CREATE TABLE `log_transaction` (
-  `LOG_TRANSACTION_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `log_transaction` (
+  `LOG_TRANSACTION_ID` int(11) NOT NULL,
   `TRANSACTION_TYPE_ID` int(11) DEFAULT NULL,
   `TRA_TRANSACTION_TYPE_ID` int(11) DEFAULT NULL,
   `TRA_TRANSACTION_TYPE_ID2` int(11) DEFAULT NULL,
@@ -131,67 +268,67 @@ CREATE TABLE `log_transaction` (
   `TICKET_TRANSACTION_ID` int(11) DEFAULT NULL,
   `LOG_TRANSACTION_ACTIVITY` varchar(100) DEFAULT NULL,
   `LOG_TRANSACTION_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `LOG_TRANSACTION_CREATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`LOG_TRANSACTION_ID`),
-  KEY `FK_RELATIONSHIP_2` (`TICKET_TRANSACTION_ID`),
-  KEY `FK_RELATIONSHIP_31` (`TRAVEL_TRANSACTION_ID`),
-  KEY `FK_RELATIONSHIP_38` (`TRA_TRANSACTION_TYPE_ID`),
-  KEY `FK_RELATIONSHIP_39` (`TRA_TRANSACTION_TYPE_ID2`),
-  KEY `FK_RELATIONSHIP_40` (`TRANSACTION_TYPE_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_2` FOREIGN KEY (`TICKET_TRANSACTION_ID`) REFERENCES `ticket_transaction` (`TICKET_TRANSACTION_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_31` FOREIGN KEY (`TRAVEL_TRANSACTION_ID`) REFERENCES `travel_transaction` (`TRAVEL_TRANSACTION_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_38` FOREIGN KEY (`TRA_TRANSACTION_TYPE_ID`) REFERENCES `transaction_type` (`TRANSACTION_TYPE_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_39` FOREIGN KEY (`TRA_TRANSACTION_TYPE_ID2`) REFERENCES `transaction_type` (`TRANSACTION_TYPE_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_40` FOREIGN KEY (`TRANSACTION_TYPE_ID`) REFERENCES `transaction_type` (`TRANSACTION_TYPE_ID`)
+  `LOG_TRANSACTION_CREATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `log_transaction` */
+-- --------------------------------------------------------
 
-/*Table structure for table `member` */
+--
+-- Table structure for table `member`
+--
 
-DROP TABLE IF EXISTS `member`;
-
-CREATE TABLE `member` (
+CREATE TABLE IF NOT EXISTS `member` (
   `MEMBER_EMAIL` varchar(100) DEFAULT NULL,
-  `MEMBER_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MEMBER_ID` int(11) NOT NULL,
   `MEMBER_NAME` varchar(100) DEFAULT NULL,
   `MEMBER_PASSWORD` varchar(100) DEFAULT NULL,
   `MEMBER_USERNAME` varchar(100) DEFAULT NULL,
   `MEMBER_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `MEMBER_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `MEMBER_CREATEBY` int(11) DEFAULT NULL,
-  `MEMBER_UPDATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`MEMBER_ID`)
+  `MEMBER_UPDATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
-/*Data for the table `member` */
+--
+-- Dumping data for table `member`
+--
 
-insert  into `member`(MEMBER_EMAIL,MEMBER_ID,MEMBER_NAME,MEMBER_PASSWORD,MEMBER_USERNAME,MEMBER_CREATE,MEMBER_UPDATE,MEMBER_CREATEBY,MEMBER_UPDATEBY) values (NULL,1,'ripas','123','ripas','2015-08-21 14:42:52','0000-00-00 00:00:00',NULL,NULL),('ripas',2,'RIpas','202cb962ac59075b964b07152d234b70','123','2015-08-27 14:59:33','0000-00-00 00:00:00',NULL,NULL),('ripas',3,'RIpas','202cb962ac59075b964b07152d234b70','ripas','2015-08-27 15:29:02','0000-00-00 00:00:00',NULL,NULL);
+INSERT INTO `member` (`MEMBER_EMAIL`, `MEMBER_ID`, `MEMBER_NAME`, `MEMBER_PASSWORD`, `MEMBER_USERNAME`, `MEMBER_CREATE`, `MEMBER_UPDATE`, `MEMBER_CREATEBY`, `MEMBER_UPDATEBY`) VALUES
+(NULL, 1, 'ripas', '123', 'ripas', '2015-08-21 07:42:52', '0000-00-00 00:00:00', NULL, NULL),
+('ripas', 2, 'RIpas', '202cb962ac59075b964b07152d234b70', '123', '2015-08-27 07:59:33', '0000-00-00 00:00:00', NULL, NULL),
+('ripas', 3, 'RIpas', '202cb962ac59075b964b07152d234b70', 'ripas', '2015-08-27 08:29:02', '0000-00-00 00:00:00', NULL, NULL);
 
-/*Table structure for table `modules` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `modules`;
+--
+-- Table structure for table `modules`
+--
 
-CREATE TABLE `modules` (
-  `MODULES_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `modules` (
+  `MODULES_ID` int(11) NOT NULL,
   `MODULES_NAME` varchar(100) DEFAULT NULL,
   `MODULES_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `MODULES_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `MODULES_CREATEBY` int(11) DEFAULT NULL,
-  `MODULES_UPDATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`MODULES_ID`)
+  `MODULES_UPDATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
-/*Data for the table `modules` */
+--
+-- Dumping data for table `modules`
+--
 
-insert  into `modules`(MODULES_ID,MODULES_NAME,MODULES_CREATE,MODULES_UPDATE,MODULES_CREATEBY,MODULES_UPDATEBY) values (1,'user management','2015-08-13 14:21:54','0000-00-00 00:00:00',NULL,NULL),(2,'tes','2015-08-18 10:39:59','0000-00-00 00:00:00',NULL,NULL);
+INSERT INTO `modules` (`MODULES_ID`, `MODULES_NAME`, `MODULES_CREATE`, `MODULES_UPDATE`, `MODULES_CREATEBY`, `MODULES_UPDATEBY`) VALUES
+(1, 'user management', '2015-08-13 07:21:54', '0000-00-00 00:00:00', NULL, NULL),
+(2, 'tes', '2015-08-18 03:39:59', '0000-00-00 00:00:00', NULL, NULL);
 
-/*Table structure for table `partner` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `partner`;
+--
+-- Table structure for table `partner`
+--
 
-CREATE TABLE `partner` (
-  `PARTNER_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `partner` (
+  `PARTNER_ID` int(11) NOT NULL,
   `PARTNER_NAME` varchar(100) DEFAULT NULL,
   `PARTNER_ADDRESS` varchar(400) DEFAULT NULL,
   `PARTNER_TELP` varchar(20) DEFAULT NULL,
@@ -204,146 +341,289 @@ CREATE TABLE `partner` (
   `PARTNER_USERNAME` varchar(100) DEFAULT NULL,
   `PARTNER_PASSWORD` varchar(100) DEFAULT NULL,
   `PARTNER_EMAIL` varchar(50) DEFAULT NULL,
-  `PARTNER_TYPE_ID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`PARTNER_ID`),
-  KEY `FK_partner` (`PARTNER_TYPE_ID`),
-  CONSTRAINT `FK_partner` FOREIGN KEY (`PARTNER_TYPE_ID`) REFERENCES `partner_type` (`PARTNER_TYPE_ID`)
+  `PARTNER_TYPE_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
-/*Data for the table `partner` */
+--
+-- Dumping data for table `partner`
+--
 
-insert  into `partner`(PARTNER_ID,PARTNER_NAME,PARTNER_ADDRESS,PARTNER_TELP,PARTNER_DESCRIPTION,PARTNER_CREATE,PARTNER_UPDATE,PARTNER_CREATEBY,PARTNER_UPDATEBY,PARTNER_PHOTO,PARTNER_USERNAME,PARTNER_PASSWORD,PARTNER_EMAIL,PARTNER_TYPE_ID) values (1,'ripas','surabaya','0808','lalla','2015-09-09 10:59:17','0000-00-00 00:00:00',NULL,NULL,'63d59d4d106fcf4f2a18a64b7ecac759.png','','202cb962ac59075b964b07152d234b70','ro@ss.com',NULL),(4,'Ripas','surabaya','08080','','2015-09-09 10:59:17','0000-00-00 00:00:00',0,NULL,'3e5b362b396b92bc57127477e66d7dc6.png','ripas','202cb962ac59075b964b07152d234b70',NULL,NULL),(5,'lalal','aalla','090','lla','2015-09-09 10:59:17','0000-00-00 00:00:00',0,NULL,'63d59d4d106fcf4f2a18a64b7ecac759.png','1234','202cb962ac59075b964b07152d234b70','ripas@gmail.com',1),(6,'lalal','aalla','090','lla','2015-09-09 16:25:29','0000-00-00 00:00:00',0,NULL,'6186b21aee634d8586c2f42b21f228cb.png','123','202cb962ac59075b964b07152d234b70','ripas@gmil.com',1),(7,'Ripas','surabaya','08080','','2015-09-09 14:11:49','0000-00-00 00:00:00',0,NULL,'2b908368195a845925b01d4566b82cd6.png','ripas','202cb962ac59075b964b07152d234b70','ripas@gmil.com',2),(8,'Ripas','surabaya','08080','','2015-09-04 13:30:33','0000-00-00 00:00:00',0,1,'5757add68791618f7055ad5f08a43b00.png','ripas123','202cb962ac59075b964b07152d234b70','',1),(9,'Ripas','surabaya','08080','','2015-09-09 10:59:17','0000-00-00 00:00:00',0,NULL,'11816039_10203743388660082_1984388789_n.jpg','ripas123','202cb962ac59075b964b07152d234b70','ripas@gmil.com',2),(10,'','','','','2015-09-09 10:59:17','0000-00-00 00:00:00',0,NULL,NULL,'','202cb962ac59075b964b07152d234b70',NULL,1),(11,'INDRA RENTAL','Jl. Penjaringan Timur 5 PD 30','011111111','Rental Mobil','2015-09-09 10:59:17','0000-00-00 00:00:00',0,NULL,NULL,'indra','202cb962ac59075b964b07152d234b70',NULL,2),(12,'Ferdy Travel','Jl Wisma Penjaringan Sari 2','032322222','Travel agent terpercaya','2015-09-09 11:07:44','0000-00-00 00:00:00',0,NULL,'sadadad.png','ferdi','e10adc3949ba59abbe56e057f20f883e',NULL,1);
+INSERT INTO `partner` (`PARTNER_ID`, `PARTNER_NAME`, `PARTNER_ADDRESS`, `PARTNER_TELP`, `PARTNER_DESCRIPTION`, `PARTNER_CREATE`, `PARTNER_UPDATE`, `PARTNER_CREATEBY`, `PARTNER_UPDATEBY`, `PARTNER_PHOTO`, `PARTNER_USERNAME`, `PARTNER_PASSWORD`, `PARTNER_EMAIL`, `PARTNER_TYPE_ID`) VALUES
+(1, 'ripas', 'surabaya', '0808', 'lalla', '2015-09-09 03:59:17', '0000-00-00 00:00:00', NULL, NULL, '63d59d4d106fcf4f2a18a64b7ecac759.png', '', '202cb962ac59075b964b07152d234b70', 'ro@ss.com', NULL),
+(4, 'Ripas', 'surabaya', '08080', '', '2015-09-09 03:59:17', '0000-00-00 00:00:00', 0, NULL, '3e5b362b396b92bc57127477e66d7dc6.png', 'ripas', '202cb962ac59075b964b07152d234b70', NULL, NULL),
+(5, 'lalal', 'aalla', '090', 'lla', '2015-09-09 03:59:17', '0000-00-00 00:00:00', 0, NULL, '63d59d4d106fcf4f2a18a64b7ecac759.png', '1234', '202cb962ac59075b964b07152d234b70', 'ripas@gmail.com', 1),
+(6, 'lalal', 'aalla', '090', 'lla', '2015-09-09 09:25:29', '0000-00-00 00:00:00', 0, NULL, '6186b21aee634d8586c2f42b21f228cb.png', '123', '202cb962ac59075b964b07152d234b70', 'ripas@gmil.com', 1),
+(7, 'Ripas', 'surabaya', '08080', '', '2015-09-09 07:11:49', '0000-00-00 00:00:00', 0, NULL, '2b908368195a845925b01d4566b82cd6.png', 'ripas', '202cb962ac59075b964b07152d234b70', 'ripas@gmil.com', 2),
+(8, 'Ripas', 'surabaya', '08080', '', '2015-09-04 06:30:33', '0000-00-00 00:00:00', 0, 1, '5757add68791618f7055ad5f08a43b00.png', 'ripas123', '202cb962ac59075b964b07152d234b70', '', 1),
+(9, 'Ripas', 'surabaya', '08080', '', '2015-09-09 03:59:17', '0000-00-00 00:00:00', 0, NULL, '11816039_10203743388660082_1984388789_n.jpg', 'ripas123', '202cb962ac59075b964b07152d234b70', 'ripas@gmil.com', 2),
+(10, '', '', '', '', '2015-09-09 03:59:17', '0000-00-00 00:00:00', 0, NULL, NULL, '', '202cb962ac59075b964b07152d234b70', NULL, 1),
+(11, 'INDRA RENTAL', 'Jl. Penjaringan Timur 5 PD 30', '011111111', 'Rental Mobil', '2015-09-09 03:59:17', '0000-00-00 00:00:00', 0, NULL, NULL, 'indra', '202cb962ac59075b964b07152d234b70', NULL, 2),
+(12, 'Ferdy Travel', 'Jl Wisma Penjaringan Sari 2', '032322222', 'Travel agent terpercaya', '2015-09-09 04:07:44', '0000-00-00 00:00:00', 0, NULL, 'sadadad.png', 'ferdi', 'e10adc3949ba59abbe56e057f20f883e', NULL, 1);
 
-/*Table structure for table `partner_type` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `partner_type`;
+--
+-- Table structure for table `partner_type`
+--
 
-CREATE TABLE `partner_type` (
-  `PARTNER_TYPE_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `partner_type` (
+  `PARTNER_TYPE_ID` int(11) NOT NULL,
   `PARTNER_TYPE_NAME` varchar(100) DEFAULT NULL,
   `PARTNER_TYPE_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `PARTNER_TYPE_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `PARTNER_TYPE_CREATEBY` int(11) DEFAULT NULL,
-  `PARTNER_TYPE_UPDATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`PARTNER_TYPE_ID`)
+  `PARTNER_TYPE_UPDATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
-/*Data for the table `partner_type` */
+--
+-- Dumping data for table `partner_type`
+--
 
-insert  into `partner_type`(PARTNER_TYPE_ID,PARTNER_TYPE_NAME,PARTNER_TYPE_CREATE,PARTNER_TYPE_UPDATE,PARTNER_TYPE_CREATEBY,PARTNER_TYPE_UPDATEBY) values (1,'TRAVEL_AGENT','2015-08-27 10:03:27','0000-00-00 00:00:00',NULL,NULL),(2,'RENTAL_AGENT','2015-08-27 10:03:33','0000-00-00 00:00:00',NULL,NULL);
+INSERT INTO `partner_type` (`PARTNER_TYPE_ID`, `PARTNER_TYPE_NAME`, `PARTNER_TYPE_CREATE`, `PARTNER_TYPE_UPDATE`, `PARTNER_TYPE_CREATEBY`, `PARTNER_TYPE_UPDATEBY`) VALUES
+(1, 'TRAVEL_AGENT', '2015-08-27 03:03:27', '0000-00-00 00:00:00', NULL, NULL),
+(2, 'RENTAL_AGENT', '2015-08-27 03:03:33', '0000-00-00 00:00:00', NULL, NULL);
 
-/*Table structure for table `passenger_detail` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `passenger_detail`;
+--
+-- Table structure for table `passenger_detail`
+--
 
-CREATE TABLE `passenger_detail` (
+CREATE TABLE IF NOT EXISTS `passenger_detail` (
   `TICKET_TRANSACTION_ID` int(11) DEFAULT NULL,
   `PASSENGER_DETAIL_NAME` varchar(100) DEFAULT NULL,
   `PASSENGER_DETAIL_KTP` varchar(100) DEFAULT NULL,
   `PASSENGER_DETAIL_TITTLE` varchar(10) DEFAULT NULL,
-  `PASSENGER_DETAIL_TELP` varchar(50) DEFAULT NULL,
-  KEY `FK_RELATIONSHIP_41` (`TICKET_TRANSACTION_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_41` FOREIGN KEY (`TICKET_TRANSACTION_ID`) REFERENCES `ticket_transaction` (`TICKET_TRANSACTION_ID`)
+  `PASSENGER_DETAIL_TELP` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `passenger_detail` */
+-- --------------------------------------------------------
 
-/*Table structure for table `penggunaxroles` */
+--
+-- Table structure for table `penggunaxroles`
+--
 
-DROP TABLE IF EXISTS `penggunaxroles`;
-
-CREATE TABLE `penggunaxroles` (
+CREATE TABLE IF NOT EXISTS `penggunaxroles` (
   `USERS_ID` int(11) NOT NULL,
-  `ROLES_ID` int(11) NOT NULL,
-  PRIMARY KEY (`USERS_ID`,`ROLES_ID`),
-  KEY `FK_RELATIONSHIP_6` (`ROLES_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_5` FOREIGN KEY (`USERS_ID`) REFERENCES `users` (`USERS_ID`) ON DELETE CASCADE,
-  CONSTRAINT `FK_RELATIONSHIP_6` FOREIGN KEY (`ROLES_ID`) REFERENCES `roles` (`ROLES_ID`) ON DELETE CASCADE
+  `ROLES_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `penggunaxroles` */
+-- --------------------------------------------------------
 
-/*Table structure for table `point` */
+--
+-- Table structure for table `point`
+--
 
-DROP TABLE IF EXISTS `point`;
-
-CREATE TABLE `point` (
-  `POINT_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `point` (
+  `POINT_ID` int(11) NOT NULL,
   `POINT_STATUS_ID` int(11) DEFAULT NULL,
   `POINT_NAME` varchar(100) DEFAULT NULL,
   `POINT_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `POINT_CREATEBY` int(11) DEFAULT NULL,
   `POINT_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `POINT_UPDATEBY` int(11) DEFAULT NULL,
-  `POINT_STATUS` int(11) DEFAULT NULL,
-  PRIMARY KEY (`POINT_ID`),
-  KEY `FK_RELATIONSHIP_13` (`POINT_STATUS_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_13` FOREIGN KEY (`POINT_STATUS_ID`) REFERENCES `point_status` (`POINT_STATUS_ID`)
+  `POINT_STATUS` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `point` */
+-- --------------------------------------------------------
 
-/*Table structure for table `point_status` */
+--
+-- Table structure for table `pointxmember`
+--
 
-DROP TABLE IF EXISTS `point_status`;
+CREATE TABLE IF NOT EXISTS `pointxmember` (
+  `POINT_ID` int(11) NOT NULL,
+  `MEMBER_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `point_status` (
-  `POINT_STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `point_status`
+--
+
+CREATE TABLE IF NOT EXISTS `point_status` (
+  `POINT_STATUS_ID` int(11) NOT NULL,
   `POINT_STATUS_NAME` varchar(100) DEFAULT NULL,
   `POINT_STATUS_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `POINT_STATUS_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `POINT_STATUS_CREATEBY` int(11) DEFAULT NULL,
-  `POINT_STATUS_UPDATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`POINT_STATUS_ID`)
+  `POINT_STATUS_UPDATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `point_status` */
+-- --------------------------------------------------------
 
-/*Table structure for table `pointxmember` */
+--
+-- Table structure for table `rent_schedule`
+--
 
-DROP TABLE IF EXISTS `pointxmember`;
-
-CREATE TABLE `pointxmember` (
-  `POINT_ID` int(11) NOT NULL,
-  `MEMBER_ID` int(11) NOT NULL,
-  PRIMARY KEY (`POINT_ID`,`MEMBER_ID`),
-  KEY `FK_RELATIONSHIP_42` (`MEMBER_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_14` FOREIGN KEY (`POINT_ID`) REFERENCES `point` (`POINT_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_42` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `pointxmember` */
-
-/*Table structure for table `rent_schedule` */
-
-DROP TABLE IF EXISTS `rent_schedule`;
-
-CREATE TABLE `rent_schedule` (
-  `RENT_SCHEDULE_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `rent_schedule` (
+  `RENT_SCHEDULE_ID` int(11) NOT NULL,
   `RENT_SCHEDULE_DATE` date DEFAULT NULL,
   `RENT_SCHEDULE_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `RENT_SCHEDULE_UPDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `RENT_SCHEDULE_UPDATEBY` int(11) DEFAULT NULL,
   `RENT_SCHEDULE_CREATEBY` int(11) DEFAULT NULL,
   `VEHICLE_ID` int(11) DEFAULT NULL,
-  `RENT_SCHEDULE_PRICE` int(11) DEFAULT NULL,
-  PRIMARY KEY (`RENT_SCHEDULE_ID`),
-  KEY `FK_RELATIONSHIP_36` (`VEHICLE_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_36` FOREIGN KEY (`VEHICLE_ID`) REFERENCES `vehicle` (`VEHICLE_ID`)
+  `RENT_SCHEDULE_PRICE` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=latin1;
 
-/*Data for the table `rent_schedule` */
+--
+-- Dumping data for table `rent_schedule`
+--
 
-insert  into `rent_schedule`(RENT_SCHEDULE_ID,RENT_SCHEDULE_DATE,RENT_SCHEDULE_CREATE,RENT_SCHEDULE_UPDATE,RENT_SCHEDULE_UPDATEBY,RENT_SCHEDULE_CREATEBY,VEHICLE_ID,RENT_SCHEDULE_PRICE) values (2,'2015-01-01','2015-08-21 13:56:17','2015-08-21 13:56:17',NULL,NULL,9,NULL),(3,'2015-01-02','2015-08-21 14:43:49','2015-08-21 14:43:49',NULL,NULL,9,NULL),(5,'2015-08-01','2015-08-27 16:28:16','2015-08-27 10:55:53',NULL,NULL,9,300000),(26,'2015-09-05','2015-09-01 17:07:24','2015-09-01 17:07:24',NULL,7,22,0),(27,'2015-09-12','2015-09-01 17:07:24','2015-09-01 17:07:24',NULL,7,22,0),(28,'2015-09-19','2015-09-01 17:07:24','2015-09-01 17:07:24',NULL,7,22,0),(29,'2015-09-26','2015-09-01 17:07:24','2015-09-01 17:07:24',NULL,7,22,0),(30,'2015-09-01','2015-09-03 12:01:29','2015-09-03 12:01:29',NULL,1,9,NULL),(31,'2015-09-01','2015-09-03 12:03:49','2015-09-03 12:03:49',NULL,NULL,9,1000000),(32,'1970-01-01','2015-09-04 12:50:28','2015-09-04 12:50:28',NULL,9,24,1000000),(33,'1970-01-01','2015-09-04 12:50:54','2015-09-04 12:50:54',NULL,9,24,1000000),(34,'1970-01-01','2015-09-04 12:51:06','2015-09-04 12:51:06',NULL,9,24,1000000),(35,'1970-01-01','2015-09-04 12:51:48','2015-09-04 12:51:48',NULL,9,24,1000000),(36,'1970-01-01','2015-09-04 12:53:38','2015-09-04 12:53:38',NULL,9,24,1000000),(37,'2015-09-01','2015-09-04 12:55:22','2015-09-04 12:55:22',NULL,9,24,1000000),(38,'2015-09-04','2015-09-04 13:01:42','2015-09-04 13:01:42',NULL,9,24,1000000),(39,'2015-09-01','2015-09-04 13:25:36','2015-09-04 13:25:36',NULL,9,24,1000000),(40,'2015-09-22','2015-09-04 13:25:36','2015-09-04 13:25:36',NULL,9,24,1000000),(41,'2015-09-15','2015-09-04 13:25:36','2015-09-04 13:25:36',NULL,9,24,1000000),(42,'2015-09-08','2015-09-04 13:25:36','2015-09-04 13:25:36',NULL,9,24,1000000),(43,'2015-09-09','2015-09-04 13:25:36','2015-09-04 13:25:36',NULL,9,24,1000000),(44,'2015-09-02','2015-09-04 13:25:36','2015-09-04 13:25:36',NULL,9,24,1000000),(45,'2015-09-17','2015-09-04 13:25:37','2015-09-04 13:25:37',NULL,9,24,1000000),(46,'2015-09-16','2015-09-04 13:25:37','2015-09-04 13:25:37',NULL,9,24,1000000),(47,'2015-09-23','2015-09-04 13:25:37','2015-09-04 13:25:37',NULL,9,24,1000000),(48,'2015-09-21','2015-09-04 13:25:37','2015-09-04 13:25:37',NULL,9,24,1000000),(49,'2015-09-20','2015-09-04 13:25:37','2015-09-04 13:25:37',NULL,9,24,1000000),(50,'2015-09-14','2015-09-04 13:25:37','2015-09-04 13:25:37',NULL,9,24,1000000),(51,'2015-09-02','2015-09-09 11:02:15','2015-09-09 11:02:15',NULL,11,25,200000),(52,'2015-09-04','2015-09-09 11:02:15','2015-09-09 11:02:15',NULL,11,25,200000),(53,'2015-09-07','2015-09-09 11:02:15','2015-09-09 11:02:15',NULL,11,25,200000),(54,'2015-09-09','2015-09-09 11:02:15','2015-09-09 11:02:15',NULL,11,25,200000),(55,'2015-09-11','2015-09-09 11:02:15','2015-09-09 11:02:15',NULL,11,25,200000),(56,'2015-09-14','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(57,'2015-09-16','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(58,'2015-09-18','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(59,'2015-09-21','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(60,'2015-09-23','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(61,'2015-09-25','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(62,'2015-09-28','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(63,'2015-09-30','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(64,'2015-10-02','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(65,'2015-10-05','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(66,'2015-10-07','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(67,'2015-10-09','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(68,'2015-10-12','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(69,'2015-10-14','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(70,'2015-10-16','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(71,'2015-10-19','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(72,'2015-10-21','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(73,'2015-10-23','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(74,'2015-10-26','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(75,'2015-10-28','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(76,'2015-10-30','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(77,'2015-11-02','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(78,'2015-11-04','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(79,'2015-11-06','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(80,'2015-11-09','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(81,'2015-11-11','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(82,'2015-11-13','2015-09-09 11:02:16','2015-09-09 11:02:16',NULL,11,25,200000),(83,'2015-11-16','2015-09-09 11:02:17','2015-09-09 11:02:17',NULL,11,25,200000),(84,'2015-11-18','2015-09-09 11:02:17','2015-09-09 11:02:17',NULL,11,25,200000),(85,'2015-11-20','2015-09-09 11:02:17','2015-09-09 11:02:17',NULL,11,25,200000),(86,'2015-11-23','2015-09-09 11:02:17','2015-09-09 11:02:17',NULL,11,25,200000),(87,'2015-11-25','2015-09-09 11:02:17','2015-09-09 11:02:17',NULL,11,25,200000),(88,'2015-11-27','2015-09-09 11:02:17','2015-09-09 11:02:17',NULL,11,25,200000),(89,'2015-11-30','2015-09-09 11:02:17','2015-09-09 11:02:17',NULL,11,25,200000),(90,'2015-09-05','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(91,'2015-09-06','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(92,'2015-09-12','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(93,'2015-09-13','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(94,'2015-09-19','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(95,'2015-09-20','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(96,'2015-09-26','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(97,'2015-09-27','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(98,'2015-10-03','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(99,'2015-10-04','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(100,'2015-10-10','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(101,'2015-10-11','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(102,'2015-10-17','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(103,'2015-10-18','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(104,'2015-10-24','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(105,'2015-10-25','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(106,'2015-10-31','2015-09-09 11:03:03','2015-09-09 11:03:03',NULL,11,25,300000),(107,'2015-11-01','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(108,'2015-11-07','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(109,'2015-11-08','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(110,'2015-11-14','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(111,'2015-11-15','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(112,'2015-11-21','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(113,'2015-11-22','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(114,'2015-11-28','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(115,'2015-11-29','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(116,'2015-12-05','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(117,'2015-12-06','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(118,'2015-12-12','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(119,'2015-12-13','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(120,'2015-12-19','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(121,'2015-12-20','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(122,'2015-12-26','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(123,'2015-12-27','2015-09-09 11:03:04','2015-09-09 11:03:04',NULL,11,25,300000),(124,'2015-09-01','2015-09-09 14:23:20','2015-09-09 14:19:47',NULL,7,22,2000000),(126,'2015-09-01','2015-09-09 14:24:30','2015-09-09 14:24:30',NULL,7,22,1000000),(127,'2015-09-30','2015-09-09 14:24:30','2015-09-09 14:24:30',NULL,7,22,1000000),(128,'2015-09-29','2015-09-09 14:24:30','2015-09-09 14:24:30',NULL,7,22,1000000),(129,'2015-09-22','2015-09-09 14:24:30','2015-09-09 14:24:30',NULL,7,22,1000000),(130,'2015-09-15','2015-09-09 14:24:30','2015-09-09 14:24:30',NULL,7,22,1000000),(131,'2015-09-16','2015-09-09 14:24:30','2015-09-09 14:24:30',NULL,7,22,1000000),(132,'2015-09-09','2015-09-09 14:24:30','2015-09-09 14:24:30',NULL,7,22,1000000),(133,'2015-09-03','2015-09-09 14:24:46','2015-09-09 14:24:46',NULL,7,22,1000000),(134,'2015-09-07','2015-09-09 14:24:46','2015-09-09 14:24:46',NULL,7,22,1000000),(135,'2015-09-10','2015-09-09 14:24:46','2015-09-09 14:24:46',NULL,7,22,1000000),(136,'2015-09-14','2015-09-09 14:24:46','2015-09-09 14:24:46',NULL,7,22,1000000),(137,'2015-09-17','2015-09-09 14:24:47','2015-09-09 14:24:47',NULL,7,22,1000000),(138,'2015-09-21','2015-09-09 14:24:47','2015-09-09 14:24:47',NULL,7,22,1000000),(139,'2015-09-24','2015-09-09 14:24:47','2015-09-09 14:24:47',NULL,7,22,1000000),(140,'2015-09-28','2015-09-09 14:24:47','2015-09-09 14:24:47',NULL,7,22,1000000);
+INSERT INTO `rent_schedule` (`RENT_SCHEDULE_ID`, `RENT_SCHEDULE_DATE`, `RENT_SCHEDULE_CREATE`, `RENT_SCHEDULE_UPDATE`, `RENT_SCHEDULE_UPDATEBY`, `RENT_SCHEDULE_CREATEBY`, `VEHICLE_ID`, `RENT_SCHEDULE_PRICE`) VALUES
+(2, '2015-01-01', '2015-08-21 06:56:17', '2015-08-21 06:56:17', NULL, NULL, 9, NULL),
+(3, '2015-01-02', '2015-08-21 07:43:49', '2015-08-21 07:43:49', NULL, NULL, 9, NULL),
+(5, '2015-08-01', '2015-08-27 09:28:16', '2015-08-27 03:55:53', NULL, NULL, 9, 300000),
+(26, '2015-09-05', '2015-09-01 10:07:24', '2015-09-01 10:07:24', NULL, 7, 22, 0),
+(27, '2015-09-12', '2015-09-01 10:07:24', '2015-09-01 10:07:24', NULL, 7, 22, 0),
+(28, '2015-09-19', '2015-09-01 10:07:24', '2015-09-01 10:07:24', NULL, 7, 22, 0),
+(29, '2015-09-26', '2015-09-01 10:07:24', '2015-09-01 10:07:24', NULL, 7, 22, 0),
+(30, '2015-09-01', '2015-09-03 05:01:29', '2015-09-03 05:01:29', NULL, 1, 9, NULL),
+(31, '2015-09-01', '2015-09-03 05:03:49', '2015-09-03 05:03:49', NULL, NULL, 9, 1000000),
+(32, '1970-01-01', '2015-09-04 05:50:28', '2015-09-04 05:50:28', NULL, 9, 24, 1000000),
+(33, '1970-01-01', '2015-09-04 05:50:54', '2015-09-04 05:50:54', NULL, 9, 24, 1000000),
+(34, '1970-01-01', '2015-09-04 05:51:06', '2015-09-04 05:51:06', NULL, 9, 24, 1000000),
+(35, '1970-01-01', '2015-09-04 05:51:48', '2015-09-04 05:51:48', NULL, 9, 24, 1000000),
+(36, '1970-01-01', '2015-09-04 05:53:38', '2015-09-04 05:53:38', NULL, 9, 24, 1000000),
+(37, '2015-09-01', '2015-09-04 05:55:22', '2015-09-04 05:55:22', NULL, 9, 24, 1000000),
+(38, '2015-09-04', '2015-09-04 06:01:42', '2015-09-04 06:01:42', NULL, 9, 24, 1000000),
+(39, '2015-09-01', '2015-09-04 06:25:36', '2015-09-04 06:25:36', NULL, 9, 24, 1000000),
+(40, '2015-09-22', '2015-09-04 06:25:36', '2015-09-04 06:25:36', NULL, 9, 24, 1000000),
+(41, '2015-09-15', '2015-09-04 06:25:36', '2015-09-04 06:25:36', NULL, 9, 24, 1000000),
+(42, '2015-09-08', '2015-09-04 06:25:36', '2015-09-04 06:25:36', NULL, 9, 24, 1000000),
+(43, '2015-09-09', '2015-09-04 06:25:36', '2015-09-04 06:25:36', NULL, 9, 24, 1000000),
+(44, '2015-09-02', '2015-09-04 06:25:36', '2015-09-04 06:25:36', NULL, 9, 24, 1000000),
+(45, '2015-09-17', '2015-09-04 06:25:37', '2015-09-04 06:25:37', NULL, 9, 24, 1000000),
+(46, '2015-09-16', '2015-09-04 06:25:37', '2015-09-04 06:25:37', NULL, 9, 24, 1000000),
+(47, '2015-09-23', '2015-09-04 06:25:37', '2015-09-04 06:25:37', NULL, 9, 24, 1000000),
+(48, '2015-09-21', '2015-09-04 06:25:37', '2015-09-04 06:25:37', NULL, 9, 24, 1000000),
+(49, '2015-09-20', '2015-09-04 06:25:37', '2015-09-04 06:25:37', NULL, 9, 24, 1000000),
+(50, '2015-09-14', '2015-09-04 06:25:37', '2015-09-04 06:25:37', NULL, 9, 24, 1000000),
+(51, '2015-09-02', '2015-09-09 04:02:15', '2015-09-09 04:02:15', NULL, 11, 25, 200000),
+(52, '2015-09-04', '2015-09-09 04:02:15', '2015-09-09 04:02:15', NULL, 11, 25, 200000),
+(53, '2015-09-07', '2015-09-09 04:02:15', '2015-09-09 04:02:15', NULL, 11, 25, 200000),
+(54, '2015-09-09', '2015-09-09 04:02:15', '2015-09-09 04:02:15', NULL, 11, 25, 200000),
+(55, '2015-09-11', '2015-09-09 04:02:15', '2015-09-09 04:02:15', NULL, 11, 25, 200000),
+(56, '2015-09-14', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(57, '2015-09-16', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(58, '2015-09-18', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(59, '2015-09-21', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(60, '2015-09-23', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(61, '2015-09-25', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(62, '2015-09-28', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(63, '2015-09-30', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(64, '2015-10-02', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(65, '2015-10-05', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(66, '2015-10-07', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(67, '2015-10-09', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(68, '2015-10-12', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(69, '2015-10-14', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(70, '2015-10-16', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(71, '2015-10-19', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(72, '2015-10-21', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(73, '2015-10-23', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(74, '2015-10-26', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(75, '2015-10-28', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(76, '2015-10-30', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(77, '2015-11-02', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(78, '2015-11-04', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(79, '2015-11-06', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(80, '2015-11-09', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(81, '2015-11-11', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(82, '2015-11-13', '2015-09-09 04:02:16', '2015-09-09 04:02:16', NULL, 11, 25, 200000),
+(83, '2015-11-16', '2015-09-09 04:02:17', '2015-09-09 04:02:17', NULL, 11, 25, 200000),
+(84, '2015-11-18', '2015-09-09 04:02:17', '2015-09-09 04:02:17', NULL, 11, 25, 200000),
+(85, '2015-11-20', '2015-09-09 04:02:17', '2015-09-09 04:02:17', NULL, 11, 25, 200000),
+(86, '2015-11-23', '2015-09-09 04:02:17', '2015-09-09 04:02:17', NULL, 11, 25, 200000),
+(87, '2015-11-25', '2015-09-09 04:02:17', '2015-09-09 04:02:17', NULL, 11, 25, 200000),
+(88, '2015-11-27', '2015-09-09 04:02:17', '2015-09-09 04:02:17', NULL, 11, 25, 200000),
+(89, '2015-11-30', '2015-09-09 04:02:17', '2015-09-09 04:02:17', NULL, 11, 25, 200000),
+(90, '2015-09-05', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(91, '2015-09-06', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(92, '2015-09-12', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(93, '2015-09-13', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(94, '2015-09-19', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(95, '2015-09-20', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(96, '2015-09-26', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(97, '2015-09-27', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(98, '2015-10-03', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(99, '2015-10-04', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(100, '2015-10-10', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(101, '2015-10-11', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(102, '2015-10-17', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(103, '2015-10-18', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(104, '2015-10-24', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(105, '2015-10-25', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(106, '2015-10-31', '2015-09-09 04:03:03', '2015-09-09 04:03:03', NULL, 11, 25, 300000),
+(107, '2015-11-01', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(108, '2015-11-07', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(109, '2015-11-08', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(110, '2015-11-14', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(111, '2015-11-15', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(112, '2015-11-21', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(113, '2015-11-22', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(114, '2015-11-28', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(115, '2015-11-29', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(116, '2015-12-05', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(117, '2015-12-06', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(118, '2015-12-12', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(119, '2015-12-13', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(120, '2015-12-19', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(121, '2015-12-20', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(122, '2015-12-26', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(123, '2015-12-27', '2015-09-09 04:03:04', '2015-09-09 04:03:04', NULL, 11, 25, 300000),
+(124, '2015-09-01', '2015-09-09 07:23:20', '2015-09-09 07:19:47', NULL, 7, 22, 2000000),
+(126, '2015-09-01', '2015-09-09 07:24:30', '2015-09-09 07:24:30', NULL, 7, 22, 1000000),
+(127, '2015-09-30', '2015-09-09 07:24:30', '2015-09-09 07:24:30', NULL, 7, 22, 1000000),
+(128, '2015-09-29', '2015-09-09 07:24:30', '2015-09-09 07:24:30', NULL, 7, 22, 1000000),
+(129, '2015-09-22', '2015-09-09 07:24:30', '2015-09-09 07:24:30', NULL, 7, 22, 1000000),
+(130, '2015-09-15', '2015-09-09 07:24:30', '2015-09-09 07:24:30', NULL, 7, 22, 1000000),
+(131, '2015-09-16', '2015-09-09 07:24:30', '2015-09-09 07:24:30', NULL, 7, 22, 1000000),
+(132, '2015-09-09', '2015-09-09 07:24:30', '2015-09-09 07:24:30', NULL, 7, 22, 1000000),
+(133, '2015-09-03', '2015-09-09 07:24:46', '2015-09-09 07:24:46', NULL, 7, 22, 1000000),
+(134, '2015-09-07', '2015-09-09 07:24:46', '2015-09-09 07:24:46', NULL, 7, 22, 1000000),
+(135, '2015-09-10', '2015-09-09 07:24:46', '2015-09-09 07:24:46', NULL, 7, 22, 1000000),
+(136, '2015-09-14', '2015-09-09 07:24:46', '2015-09-09 07:24:46', NULL, 7, 22, 1000000),
+(137, '2015-09-17', '2015-09-09 07:24:47', '2015-09-09 07:24:47', NULL, 7, 22, 1000000),
+(138, '2015-09-21', '2015-09-09 07:24:47', '2015-09-09 07:24:47', NULL, 7, 22, 1000000),
+(139, '2015-09-24', '2015-09-09 07:24:47', '2015-09-09 07:24:47', NULL, 7, 22, 1000000),
+(140, '2015-09-28', '2015-09-09 07:24:47', '2015-09-09 07:24:47', NULL, 7, 22, 1000000);
 
-/*Table structure for table `rent_transaction` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `rent_transaction`;
+--
+-- Table structure for table `rent_status_transaction`
+--
 
-CREATE TABLE `rent_transaction` (
-  `RENT_TRANSACTION_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `rent_status_transaction` (
+  `RENT_TRANSACTION_STATUS_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `RENT_TRANSACTION_STATUS_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `RENT_TRANSACTION_STATUS_CREATEBY` int(11) DEFAULT NULL,
+  `RENT_TRANSACTION_STATUS_UPDATEBY` int(11) DEFAULT NULL,
+  `RENT_TRANSACTION_STATUS_ID` int(11) NOT NULL,
+  `RENT_TRANSACTION_STATUS_NAME` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rent_status_transaction`
+--
+
+INSERT INTO `rent_status_transaction` (`RENT_TRANSACTION_STATUS_CREATE`, `RENT_TRANSACTION_STATUS_UPDATE`, `RENT_TRANSACTION_STATUS_CREATEBY`, `RENT_TRANSACTION_STATUS_UPDATEBY`, `RENT_TRANSACTION_STATUS_ID`, `RENT_TRANSACTION_STATUS_NAME`) VALUES
+('2015-08-21 07:43:25', '0000-00-00 00:00:00', NULL, NULL, 1, 'belum disetujui'),
+('2015-08-21 08:09:01', '0000-00-00 00:00:00', NULL, NULL, 2, 'belum bayar');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rent_transaction`
+--
+
+CREATE TABLE IF NOT EXISTS `rent_transaction` (
+  `RENT_TRANSACTION_ID` int(11) NOT NULL,
   `LOG_TRANSACTION_ID` int(11) DEFAULT NULL,
-  `STATUS_TRANSACTION_RENT_ID` int(11) DEFAULT NULL,
+  `RENT_TRANSACTION_STATUS_ID` int(11) DEFAULT NULL,
   `MEMBER_ID` int(11) DEFAULT NULL,
   `RENT_TRANSACTION_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `RENT_TRANSACTION_UPDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -353,119 +633,135 @@ CREATE TABLE `rent_transaction` (
   `RENT_TRANSACTION_UPDATEBY` int(11) DEFAULT NULL,
   `RENT_TRANSACTION_DATE` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `RENT_TRANSACTION_CODE` varchar(100) NOT NULL,
-  `COSTUMER_ID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`RENT_TRANSACTION_ID`),
-  KEY `FK_RELATIONSHIP_17` (`STATUS_TRANSACTION_RENT_ID`),
-  KEY `FK_RELATIONSHIP_25` (`LOG_TRANSACTION_ID`),
-  KEY `FK_RELATIONSHIP_29` (`MEMBER_ID`),
-  KEY `FK_rent_transaction` (`COSTUMER_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_17` FOREIGN KEY (`STATUS_TRANSACTION_RENT_ID`) REFERENCES `status_transaction_rent` (`STATUS_TRANSACTION_RENT_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_25` FOREIGN KEY (`LOG_TRANSACTION_ID`) REFERENCES `log_transaction` (`LOG_TRANSACTION_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_29` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`),
-  CONSTRAINT `FK_rent_transaction` FOREIGN KEY (`COSTUMER_ID`) REFERENCES `costumer` (`COSTUMER_ID`)
+  `COSTUMER_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
-/*Data for the table `rent_transaction` */
+--
+-- Dumping data for table `rent_transaction`
+--
 
-insert  into `rent_transaction`(RENT_TRANSACTION_ID,LOG_TRANSACTION_ID,STATUS_TRANSACTION_RENT_ID,MEMBER_ID,RENT_TRANSACTION_CREATE,RENT_TRANSACTION_UPDATE,RENT_TRANSACTION_PRICE,RENT_TRANSACTION_DURATION,RENT_TRANSACTION_CREATEBY,RENT_TRANSACTION_UPDATEBY,RENT_TRANSACTION_DATE,RENT_TRANSACTION_CODE,COSTUMER_ID) values (1,NULL,2,1,'2015-08-21 16:17:52','2015-08-21 08:24:15',10000,0,NULL,NULL,'0000-00-00 00:00:00','rent_123',NULL),(3,NULL,NULL,NULL,'2015-08-26 17:16:54','2015-08-26 17:16:54',NULL,NULL,1,NULL,'2015-08-26 00:00:00','',4),(4,NULL,NULL,NULL,'2015-08-26 17:26:38','2015-08-26 17:26:38',2,NULL,1,NULL,'2015-08-26 00:00:00','',6),(5,NULL,NULL,NULL,'2015-08-26 17:26:38','2015-08-26 17:26:38',2,NULL,1,NULL,'2015-08-26 00:00:00','',6),(6,NULL,NULL,NULL,'2015-08-26 17:28:08','2015-08-26 17:28:08',2,NULL,1,NULL,'2015-08-26 00:00:00','',7),(7,NULL,NULL,NULL,'2015-08-26 17:28:08','2015-08-26 17:28:08',2,NULL,1,NULL,'2015-08-26 00:00:00','',7),(8,NULL,NULL,NULL,'2015-08-27 11:04:00','2015-08-27 11:04:00',1,NULL,NULL,NULL,'2015-08-27 00:00:00','',17),(9,NULL,NULL,NULL,'2015-09-03 12:15:14','2015-09-03 12:15:14',1,NULL,NULL,NULL,'2015-09-03 00:00:00','',53);
+INSERT INTO `rent_transaction` (`RENT_TRANSACTION_ID`, `LOG_TRANSACTION_ID`, `RENT_TRANSACTION_STATUS_ID`, `MEMBER_ID`, `RENT_TRANSACTION_CREATE`, `RENT_TRANSACTION_UPDATE`, `RENT_TRANSACTION_PRICE`, `RENT_TRANSACTION_DURATION`, `RENT_TRANSACTION_CREATEBY`, `RENT_TRANSACTION_UPDATEBY`, `RENT_TRANSACTION_DATE`, `RENT_TRANSACTION_CODE`, `COSTUMER_ID`) VALUES
+(1, NULL, 2, 1, '2015-08-21 09:17:52', '2015-08-21 01:24:15', 10000, 0, NULL, NULL, '0000-00-00 00:00:00', 'rent_123', NULL),
+(3, NULL, NULL, NULL, '2015-08-26 10:16:54', '2015-08-26 10:16:54', NULL, NULL, 1, NULL, '2015-08-25 17:00:00', '', 4),
+(4, NULL, NULL, NULL, '2015-08-26 10:26:38', '2015-08-26 10:26:38', 2, NULL, 1, NULL, '2015-08-25 17:00:00', '', 6),
+(5, NULL, NULL, NULL, '2015-08-26 10:26:38', '2015-08-26 10:26:38', 2, NULL, 1, NULL, '2015-08-25 17:00:00', '', 6),
+(6, NULL, NULL, NULL, '2015-08-26 10:28:08', '2015-08-26 10:28:08', 2, NULL, 1, NULL, '2015-08-25 17:00:00', '', 7),
+(7, NULL, NULL, NULL, '2015-08-26 10:28:08', '2015-08-26 10:28:08', 2, NULL, 1, NULL, '2015-08-25 17:00:00', '', 7),
+(8, NULL, NULL, NULL, '2015-08-27 04:04:00', '2015-08-27 04:04:00', 1, NULL, NULL, NULL, '2015-08-26 17:00:00', '', 17),
+(9, NULL, NULL, NULL, '2015-09-03 05:15:14', '2015-09-03 05:15:14', 1, NULL, NULL, NULL, '2015-09-02 17:00:00', '', 53);
 
-/*Table structure for table `rent_transaction_detail` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `rent_transaction_detail`;
+--
+-- Table structure for table `rent_transaction_detail`
+--
 
-CREATE TABLE `rent_transaction_detail` (
+CREATE TABLE IF NOT EXISTS `rent_transaction_detail` (
   `RENT_TRANSACTION_ID` int(11) NOT NULL,
-  `RENT_SCHEDULE_ID` int(11) NOT NULL,
-  PRIMARY KEY (`RENT_TRANSACTION_ID`,`RENT_SCHEDULE_ID`),
-  KEY `FK_RELATIONSHIP_30` (`RENT_SCHEDULE_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_27` FOREIGN KEY (`RENT_TRANSACTION_ID`) REFERENCES `rent_transaction` (`RENT_TRANSACTION_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_30` FOREIGN KEY (`RENT_SCHEDULE_ID`) REFERENCES `rent_schedule` (`RENT_SCHEDULE_ID`)
+  `RENT_SCHEDULE_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `rent_transaction_detail` */
+--
+-- Dumping data for table `rent_transaction_detail`
+--
 
-insert  into `rent_transaction_detail`(RENT_TRANSACTION_ID,RENT_SCHEDULE_ID) values (1,2),(1,3),(8,5);
+INSERT INTO `rent_transaction_detail` (`RENT_TRANSACTION_ID`, `RENT_SCHEDULE_ID`) VALUES
+(1, 2),
+(1, 3),
+(8, 5);
 
-/*Table structure for table `roles` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `roles`;
+--
+-- Table structure for table `roles`
+--
 
-CREATE TABLE `roles` (
-  `ROLES_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `roles` (
+  `ROLES_ID` int(11) NOT NULL,
   `ROLES_NAME` varchar(100) DEFAULT NULL,
   `ROLES_UPDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ROLES_CREATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ROLES_UPDATEBY` int(11) DEFAULT NULL,
-  `ROLES_CREATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ROLES_ID`)
+  `ROLES_CREATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
-/*Data for the table `roles` */
+--
+-- Dumping data for table `roles`
+--
 
-insert  into `roles`(ROLES_ID,ROLES_NAME,ROLES_UPDATE,ROLES_CREATE,ROLES_UPDATEBY,ROLES_CREATEBY) values (2,'admin','2015-09-04 16:08:23','0000-00-00 00:00:00',NULL,1);
+INSERT INTO `roles` (`ROLES_ID`, `ROLES_NAME`, `ROLES_UPDATE`, `ROLES_CREATE`, `ROLES_UPDATEBY`, `ROLES_CREATEBY`) VALUES
+(2, 'admin', '2015-09-04 09:08:23', '0000-00-00 00:00:00', NULL, 1);
 
-/*Table structure for table `route` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `route`;
+--
+-- Table structure for table `route`
+--
 
-CREATE TABLE `route` (
-  `ROUTE_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `route` (
+  `ROUTE_ID` int(11) NOT NULL,
   `ROUTE_DEST` varchar(100) DEFAULT NULL,
   `ROUTE_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ROUTE_UPDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ROUTE_UPDATEBY` int(11) DEFAULT NULL,
   `ROUTE_CREATEBY` int(11) DEFAULT NULL,
   `ROUTE_DEPARTURE` int(11) DEFAULT NULL,
-  `ROUTE_ARRIVE` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ROUTE_ID`)
+  `ROUTE_ARRIVE` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
-/*Data for the table `route` */
+--
+-- Dumping data for table `route`
+--
 
-insert  into `route`(ROUTE_ID,ROUTE_DEST,ROUTE_CREATE,ROUTE_UPDATE,ROUTE_UPDATEBY,ROUTE_CREATEBY,ROUTE_DEPARTURE,ROUTE_ARRIVE) values (2,'2','2015-08-31 10:50:36','2015-08-20 12:13:48',NULL,1,1,NULL),(3,'1','2015-08-31 10:50:36','2015-08-20 17:22:21',NULL,2,2,NULL),(4,'2','2015-08-31 10:50:37','0000-00-00 00:00:00',NULL,1,1,NULL),(5,'3','2015-08-31 10:50:37','2015-08-27 10:40:40',NULL,1,1,NULL),(6,'4','2015-08-31 10:50:37','2015-08-27 10:40:46',NULL,1,1,NULL),(7,'5','2015-08-31 10:50:38','2015-08-27 10:40:52',NULL,1,1,NULL),(8,'6','2015-08-31 10:50:39','2015-08-27 10:40:57',NULL,1,1,NULL),(9,'4','0000-00-00 00:00:00','2015-08-31 11:07:08',NULL,NULL,2,NULL),(10,'4','2015-08-31 11:12:12','0000-00-00 00:00:00',5,5,2,NULL),(11,'2','2015-09-02 10:52:10','2015-09-02 10:52:10',NULL,6,1,NULL),(12,'5','2015-09-09 11:08:08','2015-09-09 11:08:08',NULL,12,6,NULL),(13,'2','2015-09-09 11:08:16','2015-09-09 11:08:16',NULL,12,6,NULL),(14,'1','2015-09-09 11:08:24','2015-09-09 11:08:24',NULL,12,6,NULL),(15,'2','2015-09-09 15:47:00','2015-09-09 15:47:00',NULL,8,1,NULL),(16,'2','2015-09-09 16:25:43','2015-09-09 16:25:43',NULL,6,1,NULL);
+INSERT INTO `route` (`ROUTE_ID`, `ROUTE_DEST`, `ROUTE_CREATE`, `ROUTE_UPDATE`, `ROUTE_UPDATEBY`, `ROUTE_CREATEBY`, `ROUTE_DEPARTURE`, `ROUTE_ARRIVE`) VALUES
+(2, '2', '2015-08-31 03:50:36', '2015-08-20 05:13:48', NULL, 1, 1, NULL),
+(3, '1', '2015-08-31 03:50:36', '2015-08-20 10:22:21', NULL, 2, 2, NULL),
+(4, '2', '2015-08-31 03:50:37', '0000-00-00 00:00:00', NULL, 1, 1, NULL),
+(5, '3', '2015-08-31 03:50:37', '2015-08-27 03:40:40', NULL, 1, 1, NULL),
+(6, '4', '2015-08-31 03:50:37', '2015-08-27 03:40:46', NULL, 1, 1, NULL),
+(7, '5', '2015-08-31 03:50:38', '2015-08-27 03:40:52', NULL, 1, 1, NULL),
+(8, '6', '2015-08-31 03:50:39', '2015-08-27 03:40:57', NULL, 1, 1, NULL),
+(9, '4', '0000-00-00 00:00:00', '2015-08-31 04:07:08', NULL, NULL, 2, NULL),
+(10, '4', '2015-08-31 04:12:12', '0000-00-00 00:00:00', 5, 5, 2, NULL),
+(11, '2', '2015-09-02 03:52:10', '2015-09-02 03:52:10', NULL, 6, 1, NULL),
+(12, '5', '2015-09-09 04:08:08', '2015-09-09 04:08:08', NULL, 12, 6, NULL),
+(13, '2', '2015-09-09 04:08:16', '2015-09-09 04:08:16', NULL, 12, 6, NULL),
+(14, '1', '2015-09-09 04:08:24', '2015-09-09 04:08:24', NULL, 12, 6, NULL),
+(15, '2', '2015-09-09 08:47:00', '2015-09-09 08:47:00', NULL, 8, 1, NULL),
+(16, '2', '2015-09-09 09:25:43', '2015-09-09 09:25:43', NULL, 6, 1, NULL);
 
-/*Table structure for table `status_transaction_rent` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `status_transaction_rent`;
+--
+-- Table structure for table `sub_modules`
+--
 
-CREATE TABLE `status_transaction_rent` (
-  `STATUS_TRANSACTION_RENT_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `STATUS_TRANSACTION_RENT_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `STATUS_TRANSACTION_RENT_CREATEBY` int(11) DEFAULT NULL,
-  `STATUS_TRANSACTION_RENT_UPDATEBY` int(11) DEFAULT NULL,
-  `STATUS_TRANSACTION_RENT_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `STATUS_TRANSACTION_RENT_NAME` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`STATUS_TRANSACTION_RENT_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
-/*Data for the table `status_transaction_rent` */
-
-insert  into `status_transaction_rent`(STATUS_TRANSACTION_RENT_CREATE,STATUS_TRANSACTION_RENT_UPDATE,STATUS_TRANSACTION_RENT_CREATEBY,STATUS_TRANSACTION_RENT_UPDATEBY,STATUS_TRANSACTION_RENT_ID,STATUS_TRANSACTION_RENT_NAME) values ('2015-08-21 14:43:25','0000-00-00 00:00:00',NULL,NULL,1,'belum disetujui'),('2015-08-21 15:09:01','0000-00-00 00:00:00',NULL,NULL,2,'belum bayar');
-
-/*Table structure for table `sub_modules` */
-
-DROP TABLE IF EXISTS `sub_modules`;
-
-CREATE TABLE `sub_modules` (
-  `SUB_MODULES_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `sub_modules` (
+  `SUB_MODULES_ID` int(11) NOT NULL,
   `SUB_MODULES_NAME` varchar(100) DEFAULT NULL,
   `SUB_MODULES_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `SUB_MODULES_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `SUB_MODULES_CREATEBY` int(11) DEFAULT NULL,
-  `SUB_MODULES_UPDATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`SUB_MODULES_ID`)
+  `SUB_MODULES_UPDATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
-/*Data for the table `sub_modules` */
+--
+-- Dumping data for table `sub_modules`
+--
 
-insert  into `sub_modules`(SUB_MODULES_ID,SUB_MODULES_NAME,SUB_MODULES_CREATE,SUB_MODULES_UPDATE,SUB_MODULES_CREATEBY,SUB_MODULES_UPDATEBY) values (1,'view','2015-08-13 14:19:53','0000-00-00 00:00:00',NULL,NULL),(2,'edit','2015-08-13 14:19:55','0000-00-00 00:00:00',NULL,NULL),(3,'delete','2015-08-13 14:20:00','0000-00-00 00:00:00',NULL,NULL);
+INSERT INTO `sub_modules` (`SUB_MODULES_ID`, `SUB_MODULES_NAME`, `SUB_MODULES_CREATE`, `SUB_MODULES_UPDATE`, `SUB_MODULES_CREATEBY`, `SUB_MODULES_UPDATEBY`) VALUES
+(1, 'view', '2015-08-13 07:19:53', '0000-00-00 00:00:00', NULL, NULL),
+(2, 'edit', '2015-08-13 07:19:55', '0000-00-00 00:00:00', NULL, NULL),
+(3, 'delete', '2015-08-13 07:20:00', '0000-00-00 00:00:00', NULL, NULL);
 
-/*Table structure for table `ticket_transaction` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `ticket_transaction`;
+--
+-- Table structure for table `ticket_transaction`
+--
 
-CREATE TABLE `ticket_transaction` (
-  `TICKET_TRANSACTION_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `ticket_transaction` (
+  `TICKET_TRANSACTION_ID` int(11) NOT NULL,
   `MEMBER_ID` int(11) DEFAULT NULL,
   `STATUS_TRANSACTION_RENT_ID` int(11) DEFAULT NULL,
   `TICKET_TRANSACTION_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -476,52 +772,44 @@ CREATE TABLE `ticket_transaction` (
   `TICKET_TRANSACTION_PRICE` int(11) DEFAULT NULL,
   `TICKET_TRANSACTION_BUYERNAME` varchar(100) DEFAULT NULL,
   `TICKET_TRANSACTION_BUYERTELP` varchar(100) DEFAULT NULL,
-  `TICKET_TRANSACTION_BUYEREMAIL` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`TICKET_TRANSACTION_ID`),
-  KEY `FK_RELATIONSHIP_1` (`STATUS_TRANSACTION_RENT_ID`),
-  KEY `FK_RELATIONSHIP_10` (`MEMBER_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_1` FOREIGN KEY (`STATUS_TRANSACTION_RENT_ID`) REFERENCES `status_transaction_rent` (`STATUS_TRANSACTION_RENT_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_10` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`)
+  `TICKET_TRANSACTION_BUYEREMAIL` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `ticket_transaction` */
+-- --------------------------------------------------------
 
-/*Table structure for table `ticket_transaction_detail` */
+--
+-- Table structure for table `ticket_transaction_detail`
+--
 
-DROP TABLE IF EXISTS `ticket_transaction_detail`;
-
-CREATE TABLE `ticket_transaction_detail` (
+CREATE TABLE IF NOT EXISTS `ticket_transaction_detail` (
   `TICKET_TRANSACTION_ID` int(11) DEFAULT NULL,
   `TICKET_TRANSACTION_DETAIL_ARRIVETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `TICKET_TRANSACTION_DETAIL_DEPARTTIME` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `TICKET_TRANSACTION_DETAIL_ARRIVE` varchar(100) DEFAULT NULL,
   `TICKET_TRANSACTION_DETAIL_DEPART` varchar(100) DEFAULT NULL,
   `TICKET_TRANSACTION_DETAIL_PRICE` int(11) DEFAULT NULL,
-  `TICKET_TRANSACTION_DETAIL_CODE` varchar(100) DEFAULT NULL,
-  KEY `FK_RELATIONSHIP_37` (`TICKET_TRANSACTION_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_37` FOREIGN KEY (`TICKET_TRANSACTION_ID`) REFERENCES `ticket_transaction` (`TICKET_TRANSACTION_ID`)
+  `TICKET_TRANSACTION_DETAIL_CODE` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `ticket_transaction_detail` */
+-- --------------------------------------------------------
 
-/*Table structure for table `transaction_type` */
+--
+-- Table structure for table `transaction_type`
+--
 
-DROP TABLE IF EXISTS `transaction_type`;
-
-CREATE TABLE `transaction_type` (
+CREATE TABLE IF NOT EXISTS `transaction_type` (
   `TRANSACTION_TYPE_ID` int(11) NOT NULL,
-  `TRANSACTION_TYPE_NAME` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`TRANSACTION_TYPE_ID`)
+  `TRANSACTION_TYPE_NAME` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `transaction_type` */
+-- --------------------------------------------------------
 
-/*Table structure for table `travel_schedule` */
+--
+-- Table structure for table `travel_schedule`
+--
 
-DROP TABLE IF EXISTS `travel_schedule`;
-
-CREATE TABLE `travel_schedule` (
-  `TRAVEL_SCHEDULE_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `travel_schedule` (
+  `TRAVEL_SCHEDULE_ID` int(11) NOT NULL,
   `ROUTE_ID` int(11) DEFAULT NULL,
   `TRAVEL_SCHEDULE_PRICE` int(11) DEFAULT NULL,
   `TRAVEL_SCHEDULE_UPDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -531,58 +819,300 @@ CREATE TABLE `travel_schedule` (
   `TRAVEL_SCHEDULE_ARRIVETIME` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `TRAVEL_SCHEDULE_DEPARTTIME` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `VEHICLE_ID` int(11) DEFAULT NULL,
-  `TRAVEL_SCHEDULE_UMUM_ID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`TRAVEL_SCHEDULE_ID`),
-  KEY `FK_RELATIONSHIP_8` (`ROUTE_ID`),
-  KEY `FK_travel_schedule` (`VEHICLE_ID`),
-  KEY `FK_travel_schedule_umum` (`TRAVEL_SCHEDULE_UMUM_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_8` FOREIGN KEY (`ROUTE_ID`) REFERENCES `route` (`ROUTE_ID`),
-  CONSTRAINT `FK_travel_schedule` FOREIGN KEY (`VEHICLE_ID`) REFERENCES `vehicle` (`VEHICLE_ID`),
-  CONSTRAINT `FK_travel_schedule_umum` FOREIGN KEY (`TRAVEL_SCHEDULE_UMUM_ID`) REFERENCES `travel_schedule_umum` (`TRAVEL_SCHEDULE_UMUM_ID`) ON DELETE CASCADE
+  `TRAVEL_SCHEDULE_UMUM_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2905 DEFAULT CHARSET=latin1;
 
-/*Data for the table `travel_schedule` */
+--
+-- Dumping data for table `travel_schedule`
+--
 
-insert  into `travel_schedule`(TRAVEL_SCHEDULE_ID,ROUTE_ID,TRAVEL_SCHEDULE_PRICE,TRAVEL_SCHEDULE_UPDATE,TRAVEL_SCHEDULE_CREATE,TRAVEL_SCHEDULE_UPDATEBY,TRAVEL_SCHEDULE_CREATEBY,TRAVEL_SCHEDULE_ARRIVETIME,TRAVEL_SCHEDULE_DEPARTTIME,VEHICLE_ID,TRAVEL_SCHEDULE_UMUM_ID) values (15,2,1000000,'2015-08-27 10:49:35','2015-08-27 10:49:35',NULL,NULL,'2015-08-01 01:00:00','2015-08-01 10:10:00',12,NULL),(16,2,50000,'2015-08-27 10:49:55','2015-08-27 10:49:55',NULL,NULL,'2015-08-01 09:00:00','2015-08-01 06:00:00',13,NULL),(2630,10,0,'2015-09-01 15:53:37','2015-09-01 15:53:37',NULL,5,'2015-09-07 12:00:00','2015-09-07 10:00:00',19,NULL),(2631,10,0,'2015-09-01 15:53:37','2015-09-01 15:53:37',NULL,5,'2015-09-08 12:00:00','2015-09-08 10:00:00',19,NULL),(2632,10,0,'2015-09-01 15:53:37','2015-09-01 15:53:37',NULL,5,'2015-09-14 12:00:00','2015-09-14 10:00:00',19,NULL),(2633,10,0,'2015-09-01 15:53:37','2015-09-01 15:53:37',NULL,5,'2015-09-15 12:00:00','2015-09-15 10:00:00',19,NULL),(2634,10,0,'2015-09-01 15:53:37','2015-09-01 15:53:37',NULL,5,'2015-09-21 12:00:00','2015-09-21 10:00:00',19,NULL),(2635,10,0,'2015-09-01 15:53:37','2015-09-01 15:53:37',NULL,5,'2015-09-22 12:00:00','2015-09-22 10:00:00',19,NULL),(2636,10,0,'2015-09-01 15:53:37','2015-09-01 15:53:37',NULL,5,'2015-09-28 12:00:00','2015-09-28 10:00:00',19,NULL),(2637,10,0,'2015-09-01 15:53:37','2015-09-01 15:53:37',NULL,5,'2015-09-29 12:00:00','2015-09-29 10:00:00',19,NULL),(2638,11,200000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-09 11:40:00','2015-09-01 10:10:00',23,NULL),(2639,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-02 12:00:00','2015-09-02 10:00:00',23,NULL),(2640,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-03 12:00:00','2015-09-03 10:00:00',23,NULL),(2641,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-04 12:00:00','2015-09-04 10:00:00',23,NULL),(2642,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-05 12:00:00','2015-09-05 10:00:00',23,NULL),(2643,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-12 12:00:00','2015-09-12 10:00:00',23,NULL),(2644,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-11 12:00:00','2015-09-11 10:00:00',23,NULL),(2645,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-10 12:00:00','2015-09-10 10:00:00',23,NULL),(2647,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-08 12:00:00','2015-09-08 10:00:00',23,NULL),(2648,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-07 12:00:00','2015-09-07 10:00:00',23,NULL),(2649,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-14 12:00:00','2015-09-14 10:00:00',23,NULL),(2650,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-06 12:00:00','2015-09-06 10:00:00',23,NULL),(2651,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-13 12:00:00','2015-09-13 10:00:00',23,NULL),(2652,11,100000,'2015-09-02 10:53:15','2015-09-02 10:53:15',NULL,6,'2015-09-15 12:00:00','2015-09-15 10:00:00',23,NULL),(2653,14,125000,'2015-09-09 11:14:52','2015-09-09 11:14:52',NULL,12,'2015-09-03 03:30:00','2015-09-03 08:00:00',27,NULL),(2654,14,125000,'2015-09-09 11:14:52','2015-09-09 11:14:52',NULL,12,'2015-09-07 03:30:00','2015-09-07 08:00:00',27,NULL),(2655,14,125000,'2015-09-09 11:14:52','2015-09-09 11:14:52',NULL,12,'2015-09-10 03:30:00','2015-09-10 08:00:00',27,NULL),(2656,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-09-14 03:30:00','2015-09-14 08:00:00',27,NULL),(2657,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-09-17 03:30:00','2015-09-17 08:00:00',27,NULL),(2658,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-09-21 03:30:00','2015-09-21 08:00:00',27,NULL),(2659,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-09-24 03:30:00','2015-09-24 08:00:00',27,NULL),(2660,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-09-28 03:30:00','2015-09-28 08:00:00',27,NULL),(2661,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-10-01 03:30:00','2015-10-01 08:00:00',27,NULL),(2662,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-10-05 03:30:00','2015-10-05 08:00:00',27,NULL),(2663,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-10-08 03:30:00','2015-10-08 08:00:00',27,NULL),(2664,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-10-12 03:30:00','2015-10-12 08:00:00',27,NULL),(2665,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-10-15 03:30:00','2015-10-15 08:00:00',27,NULL),(2666,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-10-19 03:30:00','2015-10-19 08:00:00',27,NULL),(2667,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-10-22 03:30:00','2015-10-22 08:00:00',27,NULL),(2668,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-10-26 03:30:00','2015-10-26 08:00:00',27,NULL),(2669,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-10-29 03:30:00','2015-10-29 08:00:00',27,NULL),(2670,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-11-02 03:30:00','2015-11-02 08:00:00',27,NULL),(2671,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-11-05 03:30:00','2015-11-05 08:00:00',27,NULL),(2672,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-11-09 03:30:00','2015-11-09 08:00:00',27,NULL),(2673,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-11-12 03:30:00','2015-11-12 08:00:00',27,NULL),(2674,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-11-16 03:30:00','2015-11-16 08:00:00',27,NULL),(2675,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-11-19 03:30:00','2015-11-19 08:00:00',27,NULL),(2676,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-11-23 03:30:00','2015-11-23 08:00:00',27,NULL),(2677,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-11-26 03:30:00','2015-11-26 08:00:00',27,NULL),(2678,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-11-30 03:30:00','2015-11-30 08:00:00',27,NULL),(2679,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-12-03 03:30:00','2015-12-03 08:00:00',27,NULL),(2680,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-12-07 03:30:00','2015-12-07 08:00:00',27,NULL),(2681,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-12-10 03:30:00','2015-12-10 08:00:00',27,NULL),(2682,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-12-14 03:30:00','2015-12-14 08:00:00',27,NULL),(2683,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-12-17 03:30:00','2015-12-17 08:00:00',27,NULL),(2684,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-12-21 03:30:00','2015-12-21 08:00:00',27,NULL),(2685,14,125000,'2015-09-09 11:14:53','2015-09-09 11:14:53',NULL,12,'2015-12-24 03:30:00','2015-12-24 08:00:00',27,NULL),(2686,14,125000,'2015-09-09 11:14:54','2015-09-09 11:14:54',NULL,12,'2015-12-28 03:30:00','2015-12-28 08:00:00',27,NULL),(2687,14,125000,'2015-09-09 11:14:54','2015-09-09 11:14:54',NULL,12,'2015-12-31 03:30:00','2015-12-31 08:00:00',27,NULL),(2688,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-09-01 11:40:00','2015-09-01 07:00:00',26,NULL),(2689,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-09-02 11:40:00','2015-09-02 07:00:00',26,NULL),(2690,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-09-08 11:40:00','2015-09-08 07:00:00',26,NULL),(2691,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-09-09 11:40:00','2015-09-09 07:00:00',26,NULL),(2692,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-09-15 11:40:00','2015-09-15 07:00:00',26,NULL),(2693,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-09-16 11:40:00','2015-09-16 07:00:00',26,NULL),(2694,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-09-22 11:40:00','2015-09-22 07:00:00',26,NULL),(2695,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-09-23 11:40:00','2015-09-23 07:00:00',26,NULL),(2696,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-09-29 11:40:00','2015-09-29 07:00:00',26,NULL),(2697,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-09-30 11:40:00','2015-09-30 07:00:00',26,NULL),(2698,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-10-06 11:40:00','2015-10-06 07:00:00',26,NULL),(2699,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-10-07 11:40:00','2015-10-07 07:00:00',26,NULL),(2700,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-10-13 11:40:00','2015-10-13 07:00:00',26,NULL),(2701,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-10-14 11:40:00','2015-10-14 07:00:00',26,NULL),(2702,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-10-20 11:40:00','2015-10-20 07:00:00',26,NULL),(2703,13,80000,'2015-09-09 11:15:29','2015-09-09 11:15:29',NULL,12,'2015-10-21 11:40:00','2015-10-21 07:00:00',26,NULL),(2704,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-10-27 11:40:00','2015-10-27 07:00:00',26,NULL),(2705,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-10-28 11:40:00','2015-10-28 07:00:00',26,NULL),(2706,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-11-03 11:40:00','2015-11-03 07:00:00',26,NULL),(2707,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-11-04 11:40:00','2015-11-04 07:00:00',26,NULL),(2708,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-11-10 11:40:00','2015-11-10 07:00:00',26,NULL),(2709,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-11-11 11:40:00','2015-11-11 07:00:00',26,NULL),(2710,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-11-17 11:40:00','2015-11-17 07:00:00',26,NULL),(2711,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-11-18 11:40:00','2015-11-18 07:00:00',26,NULL),(2712,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-11-24 11:40:00','2015-11-24 07:00:00',26,NULL),(2713,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-11-25 11:40:00','2015-11-25 07:00:00',26,NULL),(2714,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-12-01 11:40:00','2015-12-01 07:00:00',26,NULL),(2715,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-12-02 11:40:00','2015-12-02 07:00:00',26,NULL),(2716,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-12-08 11:40:00','2015-12-08 07:00:00',26,NULL),(2717,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-12-09 11:40:00','2015-12-09 07:00:00',26,NULL),(2718,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-12-15 11:40:00','2015-12-15 07:00:00',26,NULL),(2719,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-12-16 11:40:00','2015-12-16 07:00:00',26,NULL),(2720,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-12-22 11:40:00','2015-12-22 07:00:00',26,NULL),(2721,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-12-23 11:40:00','2015-12-23 07:00:00',26,NULL),(2722,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-12-29 11:40:00','2015-12-29 07:00:00',26,NULL),(2723,13,80000,'2015-09-09 11:15:30','2015-09-09 11:15:30',NULL,12,'2015-12-30 11:40:00','2015-12-30 07:00:00',26,NULL),(2724,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-01 08:30:00','2015-09-01 05:00:00',26,NULL),(2725,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-02 08:30:00','2015-09-02 05:00:00',26,NULL),(2726,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-03 08:30:00','2015-09-03 05:00:00',26,NULL),(2727,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-04 08:30:00','2015-09-04 05:00:00',26,NULL),(2728,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-05 08:30:00','2015-09-05 05:00:00',26,NULL),(2729,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-06 08:30:00','2015-09-06 05:00:00',26,NULL),(2730,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-07 08:30:00','2015-09-07 05:00:00',26,NULL),(2731,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-08 08:30:00','2015-09-08 05:00:00',26,NULL),(2732,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-09 08:30:00','2015-09-09 05:00:00',26,NULL),(2733,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-10 08:30:00','2015-09-10 05:00:00',26,NULL),(2734,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-11 08:30:00','2015-09-11 05:00:00',26,NULL),(2735,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-12 08:30:00','2015-09-12 05:00:00',26,NULL),(2736,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-13 08:30:00','2015-09-13 05:00:00',26,NULL),(2737,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-14 08:30:00','2015-09-14 05:00:00',26,NULL),(2738,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-15 08:30:00','2015-09-15 05:00:00',26,NULL),(2739,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-16 08:30:00','2015-09-16 05:00:00',26,NULL),(2740,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-17 08:30:00','2015-09-17 05:00:00',26,NULL),(2741,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-18 08:30:00','2015-09-18 05:00:00',26,NULL),(2742,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-19 08:30:00','2015-09-19 05:00:00',26,NULL),(2743,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-20 08:30:00','2015-09-20 05:00:00',26,NULL),(2744,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-21 08:30:00','2015-09-21 05:00:00',26,NULL),(2745,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-22 08:30:00','2015-09-22 05:00:00',26,NULL),(2746,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-23 08:30:00','2015-09-23 05:00:00',26,NULL),(2747,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-24 08:30:00','2015-09-24 05:00:00',26,NULL),(2748,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-25 08:30:00','2015-09-25 05:00:00',26,NULL),(2749,12,200000,'2015-09-09 11:16:32','2015-09-09 11:16:32',NULL,12,'2015-09-26 08:30:00','2015-09-26 05:00:00',26,NULL),(2750,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-09-27 08:30:00','2015-09-27 05:00:00',26,NULL),(2751,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-09-28 08:30:00','2015-09-28 05:00:00',26,NULL),(2752,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-09-29 08:30:00','2015-09-29 05:00:00',26,NULL),(2753,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-09-30 08:30:00','2015-09-30 05:00:00',26,NULL),(2754,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-01 08:30:00','2015-10-01 05:00:00',26,NULL),(2755,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-02 08:30:00','2015-10-02 05:00:00',26,NULL),(2756,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-03 08:30:00','2015-10-03 05:00:00',26,NULL),(2757,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-04 08:30:00','2015-10-04 05:00:00',26,NULL),(2758,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-05 08:30:00','2015-10-05 05:00:00',26,NULL),(2759,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-06 08:30:00','2015-10-06 05:00:00',26,NULL),(2760,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-07 08:30:00','2015-10-07 05:00:00',26,NULL),(2761,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-08 08:30:00','2015-10-08 05:00:00',26,NULL),(2762,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-09 08:30:00','2015-10-09 05:00:00',26,NULL),(2763,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-10 08:30:00','2015-10-10 05:00:00',26,NULL),(2764,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-11 08:30:00','2015-10-11 05:00:00',26,NULL),(2765,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-12 08:30:00','2015-10-12 05:00:00',26,NULL),(2766,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-13 08:30:00','2015-10-13 05:00:00',26,NULL),(2767,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-14 08:30:00','2015-10-14 05:00:00',26,NULL),(2768,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-15 08:30:00','2015-10-15 05:00:00',26,NULL),(2769,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-16 08:30:00','2015-10-16 05:00:00',26,NULL),(2770,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-17 08:30:00','2015-10-17 05:00:00',26,NULL),(2771,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-18 08:30:00','2015-10-18 05:00:00',26,NULL),(2772,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-19 08:30:00','2015-10-19 05:00:00',26,NULL),(2773,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-20 08:30:00','2015-10-20 05:00:00',26,NULL),(2774,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-21 08:30:00','2015-10-21 05:00:00',26,NULL),(2775,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-22 08:30:00','2015-10-22 05:00:00',26,NULL),(2776,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-23 08:30:00','2015-10-23 05:00:00',26,NULL),(2777,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-24 08:30:00','2015-10-24 05:00:00',26,NULL),(2778,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-25 08:30:00','2015-10-25 05:00:00',26,NULL),(2779,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-26 08:30:00','2015-10-26 05:00:00',26,NULL),(2780,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-27 08:30:00','2015-10-27 05:00:00',26,NULL),(2781,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-28 08:30:00','2015-10-28 05:00:00',26,NULL),(2782,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-29 08:30:00','2015-10-29 05:00:00',26,NULL),(2783,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-30 08:30:00','2015-10-30 05:00:00',26,NULL),(2784,12,200000,'2015-09-09 11:16:33','2015-09-09 11:16:33',NULL,12,'2015-10-31 08:30:00','2015-10-31 05:00:00',26,NULL),(2785,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-01 08:30:00','2015-11-01 05:00:00',26,NULL),(2786,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-02 08:30:00','2015-11-02 05:00:00',26,NULL),(2787,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-03 08:30:00','2015-11-03 05:00:00',26,NULL),(2788,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-04 08:30:00','2015-11-04 05:00:00',26,NULL),(2789,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-05 08:30:00','2015-11-05 05:00:00',26,NULL),(2790,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-06 08:30:00','2015-11-06 05:00:00',26,NULL),(2791,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-07 08:30:00','2015-11-07 05:00:00',26,NULL),(2792,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-08 08:30:00','2015-11-08 05:00:00',26,NULL),(2793,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-09 08:30:00','2015-11-09 05:00:00',26,NULL),(2794,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-10 08:30:00','2015-11-10 05:00:00',26,NULL),(2795,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-11 08:30:00','2015-11-11 05:00:00',26,NULL),(2796,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-12 08:30:00','2015-11-12 05:00:00',26,NULL),(2797,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-13 08:30:00','2015-11-13 05:00:00',26,NULL),(2798,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-14 08:30:00','2015-11-14 05:00:00',26,NULL),(2799,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-15 08:30:00','2015-11-15 05:00:00',26,NULL),(2800,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-16 08:30:00','2015-11-16 05:00:00',26,NULL),(2801,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-17 08:30:00','2015-11-17 05:00:00',26,NULL),(2802,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-18 08:30:00','2015-11-18 05:00:00',26,NULL),(2803,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-19 08:30:00','2015-11-19 05:00:00',26,NULL),(2804,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-20 08:30:00','2015-11-20 05:00:00',26,NULL),(2805,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-21 08:30:00','2015-11-21 05:00:00',26,NULL),(2806,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-22 08:30:00','2015-11-22 05:00:00',26,NULL),(2807,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-23 08:30:00','2015-11-23 05:00:00',26,NULL),(2808,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-24 08:30:00','2015-11-24 05:00:00',26,NULL),(2809,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-25 08:30:00','2015-11-25 05:00:00',26,NULL),(2810,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-26 08:30:00','2015-11-26 05:00:00',26,NULL),(2811,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-27 08:30:00','2015-11-27 05:00:00',26,NULL),(2812,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-28 08:30:00','2015-11-28 05:00:00',26,NULL),(2813,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-29 08:30:00','2015-11-29 05:00:00',26,NULL),(2814,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-11-30 08:30:00','2015-11-30 05:00:00',26,NULL),(2815,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-12-01 08:30:00','2015-12-01 05:00:00',26,NULL),(2816,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-12-02 08:30:00','2015-12-02 05:00:00',26,NULL),(2817,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-12-03 08:30:00','2015-12-03 05:00:00',26,NULL),(2818,12,200000,'2015-09-09 11:16:34','2015-09-09 11:16:34',NULL,12,'2015-12-04 08:30:00','2015-12-04 05:00:00',26,NULL),(2819,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-05 08:30:00','2015-12-05 05:00:00',26,NULL),(2820,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-06 08:30:00','2015-12-06 05:00:00',26,NULL),(2821,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-07 08:30:00','2015-12-07 05:00:00',26,NULL),(2822,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-08 08:30:00','2015-12-08 05:00:00',26,NULL),(2823,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-09 08:30:00','2015-12-09 05:00:00',26,NULL),(2824,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-10 08:30:00','2015-12-10 05:00:00',26,NULL),(2825,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-11 08:30:00','2015-12-11 05:00:00',26,NULL),(2826,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-12 08:30:00','2015-12-12 05:00:00',26,NULL),(2827,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-13 08:30:00','2015-12-13 05:00:00',26,NULL),(2828,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-14 08:30:00','2015-12-14 05:00:00',26,NULL),(2829,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-15 08:30:00','2015-12-15 05:00:00',26,NULL),(2830,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-16 08:30:00','2015-12-16 05:00:00',26,NULL),(2831,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-17 08:30:00','2015-12-17 05:00:00',26,NULL),(2832,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-18 08:30:00','2015-12-18 05:00:00',26,NULL),(2833,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-19 08:30:00','2015-12-19 05:00:00',26,NULL),(2834,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-20 08:30:00','2015-12-20 05:00:00',26,NULL),(2835,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-21 08:30:00','2015-12-21 05:00:00',26,NULL),(2836,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-22 08:30:00','2015-12-22 05:00:00',26,NULL),(2837,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-23 08:30:00','2015-12-23 05:00:00',26,NULL),(2838,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-24 08:30:00','2015-12-24 05:00:00',26,NULL),(2839,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-25 08:30:00','2015-12-25 05:00:00',26,NULL),(2840,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-26 08:30:00','2015-12-26 05:00:00',26,NULL),(2841,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-27 08:30:00','2015-12-27 05:00:00',26,NULL),(2842,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-28 08:30:00','2015-12-28 05:00:00',26,NULL),(2843,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-29 08:30:00','2015-12-29 05:00:00',26,NULL),(2844,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-30 08:30:00','2015-12-30 05:00:00',26,NULL),(2845,12,200000,'2015-09-09 11:16:35','2015-09-09 11:16:35',NULL,12,'2015-12-31 08:30:00','2015-12-31 05:00:00',26,NULL),(2846,11,100000,'2015-09-09 12:51:53','2015-09-09 12:51:53',NULL,6,'2015-09-09 11:40:00','2015-09-09 10:10:00',23,NULL),(2847,15,100000,'2015-09-09 16:14:37','2015-09-09 16:14:37',NULL,8,'0000-00-00 00:00:00','2015-09-29 10:00:00',33,NULL),(2848,15,100000,'2015-09-09 16:14:37','2015-09-09 16:14:37',NULL,8,'0000-00-00 00:00:00','2015-09-22 10:00:00',33,NULL),(2849,15,100000,'2015-09-09 16:14:37','2015-09-09 16:14:37',NULL,8,'0000-00-00 00:00:00','2015-09-15 10:00:00',33,NULL),(2850,11,100000,'2015-09-09 16:31:24','2015-09-09 16:31:24',NULL,6,'0000-00-00 00:00:00','2015-09-07 10:00:00',23,NULL),(2851,11,100000,'2015-09-09 16:31:24','2015-09-09 16:31:24',NULL,6,'0000-00-00 00:00:00','2015-09-14 10:00:00',23,NULL),(2852,11,100000,'2015-09-09 16:31:24','2015-09-09 16:31:24',NULL,6,'0000-00-00 00:00:00','2015-09-15 10:00:00',23,NULL),(2853,11,100000,'2015-09-09 16:31:24','2015-09-09 16:31:24',NULL,6,'0000-00-00 00:00:00','2015-09-23 10:00:00',23,NULL),(2854,11,100000,'2015-09-09 16:31:24','2015-09-09 16:31:24',NULL,6,'0000-00-00 00:00:00','2015-09-16 10:00:00',23,NULL),(2855,11,200000,'2015-09-09 16:32:33','2015-09-09 16:32:33',NULL,6,'0000-00-00 00:00:00','2015-09-07 02:00:00',23,NULL),(2893,15,0,'2015-09-09 19:11:26','2015-09-09 19:11:26',NULL,8,'2015-09-01 11:00:00','2015-09-01 10:00:00',33,5),(2894,15,0,'2015-09-09 19:11:26','2015-09-09 19:11:26',NULL,8,'2015-09-07 11:00:00','2015-09-07 10:00:00',33,5),(2895,15,0,'2015-09-09 19:11:26','2015-09-09 19:11:26',NULL,8,'2015-09-08 11:00:00','2015-09-08 10:00:00',33,5),(2896,15,0,'2015-09-09 19:11:26','2015-09-09 19:11:26',NULL,8,'2015-09-14 11:00:00','2015-09-14 10:00:00',33,5),(2897,15,0,'2015-09-09 19:11:26','2015-09-09 19:11:26',NULL,8,'2015-09-15 11:00:00','2015-09-15 10:00:00',33,5),(2898,15,0,'2015-09-09 19:11:26','2015-09-09 19:11:26',NULL,8,'2015-09-21 11:00:00','2015-09-21 10:00:00',33,5),(2899,15,0,'2015-09-09 19:11:26','2015-09-09 19:11:26',NULL,8,'2015-09-22 11:00:00','2015-09-22 10:00:00',33,5),(2900,15,0,'2015-09-09 19:11:26','2015-09-09 19:11:26',NULL,8,'2015-09-28 11:00:00','2015-09-28 10:00:00',33,5),(2901,15,0,'2015-09-09 19:11:26','2015-09-09 19:11:26',NULL,8,'2015-09-29 11:00:00','2015-09-29 10:00:00',33,5),(2902,11,100000,'2015-09-10 17:06:48','2015-09-10 17:06:48',NULL,6,'0000-00-00 00:00:00','2015-09-01 12:00:00',23,NULL),(2903,11,200000,'2015-09-10 17:29:10','2015-09-10 17:29:10',NULL,6,'2015-09-01 15:00:00','2015-09-01 10:00:00',23,NULL),(2904,11,100000,'2015-09-10 17:29:51','2015-09-10 17:29:51',NULL,6,'2015-09-26 18:00:00','2015-09-26 10:00:00',23,NULL);
+INSERT INTO `travel_schedule` (`TRAVEL_SCHEDULE_ID`, `ROUTE_ID`, `TRAVEL_SCHEDULE_PRICE`, `TRAVEL_SCHEDULE_UPDATE`, `TRAVEL_SCHEDULE_CREATE`, `TRAVEL_SCHEDULE_UPDATEBY`, `TRAVEL_SCHEDULE_CREATEBY`, `TRAVEL_SCHEDULE_ARRIVETIME`, `TRAVEL_SCHEDULE_DEPARTTIME`, `VEHICLE_ID`, `TRAVEL_SCHEDULE_UMUM_ID`) VALUES
+(15, 2, 1000000, '2015-08-27 03:49:35', '2015-08-27 03:49:35', NULL, NULL, '2015-07-31 18:00:00', '2015-08-01 03:10:00', 12, NULL),
+(16, 2, 50000, '2015-08-27 03:49:55', '2015-08-27 03:49:55', NULL, NULL, '2015-08-01 02:00:00', '2015-07-31 23:00:00', 13, NULL),
+(2630, 10, 0, '2015-09-01 08:53:37', '2015-09-01 08:53:37', NULL, 5, '2015-09-07 05:00:00', '2015-09-07 03:00:00', 19, NULL),
+(2631, 10, 0, '2015-09-01 08:53:37', '2015-09-01 08:53:37', NULL, 5, '2015-09-08 05:00:00', '2015-09-08 03:00:00', 19, NULL),
+(2632, 10, 0, '2015-09-01 08:53:37', '2015-09-01 08:53:37', NULL, 5, '2015-09-14 05:00:00', '2015-09-14 03:00:00', 19, NULL),
+(2633, 10, 0, '2015-09-01 08:53:37', '2015-09-01 08:53:37', NULL, 5, '2015-09-15 05:00:00', '2015-09-15 03:00:00', 19, NULL),
+(2634, 10, 0, '2015-09-01 08:53:37', '2015-09-01 08:53:37', NULL, 5, '2015-09-21 05:00:00', '2015-09-21 03:00:00', 19, NULL),
+(2635, 10, 0, '2015-09-01 08:53:37', '2015-09-01 08:53:37', NULL, 5, '2015-09-22 05:00:00', '2015-09-22 03:00:00', 19, NULL),
+(2636, 10, 0, '2015-09-01 08:53:37', '2015-09-01 08:53:37', NULL, 5, '2015-09-28 05:00:00', '2015-09-28 03:00:00', 19, NULL),
+(2637, 10, 0, '2015-09-01 08:53:37', '2015-09-01 08:53:37', NULL, 5, '2015-09-29 05:00:00', '2015-09-29 03:00:00', 19, NULL),
+(2638, 11, 200000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-09 04:40:00', '2015-09-01 03:10:00', 23, NULL),
+(2639, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-02 05:00:00', '2015-09-02 03:00:00', 23, NULL),
+(2640, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-03 05:00:00', '2015-09-03 03:00:00', 23, NULL),
+(2641, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-04 05:00:00', '2015-09-04 03:00:00', 23, NULL),
+(2642, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-05 05:00:00', '2015-09-05 03:00:00', 23, NULL),
+(2643, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-12 05:00:00', '2015-09-12 03:00:00', 23, NULL),
+(2644, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-11 05:00:00', '2015-09-11 03:00:00', 23, NULL),
+(2645, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-10 05:00:00', '2015-09-10 03:00:00', 23, NULL),
+(2647, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-08 05:00:00', '2015-09-08 03:00:00', 23, NULL),
+(2648, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-07 05:00:00', '2015-09-07 03:00:00', 23, NULL),
+(2649, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-14 05:00:00', '2015-09-14 03:00:00', 23, NULL),
+(2650, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-06 05:00:00', '2015-09-06 03:00:00', 23, NULL),
+(2651, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-13 05:00:00', '2015-09-13 03:00:00', 23, NULL),
+(2652, 11, 100000, '2015-09-02 03:53:15', '2015-09-02 03:53:15', NULL, 6, '2015-09-15 05:00:00', '2015-09-15 03:00:00', 23, NULL),
+(2653, 14, 125000, '2015-09-09 04:14:52', '2015-09-09 04:14:52', NULL, 12, '2015-09-02 20:30:00', '2015-09-03 01:00:00', 27, NULL),
+(2654, 14, 125000, '2015-09-09 04:14:52', '2015-09-09 04:14:52', NULL, 12, '2015-09-06 20:30:00', '2015-09-07 01:00:00', 27, NULL),
+(2655, 14, 125000, '2015-09-09 04:14:52', '2015-09-09 04:14:52', NULL, 12, '2015-09-09 20:30:00', '2015-09-10 01:00:00', 27, NULL),
+(2656, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-09-13 20:30:00', '2015-09-14 01:00:00', 27, NULL),
+(2657, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-09-16 20:30:00', '2015-09-17 01:00:00', 27, NULL),
+(2658, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-09-20 20:30:00', '2015-09-21 01:00:00', 27, NULL),
+(2659, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-09-23 20:30:00', '2015-09-24 01:00:00', 27, NULL),
+(2660, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-09-27 20:30:00', '2015-09-28 01:00:00', 27, NULL),
+(2661, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-09-30 20:30:00', '2015-10-01 01:00:00', 27, NULL),
+(2662, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-10-04 20:30:00', '2015-10-05 01:00:00', 27, NULL),
+(2663, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-10-07 20:30:00', '2015-10-08 01:00:00', 27, NULL),
+(2664, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-10-11 20:30:00', '2015-10-12 01:00:00', 27, NULL),
+(2665, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-10-14 20:30:00', '2015-10-15 01:00:00', 27, NULL),
+(2666, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-10-18 20:30:00', '2015-10-19 01:00:00', 27, NULL),
+(2667, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-10-21 20:30:00', '2015-10-22 01:00:00', 27, NULL),
+(2668, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-10-25 20:30:00', '2015-10-26 01:00:00', 27, NULL),
+(2669, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-10-28 20:30:00', '2015-10-29 01:00:00', 27, NULL),
+(2670, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-11-01 20:30:00', '2015-11-02 01:00:00', 27, NULL),
+(2671, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-11-04 20:30:00', '2015-11-05 01:00:00', 27, NULL),
+(2672, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-11-08 20:30:00', '2015-11-09 01:00:00', 27, NULL),
+(2673, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-11-11 20:30:00', '2015-11-12 01:00:00', 27, NULL),
+(2674, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-11-15 20:30:00', '2015-11-16 01:00:00', 27, NULL),
+(2675, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-11-18 20:30:00', '2015-11-19 01:00:00', 27, NULL),
+(2676, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-11-22 20:30:00', '2015-11-23 01:00:00', 27, NULL),
+(2677, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-11-25 20:30:00', '2015-11-26 01:00:00', 27, NULL),
+(2678, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-11-29 20:30:00', '2015-11-30 01:00:00', 27, NULL),
+(2679, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-12-02 20:30:00', '2015-12-03 01:00:00', 27, NULL),
+(2680, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-12-06 20:30:00', '2015-12-07 01:00:00', 27, NULL),
+(2681, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-12-09 20:30:00', '2015-12-10 01:00:00', 27, NULL),
+(2682, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-12-13 20:30:00', '2015-12-14 01:00:00', 27, NULL),
+(2683, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-12-16 20:30:00', '2015-12-17 01:00:00', 27, NULL),
+(2684, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-12-20 20:30:00', '2015-12-21 01:00:00', 27, NULL),
+(2685, 14, 125000, '2015-09-09 04:14:53', '2015-09-09 04:14:53', NULL, 12, '2015-12-23 20:30:00', '2015-12-24 01:00:00', 27, NULL),
+(2686, 14, 125000, '2015-09-09 04:14:54', '2015-09-09 04:14:54', NULL, 12, '2015-12-27 20:30:00', '2015-12-28 01:00:00', 27, NULL),
+(2687, 14, 125000, '2015-09-09 04:14:54', '2015-09-09 04:14:54', NULL, 12, '2015-12-30 20:30:00', '2015-12-31 01:00:00', 27, NULL),
+(2688, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-09-01 04:40:00', '2015-09-01 00:00:00', 26, NULL),
+(2689, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-09-02 04:40:00', '2015-09-02 00:00:00', 26, NULL),
+(2690, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-09-08 04:40:00', '2015-09-08 00:00:00', 26, NULL),
+(2691, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-09-09 04:40:00', '2015-09-09 00:00:00', 26, NULL),
+(2692, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-09-15 04:40:00', '2015-09-15 00:00:00', 26, NULL),
+(2693, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-09-16 04:40:00', '2015-09-16 00:00:00', 26, NULL),
+(2694, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-09-22 04:40:00', '2015-09-22 00:00:00', 26, NULL),
+(2695, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-09-23 04:40:00', '2015-09-23 00:00:00', 26, NULL),
+(2696, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-09-29 04:40:00', '2015-09-29 00:00:00', 26, NULL),
+(2697, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-09-30 04:40:00', '2015-09-30 00:00:00', 26, NULL),
+(2698, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-10-06 04:40:00', '2015-10-06 00:00:00', 26, NULL),
+(2699, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-10-07 04:40:00', '2015-10-07 00:00:00', 26, NULL),
+(2700, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-10-13 04:40:00', '2015-10-13 00:00:00', 26, NULL),
+(2701, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-10-14 04:40:00', '2015-10-14 00:00:00', 26, NULL),
+(2702, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-10-20 04:40:00', '2015-10-20 00:00:00', 26, NULL),
+(2703, 13, 80000, '2015-09-09 04:15:29', '2015-09-09 04:15:29', NULL, 12, '2015-10-21 04:40:00', '2015-10-21 00:00:00', 26, NULL),
+(2704, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-10-27 04:40:00', '2015-10-27 00:00:00', 26, NULL),
+(2705, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-10-28 04:40:00', '2015-10-28 00:00:00', 26, NULL),
+(2706, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-11-03 04:40:00', '2015-11-03 00:00:00', 26, NULL),
+(2707, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-11-04 04:40:00', '2015-11-04 00:00:00', 26, NULL),
+(2708, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-11-10 04:40:00', '2015-11-10 00:00:00', 26, NULL),
+(2709, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-11-11 04:40:00', '2015-11-11 00:00:00', 26, NULL),
+(2710, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-11-17 04:40:00', '2015-11-17 00:00:00', 26, NULL),
+(2711, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-11-18 04:40:00', '2015-11-18 00:00:00', 26, NULL),
+(2712, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-11-24 04:40:00', '2015-11-24 00:00:00', 26, NULL),
+(2713, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-11-25 04:40:00', '2015-11-25 00:00:00', 26, NULL),
+(2714, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-12-01 04:40:00', '2015-12-01 00:00:00', 26, NULL),
+(2715, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-12-02 04:40:00', '2015-12-02 00:00:00', 26, NULL),
+(2716, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-12-08 04:40:00', '2015-12-08 00:00:00', 26, NULL),
+(2717, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-12-09 04:40:00', '2015-12-09 00:00:00', 26, NULL),
+(2718, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-12-15 04:40:00', '2015-12-15 00:00:00', 26, NULL),
+(2719, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-12-16 04:40:00', '2015-12-16 00:00:00', 26, NULL),
+(2720, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-12-22 04:40:00', '2015-12-22 00:00:00', 26, NULL),
+(2721, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-12-23 04:40:00', '2015-12-23 00:00:00', 26, NULL),
+(2722, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-12-29 04:40:00', '2015-12-29 00:00:00', 26, NULL),
+(2723, 13, 80000, '2015-09-09 04:15:30', '2015-09-09 04:15:30', NULL, 12, '2015-12-30 04:40:00', '2015-12-30 00:00:00', 26, NULL),
+(2724, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-01 01:30:00', '2015-08-31 22:00:00', 26, NULL),
+(2725, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-02 01:30:00', '2015-09-01 22:00:00', 26, NULL),
+(2726, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-03 01:30:00', '2015-09-02 22:00:00', 26, NULL),
+(2727, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-04 01:30:00', '2015-09-03 22:00:00', 26, NULL),
+(2728, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-05 01:30:00', '2015-09-04 22:00:00', 26, NULL),
+(2729, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-06 01:30:00', '2015-09-05 22:00:00', 26, NULL),
+(2730, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-07 01:30:00', '2015-09-06 22:00:00', 26, NULL),
+(2731, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-08 01:30:00', '2015-09-07 22:00:00', 26, NULL),
+(2732, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-09 01:30:00', '2015-09-08 22:00:00', 26, NULL),
+(2733, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-10 01:30:00', '2015-09-09 22:00:00', 26, NULL),
+(2734, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-11 01:30:00', '2015-09-10 22:00:00', 26, NULL),
+(2735, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-12 01:30:00', '2015-09-11 22:00:00', 26, NULL),
+(2736, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-13 01:30:00', '2015-09-12 22:00:00', 26, NULL),
+(2737, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-14 01:30:00', '2015-09-13 22:00:00', 26, NULL),
+(2738, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-15 01:30:00', '2015-09-14 22:00:00', 26, NULL),
+(2739, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-16 01:30:00', '2015-09-15 22:00:00', 26, NULL),
+(2740, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-17 01:30:00', '2015-09-16 22:00:00', 26, NULL),
+(2741, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-18 01:30:00', '2015-09-17 22:00:00', 26, NULL),
+(2742, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-19 01:30:00', '2015-09-18 22:00:00', 26, NULL),
+(2743, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-20 01:30:00', '2015-09-19 22:00:00', 26, NULL),
+(2744, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-21 01:30:00', '2015-09-20 22:00:00', 26, NULL),
+(2745, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-22 01:30:00', '2015-09-21 22:00:00', 26, NULL),
+(2746, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-23 01:30:00', '2015-09-22 22:00:00', 26, NULL),
+(2747, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-24 01:30:00', '2015-09-23 22:00:00', 26, NULL),
+(2748, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-25 01:30:00', '2015-09-24 22:00:00', 26, NULL),
+(2749, 12, 200000, '2015-09-09 04:16:32', '2015-09-09 04:16:32', NULL, 12, '2015-09-26 01:30:00', '2015-09-25 22:00:00', 26, NULL),
+(2750, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-09-27 01:30:00', '2015-09-26 22:00:00', 26, NULL),
+(2751, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-09-28 01:30:00', '2015-09-27 22:00:00', 26, NULL),
+(2752, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-09-29 01:30:00', '2015-09-28 22:00:00', 26, NULL),
+(2753, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-09-30 01:30:00', '2015-09-29 22:00:00', 26, NULL),
+(2754, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-01 01:30:00', '2015-09-30 22:00:00', 26, NULL),
+(2755, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-02 01:30:00', '2015-10-01 22:00:00', 26, NULL),
+(2756, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-03 01:30:00', '2015-10-02 22:00:00', 26, NULL),
+(2757, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-04 01:30:00', '2015-10-03 22:00:00', 26, NULL),
+(2758, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-05 01:30:00', '2015-10-04 22:00:00', 26, NULL),
+(2759, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-06 01:30:00', '2015-10-05 22:00:00', 26, NULL),
+(2760, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-07 01:30:00', '2015-10-06 22:00:00', 26, NULL),
+(2761, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-08 01:30:00', '2015-10-07 22:00:00', 26, NULL),
+(2762, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-09 01:30:00', '2015-10-08 22:00:00', 26, NULL),
+(2763, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-10 01:30:00', '2015-10-09 22:00:00', 26, NULL),
+(2764, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-11 01:30:00', '2015-10-10 22:00:00', 26, NULL),
+(2765, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-12 01:30:00', '2015-10-11 22:00:00', 26, NULL),
+(2766, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-13 01:30:00', '2015-10-12 22:00:00', 26, NULL),
+(2767, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-14 01:30:00', '2015-10-13 22:00:00', 26, NULL),
+(2768, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-15 01:30:00', '2015-10-14 22:00:00', 26, NULL),
+(2769, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-16 01:30:00', '2015-10-15 22:00:00', 26, NULL),
+(2770, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-17 01:30:00', '2015-10-16 22:00:00', 26, NULL),
+(2771, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-18 01:30:00', '2015-10-17 22:00:00', 26, NULL),
+(2772, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-19 01:30:00', '2015-10-18 22:00:00', 26, NULL),
+(2773, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-20 01:30:00', '2015-10-19 22:00:00', 26, NULL),
+(2774, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-21 01:30:00', '2015-10-20 22:00:00', 26, NULL),
+(2775, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-22 01:30:00', '2015-10-21 22:00:00', 26, NULL),
+(2776, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-23 01:30:00', '2015-10-22 22:00:00', 26, NULL),
+(2777, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-24 01:30:00', '2015-10-23 22:00:00', 26, NULL),
+(2778, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-25 01:30:00', '2015-10-24 22:00:00', 26, NULL),
+(2779, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-26 01:30:00', '2015-10-25 22:00:00', 26, NULL),
+(2780, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-27 01:30:00', '2015-10-26 22:00:00', 26, NULL),
+(2781, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-28 01:30:00', '2015-10-27 22:00:00', 26, NULL),
+(2782, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-29 01:30:00', '2015-10-28 22:00:00', 26, NULL),
+(2783, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-30 01:30:00', '2015-10-29 22:00:00', 26, NULL),
+(2784, 12, 200000, '2015-09-09 04:16:33', '2015-09-09 04:16:33', NULL, 12, '2015-10-31 01:30:00', '2015-10-30 22:00:00', 26, NULL),
+(2785, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-01 01:30:00', '2015-10-31 22:00:00', 26, NULL),
+(2786, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-02 01:30:00', '2015-11-01 22:00:00', 26, NULL),
+(2787, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-03 01:30:00', '2015-11-02 22:00:00', 26, NULL),
+(2788, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-04 01:30:00', '2015-11-03 22:00:00', 26, NULL),
+(2789, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-05 01:30:00', '2015-11-04 22:00:00', 26, NULL),
+(2790, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-06 01:30:00', '2015-11-05 22:00:00', 26, NULL),
+(2791, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-07 01:30:00', '2015-11-06 22:00:00', 26, NULL),
+(2792, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-08 01:30:00', '2015-11-07 22:00:00', 26, NULL),
+(2793, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-09 01:30:00', '2015-11-08 22:00:00', 26, NULL),
+(2794, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-10 01:30:00', '2015-11-09 22:00:00', 26, NULL),
+(2795, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-11 01:30:00', '2015-11-10 22:00:00', 26, NULL),
+(2796, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-12 01:30:00', '2015-11-11 22:00:00', 26, NULL),
+(2797, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-13 01:30:00', '2015-11-12 22:00:00', 26, NULL),
+(2798, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-14 01:30:00', '2015-11-13 22:00:00', 26, NULL),
+(2799, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-15 01:30:00', '2015-11-14 22:00:00', 26, NULL),
+(2800, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-16 01:30:00', '2015-11-15 22:00:00', 26, NULL),
+(2801, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-17 01:30:00', '2015-11-16 22:00:00', 26, NULL),
+(2802, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-18 01:30:00', '2015-11-17 22:00:00', 26, NULL),
+(2803, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-19 01:30:00', '2015-11-18 22:00:00', 26, NULL),
+(2804, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-20 01:30:00', '2015-11-19 22:00:00', 26, NULL),
+(2805, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-21 01:30:00', '2015-11-20 22:00:00', 26, NULL),
+(2806, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-22 01:30:00', '2015-11-21 22:00:00', 26, NULL),
+(2807, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-23 01:30:00', '2015-11-22 22:00:00', 26, NULL),
+(2808, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-24 01:30:00', '2015-11-23 22:00:00', 26, NULL),
+(2809, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-25 01:30:00', '2015-11-24 22:00:00', 26, NULL),
+(2810, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-26 01:30:00', '2015-11-25 22:00:00', 26, NULL),
+(2811, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-27 01:30:00', '2015-11-26 22:00:00', 26, NULL),
+(2812, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-28 01:30:00', '2015-11-27 22:00:00', 26, NULL),
+(2813, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-29 01:30:00', '2015-11-28 22:00:00', 26, NULL),
+(2814, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-11-30 01:30:00', '2015-11-29 22:00:00', 26, NULL),
+(2815, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-12-01 01:30:00', '2015-11-30 22:00:00', 26, NULL),
+(2816, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-12-02 01:30:00', '2015-12-01 22:00:00', 26, NULL),
+(2817, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-12-03 01:30:00', '2015-12-02 22:00:00', 26, NULL),
+(2818, 12, 200000, '2015-09-09 04:16:34', '2015-09-09 04:16:34', NULL, 12, '2015-12-04 01:30:00', '2015-12-03 22:00:00', 26, NULL),
+(2819, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-05 01:30:00', '2015-12-04 22:00:00', 26, NULL),
+(2820, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-06 01:30:00', '2015-12-05 22:00:00', 26, NULL),
+(2821, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-07 01:30:00', '2015-12-06 22:00:00', 26, NULL),
+(2822, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-08 01:30:00', '2015-12-07 22:00:00', 26, NULL),
+(2823, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-09 01:30:00', '2015-12-08 22:00:00', 26, NULL),
+(2824, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-10 01:30:00', '2015-12-09 22:00:00', 26, NULL),
+(2825, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-11 01:30:00', '2015-12-10 22:00:00', 26, NULL),
+(2826, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-12 01:30:00', '2015-12-11 22:00:00', 26, NULL),
+(2827, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-13 01:30:00', '2015-12-12 22:00:00', 26, NULL),
+(2828, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-14 01:30:00', '2015-12-13 22:00:00', 26, NULL),
+(2829, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-15 01:30:00', '2015-12-14 22:00:00', 26, NULL),
+(2830, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-16 01:30:00', '2015-12-15 22:00:00', 26, NULL),
+(2831, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-17 01:30:00', '2015-12-16 22:00:00', 26, NULL),
+(2832, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-18 01:30:00', '2015-12-17 22:00:00', 26, NULL),
+(2833, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-19 01:30:00', '2015-12-18 22:00:00', 26, NULL),
+(2834, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-20 01:30:00', '2015-12-19 22:00:00', 26, NULL),
+(2835, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-21 01:30:00', '2015-12-20 22:00:00', 26, NULL),
+(2836, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-22 01:30:00', '2015-12-21 22:00:00', 26, NULL),
+(2837, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-23 01:30:00', '2015-12-22 22:00:00', 26, NULL),
+(2838, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-24 01:30:00', '2015-12-23 22:00:00', 26, NULL),
+(2839, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-25 01:30:00', '2015-12-24 22:00:00', 26, NULL),
+(2840, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-26 01:30:00', '2015-12-25 22:00:00', 26, NULL),
+(2841, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-27 01:30:00', '2015-12-26 22:00:00', 26, NULL),
+(2842, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-28 01:30:00', '2015-12-27 22:00:00', 26, NULL),
+(2843, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-29 01:30:00', '2015-12-28 22:00:00', 26, NULL),
+(2844, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-30 01:30:00', '2015-12-29 22:00:00', 26, NULL),
+(2845, 12, 200000, '2015-09-09 04:16:35', '2015-09-09 04:16:35', NULL, 12, '2015-12-31 01:30:00', '2015-12-30 22:00:00', 26, NULL),
+(2846, 11, 100000, '2015-09-09 05:51:53', '2015-09-09 05:51:53', NULL, 6, '2015-09-09 04:40:00', '2015-09-09 03:10:00', 23, NULL),
+(2847, 15, 100000, '2015-09-09 09:14:37', '2015-09-09 09:14:37', NULL, 8, '0000-00-00 00:00:00', '2015-09-29 03:00:00', 33, NULL),
+(2848, 15, 100000, '2015-09-09 09:14:37', '2015-09-09 09:14:37', NULL, 8, '0000-00-00 00:00:00', '2015-09-22 03:00:00', 33, NULL),
+(2849, 15, 100000, '2015-09-09 09:14:37', '2015-09-09 09:14:37', NULL, 8, '0000-00-00 00:00:00', '2015-09-15 03:00:00', 33, NULL),
+(2850, 11, 100000, '2015-09-09 09:31:24', '2015-09-09 09:31:24', NULL, 6, '0000-00-00 00:00:00', '2015-09-07 03:00:00', 23, NULL),
+(2851, 11, 100000, '2015-09-09 09:31:24', '2015-09-09 09:31:24', NULL, 6, '0000-00-00 00:00:00', '2015-09-14 03:00:00', 23, NULL),
+(2852, 11, 100000, '2015-09-09 09:31:24', '2015-09-09 09:31:24', NULL, 6, '0000-00-00 00:00:00', '2015-09-15 03:00:00', 23, NULL),
+(2853, 11, 100000, '2015-09-09 09:31:24', '2015-09-09 09:31:24', NULL, 6, '0000-00-00 00:00:00', '2015-09-23 03:00:00', 23, NULL),
+(2854, 11, 100000, '2015-09-09 09:31:24', '2015-09-09 09:31:24', NULL, 6, '0000-00-00 00:00:00', '2015-09-16 03:00:00', 23, NULL),
+(2855, 11, 200000, '2015-09-09 09:32:33', '2015-09-09 09:32:33', NULL, 6, '0000-00-00 00:00:00', '2015-09-06 19:00:00', 23, NULL),
+(2893, 15, 0, '2015-09-09 12:11:26', '2015-09-09 12:11:26', NULL, 8, '2015-09-01 04:00:00', '2015-09-01 03:00:00', 33, 5),
+(2894, 15, 0, '2015-09-09 12:11:26', '2015-09-09 12:11:26', NULL, 8, '2015-09-07 04:00:00', '2015-09-07 03:00:00', 33, 5),
+(2895, 15, 0, '2015-09-09 12:11:26', '2015-09-09 12:11:26', NULL, 8, '2015-09-08 04:00:00', '2015-09-08 03:00:00', 33, 5),
+(2896, 15, 0, '2015-09-09 12:11:26', '2015-09-09 12:11:26', NULL, 8, '2015-09-14 04:00:00', '2015-09-14 03:00:00', 33, 5),
+(2897, 15, 0, '2015-09-09 12:11:26', '2015-09-09 12:11:26', NULL, 8, '2015-09-15 04:00:00', '2015-09-15 03:00:00', 33, 5),
+(2898, 15, 0, '2015-09-09 12:11:26', '2015-09-09 12:11:26', NULL, 8, '2015-09-21 04:00:00', '2015-09-21 03:00:00', 33, 5),
+(2899, 15, 0, '2015-09-09 12:11:26', '2015-09-09 12:11:26', NULL, 8, '2015-09-22 04:00:00', '2015-09-22 03:00:00', 33, 5),
+(2900, 15, 0, '2015-09-09 12:11:26', '2015-09-09 12:11:26', NULL, 8, '2015-09-28 04:00:00', '2015-09-28 03:00:00', 33, 5),
+(2901, 15, 0, '2015-09-09 12:11:26', '2015-09-09 12:11:26', NULL, 8, '2015-09-29 04:00:00', '2015-09-29 03:00:00', 33, 5),
+(2902, 11, 100000, '2015-09-10 10:06:48', '2015-09-10 10:06:48', NULL, 6, '0000-00-00 00:00:00', '2015-09-01 05:00:00', 23, NULL),
+(2903, 11, 200000, '2015-09-10 10:29:10', '2015-09-10 10:29:10', NULL, 6, '2015-09-01 08:00:00', '2015-09-01 03:00:00', 23, NULL),
+(2904, 11, 100000, '2015-09-10 10:29:51', '2015-09-10 10:29:51', NULL, 6, '2015-09-26 11:00:00', '2015-09-26 03:00:00', 23, NULL);
 
-/*Table structure for table `travel_schedule_umum` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `travel_schedule_umum`;
+--
+-- Table structure for table `travel_schedule_umum`
+--
 
-CREATE TABLE `travel_schedule_umum` (
-  `TRAVEL_SCHEDULE_UMUM_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `travel_schedule_umum` (
+  `TRAVEL_SCHEDULE_UMUM_ID` int(11) NOT NULL,
   `TRAVEL_SCHEDULE_UMUM_FROM` date DEFAULT NULL,
-  `TRAVEL_SCHEDULE_UMUM_TO` date DEFAULT NULL,
-  PRIMARY KEY (`TRAVEL_SCHEDULE_UMUM_ID`)
+  `TRAVEL_SCHEDULE_UMUM_TO` date DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
-/*Data for the table `travel_schedule_umum` */
+--
+-- Dumping data for table `travel_schedule_umum`
+--
 
-insert  into `travel_schedule_umum`(TRAVEL_SCHEDULE_UMUM_ID,TRAVEL_SCHEDULE_UMUM_FROM,TRAVEL_SCHEDULE_UMUM_TO) values (5,'2015-09-01','2015-09-30');
+INSERT INTO `travel_schedule_umum` (`TRAVEL_SCHEDULE_UMUM_ID`, `TRAVEL_SCHEDULE_UMUM_FROM`, `TRAVEL_SCHEDULE_UMUM_TO`) VALUES
+(5, '2015-09-01', '2015-09-30');
 
-/*Table structure for table `travel_schedule_umumxday` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `travel_schedule_umumxday`;
+--
+-- Table structure for table `travel_schedule_umumxday`
+--
 
-CREATE TABLE `travel_schedule_umumxday` (
+CREATE TABLE IF NOT EXISTS `travel_schedule_umumxday` (
   `DAY_ID` int(11) DEFAULT NULL,
-  `TRAVEL_SCHEDULE_UMUM_ID` int(11) DEFAULT NULL,
-  KEY `FK_travel_schedule_umumxday` (`DAY_ID`),
-  KEY `FK_travel_schedule_umumxday_umum` (`TRAVEL_SCHEDULE_UMUM_ID`),
-  CONSTRAINT `FK_travel_schedule_umumxday` FOREIGN KEY (`DAY_ID`) REFERENCES `day` (`DAY_ID`),
-  CONSTRAINT `FK_travel_schedule_umumxday_umum` FOREIGN KEY (`TRAVEL_SCHEDULE_UMUM_ID`) REFERENCES `travel_schedule_umum` (`TRAVEL_SCHEDULE_UMUM_ID`) ON DELETE CASCADE
+  `TRAVEL_SCHEDULE_UMUM_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `travel_schedule_umumxday` */
+--
+-- Dumping data for table `travel_schedule_umumxday`
+--
 
-insert  into `travel_schedule_umumxday`(DAY_ID,TRAVEL_SCHEDULE_UMUM_ID) values (1,5),(2,5);
+INSERT INTO `travel_schedule_umumxday` (`DAY_ID`, `TRAVEL_SCHEDULE_UMUM_ID`) VALUES
+(1, 5),
+(2, 5);
 
-/*Table structure for table `travel_transaction` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `travel_transaction`;
+--
+-- Table structure for table `travel_transaction`
+--
 
-CREATE TABLE `travel_transaction` (
-  `TRAVEL_TRANSACTION_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `travel_transaction` (
+  `TRAVEL_TRANSACTION_ID` int(11) NOT NULL,
   `MEMBER_ID` int(11) DEFAULT NULL,
   `TRAVEL_TRANSACTION_STATUS_ID` int(11) DEFAULT NULL,
   `TRAVEL_TRANSACTION_NAME` varchar(100) DEFAULT NULL,
@@ -592,46 +1122,51 @@ CREATE TABLE `travel_transaction` (
   `TRAVEL_TRANSACTION_CODE` varchar(20) DEFAULT NULL,
   `COSTUMER_ID` int(11) DEFAULT NULL,
   `TRAVEL_SCHEDULE_ID` int(11) DEFAULT NULL,
-  `TRAVEL_TRANSACTION_PASSENGER` int(11) DEFAULT NULL,
-  PRIMARY KEY (`TRAVEL_TRANSACTION_ID`),
-  KEY `FK_RELATIONSHIP_26` (`TRAVEL_TRANSACTION_STATUS_ID`),
-  KEY `FK_RELATIONSHIP_33` (`MEMBER_ID`),
-  KEY `FK_travel_transaction` (`COSTUMER_ID`),
-  KEY `FK_travel_transaction_schedule` (`TRAVEL_SCHEDULE_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_26` FOREIGN KEY (`TRAVEL_TRANSACTION_STATUS_ID`) REFERENCES `travel_transaction_status` (`TRAVEL_TRANSACTION_STATUS_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_33` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`),
-  CONSTRAINT `FK_travel_transaction` FOREIGN KEY (`COSTUMER_ID`) REFERENCES `costumer` (`COSTUMER_ID`),
-  CONSTRAINT `FK_travel_transaction_schedule` FOREIGN KEY (`TRAVEL_SCHEDULE_ID`) REFERENCES `travel_schedule` (`TRAVEL_SCHEDULE_ID`)
+  `TRAVEL_TRANSACTION_PASSENGER` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
-/*Data for the table `travel_transaction` */
+--
+-- Dumping data for table `travel_transaction`
+--
 
-insert  into `travel_transaction`(TRAVEL_TRANSACTION_ID,MEMBER_ID,TRAVEL_TRANSACTION_STATUS_ID,TRAVEL_TRANSACTION_NAME,TRAVEL_TRANSACTION_CREATE,TRAVEL_TRANSACTION_UPDATE,TRAVEL_TRANSACTION_PRICE,TRAVEL_TRANSACTION_CODE,COSTUMER_ID,TRAVEL_SCHEDULE_ID,TRAVEL_TRANSACTION_PASSENGER) values (34,NULL,1,NULL,'2015-08-27 14:23:02','0000-00-00 00:00:00',1,'TRAVEL_1',48,16,2),(35,NULL,1,NULL,'2015-08-27 14:35:11','0000-00-00 00:00:00',1,'TRAVEL_1',49,16,3),(36,NULL,1,NULL,'2015-08-27 14:37:26','0000-00-00 00:00:00',1,'TRAVEL_1',50,16,1),(37,NULL,2,NULL,'2015-09-04 16:40:59','2015-09-04 09:40:59',1,'TRAVEL_2',51,15,9),(38,NULL,2,NULL,'2015-09-04 16:40:36','2015-09-04 09:40:36',1000000,'TRAVEL_3',52,15,1);
+INSERT INTO `travel_transaction` (`TRAVEL_TRANSACTION_ID`, `MEMBER_ID`, `TRAVEL_TRANSACTION_STATUS_ID`, `TRAVEL_TRANSACTION_NAME`, `TRAVEL_TRANSACTION_CREATE`, `TRAVEL_TRANSACTION_UPDATE`, `TRAVEL_TRANSACTION_PRICE`, `TRAVEL_TRANSACTION_CODE`, `COSTUMER_ID`, `TRAVEL_SCHEDULE_ID`, `TRAVEL_TRANSACTION_PASSENGER`) VALUES
+(34, NULL, 1, NULL, '2015-08-27 07:23:02', '0000-00-00 00:00:00', 1, 'TRAVEL_1', 48, 16, 2),
+(35, NULL, 1, NULL, '2015-08-27 07:35:11', '0000-00-00 00:00:00', 1, 'TRAVEL_1', 49, 16, 3),
+(36, NULL, 1, NULL, '2015-08-27 07:37:26', '0000-00-00 00:00:00', 1, 'TRAVEL_1', 50, 16, 1),
+(37, NULL, 2, NULL, '2015-09-04 09:40:59', '2015-09-04 02:40:59', 1, 'TRAVEL_2', 51, 15, 9),
+(38, NULL, 2, NULL, '2015-09-04 09:40:36', '2015-09-04 02:40:36', 1000000, 'TRAVEL_3', 52, 15, 1);
 
-/*Table structure for table `travel_transaction_status` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `travel_transaction_status`;
+--
+-- Table structure for table `travel_transaction_status`
+--
 
-CREATE TABLE `travel_transaction_status` (
-  `TRAVEL_TRANSACTION_STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `travel_transaction_status` (
+  `TRAVEL_TRANSACTION_STATUS_ID` int(11) NOT NULL,
   `TRAVEL_TRANSACTION_STATUS_NAME` varchar(100) DEFAULT NULL,
   `TRAVEL_TRANSACTION_STATUS_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `TRAVEL_TRANSACTION_STATUS_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `TRAVEL_TRANSACTION_STATUS_UPDATEBY` int(11) DEFAULT NULL,
-  `TRAVEL_TRANSACTION_STATUS_CREATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`TRAVEL_TRANSACTION_STATUS_ID`)
+  `TRAVEL_TRANSACTION_STATUS_CREATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
-/*Data for the table `travel_transaction_status` */
+--
+-- Dumping data for table `travel_transaction_status`
+--
 
-insert  into `travel_transaction_status`(TRAVEL_TRANSACTION_STATUS_ID,TRAVEL_TRANSACTION_STATUS_NAME,TRAVEL_TRANSACTION_STATUS_CREATE,TRAVEL_TRANSACTION_STATUS_UPDATE,TRAVEL_TRANSACTION_STATUS_UPDATEBY,TRAVEL_TRANSACTION_STATUS_CREATEBY) values (1,'BELUM BAYAR','2015-08-21 17:06:58','0000-00-00 00:00:00',NULL,NULL),(2,'LUNAS','2015-08-21 17:17:43','0000-00-00 00:00:00',NULL,NULL);
+INSERT INTO `travel_transaction_status` (`TRAVEL_TRANSACTION_STATUS_ID`, `TRAVEL_TRANSACTION_STATUS_NAME`, `TRAVEL_TRANSACTION_STATUS_CREATE`, `TRAVEL_TRANSACTION_STATUS_UPDATE`, `TRAVEL_TRANSACTION_STATUS_UPDATEBY`, `TRAVEL_TRANSACTION_STATUS_CREATEBY`) VALUES
+(1, 'BELUM BAYAR', '2015-08-21 10:06:58', '0000-00-00 00:00:00', NULL, NULL),
+(2, 'LUNAS', '2015-08-21 10:17:43', '0000-00-00 00:00:00', NULL, NULL);
 
-/*Table structure for table `users` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `users`;
+--
+-- Table structure for table `users`
+--
 
-CREATE TABLE `users` (
-  `USERS_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `users` (
+  `USERS_ID` int(11) NOT NULL,
   `USERS_NAME` varchar(100) DEFAULT NULL,
   `USERS_USERNAME` varchar(100) DEFAULT NULL,
   `USERS_EMAIL` varchar(100) DEFAULT NULL,
@@ -639,22 +1174,27 @@ CREATE TABLE `users` (
   `USERS_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `USERS_CREATEBY` int(11) DEFAULT NULL,
   `USERS_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `USERS_UPDATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`USERS_ID`)
+  `USERS_UPDATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
-/*Data for the table `users` */
+--
+-- Dumping data for table `users`
+--
 
-insert  into `users`(USERS_ID,USERS_NAME,USERS_USERNAME,USERS_EMAIL,USERS_PASSWORD,USERS_CREATE,USERS_CREATEBY,USERS_UPDATE,USERS_UPDATEBY) values (1,'admin','admin','admin@admin.com','21232f297a57a5a743894a0e4a801fc3','2015-08-17 13:49:40',NULL,'2015-08-17 06:45:19',1),(3,'RIPAS','bayu','ripas@rmail.com','123','2015-08-19 14:28:49',NULL,'0000-00-00 00:00:00',NULL);
+INSERT INTO `users` (`USERS_ID`, `USERS_NAME`, `USERS_USERNAME`, `USERS_EMAIL`, `USERS_PASSWORD`, `USERS_CREATE`, `USERS_CREATEBY`, `USERS_UPDATE`, `USERS_UPDATEBY`) VALUES
+(1, 'admin', 'admin', 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', '2015-08-17 06:49:40', NULL, '2015-08-16 23:45:19', 1),
+(3, 'RIPAS', 'bayu', 'ripas@rmail.com', '123', '2015-08-19 07:28:49', NULL, '0000-00-00 00:00:00', NULL);
 
-/*Table structure for table `vehicle` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `vehicle`;
+--
+-- Table structure for table `vehicle`
+--
 
-CREATE TABLE `vehicle` (
+CREATE TABLE IF NOT EXISTS `vehicle` (
   `VEHICLE_UPDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `VEHICLE_CAPACITY` int(11) DEFAULT NULL,
-  `VEHICLE_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `VEHICLE_ID` int(11) NOT NULL,
   `PARTNER_ID` int(11) DEFAULT NULL,
   `VEHICLE_STATUS_ID` int(11) DEFAULT NULL,
   `CITY_ID` int(11) DEFAULT NULL,
@@ -664,110 +1204,583 @@ CREATE TABLE `vehicle` (
   `VEHICLE_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `VEHICLE_CREATEBY` int(11) DEFAULT NULL,
   `VEHICLE_UPDATEBY` int(11) DEFAULT NULL,
-  `VEHICLE_DESCRIPTION` varchar(2000) DEFAULT NULL,
-  PRIMARY KEY (`VEHICLE_ID`),
-  KEY `FK_RELATIONSHIP_19` (`PARTNER_ID`),
-  KEY `FK_RELATIONSHIP_21` (`VEHICLE_STATUS_ID`),
-  KEY `FK_RELATIONSHIP_22` (`CITY_ID`),
-  KEY `FK_RELATIONSHIP_7` (`VEHICLE_TYPE_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_19` FOREIGN KEY (`PARTNER_ID`) REFERENCES `partner` (`PARTNER_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_21` FOREIGN KEY (`VEHICLE_STATUS_ID`) REFERENCES `vehicle_status` (`VEHICLE_STATUS_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_22` FOREIGN KEY (`CITY_ID`) REFERENCES `city` (`CITY_ID`),
-  CONSTRAINT `FK_RELATIONSHIP_7` FOREIGN KEY (`VEHICLE_TYPE_ID`) REFERENCES `vehicle_type` (`VEHICLE_TYPE_ID`)
+  `VEHICLE_DESCRIPTION` varchar(2000) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
-/*Data for the table `vehicle` */
+--
+-- Dumping data for table `vehicle`
+--
 
-insert  into `vehicle`(VEHICLE_UPDATE,VEHICLE_CAPACITY,VEHICLE_ID,PARTNER_ID,VEHICLE_STATUS_ID,CITY_ID,VEHICLE_TYPE_ID,VEHICLE_NAME,VEHICLE_PHOTO,VEHICLE_CREATE,VEHICLE_CREATEBY,VEHICLE_UPDATEBY,VEHICLE_DESCRIPTION) values ('2015-08-26 05:00:57',8,9,1,1,1,1,'AVANZA','7cbb62b87b12b18366e862b238e971d3.jpg','2015-08-19 12:27:09',NULL,1,'lala'),('2015-08-26 05:43:11',20,10,1,1,1,1,'ELF Putih','78432d16870323050890d275f7534338.jpg','2015-08-19 14:40:40',NULL,1,'lalal'),('2015-08-25 03:59:45',20,11,1,1,1,1,'ELF Merah','f30c1d8b8b546059d6832deb13f17462.jpg','2015-08-19 14:49:29',NULL,1,'lalala'),('2015-08-26 04:24:40',20,12,1,1,1,1,'ELF Biru','8d2782289aeafd7b7695b38e45672296.jpg','2015-08-25 11:04:06',1,1,'elf loh'),('2015-08-25 11:04:27',6,13,1,1,1,3,'XENIA','b12308f201c369f47bb223aefcab9b7f.jpg','2015-08-25 11:04:27',1,NULL,''),('2015-08-25 11:04:55',15,14,1,1,1,4,'Mini Bus','aa74c60e43fecf7dc6c5c795bdd060ff.jpg','2015-08-25 11:04:55',1,NULL,''),('2015-08-25 11:05:25',18,15,1,1,1,4,'L-300 ','661196b99e3f3ea7d54c82de2c2238d1.jpg','2015-08-25 11:05:25',1,NULL,''),('2015-08-25 11:06:04',25,16,1,1,1,4,'Bus Mini','e292a8f18be338c1f3deba9a8cd12fbb.jpg','2015-08-25 11:06:04',1,NULL,''),('2015-08-25 11:10:00',8,17,1,1,1,2,'INNOVA Orange','45ef00dde0f05ed723fe7c4d88f8cd1f.jpg','2015-08-25 11:10:00',1,NULL,''),('2015-08-25 11:10:35',20,18,1,1,1,4,'L-300 ','f468300d4eb2db3428722efa1f7f38d9.jpg','2015-08-25 11:10:35',1,NULL,''),('2015-09-01 11:16:01',20,19,5,1,1,3,'Avanza','509ab43266703c95069ee288365e6bd6.jpg','2015-08-31 11:55:49',5,NULL,'ini bagus'),('2015-08-31 12:18:47',20,21,5,1,1,1,'Avanza','0087200b0d0ee676ce78634d2528a083.jpg','2015-08-31 12:18:47',5,NULL,'s'),('2015-09-01 10:21:45',20,22,7,1,1,3,'Avanza','6ca4fac01e1863e974544debaf679e03.jpg','2015-09-01 16:16:09',7,7,'10000'),('2015-09-02 10:52:37',8,23,6,1,1,3,'Avanza','a192c071402370abc9931366b8327d3a.jpg','2015-09-02 10:52:37',6,NULL,'Mahal'),('2015-09-04 12:37:06',20,24,9,1,1,1,'Avanza','c03355ba1b74a21bd9c4092c7f31df23.jpg','2015-09-04 12:37:06',9,NULL,''),('2015-09-09 11:00:56',7,25,11,1,1,3,'Avanza Veloz ','a9cfde509ea7517b9c364586433afe83.jpg','2015-09-09 11:00:56',11,NULL,'7 Penumpang, AC'),('2015-09-09 11:10:26',14,26,12,1,6,1,'ELF','53bf3b6118eb9358f880a755a0526511.jpg','2015-09-09 11:10:26',12,NULL,'AC, Nyaman'),('2015-09-09 11:13:28',20,27,12,1,6,4,'Mini Bus','b716fbb559127385404f3a778056faa9.jpg','2015-09-09 11:13:28',12,NULL,''),('2015-09-09 16:04:37',20,33,8,1,1,1,'Avanza','224cd01ffe6a91ab6fd6102428a89705.jpg','2015-09-09 16:04:37',8,NULL,'sd');
+INSERT INTO `vehicle` (`VEHICLE_UPDATE`, `VEHICLE_CAPACITY`, `VEHICLE_ID`, `PARTNER_ID`, `VEHICLE_STATUS_ID`, `CITY_ID`, `VEHICLE_TYPE_ID`, `VEHICLE_NAME`, `VEHICLE_PHOTO`, `VEHICLE_CREATE`, `VEHICLE_CREATEBY`, `VEHICLE_UPDATEBY`, `VEHICLE_DESCRIPTION`) VALUES
+('2015-08-25 22:00:57', 8, 9, 1, 1, 1, 1, 'AVANZA', '7cbb62b87b12b18366e862b238e971d3.jpg', '2015-08-19 05:27:09', NULL, 1, 'lala'),
+('2015-08-25 22:43:11', 20, 10, 1, 1, 1, 1, 'ELF Putih', '78432d16870323050890d275f7534338.jpg', '2015-08-19 07:40:40', NULL, 1, 'lalal'),
+('2015-08-24 20:59:45', 20, 11, 1, 1, 1, 1, 'ELF Merah', 'f30c1d8b8b546059d6832deb13f17462.jpg', '2015-08-19 07:49:29', NULL, 1, 'lalala'),
+('2015-08-25 21:24:40', 20, 12, 1, 1, 1, 1, 'ELF Biru', '8d2782289aeafd7b7695b38e45672296.jpg', '2015-08-25 04:04:06', 1, 1, 'elf loh'),
+('2015-08-25 04:04:27', 6, 13, 1, 1, 1, 3, 'XENIA', 'b12308f201c369f47bb223aefcab9b7f.jpg', '2015-08-25 04:04:27', 1, NULL, ''),
+('2015-08-25 04:04:55', 15, 14, 1, 1, 1, 4, 'Mini Bus', 'aa74c60e43fecf7dc6c5c795bdd060ff.jpg', '2015-08-25 04:04:55', 1, NULL, ''),
+('2015-08-25 04:05:25', 18, 15, 1, 1, 1, 4, 'L-300 ', '661196b99e3f3ea7d54c82de2c2238d1.jpg', '2015-08-25 04:05:25', 1, NULL, ''),
+('2015-08-25 04:06:04', 25, 16, 1, 1, 1, 4, 'Bus Mini', 'e292a8f18be338c1f3deba9a8cd12fbb.jpg', '2015-08-25 04:06:04', 1, NULL, ''),
+('2015-08-25 04:10:00', 8, 17, 1, 1, 1, 2, 'INNOVA Orange', '45ef00dde0f05ed723fe7c4d88f8cd1f.jpg', '2015-08-25 04:10:00', 1, NULL, ''),
+('2015-08-25 04:10:35', 20, 18, 1, 1, 1, 4, 'L-300 ', 'f468300d4eb2db3428722efa1f7f38d9.jpg', '2015-08-25 04:10:35', 1, NULL, ''),
+('2015-09-01 04:16:01', 20, 19, 5, 1, 1, 3, 'Avanza', '509ab43266703c95069ee288365e6bd6.jpg', '2015-08-31 04:55:49', 5, NULL, 'ini bagus'),
+('2015-08-31 05:18:47', 20, 21, 5, 1, 1, 1, 'Avanza', '0087200b0d0ee676ce78634d2528a083.jpg', '2015-08-31 05:18:47', 5, NULL, 's'),
+('2015-09-01 03:21:45', 20, 22, 7, 1, 1, 3, 'Avanza', '6ca4fac01e1863e974544debaf679e03.jpg', '2015-09-01 09:16:09', 7, 7, '10000'),
+('2015-09-02 03:52:37', 8, 23, 6, 1, 1, 3, 'Avanza', 'a192c071402370abc9931366b8327d3a.jpg', '2015-09-02 03:52:37', 6, NULL, 'Mahal'),
+('2015-09-04 05:37:06', 20, 24, 9, 1, 1, 1, 'Avanza', 'c03355ba1b74a21bd9c4092c7f31df23.jpg', '2015-09-04 05:37:06', 9, NULL, ''),
+('2015-09-09 04:00:56', 7, 25, 11, 1, 1, 3, 'Avanza Veloz ', 'a9cfde509ea7517b9c364586433afe83.jpg', '2015-09-09 04:00:56', 11, NULL, '7 Penumpang, AC'),
+('2015-09-09 04:10:26', 14, 26, 12, 1, 6, 1, 'ELF', '53bf3b6118eb9358f880a755a0526511.jpg', '2015-09-09 04:10:26', 12, NULL, 'AC, Nyaman'),
+('2015-09-09 04:13:28', 20, 27, 12, 1, 6, 4, 'Mini Bus', 'b716fbb559127385404f3a778056faa9.jpg', '2015-09-09 04:13:28', 12, NULL, ''),
+('2015-09-09 09:04:37', 20, 33, 8, 1, 1, 1, 'Avanza', '224cd01ffe6a91ab6fd6102428a89705.jpg', '2015-09-09 09:04:37', 8, NULL, 'sd');
 
-/*Table structure for table `vehicle_status` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `vehicle_status`;
+--
+-- Table structure for table `vehicle_status`
+--
 
-CREATE TABLE `vehicle_status` (
-  `VEHICLE_STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `vehicle_status` (
+  `VEHICLE_STATUS_ID` int(11) NOT NULL,
   `VEHICLE_STATUS_NAME` varchar(100) DEFAULT NULL,
   `VEHICLE_STATUS_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `VEHICLE_STATUS_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `VEHICLE_STATUS_CREATEBY` int(11) DEFAULT NULL,
-  `VEHICLE_STATUS_UPDATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`VEHICLE_STATUS_ID`)
+  `VEHICLE_STATUS_UPDATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-/*Data for the table `vehicle_status` */
+--
+-- Dumping data for table `vehicle_status`
+--
 
-insert  into `vehicle_status`(VEHICLE_STATUS_ID,VEHICLE_STATUS_NAME,VEHICLE_STATUS_CREATE,VEHICLE_STATUS_UPDATE,VEHICLE_STATUS_CREATEBY,VEHICLE_STATUS_UPDATEBY) values (1,'bagus','2015-08-18 20:23:34','0000-00-00 00:00:00',NULL,NULL);
+INSERT INTO `vehicle_status` (`VEHICLE_STATUS_ID`, `VEHICLE_STATUS_NAME`, `VEHICLE_STATUS_CREATE`, `VEHICLE_STATUS_UPDATE`, `VEHICLE_STATUS_CREATEBY`, `VEHICLE_STATUS_UPDATEBY`) VALUES
+(1, 'bagus', '2015-08-18 13:23:34', '0000-00-00 00:00:00', NULL, NULL);
 
-/*Table structure for table `vehicle_type` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `vehicle_type`;
+--
+-- Table structure for table `vehicle_type`
+--
 
-CREATE TABLE `vehicle_type` (
-  `VEHICLE_TYPE_ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `vehicle_type` (
+  `VEHICLE_TYPE_ID` int(11) NOT NULL,
   `VEHICLE_TYPE_NAME` varchar(200) DEFAULT NULL,
   `VEHICLE_TYPE_CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `VEHICLE_TYPE_CREATEBY` int(11) DEFAULT NULL,
   `VEHICLE_TYPE_UPDATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `VEHICLE_TYPE_UPDATEBY` int(11) DEFAULT NULL,
-  PRIMARY KEY (`VEHICLE_TYPE_ID`)
+  `VEHICLE_TYPE_UPDATEBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
-/*Data for the table `vehicle_type` */
+--
+-- Dumping data for table `vehicle_type`
+--
 
-insert  into `vehicle_type`(VEHICLE_TYPE_ID,VEHICLE_TYPE_NAME,VEHICLE_TYPE_CREATE,VEHICLE_TYPE_CREATEBY,VEHICLE_TYPE_UPDATE,VEHICLE_TYPE_UPDATEBY) values (1,'ELF','2015-08-25 10:58:30',NULL,'0000-00-00 00:00:00',NULL),(2,'INNOVA','2015-08-25 10:58:42',NULL,'0000-00-00 00:00:00',NULL),(3,'AVANZA','2015-08-25 10:58:48',NULL,'0000-00-00 00:00:00',NULL),(4,'MINIBUS','2015-08-25 10:58:56',NULL,'0000-00-00 00:00:00',NULL);
+INSERT INTO `vehicle_type` (`VEHICLE_TYPE_ID`, `VEHICLE_TYPE_NAME`, `VEHICLE_TYPE_CREATE`, `VEHICLE_TYPE_CREATEBY`, `VEHICLE_TYPE_UPDATE`, `VEHICLE_TYPE_UPDATEBY`) VALUES
+(1, 'ELF', '2015-08-25 03:58:30', NULL, '0000-00-00 00:00:00', NULL),
+(2, 'INNOVA', '2015-08-25 03:58:42', NULL, '0000-00-00 00:00:00', NULL),
+(3, 'AVANZA', '2015-08-25 03:58:48', NULL, '0000-00-00 00:00:00', NULL),
+(4, 'MINIBUS', '2015-08-25 03:58:56', NULL, '0000-00-00 00:00:00', NULL);
 
-/* Function  structure for function  `getCityName` */
+--
+-- Indexes for dumped tables
+--
 
-/*!50003 DROP FUNCTION IF EXISTS `getCityName` */;
-DELIMITER $$
+--
+-- Indexes for table `city`
+--
+ALTER TABLE `city`
+  ADD PRIMARY KEY (`CITY_ID`);
 
-/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `getCityName`(ID varchar(100)) RETURNS varchar(100) CHARSET latin1
-BEGIN
-	DECLARE NAMA VARCHAR(100);
-	SELECT CITY_NAME INTO NAMA FROM CITY WHERE CITY_ID=ID;
-	RETURN NAMA;
-    END */$$
-DELIMITER ;
+--
+-- Indexes for table `costumer`
+--
+ALTER TABLE `costumer`
+  ADD PRIMARY KEY (`COSTUMER_ID`);
 
-/* Function  structure for function  `rent_code` */
+--
+-- Indexes for table `day`
+--
+ALTER TABLE `day`
+  ADD PRIMARY KEY (`DAY_ID`);
 
-/*!50003 DROP FUNCTION IF EXISTS `rent_code` */;
-DELIMITER $$
+--
+-- Indexes for table `hak_akses`
+--
+ALTER TABLE `hak_akses`
+  ADD KEY `FK_hak_akses` (`ROLES_ID`);
 
-/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `rent_code`() RETURNS varchar(20) CHARSET latin1
-BEGIN
-	DECLARE transaksicode VARCHAR(20);
-	DECLARE temp VARCHAR(20);
-	SELECT MAX(RENT_TRANSACTION_CODE) INTO transaksicode FROM RENT_TRANSACTION;
-	
-	IF transaksicode IS NULL THEN SET transaksicode='1';
-	ELSE  SET transaksicode=SUBSTR(transaksicode,5,1)+1;
-	END IF;
-	
-	SET transaksicode=CONCAT('RENT_',transaksicode);
-	RETURN transaksicode;
-    END */$$
-DELIMITER ;
+--
+-- Indexes for table `link_rent`
+--
+ALTER TABLE `link_rent`
+  ADD PRIMARY KEY (`LINK_RENT_ID`);
 
-/* Function  structure for function  `travel_code` */
+--
+-- Indexes for table `link_travel`
+--
+ALTER TABLE `link_travel`
+  ADD PRIMARY KEY (`LINK_TRAVEL_ID`);
 
-/*!50003 DROP FUNCTION IF EXISTS `travel_code` */;
-DELIMITER $$
+--
+-- Indexes for table `log_transaction`
+--
+ALTER TABLE `log_transaction`
+  ADD PRIMARY KEY (`LOG_TRANSACTION_ID`),
+  ADD KEY `FK_RELATIONSHIP_2` (`TICKET_TRANSACTION_ID`),
+  ADD KEY `FK_RELATIONSHIP_31` (`TRAVEL_TRANSACTION_ID`),
+  ADD KEY `FK_RELATIONSHIP_38` (`TRA_TRANSACTION_TYPE_ID`),
+  ADD KEY `FK_RELATIONSHIP_39` (`TRA_TRANSACTION_TYPE_ID2`),
+  ADD KEY `FK_RELATIONSHIP_40` (`TRANSACTION_TYPE_ID`);
 
-/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `travel_code`() RETURNS varchar(20) CHARSET latin1
-BEGIN
-	DECLARE transaksicode VARCHAR(20);
-	DECLARE temp VARCHAR(20);
-	SELECT MAX(TRAVEL_TRANSACTION_CODE) INTO transaksicode FROM TRAVEL_TRANSACTION;
-	
-	iF transaksicode IS NULL THEN SET transaksicode='1';
-	ELSE  SET transaksicode=SUBSTR(transaksicode,8,1)+1;
-	END IF;
-	
-	SET transaksicode=CONCAT('TRAVEL_',transaksicode);
-	RETURN transaksicode;
-    END */$$
-DELIMITER ;
+--
+-- Indexes for table `member`
+--
+ALTER TABLE `member`
+  ADD PRIMARY KEY (`MEMBER_ID`);
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+--
+-- Indexes for table `modules`
+--
+ALTER TABLE `modules`
+  ADD PRIMARY KEY (`MODULES_ID`);
+
+--
+-- Indexes for table `partner`
+--
+ALTER TABLE `partner`
+  ADD PRIMARY KEY (`PARTNER_ID`),
+  ADD KEY `FK_partner` (`PARTNER_TYPE_ID`);
+
+--
+-- Indexes for table `partner_type`
+--
+ALTER TABLE `partner_type`
+  ADD PRIMARY KEY (`PARTNER_TYPE_ID`);
+
+--
+-- Indexes for table `passenger_detail`
+--
+ALTER TABLE `passenger_detail`
+  ADD KEY `FK_RELATIONSHIP_41` (`TICKET_TRANSACTION_ID`);
+
+--
+-- Indexes for table `penggunaxroles`
+--
+ALTER TABLE `penggunaxroles`
+  ADD PRIMARY KEY (`USERS_ID`,`ROLES_ID`),
+  ADD KEY `FK_RELATIONSHIP_6` (`ROLES_ID`);
+
+--
+-- Indexes for table `point`
+--
+ALTER TABLE `point`
+  ADD PRIMARY KEY (`POINT_ID`),
+  ADD KEY `FK_RELATIONSHIP_13` (`POINT_STATUS_ID`);
+
+--
+-- Indexes for table `pointxmember`
+--
+ALTER TABLE `pointxmember`
+  ADD PRIMARY KEY (`POINT_ID`,`MEMBER_ID`),
+  ADD KEY `FK_RELATIONSHIP_42` (`MEMBER_ID`);
+
+--
+-- Indexes for table `point_status`
+--
+ALTER TABLE `point_status`
+  ADD PRIMARY KEY (`POINT_STATUS_ID`);
+
+--
+-- Indexes for table `rent_schedule`
+--
+ALTER TABLE `rent_schedule`
+  ADD PRIMARY KEY (`RENT_SCHEDULE_ID`),
+  ADD KEY `FK_RELATIONSHIP_36` (`VEHICLE_ID`);
+
+--
+-- Indexes for table `rent_status_transaction`
+--
+ALTER TABLE `rent_status_transaction`
+  ADD PRIMARY KEY (`RENT_TRANSACTION_STATUS_ID`);
+
+--
+-- Indexes for table `rent_transaction`
+--
+ALTER TABLE `rent_transaction`
+  ADD PRIMARY KEY (`RENT_TRANSACTION_ID`),
+  ADD KEY `FK_RELATIONSHIP_17` (`RENT_TRANSACTION_STATUS_ID`),
+  ADD KEY `FK_RELATIONSHIP_25` (`LOG_TRANSACTION_ID`),
+  ADD KEY `FK_RELATIONSHIP_29` (`MEMBER_ID`),
+  ADD KEY `FK_rent_transaction` (`COSTUMER_ID`);
+
+--
+-- Indexes for table `rent_transaction_detail`
+--
+ALTER TABLE `rent_transaction_detail`
+  ADD PRIMARY KEY (`RENT_TRANSACTION_ID`,`RENT_SCHEDULE_ID`),
+  ADD KEY `FK_RELATIONSHIP_30` (`RENT_SCHEDULE_ID`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`ROLES_ID`);
+
+--
+-- Indexes for table `route`
+--
+ALTER TABLE `route`
+  ADD PRIMARY KEY (`ROUTE_ID`);
+
+--
+-- Indexes for table `sub_modules`
+--
+ALTER TABLE `sub_modules`
+  ADD PRIMARY KEY (`SUB_MODULES_ID`);
+
+--
+-- Indexes for table `ticket_transaction`
+--
+ALTER TABLE `ticket_transaction`
+  ADD PRIMARY KEY (`TICKET_TRANSACTION_ID`),
+  ADD KEY `FK_RELATIONSHIP_1` (`STATUS_TRANSACTION_RENT_ID`),
+  ADD KEY `FK_RELATIONSHIP_10` (`MEMBER_ID`);
+
+--
+-- Indexes for table `ticket_transaction_detail`
+--
+ALTER TABLE `ticket_transaction_detail`
+  ADD KEY `FK_RELATIONSHIP_37` (`TICKET_TRANSACTION_ID`);
+
+--
+-- Indexes for table `transaction_type`
+--
+ALTER TABLE `transaction_type`
+  ADD PRIMARY KEY (`TRANSACTION_TYPE_ID`);
+
+--
+-- Indexes for table `travel_schedule`
+--
+ALTER TABLE `travel_schedule`
+  ADD PRIMARY KEY (`TRAVEL_SCHEDULE_ID`),
+  ADD KEY `FK_RELATIONSHIP_8` (`ROUTE_ID`),
+  ADD KEY `FK_travel_schedule` (`VEHICLE_ID`),
+  ADD KEY `FK_travel_schedule_umum` (`TRAVEL_SCHEDULE_UMUM_ID`);
+
+--
+-- Indexes for table `travel_schedule_umum`
+--
+ALTER TABLE `travel_schedule_umum`
+  ADD PRIMARY KEY (`TRAVEL_SCHEDULE_UMUM_ID`);
+
+--
+-- Indexes for table `travel_schedule_umumxday`
+--
+ALTER TABLE `travel_schedule_umumxday`
+  ADD KEY `FK_travel_schedule_umumxday` (`DAY_ID`),
+  ADD KEY `FK_travel_schedule_umumxday_umum` (`TRAVEL_SCHEDULE_UMUM_ID`);
+
+--
+-- Indexes for table `travel_transaction`
+--
+ALTER TABLE `travel_transaction`
+  ADD PRIMARY KEY (`TRAVEL_TRANSACTION_ID`),
+  ADD KEY `FK_RELATIONSHIP_26` (`TRAVEL_TRANSACTION_STATUS_ID`),
+  ADD KEY `FK_RELATIONSHIP_33` (`MEMBER_ID`),
+  ADD KEY `FK_travel_transaction` (`COSTUMER_ID`),
+  ADD KEY `FK_travel_transaction_schedule` (`TRAVEL_SCHEDULE_ID`);
+
+--
+-- Indexes for table `travel_transaction_status`
+--
+ALTER TABLE `travel_transaction_status`
+  ADD PRIMARY KEY (`TRAVEL_TRANSACTION_STATUS_ID`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`USERS_ID`);
+
+--
+-- Indexes for table `vehicle`
+--
+ALTER TABLE `vehicle`
+  ADD PRIMARY KEY (`VEHICLE_ID`),
+  ADD KEY `FK_RELATIONSHIP_19` (`PARTNER_ID`),
+  ADD KEY `FK_RELATIONSHIP_21` (`VEHICLE_STATUS_ID`),
+  ADD KEY `FK_RELATIONSHIP_22` (`CITY_ID`),
+  ADD KEY `FK_RELATIONSHIP_7` (`VEHICLE_TYPE_ID`);
+
+--
+-- Indexes for table `vehicle_status`
+--
+ALTER TABLE `vehicle_status`
+  ADD PRIMARY KEY (`VEHICLE_STATUS_ID`);
+
+--
+-- Indexes for table `vehicle_type`
+--
+ALTER TABLE `vehicle_type`
+  ADD PRIMARY KEY (`VEHICLE_TYPE_ID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `city`
+--
+ALTER TABLE `city`
+  MODIFY `CITY_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `costumer`
+--
+ALTER TABLE `costumer`
+  MODIFY `COSTUMER_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54;
+--
+-- AUTO_INCREMENT for table `day`
+--
+ALTER TABLE `day`
+  MODIFY `DAY_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `link_rent`
+--
+ALTER TABLE `link_rent`
+  MODIFY `LINK_RENT_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `link_travel`
+--
+ALTER TABLE `link_travel`
+  MODIFY `LINK_TRAVEL_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `log_transaction`
+--
+ALTER TABLE `log_transaction`
+  MODIFY `LOG_TRANSACTION_ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `member`
+--
+ALTER TABLE `member`
+  MODIFY `MEMBER_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `modules`
+--
+ALTER TABLE `modules`
+  MODIFY `MODULES_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `partner`
+--
+ALTER TABLE `partner`
+  MODIFY `PARTNER_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `partner_type`
+--
+ALTER TABLE `partner_type`
+  MODIFY `PARTNER_TYPE_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `point`
+--
+ALTER TABLE `point`
+  MODIFY `POINT_ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `point_status`
+--
+ALTER TABLE `point_status`
+  MODIFY `POINT_STATUS_ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `rent_schedule`
+--
+ALTER TABLE `rent_schedule`
+  MODIFY `RENT_SCHEDULE_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=141;
+--
+-- AUTO_INCREMENT for table `rent_status_transaction`
+--
+ALTER TABLE `rent_status_transaction`
+  MODIFY `RENT_TRANSACTION_STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `rent_transaction`
+--
+ALTER TABLE `rent_transaction`
+  MODIFY `RENT_TRANSACTION_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `ROLES_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `route`
+--
+ALTER TABLE `route`
+  MODIFY `ROUTE_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `sub_modules`
+--
+ALTER TABLE `sub_modules`
+  MODIFY `SUB_MODULES_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `ticket_transaction`
+--
+ALTER TABLE `ticket_transaction`
+  MODIFY `TICKET_TRANSACTION_ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `travel_schedule`
+--
+ALTER TABLE `travel_schedule`
+  MODIFY `TRAVEL_SCHEDULE_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2905;
+--
+-- AUTO_INCREMENT for table `travel_schedule_umum`
+--
+ALTER TABLE `travel_schedule_umum`
+  MODIFY `TRAVEL_SCHEDULE_UMUM_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `travel_transaction`
+--
+ALTER TABLE `travel_transaction`
+  MODIFY `TRAVEL_TRANSACTION_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
+--
+-- AUTO_INCREMENT for table `travel_transaction_status`
+--
+ALTER TABLE `travel_transaction_status`
+  MODIFY `TRAVEL_TRANSACTION_STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `USERS_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `vehicle`
+--
+ALTER TABLE `vehicle`
+  MODIFY `VEHICLE_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+--
+-- AUTO_INCREMENT for table `vehicle_status`
+--
+ALTER TABLE `vehicle_status`
+  MODIFY `VEHICLE_STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `vehicle_type`
+--
+ALTER TABLE `vehicle_type`
+  MODIFY `VEHICLE_TYPE_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `hak_akses`
+--
+ALTER TABLE `hak_akses`
+  ADD CONSTRAINT `FK_hak_akses` FOREIGN KEY (`ROLES_ID`) REFERENCES `roles` (`ROLES_ID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `log_transaction`
+--
+ALTER TABLE `log_transaction`
+  ADD CONSTRAINT `FK_RELATIONSHIP_2` FOREIGN KEY (`TICKET_TRANSACTION_ID`) REFERENCES `ticket_transaction` (`TICKET_TRANSACTION_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_31` FOREIGN KEY (`TRAVEL_TRANSACTION_ID`) REFERENCES `travel_transaction` (`TRAVEL_TRANSACTION_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_38` FOREIGN KEY (`TRA_TRANSACTION_TYPE_ID`) REFERENCES `transaction_type` (`TRANSACTION_TYPE_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_39` FOREIGN KEY (`TRA_TRANSACTION_TYPE_ID2`) REFERENCES `transaction_type` (`TRANSACTION_TYPE_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_40` FOREIGN KEY (`TRANSACTION_TYPE_ID`) REFERENCES `transaction_type` (`TRANSACTION_TYPE_ID`);
+
+--
+-- Constraints for table `partner`
+--
+ALTER TABLE `partner`
+  ADD CONSTRAINT `FK_partner` FOREIGN KEY (`PARTNER_TYPE_ID`) REFERENCES `partner_type` (`PARTNER_TYPE_ID`);
+
+--
+-- Constraints for table `passenger_detail`
+--
+ALTER TABLE `passenger_detail`
+  ADD CONSTRAINT `FK_RELATIONSHIP_41` FOREIGN KEY (`TICKET_TRANSACTION_ID`) REFERENCES `ticket_transaction` (`TICKET_TRANSACTION_ID`);
+
+--
+-- Constraints for table `penggunaxroles`
+--
+ALTER TABLE `penggunaxroles`
+  ADD CONSTRAINT `FK_RELATIONSHIP_5` FOREIGN KEY (`USERS_ID`) REFERENCES `users` (`USERS_ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_RELATIONSHIP_6` FOREIGN KEY (`ROLES_ID`) REFERENCES `roles` (`ROLES_ID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `point`
+--
+ALTER TABLE `point`
+  ADD CONSTRAINT `FK_RELATIONSHIP_13` FOREIGN KEY (`POINT_STATUS_ID`) REFERENCES `point_status` (`POINT_STATUS_ID`);
+
+--
+-- Constraints for table `pointxmember`
+--
+ALTER TABLE `pointxmember`
+  ADD CONSTRAINT `FK_RELATIONSHIP_14` FOREIGN KEY (`POINT_ID`) REFERENCES `point` (`POINT_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_42` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`);
+
+--
+-- Constraints for table `rent_schedule`
+--
+ALTER TABLE `rent_schedule`
+  ADD CONSTRAINT `FK_RELATIONSHIP_36` FOREIGN KEY (`VEHICLE_ID`) REFERENCES `vehicle` (`VEHICLE_ID`);
+
+--
+-- Constraints for table `rent_transaction`
+--
+ALTER TABLE `rent_transaction`
+  ADD CONSTRAINT `FK_RELATIONSHIP_17` FOREIGN KEY (`RENT_TRANSACTION_STATUS_ID`) REFERENCES `rent_status_transaction` (`RENT_TRANSACTION_STATUS_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_25` FOREIGN KEY (`LOG_TRANSACTION_ID`) REFERENCES `log_transaction` (`LOG_TRANSACTION_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_29` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`),
+  ADD CONSTRAINT `FK_rent_transaction` FOREIGN KEY (`COSTUMER_ID`) REFERENCES `costumer` (`COSTUMER_ID`);
+
+--
+-- Constraints for table `rent_transaction_detail`
+--
+ALTER TABLE `rent_transaction_detail`
+  ADD CONSTRAINT `FK_RELATIONSHIP_27` FOREIGN KEY (`RENT_TRANSACTION_ID`) REFERENCES `rent_transaction` (`RENT_TRANSACTION_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_30` FOREIGN KEY (`RENT_SCHEDULE_ID`) REFERENCES `rent_schedule` (`RENT_SCHEDULE_ID`);
+
+--
+-- Constraints for table `ticket_transaction`
+--
+ALTER TABLE `ticket_transaction`
+  ADD CONSTRAINT `FK_RELATIONSHIP_1` FOREIGN KEY (`STATUS_TRANSACTION_RENT_ID`) REFERENCES `rent_status_transaction` (`RENT_TRANSACTION_STATUS_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_10` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`);
+
+--
+-- Constraints for table `ticket_transaction_detail`
+--
+ALTER TABLE `ticket_transaction_detail`
+  ADD CONSTRAINT `FK_RELATIONSHIP_37` FOREIGN KEY (`TICKET_TRANSACTION_ID`) REFERENCES `ticket_transaction` (`TICKET_TRANSACTION_ID`);
+
+--
+-- Constraints for table `travel_schedule`
+--
+ALTER TABLE `travel_schedule`
+  ADD CONSTRAINT `FK_RELATIONSHIP_8` FOREIGN KEY (`ROUTE_ID`) REFERENCES `route` (`ROUTE_ID`),
+  ADD CONSTRAINT `FK_travel_schedule` FOREIGN KEY (`VEHICLE_ID`) REFERENCES `vehicle` (`VEHICLE_ID`),
+  ADD CONSTRAINT `FK_travel_schedule_umum` FOREIGN KEY (`TRAVEL_SCHEDULE_UMUM_ID`) REFERENCES `travel_schedule_umum` (`TRAVEL_SCHEDULE_UMUM_ID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `travel_schedule_umumxday`
+--
+ALTER TABLE `travel_schedule_umumxday`
+  ADD CONSTRAINT `FK_travel_schedule_umumxday` FOREIGN KEY (`DAY_ID`) REFERENCES `day` (`DAY_ID`),
+  ADD CONSTRAINT `FK_travel_schedule_umumxday_umum` FOREIGN KEY (`TRAVEL_SCHEDULE_UMUM_ID`) REFERENCES `travel_schedule_umum` (`TRAVEL_SCHEDULE_UMUM_ID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `travel_transaction`
+--
+ALTER TABLE `travel_transaction`
+  ADD CONSTRAINT `FK_RELATIONSHIP_26` FOREIGN KEY (`TRAVEL_TRANSACTION_STATUS_ID`) REFERENCES `travel_transaction_status` (`TRAVEL_TRANSACTION_STATUS_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_33` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`),
+  ADD CONSTRAINT `FK_travel_transaction` FOREIGN KEY (`COSTUMER_ID`) REFERENCES `costumer` (`COSTUMER_ID`),
+  ADD CONSTRAINT `FK_travel_transaction_schedule` FOREIGN KEY (`TRAVEL_SCHEDULE_ID`) REFERENCES `travel_schedule` (`TRAVEL_SCHEDULE_ID`);
+
+--
+-- Constraints for table `vehicle`
+--
+ALTER TABLE `vehicle`
+  ADD CONSTRAINT `FK_RELATIONSHIP_19` FOREIGN KEY (`PARTNER_ID`) REFERENCES `partner` (`PARTNER_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_21` FOREIGN KEY (`VEHICLE_STATUS_ID`) REFERENCES `vehicle_status` (`VEHICLE_STATUS_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_22` FOREIGN KEY (`CITY_ID`) REFERENCES `city` (`CITY_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_7` FOREIGN KEY (`VEHICLE_TYPE_ID`) REFERENCES `vehicle_type` (`VEHICLE_TYPE_ID`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
