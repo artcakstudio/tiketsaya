@@ -28,17 +28,18 @@
                             <!---------------------PESAWAT SEARCH TAB----------------------- -->
                           <div class="tab-pane active" id="pesawat">
                               <div class="row">
+               
                                   <div class="col-md-4 padding10">
                                       <div class="konten3_">
                                           <div class="head_konten3">Kota Asal</div>
                                           <div class="input-group isi_konten3">
-                                            <input type="text" class="form-control remove_border"/>
+                                            <select class="form-control remove_border" name="depart">
+                                                    @foreach($datashare['Bandara'] as $row)
+                                                        <option value="{{$row['Code']}}" class="remove_border">{{$row['DisplayName']}}</option>
+                                                    @endforeach
+                                            </select>
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">Surabaya</a></li>
-                                                    <li><a href="#">Jakarta</a></li>
-                                                  </ul>
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>
@@ -47,7 +48,11 @@
                                       <div class="konten3_">
                                           <div class="head_konten3">Kota Tujuan</div>
                                           <div class="input-group isi_konten3">
-                                            <input type="text" class="form-control remove_border"/>
+                                            <select class="form-control remove_border" name="dest">
+                                                    @foreach($datashare['Bandara'] as $row)
+                                                        <option value="{{$row['Code']}}" class="remove_border">{{$row['DisplayName']}}</option>
+                                                    @endforeach
+                                            </select>
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
                                             </div><!-- /btn-group -->
@@ -58,7 +63,7 @@
                                       <div class="konten3_">
                                           <div class="head_konten3">Tanggal Keberangkatan</div>
                                           <div class="input-group isi_konten3">
-                                            <input type="text" class="form-control remove_border" />
+                                            <input type="text" class="form-control remove_border datepicker" />
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
                                             </div><!-- /btn-group -->
@@ -122,7 +127,7 @@
                                           <div class="head_konten3">Kota Berangkat</div>
                                           <div class="input-group isi_konten3">
                                             <select class="form-control remove_border" name="depart">
-                                                    @foreach($city as $row)
+                                                    @foreach($datashare['City'] as $row)
                                                         <option value="{{$row['CITY_ID']}}" class="remove_border">{{$row['CITY_NAME']}}</option>
                                                     @endforeach
                                             </select>
@@ -140,7 +145,7 @@
                                           <div class="head_konten3">Kota Tujuan</div>
                                           <div class="input-group isi_konten3">
                                             <select class="form-control remove_border" name="dest">
-                                                    @foreach($city as $row)
+                                                    @foreach($datashare['City'] as $row)
                                                         <option value="{{$row['CITY_ID']}}" class=" remove_border">{{$row['CITY_NAME']}}</option>
                                                     @endforeach
                                             </select>
@@ -190,17 +195,13 @@
                                           <div class="input-group isi_konten3">
                                             <!-- <input type="text" class="form-control remove_border"/> -->
                                                   <select class="form-control remove_border" name="CITY_ID">
-                                                    @foreach($city as $row)
+                                                    @foreach($datashare['City'] as $row)
                                                         <option value="{{$row['CITY_ID']}}" class="remove_border">{{$row['CITY_NAME']}}</option>
                                                     @endforeach
                                                   </select>
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
-                                                <!-- ul class="dropdown-menu">
-                                                    @foreach($city as $row)
-                                                    <li><a href="#" id="city_{{$row['CITY_ID']}}">{{$row['CITY_NAME']}}</a></li>
-                                                    @endforeach
-                                                  </ul> -->
+                                                
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>

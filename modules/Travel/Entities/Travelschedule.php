@@ -68,13 +68,14 @@ class travelschedule extends Model {
     }
     function scopetravelScheduleRentang($query,$depart, $dest, $start, $finish){
         return $query->select(['TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'), 'PARTNER.*', 'VEHICLE_TYPE_NAME'])
-                ->whereBetween('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME',array($start,$finish))
+                ->whereDate('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME','>=',date('Y-m-d',strtotime($start)))
+                ->whereDate('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME','<=',date('Y-m-d',strtotime($finish)))
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
                 ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
                 ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
-/*                ->where('ROUTE.ROUTE_DEPARTURE','=',$depart)
-                ->where('ROUTE.ROUTE_DEST','=',$dest)   */
-                ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
-                ->groupBy('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID');
+                  ->where('ROUTE.ROUTE_DEPARTURE','=',$depart)
+                ->where('ROUTE.ROUTE_DEST','=',$dest)  
+                ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID');
+
     }
 }

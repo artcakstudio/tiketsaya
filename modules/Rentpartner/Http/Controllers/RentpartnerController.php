@@ -21,7 +21,7 @@ public function index()
 	 	$partner=Partner::where('PARTNER_ID','=',$data['PARTNER_ID']);
 	 	print_r($data);
 	 	unset($data['_token']);
-	 	if (!is_null($data['PARTNER_PHOTO'])){
+	 	if (isset($data['PARTNER_PHOTO'])){
 	 		$data['PARTNER_PHOTO']=md5(time()).'.png';;
 		 	$destPath=public_path().'\Assets\PartnerPhoto';
 		 	Input::file('PARTNER_PHOTO')->move($destPath,$data['PARTNER_PHOTO']);

@@ -19,9 +19,7 @@ private $vehicle;
 public $partner_id;
 	function __construct(){
 		$this->partner_id=Session::get('id');
-		$this->route=Route::getRoutePartner($this->partner_id)->get();
-		$this->jadwal=Travelschedule::partnerSchedule($this->partner_id)->get();
-		$this->vehicle=Vehicle::where('PARTNER_ID','=', $this->partner_id)->get();
+
 	}
 	public function index()
 	{
@@ -29,10 +27,11 @@ public $partner_id;
 	}
 	function jadwal($date)
 	{
-		$jadwal=$this->jadwal;
-		$route=$this->route;
-		$vehicle=$this->vehicle;
-	//	print_r($jadwal);
+		//ini_set('memory_limit','256M');
+		$jadwal=Travelschedule::partnerSchedule($this->partner_id)->get();
+		$route=Route::getRoutePartner($this->partner_id)->get();
+		$vehicle=Vehicle::where('PARTNER_ID','=', $this->partner_id)->get();
+	
 		return view('travelpartner::jadwal.index',compact('jadwal','route','vehicle','date'));
 	}
 	function addJadwal()
@@ -68,8 +67,8 @@ public $partner_id;
 	}
 	function jadwal_harian($tanggal)
 	{
-		$route=$this->route;
-		$vehicle=$this->vehicle;
+		$route=Route::getRoutePartner($this->partner_id)->get();
+		$vehicle=Vehicle::where('PARTNER_ID','=', $this->partner_id)->get();
 		return view('travelpartner::jadwal.jadwal_harian',compact('tanggal','route','vehicle'));
 	}
 	function mingguan()
@@ -79,8 +78,9 @@ public $partner_id;
 	function addJadwalMingguan()
 	{
 		$data=Input::all();
-		$start=$data['start'];
-		$stop=$data['stop'];
+
+		$start=date('Y-m-d', strtotime($data['start']));
+		$stop=date('Y-m-d', strtotime($data['stop']));
 		$tanggal=$data['tanggal'];
 		unset($data['tanggal'],$data['_token']);
 		$data['TRAVEL_SCHEDULE_CREATEBY']=Session::get('id');
@@ -89,9 +89,9 @@ public $partner_id;
 		$hour_arrive=date('H:i', strtotime('+'.$plus.' minutes', strtotime($hour_depart)));
 		unset($data['hour_depart'],$data['minute_estimate'],$data['hour_estimate'],$data['minute_depart'],$data['start'],$data['stop']);
 
-		$data_mingguan=["TRAVEL_SCHEDULE_UMUM_FROM"=>$start,'TRAVEL_SCHEDULE_UMUM_TO'=>$stop];
-		TravelScheduleUmum::insert($data_mingguan);
-		$data['TRAVEL_SCHEDULE_UMUM_ID']=DB::getPdo()->lastInsertId();
+		//$data_mingguan=["TRAVEL_SCHEDULE_UMUM_FROM"=>$start,'TRAVEL_SCHEDULE_UMUM_TO'=>$stop];
+		//TravelScheduleUmum::insert($data_mingguan);
+		//$data['TRAVEL_SCHEDULE_UMUM_ID']=DB::getPdo()->lastInsertId();
 		while($start <=$stop) {
 
 			$index=date('N',strtotime($start))-1;
@@ -102,17 +102,19 @@ public $partner_id;
 				Travelschedule::insert($data);
 			}
 			$start=date('Y-m-d',strtotime('+1 day',strtotime($start)));
+		
 		}
-		foreach ($tanggal as $key) {
+		/*foreach ($tanggal as $key) {
 			$temp=['DAY_ID'=>$key+1,'TRAVEL_SCHEDULE_UMUM_ID'=>$data['TRAVEL_SCHEDULE_UMUM_ID']];
-			TravelScheduleUmumXDay::insert($temp);
-		}
+			//TravelScheduleUmumXDay::insert($temp);
+		}*/
+	;
 	}
 
 	function jadwalUmum(){
-		$jadwal=$this->jadwal;
-		$route=$this->route;
-		$vehicle=$this->vehicle;
+		$jadwalTravelschedule::partnerSchedule($this->partner_id)->get();
+		$route=Route::getRoutePartner($this->partner_id)->get();
+		$vehicle=Vehicle::where('PARTNER_ID','=', $this->partner_id)->get();
 		return view('travelpartner::jadwal.umum_index',compact('jadwal','route','vehicle'));
 	}
 	function umum_mingguan(){

@@ -65,13 +65,13 @@
                             
                         </tr> 
                      </table>
+                     <button class="btn btn-primary" id="schedule_bulanan" >Tambah Schedule</button>
+                     <button class="btn btn-primary"  data-toggle="modal" data-target="#addScheduleMingguan">Tambah Schedule Mingguan</button>
                      </div>       
                      </div>
                      </div>
                      <div class="col-md-8" style="margin-left:25%">
                        
-                     <button class="btn btn-primary" id="schedule_bulanan" >Tambah Schedule</button>
-                     <button class="btn btn-primary"  data-toggle="modal" data-target="#addScheduleMingguan">Tambah Schedule Mingguan</button>
                      </div>
                     </div>
                 </div>
@@ -243,7 +243,9 @@
         console.log(data);
         var path="<?php echo url('public/Assets/vehiclePhoto/')?>";
         var path=path+'/'+data[0].VEHICLE_PHOTO;
-        $("#detail_jadwal table tbody tr").append('<td>'+data[0].ROUTE_DEPARTURE+'</td><td>'+data[0].ROUTE_DEST+'</td><td>'+data[0].TRAVEL_SCHEDULE_DEPARTTIME+'</td><td>'+data[0].TRAVEL_SCHEDULE_ARRIVETIME+'</td><td>'+data[0].VEHICLE_NAME+'</td><td><img src="'+path+'" width=90 height=50');
+        var patherror="<?php echo url('assets/images/noimage.png')?>";
+        
+        $("#detail_jadwal table tbody tr").append('<td>'+data[0].ROUTE_DEPARTURE+'</td><td>'+data[0].ROUTE_DEST+'</td><td>'+data[0].TRAVEL_SCHEDULE_DEPARTTIME+'</td><td>'+data[0].TRAVEL_SCHEDULE_ARRIVETIME+'</td><td>'+data[0].VEHICLE_NAME+'</td><td><img src="'+path+'" width=90 height=50  onError=this.onerror=null;this.src="'+patherror+'"  ' );
         $("#detail_jadwal").modal("show");
       }
     });

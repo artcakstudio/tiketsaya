@@ -6,5 +6,5 @@ class costumer extends Model {
 
     protected $fillable = [];
     public $timestamps=false;
-    protected $table='costumer';
+    protected $table='COSTUMER';
 }
