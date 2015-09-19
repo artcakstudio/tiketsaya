@@ -1,0 +1,11 @@
+{
+  "origin": "SUB",
+  "destination": "CGK",
+  "return": null,
+  "date_flexibility": "must_travel",
+  "depart_date": "2015-09-23",
+  "return_date": "2016-02-13",
+  "adult": 1,
+  "children": 0,
+  "infant": 0
+}

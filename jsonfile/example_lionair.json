@@ -1,0 +1,871 @@
+{
+  "depart": [
+    {
+      "plane": "ID 6401",
+      "time": [
+        "05:30",
+        "07:00"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "608000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C0_SLOT0"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6401",
+      "time": [
+        "05:30",
+        "07:00"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "762000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C0_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6401",
+      "time": [
+        "05:30",
+        "07:00"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C0_SLOT2"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6597",
+      "time": [
+        "06:15",
+        "07:45"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "608000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C1_SLOT0"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6597",
+      "time": [
+        "06:15",
+        "07:45"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "762000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C1_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6597",
+      "time": [
+        "06:15",
+        "07:45"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C1_SLOT2"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "JT 571",
+      "time": [
+        "06:45",
+        "08:15"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "577200",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C2_SLOT0"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 571",
+      "time": [
+        "06:45",
+        "08:15"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "707000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C2_SLOT1"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "ID 6391",
+      "time": [
+        "08:20",
+        "09:50"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "674000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C3_SLOT0"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6391",
+      "time": [
+        "08:20",
+        "09:50"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "762000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C3_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6391",
+      "time": [
+        "08:20",
+        "09:50"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C3_SLOT2"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6573",
+      "time": [
+        "10:35",
+        "12:05"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "641000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C4_SLOT0"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6573",
+      "time": [
+        "10:35",
+        "12:05"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "762000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C4_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6573",
+      "time": [
+        "10:35",
+        "12:05"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C4_SLOT2"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "JT 591",
+      "time": [
+        "12:10",
+        "13:40"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "577200",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C5_SLOT0"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 591",
+      "time": [
+        "12:10",
+        "13:40"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "707000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C5_SLOT1"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "ID 6575",
+      "time": [
+        "12:50",
+        "14:20"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "641000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C6_SLOT0"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6575",
+      "time": [
+        "12:50",
+        "14:20"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "762000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C6_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6575",
+      "time": [
+        "12:50",
+        "14:20"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C6_SLOT2"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "JT 577",
+      "time": [
+        "13:50",
+        "15:20"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "577200",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C7_SLOT0"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 577",
+      "time": [
+        "13:50",
+        "15:20"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "707000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C7_SLOT1"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 749",
+      "time": [
+        "14:35",
+        "16:05"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "577200",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C9_SLOT0"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 749",
+      "time": [
+        "14:35",
+        "16:05"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "707000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C9_SLOT1"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "ID 6417",
+      "time": [
+        "15:15",
+        "16:45"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "674000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C10_SLOT0"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6417",
+      "time": [
+        "15:15",
+        "16:45"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "762000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C10_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6417",
+      "time": [
+        "15:15",
+        "16:45"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C10_SLOT2"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "JT 581",
+      "time": [
+        "15:40",
+        "17:10"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "577200",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C11_SLOT0"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 581",
+      "time": [
+        "15:40",
+        "17:10"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "707000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C11_SLOT1"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 599",
+      "time": [
+        "16:30",
+        "18:00"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "577200",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C12_SLOT0"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 599",
+      "time": [
+        "16:30",
+        "18:00"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "707000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C12_SLOT1"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 693",
+      "time": [
+        "16:50",
+        "18:20"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "608000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C13_SLOT0"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 693",
+      "time": [
+        "16:50",
+        "18:20"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "707000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C13_SLOT1"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "ID 6579",
+      "time": [
+        "17:30",
+        "19:00"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "806000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C14_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6579",
+      "time": [
+        "17:30",
+        "19:00"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C14_SLOT2"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "JT 585",
+      "time": [
+        "18:45",
+        "20:15"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "608000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C15_SLOT0"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 585",
+      "time": [
+        "18:45",
+        "20:15"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "707000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C15_SLOT1"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "ID 6587",
+      "time": [
+        "19:50",
+        "21:20"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "905000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C17_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6587",
+      "time": [
+        "19:50",
+        "21:20"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C17_SLOT2"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6309",
+      "time": [
+        "21:10",
+        "22:40"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "641000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C18_SLOT0"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6309",
+      "time": [
+        "21:10",
+        "22:40"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "762000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C18_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6309",
+      "time": [
+        "21:10",
+        "22:40"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C18_SLOT2"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "JT 595",
+      "time": [
+        "21:30",
+        "23:00"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "577200",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C19_SLOT0"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 595",
+      "time": [
+        "21:30",
+        "23:00"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "707000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C19_SLOT1"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "ID 6583",
+      "time": [
+        "22:00",
+        "23:30"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "608000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C20_SLOT0"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6583",
+      "time": [
+        "22:00",
+        "23:30"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "762000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C20_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 6583",
+      "time": [
+        "22:00",
+        "23:30"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C20_SLOT2"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "JT 821",
+      "time": [
+        "22:35",
+        "23:55"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "577200",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C21_SLOT0"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "JT 821",
+      "time": [
+        "22:35",
+        "23:55"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "707000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C21_SLOT1"
+      },
+      "airline": "Lion Air"
+    },
+    {
+      "plane": "ID 7502",
+      "time": [
+        "15:05",
+        "16:35"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "718000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C22_SLOT0"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 7502",
+      "time": [
+        "15:05",
+        "16:35"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "762000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C22_SLOT1"
+      },
+      "airline": "Batik Air"
+    },
+    {
+      "plane": "ID 7502",
+      "time": [
+        "15:05",
+        "16:35"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "1147000",
+      "input": {
+        "name": "Outbound",
+        "value": "FR00_C22_SLOT2"
+      },
+      "airline": "Batik Air"
+    }
+  ]
+}
