@@ -14,7 +14,7 @@
                 </div>
                 <div class="container">
                     <h2>Transaksi sukses!</h2>
-                    <h2>Invoice dan tiket telah dikirimkan ke email Anda</h2>
+                    <h2>Invoice telah dikirimkan ke email Anda</h2>
                 </div>
             </div>
         </div>

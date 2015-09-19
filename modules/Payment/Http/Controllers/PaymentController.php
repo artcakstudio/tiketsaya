@@ -11,11 +11,22 @@ class PaymentController extends Controller {
 	
 	protected $transaction_details;
 	protected $token_id;
-	
+	protected $data_type;
+
 	public function index()
 	{
+        if(Session::has('DATA_RENT'))
+        {
+            $this->data_type = 'DATA_RENT';
+        }
+        else if(Session::has('DATA_TRAVEL'))
+        {
+            $this->data_type = 'DATA_TRAVEL';
+        }
+
 		$gross_amount = Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PRICE'];
 		return view('payment::index', compact('gross_amount'));
+
 	}
 	
 	public function checkout()
@@ -36,17 +47,34 @@ class PaymentController extends Controller {
         if($payment_method == "credit_card")
         {
             $this->token_id = $input['token-id'];
-            $this->payWithCreditCard();
+            $status_code = $this->payWithCreditCard();
+            if($status_code == "200" or $status_code == "201")
+            {
+                return view('payment::response.success');
+            }
+            else
+            {
+                return view('payment::response.fail');
+            }
         }
         
         else if($payment_method == "bank_transfer")
         {
-            $this->payWithBankTransfer();
+            $status_code = $this->payWithBankTransfer();
+            if($status_code == "201")
+            {
+                return view('payment::response.instruction');
+            }
+            else
+            {
+                return view('payment::response.fail');
+            }
         }
 	}
 	
 	public function payWithCreditCard()
     {
+
         // Data that will be send for credit card charge transaction request.
         $transaction_data = array(
           'payment_type'    => 'credit_card', 
@@ -78,29 +106,20 @@ class PaymentController extends Controller {
         {
             // success
             // kirim invoice
-            Mail::send('payment::mail-templates.invoice', array(), function($message) {
+            Mail::send('payment::mail-templates.invoice', compact('result'), function($message) {
                 $message->to(Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
                     Session::get('DATA_COSTUMER')['COSTUMER_NAME'])->subject('Invoice');
             });
-
-            // kirim e-tiket
-            Mail::send('payment::mail-templates.tiket', array(), function($message) {
-                $message->to(Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
-                    Session::get('DATA_COSTUMER')['COSTUMER_NAME'])->subject('E-Tiket');
-            });
-
-            return view('payment::response.success', compact('result'));
-
         }
         else if($result->status_code == "202")
         {
             //deny
-            return view('payment::response.fail', compact('result'));
+
         }
         else if($result->status_code == "201")
         {
             //challenge
-            return view('payment::response.success', compact('result'));
+
         }
         else
         {
@@ -109,6 +128,7 @@ class PaymentController extends Controller {
             echo "<h3>Result:</h3>";
             var_dump($result);
         }
+        return $result->status_code;
     }
     
     public function payWithBankTransfer()
@@ -123,25 +143,27 @@ class PaymentController extends Controller {
           );
           
         $result = \Veritrans_VtDirect::charge($transaction_data);
-        
+        /*
+        {#409 ?
+            +"status_code": "201"
+            +"status_message": "Success, PERMATA VA transaction is successful"
+            +"transaction_id": "acf90966-49e0-47f6-9510-34c6eeadd732"
+            +"order_id": "T9716C7"
+            +"gross_amount": "100000.00"
+            +"payment_type": "bank_transfer"
+            +"transaction_time": "2015-09-20 01:53:53"
+            +"transaction_status": "pending"
+            +"permata_va_number": "8778001224668170"
+        }
+        */
         if($result->status_code == "201")
         {
           //success
-          echo "<b>Bank Transfer</b> <br /><br />";
-          echo "<b>Please complete payment with transfer method to this Permata bank virtual account number:</b> ".$result->permata_va_number;
-          echo "<br /><br />";
-          echo "<Transfer amounts:".$this->transaction_details['gross_amount'];
-          echo "<br>";
-          echo "1. You have 24 hours to complete payment before this transaction expired <br />";
-          echo "2. If you need help, please contact 021-22334456";
-        
-        } 
-        else 
-        {
-          //error
-          echo "Have error on transaction.<br />";
-          echo "<h3>Result:</h3>";
-          var_dump($result);
+            Mail::send('payment::mail-templates.va-instruction', compact('result'), function($message) {
+                $message->to(Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
+                    Session::get('DATA_COSTUMER')['COSTUMER_NAME'])->subject('Instruksi Pembayaran');
+            });
         }
+        return $result->status_code;
     }
 }
