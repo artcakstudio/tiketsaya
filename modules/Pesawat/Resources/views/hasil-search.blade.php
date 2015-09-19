@@ -126,8 +126,8 @@
                                         <?php
                                          $diff=abs(strtotime($row['time'][1]) - strtotime($row['time'][0]));
                            
-                                            $jam= $diff/3600;
-                                            $menit= $diff%$jam/60;
+                                            $jam= intval($diff/3600);
+                                            $menit= intval($diff-3600*$jam)/60;
                                             echo "<h4>".intval($jam)." J ".$menit;?> m</h4>   
                                             <h5>Langsung</h5>
                                         </div>

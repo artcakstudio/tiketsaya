@@ -1,0 +1,752 @@
+{
+  "AMD": {
+    "Code": "AMD",
+    "Name": "Ahmedabad",
+    "Country": "IN",
+    "DisplayName": "Ahmedabad (AMD)"
+  },
+  "ARD": {
+    "Code": "ARD",
+    "Name": "Alor",
+    "Country": "ID",
+    "DisplayName": "Alor (ARD)"
+  },
+  "AOR": {
+    "Code": "AOR",
+    "Name": "Alor Setar",
+    "Country": "MY",
+    "DisplayName": "Alor Setar (AOR)"
+  },
+  "AMQ": {
+    "Code": "AMQ",
+    "Name": "Ambon",
+    "Country": "ID",
+    "DisplayName": "Ambon (AMQ)"
+  },
+  "ABU": {
+    "Code": "ABU",
+    "Name": "Atambua",
+    "Country": "ID",
+    "DisplayName": "Atambua (ABU)"
+  },
+  "BJW": {
+    "Code": "BJW",
+    "Name": "Bajawa",
+    "Country": "ID",
+    "DisplayName": "Bajawa (BJW)"
+  },
+  "BPN": {
+    "Code": "BPN",
+    "Name": "Balikpapan",
+    "Country": "ID",
+    "DisplayName": "Balikpapan (BPN)"
+  },
+  "BTJ": {
+    "Code": "BTJ",
+    "Name": "Banda Aceh",
+    "Country": "ID",
+    "DisplayName": "Banda Aceh (BTJ)"
+  },
+  "TKG": {
+    "Code": "TKG",
+    "Name": "Bandar Lampung",
+    "Country": "ID",
+    "DisplayName": "Bandar Lampung (TKG)"
+  },
+  "BDO": {
+    "Code": "BDO",
+    "Name": "Bandung",
+    "Country": "ID",
+    "DisplayName": "Bandung (BDO)"
+  },
+  "DMK": {
+    "Code": "DMK",
+    "Name": "Bangkok Donmueang",
+    "Country": "TH",
+    "DisplayName": "Bangkok Donmueang (DMK)"
+  },
+  "BDJ": {
+    "Code": "BDJ",
+    "Name": "Banjarmasin",
+    "Country": "ID",
+    "DisplayName": "Banjarmasin (BDJ)"
+  },
+  "BWX": {
+    "Code": "BWX",
+    "Name": "Banyuwangi",
+    "Country": "ID",
+    "DisplayName": "Banyuwangi (BWX)"
+  },
+  "BTH": {
+    "Code": "BTH",
+    "Name": "Batam",
+    "Country": "ID",
+    "DisplayName": "Batam (BTH)"
+  },
+  "BUW": {
+    "Code": "BUW",
+    "Name": "Baubau",
+    "Country": "ID",
+    "DisplayName": "Baubau (BUW)"
+  },
+  "BKS": {
+    "Code": "BKS",
+    "Name": "Bengkulu",
+    "Country": "ID",
+    "DisplayName": "Bengkulu (BKS)"
+  },
+  "BEJ": {
+    "Code": "BEJ",
+    "Name": "Berau",
+    "Country": "ID",
+    "DisplayName": "Berau (BEJ)"
+  },
+  "BMU": {
+    "Code": "BMU",
+    "Name": "Bima",
+    "Country": "ID",
+    "DisplayName": "Bima (BMU)"
+  },
+  "WUB": {
+    "Code": "WUB",
+    "Name": "Buli",
+    "Country": "ID",
+    "DisplayName": "Buli (WUB)"
+  },
+  "UOL": {
+    "Code": "UOL",
+    "Name": "Buol",
+    "Country": "ID",
+    "DisplayName": "Buol (UOL)"
+  },
+  "CNX": {
+    "Code": "CNX",
+    "Name": "Chiang Mai",
+    "Country": "TH",
+    "DisplayName": "Chiang Mai (CNX)"
+  },
+  "CGP": {
+    "Code": "CGP",
+    "Name": "Chittagong",
+    "Country": "BD",
+    "DisplayName": "Chittagong (CGP)"
+  },
+  "VED": {
+    "Code": "VED",
+    "Name": "Dekai/Yahukimo",
+    "Country": "ID",
+    "DisplayName": "Dekai/Yahukimo (VED)"
+  },
+  "DEL": {
+    "Code": "DEL",
+    "Name": "Delhi",
+    "Country": "IN",
+    "DisplayName": "Delhi (DEL)"
+  },
+  "DPS": {
+    "Code": "DPS",
+    "Name": "Denpasar (Bali)",
+    "Country": "ID",
+    "DisplayName": "Denpasar (Bali) (DPS)"
+  },
+  "DUM": {
+    "Code": "DUM",
+    "Name": "Dumai",
+    "Country": "ID",
+    "DisplayName": "Dumai (DUM)"
+  },
+  "ENE": {
+    "Code": "ENE",
+    "Name": "Ende",
+    "Country": "ID",
+    "DisplayName": "Ende (ENE)"
+  },
+  "FKQ": {
+    "Code": "FKQ",
+    "Name": "Fak Fak",
+    "Country": "ID",
+    "DisplayName": "Fak Fak (FKQ)"
+  },
+  "GLX": {
+    "Code": "GLX",
+    "Name": "Galela",
+    "Country": "ID",
+    "DisplayName": "Galela (GLX)"
+  },
+  "GTO": {
+    "Code": "GTO",
+    "Name": "Gorontalo",
+    "Country": "ID",
+    "DisplayName": "Gorontalo (GTO)"
+  },
+  "GNS": {
+    "Code": "GNS",
+    "Name": "Gunung Sitoli",
+    "Country": "ID",
+    "DisplayName": "Gunung Sitoli (GNS)"
+  },
+  "HDY": {
+    "Code": "HDY",
+    "Name": "Hat Yai",
+    "Country": "TH",
+    "DisplayName": "Hat Yai (HDY)"
+  },
+  "SGN": {
+    "Code": "SGN",
+    "Name": "Ho Chi Minh City",
+    "Country": "VN",
+    "DisplayName": "Ho Chi Minh City (SGN)"
+  },
+  "HHQ": {
+    "Code": "HHQ",
+    "Name": "Huahin",
+    "Country": "TH",
+    "DisplayName": "Huahin (HHQ)"
+  },
+  "IPH": {
+    "Code": "IPH",
+    "Name": "Ipoh",
+    "Country": "MY",
+    "DisplayName": "Ipoh (IPH)"
+  },
+  "CGK": {
+    "Code": "CGK",
+    "Name": "Jakarta",
+    "Country": "ID",
+    "DisplayName": "Jakarta (CGK)"
+  },
+  "HLP": {
+    "Code": "HLP",
+    "Name": "Jakarta Halim Perdanakusuma",
+    "Country": "ID",
+    "DisplayName": "Jakarta Halim Perdanakusuma (HLP)"
+  },
+  "DJB": {
+    "Code": "DJB",
+    "Name": "Jambi",
+    "Country": "ID",
+    "DisplayName": "Jambi (DJB)"
+  },
+  "DJJ": {
+    "Code": "DJJ",
+    "Name": "Jayapura",
+    "Country": "ID",
+    "DisplayName": "Jayapura (DJJ)"
+  },
+  "JED": {
+    "Code": "JED",
+    "Name": "Jeddah",
+    "Country": "SA",
+    "DisplayName": "Jeddah (JED)"
+  },
+  "JOG": {
+    "Code": "JOG",
+    "Name": "Jogjakarta",
+    "Country": "ID",
+    "DisplayName": "Jogjakarta (JOG)"
+  },
+  "JHB": {
+    "Code": "JHB",
+    "Name": "Johor Bahru",
+    "Country": "MY",
+    "DisplayName": "Johor Bahru (JHB)"
+  },
+  "KNG": {
+    "Code": "KNG",
+    "Name": "Kaimana",
+    "Country": "ID",
+    "DisplayName": "Kaimana (KNG)"
+  },
+  "KTM": {
+    "Code": "KTM",
+    "Name": "Kathmandu",
+    "Country": "NP",
+    "DisplayName": "Kathmandu (KTM)"
+  },
+  "KDI": {
+    "Code": "KDI",
+    "Name": "Kendari",
+    "Country": "ID",
+    "DisplayName": "Kendari (KDI)"
+  },
+  "KTE": {
+    "Code": "KTE",
+    "Name": "Kerteh",
+    "Country": "MY",
+    "DisplayName": "Kerteh (KTE)"
+  },
+  "KTG": {
+    "Code": "KTG",
+    "Name": "Ketapang",
+    "Country": "ID",
+    "DisplayName": "Ketapang (KTG)"
+  },
+  "COK": {
+    "Code": "COK",
+    "Name": "Kochi",
+    "Country": "IN",
+    "DisplayName": "Kochi (COK)"
+  },
+  "KBR": {
+    "Code": "KBR",
+    "Name": "Kota Bahru",
+    "Country": "MY",
+    "DisplayName": "Kota Bahru (KBR)"
+  },
+  "BKI": {
+    "Code": "BKI",
+    "Name": "Kota Kinabalu",
+    "Country": "MY",
+    "DisplayName": "Kota Kinabalu (BKI)"
+  },
+  "KBU": {
+    "Code": "KBU",
+    "Name": "Kotabaru",
+    "Country": "ID",
+    "DisplayName": "Kotabaru (KBU)"
+  },
+  "KBV": {
+    "Code": "KBV",
+    "Name": "Krabi",
+    "Country": "TH",
+    "DisplayName": "Krabi (KBV)"
+  },
+  "KUL": {
+    "Code": "KUL",
+    "Name": "Kuala Lumpur (KLIA2)",
+    "Country": "MY",
+    "DisplayName": "Kuala Lumpur (KLIA2) (KUL)"
+  },
+  "TGG": {
+    "Code": "TGG",
+    "Name": "Kuala Terengganu",
+    "Country": "MY",
+    "DisplayName": "Kuala Terengganu (TGG)"
+  },
+  "KUA": {
+    "Code": "KUA",
+    "Name": "Kuantan",
+    "Country": "MY",
+    "DisplayName": "Kuantan (KUA)"
+  },
+  "KCH": {
+    "Code": "KCH",
+    "Name": "Kuching",
+    "Country": "MY",
+    "DisplayName": "Kuching (KCH)"
+  },
+  "KOE": {
+    "Code": "KOE",
+    "Name": "Kupang",
+    "Country": "ID",
+    "DisplayName": "Kupang (KOE)"
+  },
+  "LBJ": {
+    "Code": "LBJ",
+    "Name": "Labuan Bajo",
+    "Country": "ID",
+    "DisplayName": "Labuan Bajo (LBJ)"
+  },
+  "LAH": {
+    "Code": "LAH",
+    "Name": "Labuha",
+    "Country": "ID",
+    "DisplayName": "Labuha (LAH)"
+  },
+  "LUV": {
+    "Code": "LUV",
+    "Name": "Langgur/Tual",
+    "Country": "ID",
+    "DisplayName": "Langgur/Tual (LUV)"
+  },
+  "LGK": {
+    "Code": "LGK",
+    "Name": "Langkawi",
+    "Country": "MY",
+    "DisplayName": "Langkawi (LGK)"
+  },
+  "LKA": {
+    "Code": "LKA",
+    "Name": "Larantuka",
+    "Country": "ID",
+    "DisplayName": "Larantuka (LKA)"
+  },
+  "LSW": {
+    "Code": "LSW",
+    "Name": "Lhokseumawe",
+    "Country": "ID",
+    "DisplayName": "Lhokseumawe (LSW)"
+  },
+  "LOP": {
+    "Code": "LOP",
+    "Name": "Lombok, Mataram",
+    "Country": "ID",
+    "DisplayName": "Lombok, Mataram (LOP)"
+  },
+  "LUW": {
+    "Code": "LUW",
+    "Name": "Luwuk",
+    "Country": "ID",
+    "DisplayName": "Luwuk (LUW)"
+  },
+  "MKZ": {
+    "Code": "MKZ",
+    "Name": "Malacca",
+    "Country": "MY",
+    "DisplayName": "Malacca (MKZ)"
+  },
+  "MLG": {
+    "Code": "MLG",
+    "Name": "Malang",
+    "Country": "ID",
+    "DisplayName": "Malang (MLG)"
+  },
+  "MJU": {
+    "Code": "MJU",
+    "Name": "Mamuju",
+    "Country": "ID",
+    "DisplayName": "Mamuju (MJU)"
+  },
+  "MDC": {
+    "Code": "MDC",
+    "Name": "Manado",
+    "Country": "ID",
+    "DisplayName": "Manado (MDC)"
+  },
+  "MKW": {
+    "Code": "MKW",
+    "Name": "Manokwari",
+    "Country": "ID",
+    "DisplayName": "Manokwari (MKW)"
+  },
+  "MOF": {
+    "Code": "MOF",
+    "Name": "Maumere",
+    "Country": "ID",
+    "DisplayName": "Maumere (MOF)"
+  },
+  "KNO": {
+    "Code": "KNO",
+    "Name": "Medan Kuala Namu",
+    "Country": "ID",
+    "DisplayName": "Medan Kuala Namu (KNO)"
+  },
+  "MNA": {
+    "Code": "MNA",
+    "Name": "Melanguane",
+    "Country": "ID",
+    "DisplayName": "Melanguane (MNA)"
+  },
+  "MKQ": {
+    "Code": "MKQ",
+    "Name": "Merauke",
+    "Country": "ID",
+    "DisplayName": "Merauke (MKQ)"
+  },
+  "MEQ": {
+    "Code": "MEQ",
+    "Name": "Meulaboh",
+    "Country": "ID",
+    "DisplayName": "Meulaboh (MEQ)"
+  },
+  "MYY": {
+    "Code": "MYY",
+    "Name": "Miri",
+    "Country": "MY",
+    "DisplayName": "Miri (MYY)"
+  },
+  "OTI": {
+    "Code": "OTI",
+    "Name": "Morotai",
+    "Country": "ID",
+    "DisplayName": "Morotai (OTI)"
+  },
+  "BOM": {
+    "Code": "BOM",
+    "Name": "Mumbai",
+    "Country": "IN",
+    "DisplayName": "Mumbai (BOM)"
+  },
+  "NBX": {
+    "Code": "NBX",
+    "Name": "Nabire",
+    "Country": "ID",
+    "DisplayName": "Nabire (NBX)"
+  },
+  "NTX": {
+    "Code": "NTX",
+    "Name": "Natuna Ranai",
+    "Country": "ID",
+    "DisplayName": "Natuna Ranai (NTX)"
+  },
+  "PDG": {
+    "Code": "PDG",
+    "Name": "Padang",
+    "Country": "ID",
+    "DisplayName": "Padang (PDG)"
+  },
+  "PKY": {
+    "Code": "PKY",
+    "Name": "Palangkaraya",
+    "Country": "ID",
+    "DisplayName": "Palangkaraya (PKY)"
+  },
+  "PLM": {
+    "Code": "PLM",
+    "Name": "Palembang",
+    "Country": "ID",
+    "DisplayName": "Palembang (PLM)"
+  },
+  "PLW": {
+    "Code": "PLW",
+    "Name": "Palu",
+    "Country": "ID",
+    "DisplayName": "Palu (PLW)"
+  },
+  "PGK": {
+    "Code": "PGK",
+    "Name": "Pangkal Pinang",
+    "Country": "ID",
+    "DisplayName": "Pangkal Pinang (PGK)"
+  },
+  "PKN": {
+    "Code": "PKN",
+    "Name": "Pangkalan Bun",
+    "Country": "ID",
+    "DisplayName": "Pangkalan Bun (PKN)"
+  },
+  "PKU": {
+    "Code": "PKU",
+    "Name": "Pekan Baru",
+    "Country": "ID",
+    "DisplayName": "Pekan Baru (PKU)"
+  },
+  "PEN": {
+    "Code": "PEN",
+    "Name": "Penang",
+    "Country": "MY",
+    "DisplayName": "Penang (PEN)"
+  },
+  "PUM": {
+    "Code": "PUM",
+    "Name": "Pomalaa",
+    "Country": "ID",
+    "DisplayName": "Pomalaa (PUM)"
+  },
+  "PNK": {
+    "Code": "PNK",
+    "Name": "Pontianak",
+    "Country": "ID",
+    "DisplayName": "Pontianak (PNK)"
+  },
+  "PSJ": {
+    "Code": "PSJ",
+    "Name": "Poso",
+    "Country": "ID",
+    "DisplayName": "Poso (PSJ)"
+  },
+  "PSU": {
+    "Code": "PSU",
+    "Name": "Putus Sibau",
+    "Country": "ID",
+    "DisplayName": "Putus Sibau (PSU)"
+  },
+  "RTI": {
+    "Code": "RTI",
+    "Name": "Rote",
+    "Country": "ID",
+    "DisplayName": "Rote (RTI)"
+  },
+  "SMQ": {
+    "Code": "SMQ",
+    "Name": "Sampit",
+    "Country": "ID",
+    "DisplayName": "Sampit (SMQ)"
+  },
+  "SXK": {
+    "Code": "SXK",
+    "Name": "Saumlaki",
+    "Country": "ID",
+    "DisplayName": "Saumlaki (SXK)"
+  },
+  "YKR": {
+    "Code": "YKR",
+    "Name": "Selayar",
+    "Country": "ID",
+    "DisplayName": "Selayar (YKR)"
+  },
+  "SRG": {
+    "Code": "SRG",
+    "Name": "Semarang",
+    "Country": "ID",
+    "DisplayName": "Semarang (SRG)"
+  },
+  "FLZ": {
+    "Code": "FLZ",
+    "Name": "Sibolga",
+    "Country": "ID",
+    "DisplayName": "Sibolga (FLZ)"
+  },
+  "SBW": {
+    "Code": "SBW",
+    "Name": "Sibu",
+    "Country": "MY",
+    "DisplayName": "Sibu (SBW)"
+  },
+  "DTB": {
+    "Code": "DTB",
+    "Name": "Silangit",
+    "Country": "ID",
+    "DisplayName": "Silangit (DTB)"
+  },
+  "SMG": {
+    "Code": "SMG",
+    "Name": "Simeuleu",
+    "Country": "ID",
+    "DisplayName": "Simeuleu (SMG)"
+  },
+  "SIN": {
+    "Code": "SIN",
+    "Name": "Singapore",
+    "Country": "SG",
+    "DisplayName": "Singapore (SIN)"
+  },
+  "SQG": {
+    "Code": "SQG",
+    "Name": "Sintang",
+    "Country": "ID",
+    "DisplayName": "Sintang (SQG)"
+  },
+  "SOC": {
+    "Code": "SOC",
+    "Name": "Solo",
+    "Country": "ID",
+    "DisplayName": "Solo (SOC)"
+  },
+  "SOQ": {
+    "Code": "SOQ",
+    "Name": "Sorong",
+    "Country": "ID",
+    "DisplayName": "Sorong (SOQ)"
+  },
+  "SZB": {
+    "Code": "SZB",
+    "Name": "Subang",
+    "Country": "MY",
+    "DisplayName": "Subang (SZB)"
+  },
+  "SWQ": {
+    "Code": "SWQ",
+    "Name": "Sumbawa",
+    "Country": "ID",
+    "DisplayName": "Sumbawa (SWQ)"
+  },
+  "SUB": {
+    "Code": "SUB",
+    "Name": "Surabaya",
+    "Country": "ID",
+    "DisplayName": "Surabaya (SUB)"
+  },
+  "URT": {
+    "Code": "URT",
+    "Name": "Surat Thani",
+    "Country": "TH",
+    "DisplayName": "Surat Thani (URT)"
+  },
+  "NAH": {
+    "Code": "NAH",
+    "Name": "Tahuna",
+    "Country": "ID",
+    "DisplayName": "Tahuna (NAH)"
+  },
+  "TMC": {
+    "Code": "TMC",
+    "Name": "Tambolaka",
+    "Country": "ID",
+    "DisplayName": "Tambolaka (TMC)"
+  },
+  "TJQ": {
+    "Code": "TJQ",
+    "Name": "Tanjung Pandan",
+    "Country": "ID",
+    "DisplayName": "Tanjung Pandan (TJQ)"
+  },
+  "TNJ": {
+    "Code": "TNJ",
+    "Name": "Tanjung Pinang",
+    "Country": "ID",
+    "DisplayName": "Tanjung Pinang (TNJ)"
+  },
+  "TRK": {
+    "Code": "TRK",
+    "Name": "Tarakan",
+    "Country": "ID",
+    "DisplayName": "Tarakan (TRK)"
+  },
+  "TWU": {
+    "Code": "TWU",
+    "Name": "Tawau",
+    "Country": "MY",
+    "DisplayName": "Tawau (TWU)"
+  },
+  "TTE": {
+    "Code": "TTE",
+    "Name": "Ternate",
+    "Country": "ID",
+    "DisplayName": "Ternate (TTE)"
+  },
+  "TIM": {
+    "Code": "TIM",
+    "Name": "Timika",
+    "Country": "ID",
+    "DisplayName": "Timika (TIM)"
+  },
+  "TRZ": {
+    "Code": "TRZ",
+    "Name": "Tiruchirapally",
+    "Country": "IN",
+    "DisplayName": "Tiruchirapally (TRZ)"
+  },
+  "KAZ": {
+    "Code": "KAZ",
+    "Name": "Tobelo",
+    "Country": "ID",
+    "DisplayName": "Tobelo (KAZ)"
+  },
+  "TLI": {
+    "Code": "TLI",
+    "Name": "Toli-Toli",
+    "Country": "ID",
+    "DisplayName": "Toli-Toli (TLI)"
+  },
+  "TRV": {
+    "Code": "TRV",
+    "Name": "Trivandrum",
+    "Country": "IN",
+    "DisplayName": "Trivandrum (TRV)"
+  },
+  "UPG": {
+    "Code": "UPG",
+    "Name": "Ujung Pandang",
+    "Country": "ID",
+    "DisplayName": "Ujung Pandang (UPG)"
+  },
+  "WGP": {
+    "Code": "WGP",
+    "Name": "Waingapu",
+    "Country": "ID",
+    "DisplayName": "Waingapu (WGP)"
+  },
+  "WNI": {
+    "Code": "WNI",
+    "Name": "Wakatobi",
+    "Country": "ID",
+    "DisplayName": "Wakatobi (WNI)"
+  },
+  "WMX": {
+    "Code": "WMX",
+    "Name": "Wamena",
+    "Country": "ID",
+    "DisplayName": "Wamena (WMX)"
+  }
+}

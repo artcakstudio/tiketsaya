@@ -44,13 +44,14 @@ public $partner_id;
 	function jadwalharian($tanggal){		
 		$schedule =rentschedule::partnerSchedule($this->partner_id)
 								->where('RENT_SCHEDULE_DATE',  'LIKE',$tanggal.'%' )->get();
+		  $patherror=url('assets/images/noimage.png');
 		$path=url('public/Assets/vehiclePhoto');
         return Datatables::of($schedule)
          ->addColumn('action', function ($schedule) {
          		return '<button class="btn  btn-xs btn-primary" id="'.$schedule->RENT_SCHEDULE_ID.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->RENT_SCHEDULE_ID.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
             })
-        ->addColumn('picture', function ($vehicle) use ($path) {
-         		return "<img src=".$path."/".$vehicle['VEHICLE_PHOTO']." style='width:50px; height:50px'>";
+        ->addColumn('picture', function ($vehicle) use ($path,$patherror) {
+         		return "<img src=".$path."/".$vehicle['VEHICLE_PHOTO']." style='width:50px; height:50px' onError=this.onerror=null;this.src='".$patherror."'>";
          	})
 		->make(true);
 	}
@@ -68,7 +69,7 @@ public $partner_id;
 	{
 		$data=Input::all();
 		print_r($data);
-		/*$start=$data['start'];
+		$start=$data['start'];
 		$stop=$data['stop'];
 		$tanggal=$data['tanggal'];
 		unset($data['tanggal'],$data['_token'],$data['start'],$data['stop']);
@@ -82,7 +83,7 @@ public $partner_id;
 				Rentschedule::insert($data);
 			}
 			$start=date('Y-m-d',strtotime('+1 day',strtotime($start)));
-		}*/
+		}
 	}
 	function addJadwalHarian(){
 		$data=Input::all();

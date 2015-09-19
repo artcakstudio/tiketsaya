@@ -213,7 +213,8 @@
         console.log(data);
         var path="<?php echo url('public/Assets/vehiclePhoto/')?>";
         var path=path+'/'+data[0].VEHICLE_PHOTO;
-        $("#detail_jadwal table tbody tr").append('<td>'+data[0].CITY_NAME+'</td><td>'+data[0].VEHICLE_NAME+'</td><td>'+data[0].RENT_SCHEDULE_DATE+'</td><td><img src="'+path+'" width=90 height=50');
+          var patherror="<?php echo url('assets/images/noimage.png')?>";
+        $("#detail_jadwal table tbody tr").append('<td>'+data[0].CITY_NAME+'</td><td>'+data[0].VEHICLE_NAME+'</td><td>'+data[0].RENT_SCHEDULE_DATE+'</td><td><img src="'+path+'" width=90 height=50 onError=this.onerror=null;this.src="'+patherror+'" ');
         $("#detail_jadwal").modal("show");
       }
     });

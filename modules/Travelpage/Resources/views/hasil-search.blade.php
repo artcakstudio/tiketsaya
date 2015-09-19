@@ -81,8 +81,8 @@
                                             <h4><?php 
                                             $diff=abs(strtotime($row['TRAVEL_SCHEDULE_ARRIVETIME']) - strtotime($row['TRAVEL_SCHEDULE_DEPARTTIME']) );
 
-                                            $jam= $diff/3600;
-                                            $menit= $diff%$jam/60;
+                                            $jam= intval($diff/3600);
+                                            $menit= intval($diff-3600*$jam)/60;
                                             echo $jam."Hour ".$menit;?> Menit
                                             </h4>
                                             <h5>Estimasi</h5>
