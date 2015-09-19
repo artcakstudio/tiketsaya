@@ -5,7 +5,7 @@ use Session;
 class city extends Model {
 
     protected $fillable = [];
-    protected $table='city';
+    protected $table='CITY';
 
     const UPDATED_AT = 'CITY_UPDATE';
     function scopefindCity($query, $id)

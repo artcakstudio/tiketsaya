@@ -1,8 +1,9 @@
-<?php
-
-namespace App\Providers;
+<?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\Vehicle\Entities\City;
+use Modules\Vehicle\Entities\Vehicle;
+use Session;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $datashare['City']=City::all();
+        $datashare['Vehicle']=Vehicle::where('VEHICLE.PARTNER_ID',Session::get('id'));
+        view()->share('datashare',$datashare);
     }
 
     /**

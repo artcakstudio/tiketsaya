@@ -5,7 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 class partner extends Model {
 
     protected $fillable = [];
-    protected $table='partner';
+    
+    protected $table='PARTNER';
     public $timestamps=false;
     public function scopefindPartner($query, $id)
     {

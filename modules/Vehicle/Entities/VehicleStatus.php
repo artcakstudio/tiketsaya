@@ -5,5 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 class vehicle_status extends Model {
 
     protected $fillable = [];
-    protected $table='vehicle_status';
+    
+    protected $table='VEHICLE_STATUS';
 }

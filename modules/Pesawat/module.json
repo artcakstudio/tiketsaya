@@ -1,0 +1,15 @@
+{
+    "name": "Pesawat",
+    "alias": "pesawat",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Pesawat\\Providers\\PesawatServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

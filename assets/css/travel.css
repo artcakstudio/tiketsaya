@@ -207,7 +207,7 @@ body {
 }
 .rekom_harga h5{
     padding: 0;
-    padding-top: 10px;
+    padding-top: 0px;
     margin: 0;
     font-size: 13px;
     text-align: center;
@@ -232,7 +232,7 @@ body {
 
 .rekom_harga_selected h5{
     padding: 0;
-    padding-top: 10px;
+    padding-top: 0px;
     margin: 0;
     font-size: 13px;
     text-align: center;

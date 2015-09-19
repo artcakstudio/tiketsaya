@@ -122,7 +122,7 @@
                                           <div class="head_konten3">Kota Berangkat</div>
                                           <div class="input-group isi_konten3">
                                             <select class="form-control remove_border" name="depart">
-                                                    @foreach($city as $row)
+                                                    @foreach($datashare['City'] as $row)
                                                         <option value="{{$row['CITY_ID']}}" class="remove_border">{{$row['CITY_NAME']}}</option>
                                                     @endforeach
                                             </select>
@@ -140,7 +140,7 @@
                                           <div class="head_konten3">Kota Tujuan</div>
                                           <div class="input-group isi_konten3">
                                             <select class="form-control remove_border" name="dest">
-                                                    @foreach($city as $row)
+                                                    @foreach($datashare['City'] as $row)
                                                         <option value="{{$row['CITY_ID']}}" class=" remove_border">{{$row['CITY_NAME']}}</option>
                                                     @endforeach
                                             </select>
@@ -190,17 +190,13 @@
                                           <div class="input-group isi_konten3">
                                             <!-- <input type="text" class="form-control remove_border"/> -->
                                                   <select class="form-control remove_border" name="CITY_ID">
-                                                    @foreach($city as $row)
+                                                    @foreach($datashare['City'] as $row)
                                                         <option value="{{$row['CITY_ID']}}" class="remove_border">{{$row['CITY_NAME']}}</option>
                                                     @endforeach
                                                   </select>
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
-                                                <!-- ul class="dropdown-menu">
-                                                    @foreach($city as $row)
-                                                    <li><a href="#" id="city_{{$row['CITY_ID']}}">{{$row['CITY_NAME']}}</a></li>
-                                                    @endforeach
-                                                  </ul> -->
+                                                
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>
