@@ -76,29 +76,33 @@
             <td class="left">{!! Session::get('DATA_TRAVEL')['PARTNER_NAME'] !!}</td></tr>
     </table>
 @elseif(Session::has('DATA_RENT'))
-
+    <h3>Detil Customer</h3>
+    <hr>
+    <table>
+        <tr><td class="right">Nama Customer :</td>
+            <td class="left">{!! Session::get('DATA_COSTUMER')['COSTUMER_NAME'] !!}</td></tr>
+        <tr><td class="right">No. Telepon :</td>
+            <td class="left">{!! Session::get('DATA_COSTUMER')['nohp_prefix'] !!}
+                {!! Session::get('DATA_COSTUMER')['COSTUMER_TELP'] !!} </td></tr>
+        <tr><td class="right">E-mail :</td>
+            <td class="left">{!! Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'] !!} </td></tr>
+    </table>
+    <br>
+    <h3>Detil Pemesanan</h3>
+    <hr>
+    <table>
+        <tr><td class="right">Nomor Tiket :</td>
+            <td class="left">{!! Session::get('NO_PEMESANAN') !!} </td></tr>
+        <tr><td class="right">Kota :</td>
+            <td class="left">{!! Session::get('DATA_RENT')['CITY_NAME'] !!} </td></tr>
+        <tr><td class="right">Tanggal :</td>
+            <td class="left">{!! Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'] !!}</td></tr>
+        <tr><td class="right">Kendaraan :</td>
+            <td class="left">{!! Session::get('DATA_RENT')['VEHICLE_NAME'] !!}</td></tr>
+        <tr><td class="right">Pemilik Kendaraan :</td>
+            <td class="left">{!! Session::get('DATA_RENT')['PARTNER_NAME'] !!}</td></tr>
+    </table>
 @else
-    {{--{#453 ?--}}
-    {{--+"TRAVEL_TRANSACTION_ID": 39--}}
-    {{--+"MEMBER_ID": null--}}
-    {{--+"TRAVEL_TRANSACTION_STATUS_ID": 3--}}
-    {{--+"TRAVEL_TRANSACTION_NAME": null--}}
-    {{--+"TRAVEL_TRANSACTION_CREATE": "2015-09-20 07:09:31"--}}
-    {{--+"TRAVEL_TRANSACTION_UPDATE": "0000-00-00 00:00:00"--}}
-    {{--+"TRAVEL_TRANSACTION_PRICE": 200000--}}
-    {{--+"TRAVEL_TRANSACTION_CODE": "T00F82A"--}}
-    {{--+"COSTUMER_ID": 54--}}
-    {{--+"TRAVEL_SCHEDULE_ID": null--}}
-    {{--+"TRAVEL_TRANSACTION_PASSENGER": null--}}
-    {{--+"COSTUMER_NAME": "Reyhan"--}}
-    {{--+"COSTUMER_EMAIL": "hentongmaster@gmail.com"--}}
-    {{--+"COSTUMER_TELP": "+628123456789"--}}
-    {{--+"TRAVEL_TRANSACTION_STATUS_NAME": "success"--}}
-    {{--+"TRAVEL_TRANSACTION_STATUS_CREATE": "2015-09-20 07:45:36"--}}
-    {{--+"TRAVEL_TRANSACTION_STATUS_UPDATE": "0000-00-00 00:00:00"--}}
-    {{--+"TRAVEL_TRANSACTION_STATUS_UPDATEBY": null--}}
-    {{--+"TRAVEL_TRANSACTION_STATUS_CREATEBY": null--}}
-    {{--}--}}
     <h3>Detil Customer</h3>
     <hr>
     <table>
@@ -109,25 +113,40 @@
         <tr><td class="right">E-mail :</td>
             <td class="left">{!! $query->COSTUMER_EMAIL !!} </td></tr>
     </table>
-    {{--<br>--}}
-    {{--<h3>Detil Pemesanan</h3>--}}
-    {{--<hr>--}}
-    {{--<table>--}}
-        {{--<tr><td class="right">Nomor Tiket :</td>--}}
-            {{--<td class="left">{!! $query->TRAVEL_TRANSACTION_CODE !!} </td></tr>--}}
-        {{--<tr><td class="right">Asal :</td>--}}
-            {{--<td class="left">{!! $query->TRAVEL_TRANSACTION_CODE !!} </td></tr>--}}
-        {{--<tr><td class="right">Tujuan :</td>--}}
-            {{--<td class="left">{!! Session::get('DATA_TRAVEL')['ROUTE_DEST'] !!}</td></tr>--}}
-        {{--<tr><td class="right">Jam Berangkat :</td>--}}
-            {{--<td class="left">{!! Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME'] !!}</td></tr>--}}
-        {{--<tr><td class="right">Jam Sampai :</td>--}}
-            {{--<td class="left">{!! Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME'] !!}</td></tr>--}}
-        {{--<tr><td class="right">Kendaraan :</td>--}}
-            {{--<td class="left">{!! Session::get('DATA_TRAVEL')['VEHICLE_NAME'] !!}</td></tr>--}}
-        {{--<tr><td class="right">Pemilik Kendaraan :</td>--}}
-            {{--<td class="left">{!! Session::get('DATA_TRAVEL')['PARTNER_NAME'] !!}</td></tr>--}}
-    {{--</table>--}}
+    <br>
+    <h3>Detil Pemesanan</h3>
+    <hr>
+    @if($data_type == "TRAVEL")
+    <table>
+        <tr><td class="right">Nomor Tiket :</td>
+            <td class="left">{!! $query->TRAVEL_TRANSACTION_CODE !!} </td></tr>
+        <tr><td class="right">Asal :</td>
+            <td class="left">{!! $depart->CITY_NAME !!} </td></tr>
+        <tr><td class="right">Tujuan :</td>
+            <td class="left">{!! $arrive->CITY_NAME !!} </td></tr>
+        <tr><td class="right">Jam Berangkat :</td>
+            <td class="left">{!! $query->TRAVEL_SCHEDULE_DEPARTTIME !!} </td></tr>
+        <tr><td class="right">Jam Sampai :</td>
+            <td class="left">{!! $query->TRAVEL_SCHEDULE_ARRIVETIME !!} </td></tr>
+        <tr><td class="right">Kendaraan :</td>
+            <td class="left">{!! $query->VEHICLE_NAME !!}</td></tr>
+        <tr><td class="right">Partner :</td>
+            <td class="left">{!! $query->PARTNER_NAME !!}</td></tr>
+    </table>
+    @elseif($data_type == "RENT")
+        <table>
+            <tr><td class="right">Nomor Tiket :</td>
+                <td class="left">{!! $query->RENT_TRANSACTION_CODE !!} </td></tr>
+            <tr><td class="right">Kota :</td>
+                <td class="left">{!! $query->CITY_NAME !!} </td></tr>
+            <tr><td class="right">Tanggal :</td>
+                <td class="left">{!! $query->RENT_SCHEDULE_DATE !!} </td></tr>
+            <tr><td class="right">Kendaraan :</td>
+                <td class="left">{!! $query->VEHICLE_NAME !!}</td></tr>
+            <tr><td class="right">Partner :</td>
+                <td class="left">{!! $query->PARTNER_NAME !!}</td></tr>
+        </table>
+    @endif
 @endif
 
 @if($result->payment_type == "credit_card")
