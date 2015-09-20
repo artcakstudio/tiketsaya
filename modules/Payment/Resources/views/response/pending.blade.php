@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-md-12 content_">
         <div class="container">
-            <h2>Kami telah mengirimkan petunjuk transfer ke e-mail Anda.</h2>
+            <h2>Maaf, pembayaran Anda untuk Nomor Pemesanan: {{ $order_id }} belum kami terima.</h2>
         </div>
     </div>
 </div>

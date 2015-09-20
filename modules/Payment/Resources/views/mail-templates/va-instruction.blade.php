@@ -74,6 +74,10 @@
             <li>Transaksi berhasil.</li>
         </ol>
     </div>
+    <div>
+        <h3>Setelah melakukan transfer, silakan melakukan konfirmasi melalui link berikut:</h3>
+        <h3><a href="{!! url('payment/confirm/va/'.$result->order_id) !!}"></a></h3>
+    </div>
 </div>
 </body>
 </html>
