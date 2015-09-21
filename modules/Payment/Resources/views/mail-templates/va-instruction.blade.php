@@ -9,8 +9,15 @@
     <h3>Kode pembayaran <i>Virtual Account</i>:</h3>
     <h3 >{!! $result->permata_va_number !!}</h3>
     <h3>Nominal pembayaran :</h3>
-    <h3 >Rp {!! number_format(Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PRICE']) !!}</h3>
-
+    @if(Session::has('DATA_TRAVEL'))
+        <h3 >Rp {!! number_format(Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PRICE']) !!}</h3>
+    @elseif(Session::has('DATA_RENT'))
+        <h3 >Rp {!! number_format(Session::get('DATA_COSTUMER')['RENT_TRANSACTION_PRICE']) !!}</h3>
+    @endif
+    <div>
+        <h3>Setelah melakukan transfer, silakan melakukan konfirmasi melalui link berikut:</h3>
+        <h3>localhost/tiketsaya/payment/confirm/va/{!! $result->order_id !!}</h3>
+    </div>
     <div>
         <h4>
             Pembayaran lewat ATM BCA/Jaringan ATM Prima
@@ -74,10 +81,7 @@
             <li>Transaksi berhasil.</li>
         </ol>
     </div>
-    <div>
-        <h3>Setelah melakukan transfer, silakan melakukan konfirmasi melalui link berikut:</h3>
-        <h3><a href="{!! url('payment/confirm/va/'.$result->order_id) !!}"></a></h3>
-    </div>
+
 </div>
 </body>
 </html>

@@ -116,9 +116,15 @@
                 <div class="col-md-4" style="padding-top: 0px"><h4><b>PROSES PEMESANAN</b></h4></div>
                 <div class="col-md-8" style="padding: 0;">
                     <p style="float: right;padding-top: 10px; margin-right: 10px;">
-                        {{Session::get('DATA_TRAVEL')['ROUTE_DEPARTURE']}}
-                        ke {{Session::get('DATA_TRAVEL')['ROUTE_DEST']}}
-                        | <?php echo $day[date('N', strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))) - 1]; echo " " . date('d-m-Y', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))?>
+                        @if(Session::has('DATA_TRAVEL'))
+                            {{Session::get('DATA_TRAVEL')['ROUTE_DEPARTURE']}}
+                            ke {{Session::get('DATA_TRAVEL')['ROUTE_DEST']}}
+                            | <?php echo $day[date('N', strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))) - 1]; echo " " . date('d-m-Y', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))?>
+                        @elseif(Session::has('DATA_RENT'))
+                            {{Session::get('DATA_RENT')['CITY_NAME']}}
+                            | <?php echo " " . date('d-m-Y', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?>
+                        @endif
+
                     </p>
                 </div>
             </div>
