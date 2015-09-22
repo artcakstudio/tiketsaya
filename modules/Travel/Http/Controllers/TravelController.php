@@ -32,7 +32,27 @@ class TravelController extends Controller {
 		
 		$data['TRAVEL_SCHEDULE_CREATEBY']=Session::get('id');
 
-		travelschedule::insert($data);
+		 $flag=0;
+		$flag=Travelschedule::where(function($query) use ($data){
+				$query->where('TRAVEL_SCHEDULE_DEPARTTIME','<=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_ARRIVETIME'])))
+					->where('TRAVEL_SCHEDULE_ARRIVETIME','>=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_ARRIVETIME'])));
+				})
+				->orWhere(function($query) use ($data){
+				$query->where('TRAVEL_SCHEDULE_DEPARTTIME','<=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])))
+					->where('TRAVEL_SCHEDULE_ARRIVETIME','>=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])));
+				})
+				->orWhere(function($query)use ($data){
+					$query->where('TRAVEL_SCHEDULE_DEPARTTIME','>=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])))
+							->where('TRAVEL_SCHEDULE_ARRIVETIME','<=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_ARRIVETIME'])));
+				})
+				->where('VEHICLE_ID','=',$data['VEHICLE_ID'])->count();
+			
+		if($flag==0) {
+			Travelschedule::insert($data);
+		}
+		else {
+			Session::flash("error","Ada jadwal yang bentrok, mohon periksa kembali");
+			}
 		return redirect::back();
 	}
 	function show($tanggal)

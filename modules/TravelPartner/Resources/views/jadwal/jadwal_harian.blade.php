@@ -322,6 +322,11 @@ $("#schedule-table").on("click","button.btn-primary",function(){
   </div>
 </div>
 
+<?php
+if (Session::has("error")) {
+
+  echo "<script> alert('".Session::get("error") ."');</script>";
+}?>
 <script type="text/javascript">
     $("#schedule-table").on("click","button.btn.btn-warning",function(){
         var button=$(this.closest("tr"));

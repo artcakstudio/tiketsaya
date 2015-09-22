@@ -37,13 +37,14 @@ public $partner_id;
 	function addJadwal()
 	{
 		$data=Input::all();
+		print_r($data);
 		$tanggal=$data['tanggal'];
 		unset($data['tanggal'],$data['_token']);
 		$data['TRAVEL_SCHEDULE_CREATEBY']=Session::get('id');
 		$hour_estimate=$data['hour_estimate']; $minute_estimate=$data['minute_estimate'];
 
 		$hour_depart=date('H:i',strtotime($data['hour_depart'].":".$data['minute_depart']));
-		
+		$flag=0; $i=0;
 		unset($data['_token']);
 		unset($data['date']);
 		unset($data['depart_hour'],$data['depart_minute'], $data['hour_estimate'], $data['minute_estimate']);
@@ -52,7 +53,28 @@ public $partner_id;
 			$data['TRAVEL_SCHEDULE_DEPARTTIME']=date('Y-m-d H:i', strtotime($row." ".$hour_depart));
 			$hour_arrive=date('Y-m-d H:i', strtotime('+'.$hour_estimate.' hour', strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])));
 			$data['TRAVEL_SCHEDULE_ARRIVETIME']=date('Y-m-d H:i', strtotime('+'.$minute_estimate.' minutes', strtotime($hour_arrive)));
-			Travelschedule::insert($data);
+			
+			$flag=Travelschedule::where(function($query) use ($data){
+				$query->where('TRAVEL_SCHEDULE_DEPARTTIME','<=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_ARRIVETIME'])))
+					->where('TRAVEL_SCHEDULE_ARRIVETIME','>=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_ARRIVETIME'])));
+				})
+				->orWhere(function($query) use ($data){
+				$query->where('TRAVEL_SCHEDULE_DEPARTTIME','<=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])))
+					->where('TRAVEL_SCHEDULE_ARRIVETIME','>=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])));
+				})
+				->orWhere(function($query)use ($data){
+					$query->where('TRAVEL_SCHEDULE_DEPARTTIME','>=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])))
+							->where('TRAVEL_SCHEDULE_ARRIVETIME','<=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_ARRIVETIME'])));
+				})
+				->where('VEHICLE_ID','=',$data['VEHICLE_ID'])->count();
+			
+			if($flag==0) {
+				Travelschedule::insert($data);
+			}
+			elseif ($flag>0 && $i!=1) {
+				echo json_encode("Ada jadwal yang bentrok, mohon periksa kembali");
+				$i=1;
+			}
 		}
 	}
 
@@ -88,7 +110,7 @@ public $partner_id;
 		$plus=$data['hour_estimate']*60+$data['minute_estimate'];
 		$hour_arrive=date('H:i', strtotime('+'.$plus.' minutes', strtotime($hour_depart)));
 		unset($data['hour_depart'],$data['minute_estimate'],$data['hour_estimate'],$data['minute_depart'],$data['start'],$data['stop']);
-
+		$i=0; $flag=0;
 		//$data_mingguan=["TRAVEL_SCHEDULE_UMUM_FROM"=>$start,'TRAVEL_SCHEDULE_UMUM_TO'=>$stop];
 		//TravelScheduleUmum::insert($data_mingguan);
 		//$data['TRAVEL_SCHEDULE_UMUM_ID']=DB::getPdo()->lastInsertId();
@@ -99,7 +121,28 @@ public $partner_id;
 			{
 				$data['TRAVEL_SCHEDULE_DEPARTTIME']=date('Y-m-d H:i', strtotime($start." ".$hour_depart));
 				$data['TRAVEL_SCHEDULE_ARRIVETIME']=date('Y-m-d H:i', strtotime($start." ".$hour_arrive));
-				Travelschedule::insert($data);
+				
+				$flag=Travelschedule::where(function($query) use ($data){
+				$query->where('TRAVEL_SCHEDULE_DEPARTTIME','<=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_ARRIVETIME'])))
+					->where('TRAVEL_SCHEDULE_ARRIVETIME','>=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_ARRIVETIME'])));
+				})
+				->orWhere(function($query) use ($data){
+				$query->where('TRAVEL_SCHEDULE_DEPARTTIME','<=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])))
+					->where('TRAVEL_SCHEDULE_ARRIVETIME','>=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])));
+				})
+				->orWhere(function($query)use ($data){
+					$query->where('TRAVEL_SCHEDULE_DEPARTTIME','>=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])))
+							->where('TRAVEL_SCHEDULE_ARRIVETIME','<=',date('Y-m-d H:i',strtotime($data['TRAVEL_SCHEDULE_ARRIVETIME'])));
+				})
+				->where('VEHICLE_ID','=',$data['VEHICLE_ID'])->count();
+			
+				if($flag==0) {
+					Travelschedule::insert($data);
+				}
+				elseif ($flag>0 && $i!=1) {
+					echo json_encode("Ada jadwal yang bentrok, mohon periksa kembali");
+					$i=1;
+				}
 			}
 			$start=date('Y-m-d',strtotime('+1 day',strtotime($start)));
 		

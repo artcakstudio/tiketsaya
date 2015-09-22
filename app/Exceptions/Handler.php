@@ -47,12 +47,13 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
 
-        if($e instanceof NotFoundHttpException)
+        if($e instanceof TokenMismatchException){
+            return redirect($request->fullUrl())->with('csrf_error',"Opps! Seems you couldn't submit form for a longtime. Please try again");
+        }
+        else if($e instanceof NotFoundHttpException)
         {
             return response()->view('errors.503', [], 404);
-        }
-        else if($e instanceof TokenMismatchException){
-            return response()->view('errors.404',[],404);
+                 
         }
         else if($e instanceof MethodNotAllowedHttpException)
         {
@@ -64,7 +65,8 @@ class Handler extends ExceptionHandler
         }
         else
         {
-            return parent::render($request, $e);
+           return parent::render($request, $e);
         }
+        var_dump($e);
     }
 }

@@ -26,9 +26,8 @@ class rentschedule extends Model {
         return $query->select(['RENT_SCHEDULE.*','VEHICLE.*', 'PARTNER.*','CITY_NAME','VEHICLE_TYPE_NAME'])
                 ->whereDate('RENT_SCHEDULE_DATE','=',date('Y-m-d',strtotime($date)))
                 ->whereNotIn('RENT_SCHEDULE_ID',function($query) use($date,$finish) {
-                    $query->select(['RENT_TRANSACTION_DETAIL.RENT_SCHEDULE_ID'])
-                        ->from('RENT_TRANSACTION_DETAIL')
-                        ->join('RENT_SCHEDULE','RENT_SCHEDULE.RENT_SCHEDULE_ID','=','RENT_TRANSACTION_DETAIL.RENT_SCHEDULE_ID')
+                    $query->select(['RENT_TRANSACTION.RENT_SCHEDULE_ID'])
+                        ->from('RENT_TRANSACTION')
                         ->whereBetween('RENT_SCHEDULE_DATE',[$date,$finish])
                         ;})
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')

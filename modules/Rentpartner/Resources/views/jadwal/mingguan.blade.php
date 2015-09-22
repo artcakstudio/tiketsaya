@@ -91,7 +91,10 @@
       data : {"tanggal":jadwal,'_token':token, "RENT_SCHEDULE_PRICE":price,"VEHICLE_ID":vehicle,"start":start, "stop":stop},
       datatype : "JSON",
       success:function(data){       
-      // window.location = window.location.href;
+        data=jQuery.parseJSON(data);
+        console.log(data);
+        alert(data);
+       window.location = window.location.href;
       }
     }); 
   });

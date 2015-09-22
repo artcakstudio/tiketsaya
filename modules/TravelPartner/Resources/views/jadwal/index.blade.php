@@ -225,7 +225,10 @@
       data : {"tanggal":jadwal_bulan,"ROUTE_ID":route,'_token':token, "hour_depart":hour_depart,"minute_depart":minute_depart,"hour_estimate":hour_estimate,"minute_estimate":minute_estimate, "TRAVEL_SCHEDULE_PRICE":price,"VEHICLE_ID":vehicle},
       datatype : "JSON",
       success:function(data){       
-      window.location = window.location.href;
+              data=jQuery.parseJSON(data);
+        console.log(data);
+        alert(data);
+       window.location = window.location.href;
       }
     });
   });
