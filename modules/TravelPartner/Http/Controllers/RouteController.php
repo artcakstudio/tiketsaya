@@ -5,7 +5,7 @@ use Session;
 use Modules\Travel\Entities\Travelschedule;
 use Modules\Vehicle\Entities\City;
 use Modules\Vehicle\Entities\Vehicle;
-use Modules\vehicle\Entities\VehicleType;
+use Modules\Vehicle\Entities\VehicleType;
 use Modules\Travel\Entities\Route;
 use Datatables;
 use Input;
