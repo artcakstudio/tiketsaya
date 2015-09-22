@@ -38,9 +38,6 @@
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<div class="checkbox">
-						<h1>sdd</h1>
-   						<div>{{ Session::get('error') }}</div>
-						
 									<label>
 										<input type="checkbox" name="remember"> Remember Me
 									</label>
