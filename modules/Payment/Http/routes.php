@@ -5,4 +5,10 @@ Route::group(['prefix' => 'payment', 'namespace' => 'Modules\Payment\Http\Contro
 	Route::get('/', 'PaymentController@index');
 	Route::post('checkout', 
 	    ['as' => 'payment.checkout', 'uses' => 'PaymentController@checkout']);
+	Route::get('confirm/{method}/{order_id}',
+		['as' => 'payment.confirm', 'uses' => 'PaymentController@confirm']);
+
+	Route::get('flush', function () {
+		Session::flush();
+	});
 });

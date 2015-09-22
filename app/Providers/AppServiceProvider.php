@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-            $path=url('jsonfile/ports.json');
+            $path=base_path().'/jsonfile/ports.json';
         $string = file_get_contents("$path");
         $datashare['City']=City::all();
         $datashare['Vehicle']=Vehicle::where('VEHICLE.PARTNER_ID',Session::get('id'));

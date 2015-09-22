@@ -219,7 +219,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                 <p>Dengan mengklik tombol di bawah, Anda menyetujui <u>Syarat & Ketentuan</u> dan <u>Kebijakan Privasi</u> Travebaik</p>
                             </div>
                             <div class="logo_lanjut" style="margin-bottom:15px">
-                                <input type="image" value="submit "src="<?php echo url('assets/images/lanjut_ke_pembayaran.png')?>">
+                                <a href="{!! url('payment') !!}"><img src="{!! url('assets/images/lanjut_ke_pembayaran.png') !!}"></a>
                             </div>
                         </div>
                         </div>

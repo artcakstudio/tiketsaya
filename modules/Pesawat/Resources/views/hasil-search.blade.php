@@ -4,9 +4,14 @@
     @parent
         @include('column_search_hidden')
     @stop
-
 @section('content')
 
+<?php
+
+$hari=explode('~', $schedule['AIRASIA']['depart'][0]['input']['value']);
+$tanggal=date('d-m-Y', strtotime('-3 Day', strtotime($hari[12])));
+$hari=date('D',strtotime($tanggal));
+?>
 <!-- CONTENT OPEN -->
             <div class="row">
                 <div class="col-md-12 content_">
@@ -20,48 +25,22 @@
                     
                     <div class="row">
                     <div class="row" style="margin-top: 5px; height: 50px;">
+                        @for($i=1; $i <= 7; $i++)
                         <div class="kotakrekom">
-                            <div class="rekom_harga">
-                                <h4>Senin, 27 Des</h4>
-                                <h5>Rp. 199.000,-</h5>
-                            </div>
-                        </div>
-                        <div class="kotakrekom">
-                            <div class="rekom_harga">
-                                <h4>Senin, 27 Des</h4>
-                                <h5>Rp. 199.000,-</h5>
-                            </div>
-                        </div>
-                        <div class="kotakrekom">
-                            <div class="rekom_harga">
-                                <h4>Senin, 27 Des</h4>
-                                <h5>Rp. 199.000,-</h5>
-                            </div>
-                        </div>
-                        <div class="kotakrekom">
+                            @if($i==4)
                             <div class="rekom_harga_selected">
-                                <h4>Senin, 27 Des</h4>
-                                <h5>Rp. 199.000,-</h5>
-                            </div>
-                        </div>
-                        <div class="kotakrekom">
+                            @else
                             <div class="rekom_harga">
-                                <h4>Senin, 27 Des</h4>
-                                <h5>Rp. 199.000,-</h5>
+                            @endif
+                            <?php
+                            $hari=date('D',strtotime($tanggal));
+                            $tanggal=date('d-m-Y',strtotime('+1 day', strtotime($tanggal)));?>
+                                <h4>{{$hari}}, {{$tanggal}}</h4>
+                                <!-- <h5>Rp. 199.000,-</h5> -->
                             </div>
                         </div>
-                        <div class="kotakrekom">
-                            <div class="rekom_harga">
-                                <h4>Senin, 27 Des</h4>
-                                <h5>Rp. 199.000,-</h5>
-                            </div>
-                        </div>
-                        <div class="kotakrekom">
-                            <div class="rekom_harga">
-                                <h4>Senin, 27 Des</h4>
-                                <h5>Rp. 199.000,-</h5>
-                            </div>
-                        </div>
+                        @endfor
+                        
                     </div>
                     
                     
@@ -100,7 +79,8 @@
                         
                             <?php
                             $i=0;
-                             foreach($schedule['depart'] as $row) { ?>
+                            foreach ($schedule as $key) {
+                             foreach($key['depart'] as $row) { ?>
                               <div class="panel kotakdata" style="border-radius: inherit">
                                 <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $i ?>">
                                     <div class="data_maskapai">
@@ -178,7 +158,8 @@
                                 </div>
                             </div>
                             <?php 
-                            $i++; } ?>
+                            $i++; } 
+                            }?>
                           </div> 
                     </div>
                 </div>
