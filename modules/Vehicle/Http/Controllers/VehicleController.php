@@ -1,10 +1,10 @@
 <?php namespace Modules\Vehicle\Http\Controllers;
 
 use Pingpong\Modules\Routing\Controller;
-use Modules\vehicle\Entities\Vehicle;
-use Modules\vehicle\Entities\City;
-use Modules\vehicle\Entities\VehicleType;
-use Modules\vehicle\Entities\Partner;
+use Modules\Vehicle\Entities\Vehicle;
+use Modules\Vehicle\Entities\City;
+use Modules\Vehicle\Entities\VehicleType;
+use Modules\Vehicle\Entities\Partner;
 use Datatables;
 use View;
 use Input;

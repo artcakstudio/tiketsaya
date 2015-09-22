@@ -1,9 +1,9 @@
 <?php namespace Modules\Usermanagement\Http\Controllers;
 
 use Pingpong\Modules\Routing\Controller;
-use Modules\usermanagement\entities\User;
-use Modules\usermanagement\entities\Role;
-use Modules\usermanagement\entities\Penggunaxrole;
+use Modules\Usermanagement\Entities\User;
+use Modules\Usermanagement\Entities\Role;
+use Modules\Usermanagement\Entities\Penggunaxrole;
 use Datatables;
 use Input;
 use Session;

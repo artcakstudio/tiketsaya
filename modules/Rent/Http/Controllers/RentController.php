@@ -1,8 +1,8 @@
 <?php namespace Modules\Rent\Http\Controllers;
 
 use Pingpong\Modules\Routing\Controller;
-use Modules\rent\Entities\RentSchedule;
-use Modules\vehicle\Entities\Vehicle;
+use Modules\Rent\Entities\RentSchedule;
+use Modules\Vehicle\Entities\Vehicle;
 use Input;
 use Session;
 use Datatables;

@@ -1,8 +1,8 @@
 <?php namespace Modules\Linkfooter\Http\Controllers;
 
 use Pingpong\Modules\Routing\Controller;
-use Modules\linkFooter\Entities\LinkTravel;
-use Modules\linkFooter\Entities\LinkRent;
+use Modules\LinkFooter\Entities\LinkTravel;
+use Modules\LinkFooter\Entities\LinkRent;
 use Modules\Vehicle\Entities\City;
 use Datatables;
 use Input;

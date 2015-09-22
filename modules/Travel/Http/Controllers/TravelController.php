@@ -1,9 +1,9 @@
 <?php namespace Modules\Travel\Http\Controllers;
 
 use Pingpong\Modules\Routing\Controller;
-use Modules\travel\Entities\Route;
-use Modules\travel\Entities\Travelschedule;
-use Modules\vehicle\Entities\Vehicle;
+use Modules\Travel\Entities\Route;
+use Modules\Travel\Entities\Travelschedule;
+use Modules\Vehicle\Entities\Vehicle;
 use Input;
 use Session;
 use Datatables;

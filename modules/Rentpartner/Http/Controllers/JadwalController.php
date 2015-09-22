@@ -6,7 +6,7 @@ use Session;
 use Modules\Rent\Entities\Rentschedule;
 use Modules\Vehicle\Entities\City;
 use Modules\Vehicle\Entities\Vehicle;
-use Modules\vehicle\Entities\VehicleType;
+use Modules\Vehicle\Entities\VehicleType;
 use Datatables;
 use Input;
 use Redirect;
