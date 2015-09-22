@@ -141,7 +141,7 @@
     <script type="text/javascript">
     $(".group_list_item_").click(function(){
 
-        var form=$(this.closest("Form"));
+        var form=$(this).closest("Form");
         
         form.submit();
         

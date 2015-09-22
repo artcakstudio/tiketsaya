@@ -310,6 +310,7 @@ body {
     height: 50px;
     float: left;
     padding: 1px;
+    z-index: 1000px;
 }
 
 .button_pesan div.butpesawat{

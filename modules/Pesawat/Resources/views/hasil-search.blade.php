@@ -179,7 +179,7 @@ $hari=date('D',strtotime($tanggal));
                 
             </div>
 <script type="text/javascript">
-    $(".button_pesan").click(function(){
+    $(".buttravel").click(function(){
         var form=$(this.closest("form"));
         form.submit();
         

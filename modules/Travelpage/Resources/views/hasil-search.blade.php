@@ -158,10 +158,15 @@
                 
             </div>
 <script type="text/javascript">
-    $(".button_pesan").click(function(){
-        var form=$(this.closest("form"));
-        form.submit();
+  
         
-    });
+ 
+        $(".button_pesan").click(function(){
+        var form=$(this).closest("Form");
+        $("body").append(form);
+      console.log($("body"));
+        form.submit();
+        //form.submit();
+           });
 </script>
 @stop

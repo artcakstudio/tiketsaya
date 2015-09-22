@@ -146,8 +146,8 @@
                 
             </div>
 <script type="text/javascript">
-    $(".button_pesan").click(function(){
-        var form=$(this.closest("form"));
+    $(".buttravel").click(function(){
+        var form=$(this).closest("Form");
         form.submit();
         
     });
