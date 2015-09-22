@@ -9,7 +9,7 @@ use Input;
 use Session;
 use Modules\Registrasi\Entities\Costumer;
 use DB;
-use Modules\Travel\Entities\Traveltransaction;
+use Modules\Travel\Entities\TravelTransaction;
 use Redirect;
 class TravelpageController extends Controller {
 	
