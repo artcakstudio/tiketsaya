@@ -33,7 +33,7 @@
                             <a href="<?php echo url('travelpartner/jadwal/harian/'.$date)?>"><h4>Harian</h4></a>
                         </div>
                         <div class="row sub-menu1 sub">
-                            <a href="<?php echo url('travelpartner/jadwal/umum')?>"><h4>Jadwal Umum</h4></a>
+                            <a href="<?php echo url('travelpartner/jadwal-umum')?>"><h4>Jadwal Umum</h4></a>
                         </div>
                         <div class="row sub-menu1 sub">
                             <a href="<?php echo url('travelpartner/transaksi')?>"><h4>Transaksi</h4></a>

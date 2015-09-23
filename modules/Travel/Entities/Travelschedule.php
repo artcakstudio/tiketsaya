@@ -38,9 +38,19 @@ class travelschedule extends Model {
                 })*/;
     }
 
-    function scopepartnerSchedule($query,$partner_id)
+    function scopepartnerScheduleMax($query,$partner_id)
     {
-        return $query->select([DB::raw('DATE(TRAVEL_SCHEDULE_DEPARTTIME) AS DATE'), DB::raw('TIME(TRAVEL_SCHEDULE_DEPARTTIME) AS TIME'),'TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'PARTNER.*','VEHICLE.*' ]) 
+        return $query->select([DB::raw('DATE(TRAVEL_SCHEDULE_DEPARTTIME) AS DATE'), DB::raw('TIME(TRAVEL_SCHEDULE_DEPARTTIME) AS TIME'),'TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'PARTNER.*','VEHICLE.*',DB::raw('min(TRAVEL_SCHEDULE_DEPARTTIME) as min'), DB::raw('max(TRAVEL_SCHEDULE_DEPARTTIME) as max') ]) 
+                    ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
+                    ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
+                    ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
+                    ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
+                    ->where('PARTNER.PARTNER_ID','=',$partner_id)
+                    ->orderBy('TRAVEL_SCHEDULE_DEPARTTIME');
+    }
+        function scopepartnerSchedule($query,$partner_id)
+    {
+        return $query->select([DB::raw('DATE(TRAVEL_SCHEDULE_DEPARTTIME) AS DATE'), DB::raw('TIME(TRAVEL_SCHEDULE_DEPARTTIME) AS TIME'),'TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'PARTNER.*','VEHICLE.*']) 
                     ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
                     ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
                     ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')

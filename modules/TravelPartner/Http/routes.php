@@ -18,11 +18,15 @@ Route::group(['prefix' => 'travelpartner', 'namespace' => 'Modules\TravelPartner
 		Route::get('armada','RouteController@armada');
 		Route::get('armada/getarmada','RouteController@getarmada');
 	});
+	Route::get('detail/bulanan/{id}','JadwalController@umum_bulanan_detail');
+	Route::group(['after'=>'jadwal-umum'],function(){
+		Route::get('jadwal-umum','JadwalController@jadwalUmum');
+		Route::get('jadwal-umum/bulanan','JadwalController@umum_bulanan');
+	});
+
 	Route::group(['after'=>'jadwal'],function(){
 		Route::get('jadwal/{id}','JadwalController@jadwal');
 		Route::get('jadwal/mingguan','JadwalController@mingguan');
-		Route::get('jadwal/umum','JadwalController@jadwalUmum');
-		Route::get('jadwal/umum_mingguan','JadwalController@umum_mingguan');
 		Route::get('jadwal/jadwalharian/{tanggal}','JadwalController@jadwalharian');
 		Route::get('jadwal/harian/{id}','JadwalController@jadwal_harian');
 		Route::post('jadwal/mingguan_detail','JadwalController@mingguan_detail');

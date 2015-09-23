@@ -37,7 +37,6 @@ public $partner_id;
 	function addJadwal()
 	{
 		$data=Input::all();
-		print_r($data);
 		$tanggal=$data['tanggal'];
 		unset($data['tanggal'],$data['_token']);
 		$data['TRAVEL_SCHEDULE_CREATEBY']=Session::get('id');
@@ -49,6 +48,7 @@ public $partner_id;
 		unset($data['date']);
 		unset($data['depart_hour'],$data['depart_minute'], $data['hour_estimate'], $data['minute_estimate']);
 		unset($data['hour_depart'],$data['minute_depart']);
+		$data['TRAVEL_SCHEDULE_GROUP']=md5(time());
 		foreach ($tanggal as $row) {
 			$data['TRAVEL_SCHEDULE_DEPARTTIME']=date('Y-m-d H:i', strtotime($row." ".$hour_depart));
 			$hour_arrive=date('Y-m-d H:i', strtotime('+'.$hour_estimate.' hour', strtotime($data['TRAVEL_SCHEDULE_DEPARTTIME'])));
@@ -111,9 +111,8 @@ public $partner_id;
 		$hour_arrive=date('H:i', strtotime('+'.$plus.' minutes', strtotime($hour_depart)));
 		unset($data['hour_depart'],$data['minute_estimate'],$data['hour_estimate'],$data['minute_depart'],$data['start'],$data['stop']);
 		$i=0; $flag=0;
-		//$data_mingguan=["TRAVEL_SCHEDULE_UMUM_FROM"=>$start,'TRAVEL_SCHEDULE_UMUM_TO'=>$stop];
-		//TravelScheduleUmum::insert($data_mingguan);
-		//$data['TRAVEL_SCHEDULE_UMUM_ID']=DB::getPdo()->lastInsertId();
+		$data['TRAVEL_SCHEDULE_GROUP']=md5(time());
+
 		while($start <=$stop) {
 
 			$index=date('N',strtotime($start))-1;
@@ -155,23 +154,29 @@ public $partner_id;
 	}
 
 	function jadwalUmum(){
-		$jadwalTravelschedule::partnerSchedule($this->partner_id)->get();
+		
 		$route=Route::getRoutePartner($this->partner_id)->get();
 		$vehicle=Vehicle::where('PARTNER_ID','=', $this->partner_id)->get();
 		return view('travelpartner::jadwal.umum_index',compact('jadwal','route','vehicle'));
 	}
-	function umum_mingguan(){
-		$path=url('public/Assets\vehiclePhoto');
-		$schedule =TravelScheduleUmum::scheduleMingguan()->distinct()->get();
+	function umum_bulanan(){
+		$path=url('public/Assets/vehiclePhoto');
+		$schedule =Travelschedule::partnerScheduleMax($this->partner_id)->orderBy('TRAVEL_SCHEDULE_DEPARTTIME')->groupBy('TRAVEL_SCHEDULE_GROUP')->get();
+		//print_r($schedule);
         return Datatables::of($schedule)
          ->addColumn('action', function ($schedule) {
-         		return '<button class="btn  btn-xs btn-primary" id="'.$schedule->TRAVEL_SCHEDULE_UMUM_ID.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_UMUM_ID.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
+         		return '<a href='.url("travelpartner/detail/bulanan/$schedule->TRAVEL_SCHEDULE_GROUP").'> <button class="btn  btn-xs btn-primary" id="'.$schedule->TRAVEL_SCHEDULE_GROUP.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_GROUP.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
             })
          ->addColumn('photo', function ($schedule) use($path) {
          		return '<img src="'.$path.'/'.$schedule['VEHICLE_PHOTO'].'" style="width:50px; height:50px">';
          	
             })
             ->make(true);
+	}
+	function umum_bulanan_detail($id){
+		$data=Travelschedule::partnerSchedule($this->partner_id)->where('TRAVEL_SCHEDULE_GROUP','=',$id)->get();
+		
+		return view("travelpartner::jadwal.bulanan_detail",compact('data'));
 	}
 	function mingguan_detail(){
 		$id=Input::get('TRAVEL_SCHEDULE_UMUM_ID');

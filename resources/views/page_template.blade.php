@@ -150,7 +150,7 @@
         dateFormat: "dd-mm-yy", 
         minDate: 0
     });
-    $("img").onError(function(){
+    $('img').error(function(){
         var img=this;
         this.attr("src","<?php echo url('assets/images/noimage.png')?>");
     });

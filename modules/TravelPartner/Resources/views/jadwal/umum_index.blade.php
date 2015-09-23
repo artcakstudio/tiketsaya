@@ -29,14 +29,14 @@ $(function() {
     $('#schedule-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "<?php echo url('travelpartner/jadwal/umum_mingguan/')?>",
+        ajax: "<?php echo url('travelpartner/jadwal-umum/bulanan')?>",
         columns: [
             { data: 'VEHICLE_NAME', name: 'VEHICLE_NAME' },
             { data: 'ROUTE_DEPARTURE', name: 'ROUTE_DEPARTURE' },
             { data: 'ROUTE_DEST', name: 'ROUTE_DEST' }, 
             { data: 'TRAVEL_SCHEDULE_PRICE', name: 'TRAVEL_SCHEDULE_PRICE' }, 
-            { data: 'TRAVEL_SCHEDULE_UMUM_FROM', name: 'TRAVEL_SCHEDULE_UMUM_FROM' },
-            { data: 'TRAVEL_SCHEDULE_UMUM_TO', name: 'TRAVEL_SCHEDULE_UMUM_TO' }, 
+            { data: 'min', name: 'min' },
+            { data: 'max', name: 'max' }, 
             { data: 'photo', name: 'photo' }, 
             { data: 'action', name: 'action',orderable: false, searchable: false}
         ],

@@ -49,3 +49,7 @@
 	height: inherit;
 	background-color: aliceblue;
 }
+.detail_bulan{
+    padding: 2% 2% 2% 2%;
+    border: 1px solid black;
+}
