@@ -1,10 +1,8 @@
-@extends('page_template')
-
-@section('search-colomn')
+<?php $__env->startSection('search-colomn'); ?>
     @parent
-        @include('column_search_hidden')
-    @stop
-@section('content')
+        <?php echo $__env->make('column_search_hidden', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 
 <?php
 
@@ -25,21 +23,21 @@ $hari=date('D',strtotime($tanggal));
                     
                     <div class="row">
                     <div class="row" style="margin-top: 5px; height: 50px;">
-                        @for($i=1; $i <= 7; $i++)
+                        <?php for($i=1; $i <= 7; $i++): ?>
                         <div class="kotakrekom">
-                            @if($i==4)
+                            <?php if($i==4): ?>
                             <div class="rekom_harga_selected">
-                            @else
+                            <?php else: ?>
                             <div class="rekom_harga">
-                            @endif
+                            <?php endif; ?>
                             <?php
                             $hari=date('D',strtotime($tanggal));
                             $tanggal=date('d-m-Y',strtotime('+1 day', strtotime($tanggal)));?>
-                                <h4>{{$hari}}, {{$tanggal}}</h4>
+                                <h4><?php echo e($hari); ?>, <?php echo e($tanggal); ?></h4>
                                 <!-- <h5>Rp. 199.000,-</h5> -->
                             </div>
                         </div>
-                        @endfor
+                        <?php endfor; ?>
                         
                     </div>
                     
@@ -88,18 +86,18 @@ $hari=date('D',strtotime($tanggal));
                                         <div><center><img src="<?php echo url('public/Assets/pesawatlogo/'.$row['airline'].'.png')?>"/></center></div>
                                     </div>
                                     <div class="data_maskapai">
-                                        <div><h3>{{$row['plane']}}</h3></div>
+                                        <div><h3><?php echo e($row['plane']); ?></h3></div>
                                     </div>
                                     <div class="data_maskapai">
                                         <div>
-                                            <h4>{{$row['time'][0]}}</h4>
-                                            <h5>{{$row['ports'][0]}}</h5>
+                                            <h4><?php echo e($row['time'][0]); ?></h4>
+                                            <h5><?php echo e($row['ports'][0]); ?></h5>
                                         </div>
                                     </div>
                                     <div class="data_maskapai">
                                         <div>
-                                             <h4>{{$row['time'][1]}}</h4>
-                                            <h5>{{$row['ports'][1]}}</h5>
+                                             <h4><?php echo e($row['time'][1]); ?></h4>
+                                            <h5><?php echo e($row['ports'][1]); ?></h5>
                                         </div>
                                     </div>
                                     <div class="data_maskapai">
@@ -118,34 +116,35 @@ $hari=date('D',strtotime($tanggal));
                                     </div>
                                     <div class="data_maskapai2">
                                         <div>
-                                            <h2>IDR {{$row['price']}},-</h2>
+                                            <h2>IDR <?php echo e($row['price']); ?>,-</h2>
                                             <h6><del>IDR 450.000</del></h6>
                                         </div>
                                     </div>
-				{!!Form::open(['route'=>'pesawat.transaksi.step1', 'method'=>'POST','name'=>'form_jadwal'])!!}
+				<?php echo Form::open(['route'=>'pesawat.transaksi.step1', 'method'=>'POST','name'=>'form_jadwal']); ?>
+
                                     <input type="hidden" name="plane" value="$row['plane']">
                                     <div class="button_pesan" >
                                         <div class="butpesawat"></div>
                                     </div>
-                                    {!!Form::close()!!}                               </div>
+                                    <?php echo Form::close(); ?>                               </div>
                                 <div id="data<?php echo $i ?>" class="collapse" >
                                   <div class="kotak_colaps">
                                       <div class="row detilpenerbangan_" >
                                           <div class="col-md-2">
                                               <center>
                                               <img src="<?php echo url('public/Assets/pesawatlogo/'.$row['airline'].'.png')?>"/>
-                                              <p>{{$row['airline']}}</p>
+                                              <p><?php echo e($row['airline']); ?></p>
                                               </center>
                                           </div>
                                           <div class="col-md-2" style="text-align: center">
                                               <p>Kode Penerbangan</p>
-                                              <p>{{$row['plane']}}</p>
+                                              <p><?php echo e($row['plane']); ?></p>
                                               <!-- <p>Boeing 737</p> -->
                                           </div>
                                           <div class="col-md-2" style="text-align: center">
-                                              <p>Surabaya ({{$row['ports'][0]}}) </p>
+                                              <p>Surabaya (<?php echo e($row['ports'][0]); ?>) </p>
                                               <p>ke</p>
-                                              <p>Jakarta ({{$row['ports'][1]}}) </p>
+                                              <p>Jakarta (<?php echo e($row['ports'][1]); ?>) </p>
                                           </div>
                                           
                                           <div class="col-md-6">
@@ -153,8 +152,8 @@ $hari=date('D',strtotime($tanggal));
                                               $data=( $row['input']['value']);
                                                 /*$hari=explode('~', $data);
                                             echo $hari." ".date('d-m-Y', strtotime($data[12]))."  | 2 Dewasa 0 Anak 0 Bayi/Balita</p>";*/?>
-                                              <p>Berangkat : {{date('H:i', strtotime($row['time'][0]))}} WIB </p>
-                                              <p>Tiba : {{date('H:i', strtotime($row['time'][1]))}} WIB</p>
+                                              <p>Berangkat : <?php echo e(date('H:i', strtotime($row['time'][0]))); ?> WIB </p>
+                                              <p>Tiba : <?php echo e(date('H:i', strtotime($row['time'][1]))); ?> WIB</p>
                                           </div>
                                       </div>
                                   </div>
@@ -188,4 +187,6 @@ $hari=date('D',strtotime($tanggal));
         
     });
 </script>
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('page_template', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

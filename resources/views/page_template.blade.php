@@ -137,7 +137,6 @@
                 </div>
             </div>
         </div>
-    
     <script type="text/javascript">
     $(".group_list_item_").click(function(){
 
@@ -150,6 +149,10 @@
         changeYear: true,
         dateFormat: "dd-mm-yy", 
         minDate: 0
+    });
+    $("img").onError(function(){
+        var img=this;
+        this.attr("src","<?php echo url('assets/images/noimage.png')?>");
     });
     </script>
 </body>

@@ -28,18 +28,18 @@
                             <!---------------------PESAWAT SEARCH TAB----------------------- -->
                           <div class="tab-pane active" id="pesawat">
                               <div class="row">
-               
+              			{!!Form::open(['url'=>'pesawat/hasil-search', 'method'=>'post'])!!}
                                   <div class="col-md-4 padding10">
                                       <div class="konten3_">
                                           <div class="head_konten3">Kota Asal</div>
                                           <div class="input-group isi_konten3">
-                                            <select class="form-control remove_border" name="depart">
+                                            <select class="form-control remove_border" name="origin">
                                                     @foreach($datashare['Bandara'] as $row)
                                                         <option value="{{$row['Code']}}" class="remove_border">{{$row['DisplayName']}}</option>
                                                     @endforeach
                                             </select>
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor"  aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>
@@ -48,22 +48,24 @@
                                       <div class="konten3_">
                                           <div class="head_konten3">Kota Tujuan</div>
                                           <div class="input-group isi_konten3">
-                                            <select class="form-control remove_border" name="dest">
+                                            <select class="form-control remove_border" name="destination">
                                                     @foreach($datashare['Bandara'] as $row)
                                                         <option value="{{$row['Code']}}" class="remove_border">{{$row['DisplayName']}}</option>
                                                     @endforeach
                                             </select>
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor"  aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>
                                   </div>
+<input type=hidden name="return" value="one_way">
+<input type=hidden name="date_flexibility" value="must_travel">
                                   <div class="col-md-4 padding10">
                                       <div class="konten3_">
                                           <div class="head_konten3">Tanggal Keberangkatan</div>
                                           <div class="input-group isi_konten3">
-                                            <input type="text" class="form-control remove_border datepicker" />
+                                            <input type="text" class="form-control remove_border datepicker" name="depart_date" />
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
                                             </div><!-- /btn-group -->
@@ -71,32 +73,29 @@
                                       </div>
                                   </div>
                               </div>
-                              
+<input type=hidden name="return_date" value="2016-03-02">
                               <div class="row" style="padding: 10px">
                                   <div class="col-md-4 ">
                                           <div class="row">
                                               <div class="col-md-4">
                                                   <div class="input-group" >
-                                                    <input type="text" class="form-control remove_border" />
+                                                    <input type="text" class="form-control remove_border" name="adult" value=1>
                                                     <div class="input-group-btn">
-                                                        <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2 <span class="caret"></span></button>
                                                     </div><!-- /btn-group -->
                                                   </div>
                                               </div>
                                               <div class="col-md-4">
                                                   <div class="input-group ">
-                                                    <input type="text" class="form-control remove_border" />
+                                                    <input type="text" class="form-control remove_border" name="children" value=0>
                                                     <div class="input-group-btn">
-                                                        <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">1 <span class="caret"></span></button>
-                                                    </div><!-- /btn-group -->
+                                                   </div><!-- /btn-group -->
                                                   </div>
                                               </div>
                                               <div class="col-md-4">
                                                   <div class="input-group ">
-                                                    <input type="text" class="form-control remove_border" />
+                                                    <input type="text" class="form-control remove_border" name="infant" value=0>
                                                     <div class="input-group-btn">
-                                                        <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">0 <span class="caret"></span></button>
-                                                    </div><!-- /btn-group -->
+                                                   </div><!-- /btn-group -->
                                                   </div>
                                               </div>
                                           </div>
@@ -109,8 +108,8 @@
                                   </div>
                                   <div class="col-md-4">
                                       <div style="float: right; padding-right: 0px;" >
-                                            <button type="button" class="btn remove_border themecolor">Cari Penerbangan</button>
-                                            
+                                            <button type="submit" class="btn remove_border themecolor">Cari Penerbangan</button>
+                                     {!!Form::close()!!}
                                       </div>
                                   </div>
                               </div>
