@@ -23,7 +23,7 @@ $hari=date('D',strtotime($tanggal));
                         </div>
                     </div>
                     
-                    <div class="row">
+
                     <div class="row" style="margin-top: 5px; height: 50px;">
                         @for($i=1; $i <= 7; $i++)
                         <div class="kotakrekom">

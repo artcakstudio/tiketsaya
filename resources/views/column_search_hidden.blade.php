@@ -276,7 +276,9 @@ if (Session::has('search')){
  $("#"+type+" form input[name='DATE']").val(date);
  <?php }
  
-}; ?>
+}; 
+
+?>
 </script>
 <script type="text/javascript">
  $(document).ready(function(){

@@ -11,7 +11,7 @@ use DB;
 class PaymentController extends Controller {
 	
 	protected $transaction_details;
-	protected $token_id;
+	protected $token_ID;
 	protected $data_type;
     protected $server_key = "VT-server-vcxip7_cFu7fcbymYowGQa9Y";
     protected $is_production = false;
@@ -27,18 +27,20 @@ class PaymentController extends Controller {
         {
             $this->data_type = 'TRAVEL';
         }
+//print_r(Session::get('DATA_COSTUMER'));
+
 		$gross_amount = Session::get('DATA_COSTUMER')[$this->data_type.'_TRANSACTION_PRICE'];
-		return view('payment::index', compact('gross_amount'));
+	return view('payment::index', compact('gross_amount'));
 
 	}
 
     public function findOrderIdType($order_id)
     {
         // Travel Transaction
-        $result = DB::table('travel_transaction')->where('travel_transaction_code', '=', $order_id);
+        $result = DB::table('TRAVEL_TRANSACTION')->where('TRAVEL_TRANSACTION_CODE', '=', $order_id);
 
         // Rent Transaction
-        $result = DB::table('rent_transaction')->where('rent_transaction_code', '=', $order_id);
+        $result = DB::table('RENT_TRANSACTION')->where('RENT_TRANSACTION_CODE', '=', $order_id);
     }
 
     public function setOrderIdType($order_id)
@@ -117,64 +119,65 @@ class PaymentController extends Controller {
 
     public function saveData($payment_method, $status_code)
     {
-        $transaction_status = null;
+        $TRANSACTION_STATUS = null;
         if($payment_method == "credit_card" && $status_code == "201")
         {
-            $transaction_status = "challenge";
+            $TRANSACTION_STATUS = "challenge";
         }
         else if($status_code == "200")
         {
-            $transaction_status = "success";
+            $TRANSACTION_STATUS = "success";
         }
         else if($status_code == "201")
         {
-            $transaction_status = "pending";
+            $TRANSACTION_STATUS = "pending";
         }
         else if($status_code == "202")
         {
-            $transaction_status = "denied";
+            $TRANSACTION_STATUS = "denied";
         }
 
         if(Session::has('DATA_TRAVEL'))
         {
-            $costumer_id = DB::table('costumer')->insertGetId([
-                    'costumer_name' => Session::get('DATA_COSTUMER')['COSTUMER_NAME'],
-                    'costumer_email' => Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
-                    'costumer_telp' => Session::get('DATA_COSTUMER')['nohp_prefix'].Session::get('DATA_COSTUMER')['COSTUMER_TELP'],
+            $COSTUMER_ID = DB::table('costumer')->insertGetId([
+                    'COSTUMER_NAME' => Session::get('DATA_COSTUMER')['COSTUMER_NAME'],
+                    'COSTUMER_EMAIL' => Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
+                    'COSTUMER_TELP' => Session::get('DATA_COSTUMER')['nohp_prefix'].Session::get('DATA_COSTUMER')['COSTUMER_TELP'],
                 ]);
 
-            $travel_transaction_status_id = DB::table('travel_transaction_status')->insertGetId([
-                'travel_transaction_status_name' => $transaction_status
+            $TRAVEL_TRANSACTION_STATUS_ID = DB::table('TRAVEL_TRANSACTION_STATUS')->insertGetId([
+                'TRAVEL_TRANSACTION_STATUS_NAME' => $TRANSACTION_STATUS
             ]);
 
-            // Where is travel schedule ID?
-            DB::table('travel_transaction')->insert([
-                'costumer_id' => $costumer_id,
-                'travel_transaction_code' => Session::get('NO_PEMESANAN'),
-                'travel_transaction_price' => Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PRICE'],
-                'travel_transaction_status_id' => $travel_transaction_status_id,
-                'travel_schedule_id' => Session::get('DATA_COSTUMER')['TRAVEL_SCHEDULE_ID'],
+            // Where is TRAVEL SCHEDULE ID?
+            DB::table('TRAVEL_TRANSACTION')->insert([
+                'COSTUMER_ID' => $COSTUMER_ID,
+                'TRAVEL_TRANSACTION_CODE' => Session::get('NO_PEMESANAN'),
+                'TRAVEL_TRANSACTION_PRICE' => Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PRICE'],
+                'TRAVEL_TRANSACTION_STATUS_ID' => $TRAVEL_TRANSACTION_STATUS_ID,
+                'TRAVEL_SCHEDULE_ID' => Session::get('DATA_COSTUMER')['TRAVEL_SCHEDULE_ID'],
+		'TRAVEL_TRANSACTION_PASSENGER'=>Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER'],
             ]);
 
         }
         else if(Session::has('DATA_RENT'))
         {
-            $costumer_id = DB::table('costumer')->insertGetId([
-                'costumer_name' => Session::get('DATA_COSTUMER')['COSTUMER_NAME'],
-                'costumer_email' => Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
-                'costumer_telp' => Session::get('DATA_COSTUMER')['nohp_prefix'].Session::get('DATA_COSTUMER')['COSTUMER_TELP'],
+            $COSTUMER_ID = DB::table('costumer')->insertGetId([
+                'COSTUMER_NAME' => Session::get('DATA_COSTUMER')['COSTUMER_NAME'],
+                'COSTUMER_EMAIL' => Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
+                'COSTUMER_TELP' => Session::get('DATA_COSTUMER')['nohp_prefix'].Session::get('DATA_COSTUMER')['COSTUMER_TELP'],
             ]);
 
-            $rent_transaction_status_id = DB::table('rent_transaction_status')->insertGetId([
-                'rent_transaction_status_name' => $transaction_status
+            $rent_TRANSACTION_STATUS_ID = DB::table('RENT_TRANSACTION_STATUS')->insertGetId([
+                'RENT_TRANSACTION_STATUS_RENT' => $TRANSACTION_STATUS
             ]);
 
-            DB::table('rent_transaction')->insert([
-                'costumer_id' => $costumer_id,
-                'rent_transaction_code' => Session::get('NO_PEMESANAN'),
-                'rent_transaction_price' => Session::get('DATA_COSTUMER')['RENT_TRANSACTION_PRICE'],
-                'rent_transaction_status_id' => $rent_transaction_status_id,
-                'rent_schedule_id' => Session::get('DATA_COSTUMER')['RENT_SCHEDULE_ID'],
+            DB::table('RENT_TRANSACTION')->insert([
+                'COSTUMER_ID' => $COSTUMER_ID,
+                'RENT_TRANSACTION_CODE' => Session::get('NO_PEMESANAN'),
+                'RENT_TRANSACTION_price' => Session::get('DATA_COSTUMER')['RENT_TRANSACTION_PRICE'],
+                'RENT_TRANSACTION_STATUS_ID' => $rent_TRANSACTION_STATUS_ID,
+                'RENT_SCHEDULE_ID' => Session::get('DATA_COSTUMER')['RENT_SCHEDULE_ID'],
             ]);
         }
     }
@@ -182,11 +185,11 @@ class PaymentController extends Controller {
 	public function payWithCreditCard()
     {
 
-        // Data that will be send for credit card charge transaction request.
+        // Data that will be send for credit card charge TRANSACTION request.
         $transaction_data = array(
           'payment_type'    => 'credit_card', 
           'credit_card'     => array(
-            'token_id'      => $this->token_id,
+            'token_id'      => $this->token_ID,
             'bank'          => 'bni'
             ),
           'transaction_details'   => $this->transaction_details,
@@ -216,7 +219,7 @@ class PaymentController extends Controller {
         else
         {
             //error
-            echo "Error occurred on the sent transaction data.<br />";
+            echo "Error occurred on the sent TRANSACTION data.<br />";
             echo "<h3>Result:</h3>";
             var_dump($result);
         }
@@ -225,7 +228,7 @@ class PaymentController extends Controller {
     
     public function payWithBankTransfer()
     {
-        // Data that will be send for credit card charge transaction request.
+        // Data that will be send for credit card charge TRANSACTION request.
         $transaction_data = array(
           'payment_type'    => 'bank_transfer',
           'bank_transfer' => array(
@@ -255,7 +258,7 @@ class PaymentController extends Controller {
             \Veritrans_Config::$serverKey = $this->server_key;
             \Veritrans_Config::$isProduction = $this->is_production;
 
-            $result = \Veritrans_Transaction::status($order_id);
+            $result = \Veritrans_Transaction::STATUS($order_id);
 
             $this->setOrderIdType($result->order_id);
 
@@ -269,53 +272,53 @@ class PaymentController extends Controller {
                     if ($result->status_code == "200") {
 
                         $prep_data_type = strtolower($this->data_type);
-                        $query = DB::table($prep_data_type . '_transaction')
+                        $query = DB::table($prep_data_type . '_TRANSACTION')
                             ->join('costumer',
-                                $prep_data_type . '_transaction.costumer_id',
+                                $prep_data_type . '_TRANSACTION.COSTUMER_ID',
                                 '=',
-                                'costumer.costumer_id')
-                            ->join($prep_data_type . '_transaction_status',
-                                $prep_data_type . '_transaction.' . $prep_data_type . '_transaction_status_id',
+                                'COSTUMER.COSTUMER_ID')
+                            ->join($prep_data_type . '_TRANSACTION_STATUS',
+                                $prep_data_type . '_TRANSACTION.' . $prep_data_type . '_TRANSACTION_STATUS_ID',
                                 '=',
-                                $prep_data_type . '_transaction_status.' . $prep_data_type . '_transaction_status_id')
-                            ->join($prep_data_type . '_schedule',
-                                $prep_data_type . '_transaction.' . $prep_data_type . '_schedule_id',
+                                $prep_data_type . '_TRANSACTION_STATUS.' . $prep_data_type . '_TRANSACTION_STATUS_ID')
+                            ->join($prep_data_type . '_SCHEDULE',
+                                $prep_data_type . '_TRANSACTION.' . $prep_data_type . '_SCHEDULE_ID',
                                 '=',
-                                $prep_data_type . '_schedule.' . $prep_data_type . '_schedule_id')
-                            ->join('route',
-                                $prep_data_type . '_schedule.route_id',
+                                $prep_data_type . '_SCHEDULE.' . $prep_data_type . '_SCHEDULE_ID')
+                            ->join('ROUTE',
+                                $prep_data_type . '_SCHEDULE.ROUTE_ID',
                                 '=',
-                                'route.route_id'
+                                'ROUTE.ROUTE_ID'
                             )
-                            ->join('vehicle',
-                                'vehicle.vehicle_id',
+                            ->join('VEHICLE',
+                                'VEHICLE.VEHICLE_ID',
                                 '=',
-                                $prep_data_type.'_schedule.vehicle_id'
+                                $prep_data_type.'_SCHEDULE.VEHICLE_ID'
                                 )
-                            ->join('partner',
-                                'partner.partner_id',
+                            ->join('PARTNER',
+                                'PARTNER.PARTNER_ID',
                                 '=',
-                                'vehicle.partner_id')
-                            ->where($prep_data_type . '_transaction.' . $prep_data_type . '_transaction_code',
+                                'VEHICLE.PARTNER_ID')
+                            ->where($prep_data_type . '_TRANSACTION.' . $prep_data_type . '_TRANSACTION_CODE',
                                 '=',
                                 $order_id)
                             ->first();
 
                         $route_dest = $query->ROUTE_DEST;
                         $route_departure = $query->ROUTE_DEPARTURE;
-                        $depart = DB::table('city')->where('city_id', '=', $route_departure)->first();
-                        $arrive = DB::table('city')->where('city_id', '=', $route_dest)->first();
+                        $depart = DB::table('CITY')->where('CITY_ID', '=', $route_departure)->first();
+                        $arrive = DB::table('CITY')->where('CITY_ID', '=', $route_dest)->first();
 //                        dd($depart);
-                        $prep_transaction_status_id = strtoupper($prep_data_type . '_transaction_status_id');
-                        DB::table($prep_data_type . '_transaction_status')
-                            ->where($prep_data_type . '_transaction_status_id',
+                        $prep_transaction_id = strtoupper($prep_data_type . '_TRANSACTION_STATUS_ID');
+                        DB::table($prep_data_type . '_TRANSACTION_STATUS')
+                            ->where($prep_data_type . '_TRANSACTION_STATUS_ID',
                                 '=',
-                                $query->$prep_transaction_status_id)
-                            ->update([$prep_data_type . '_transaction_status_name' => 'success']);
+                                $query->$prep_transaction_id)
+                            ->update([$prep_data_type . '_TRANSACTION_STATUS_NAME' => 'success']);
 
                         $data_type = $this->data_type;
                         Mail::send('payment::mail-templates.invoice', compact('result', 'query', 'depart', 'arrive', 'data_type'), function ($message) use ($query, $prep_data_type) {
-                            $prep_transaction_code = strtoupper($prep_data_type . '_transaction_code');
+                            $prep_transaction_code = strtoupper($prep_data_type . '_TRANSACTION_CODE');
                             $message->to($query->COSTUMER_EMAIL,
                                 $query->COSTUMER_NAME)->subject('Invoice Travel ' . $query->$prep_transaction_code);
                         });
@@ -338,51 +341,51 @@ class PaymentController extends Controller {
                     if ($result->status_code == "200") {
 
                         $prep_data_type = strtolower($this->data_type);
-                        $query = DB::table($prep_data_type . '_transaction')
+                        $query = DB::table($prep_data_type . '_TRANSACTION')
                             ->join('costumer',
-                                $prep_data_type . '_transaction.costumer_id',
+                                $prep_data_type . '_TRANSACTION.COSTUMER_ID',
                                 '=',
-                                'costumer.costumer_id')
-                            ->join($prep_data_type . '_transaction_status',
-                                $prep_data_type . '_transaction.' . $prep_data_type . '_transaction_status_id',
+                                'COSTUMER.COSTUMER_ID')
+                            ->join($prep_data_type . '_TRANSACTION_STATUS',
+                                $prep_data_type . '_TRANSACTION.' . $prep_data_type . '_TRANSACTION_STATUS_ID',
                                 '=',
-                                $prep_data_type . '_transaction_status.' . $prep_data_type . '_transaction_status_id')
-                            ->join($prep_data_type . '_schedule',
-                                $prep_data_type . '_transaction.' . $prep_data_type . '_schedule_id',
+                                $prep_data_type . '_TRANSACTION_STATUS.' . $prep_data_type . '_TRANSACTION_STATUS_ID')
+                            ->join($prep_data_type . '_SCHEDULE',
+                                $prep_data_type . '_TRANSACTION.' . $prep_data_type . '_SCHEDULE_ID',
                                 '=',
-                                $prep_data_type . '_schedule.' . $prep_data_type . '_schedule_id')
-                            ->join('vehicle',
-                                'vehicle.vehicle_id',
+                                $prep_data_type . '_SCHEDULE.' . $prep_data_type . '_SCHEDULE_ID')
+                            ->join('VEHICLE',
+                                'VEHICLE.VEHICLE_ID',
                                 '=',
-                                $prep_data_type.'_schedule.vehicle_id'
+                                $prep_data_type.'_SCHEDULE.VEHICLE_ID'
                             )
-                            ->join('partner',
-                                'partner.partner_id',
+                            ->join('PARTNER',
+                                'PARTNER.PARTNER_ID',
                                 '=',
-                                'vehicle.partner_id')
-                            ->join('city',
-                                'city.city_id',
+                                'VEHICLE.PARTNER_ID')
+                            ->join('CITY',
+                                'CITY.CITY_ID',
                                 '=',
-                                'vehicle.city_id')
-                            ->where($prep_data_type . '_transaction.' . $prep_data_type . '_transaction_code',
+                                'VEHICLE.CITY_ID')
+                            ->where($prep_data_type . '_TRANSACTION.' . $prep_data_type . '_TRANSACTION_CODE',
                                 '=',
                                 $order_id)
                             ->first();
 
 //                        dd($query);
-                        $prep_transaction_status_id = strtoupper($prep_data_type . '_transaction_status_id');
-                        DB::table($prep_data_type . '_transaction_status')
-                            ->where($prep_data_type . '_transaction_status_id',
+                        $prep_transaction_id = strtoupper($prep_data_type . '_TRANSACTION_STATUS_ID');
+                        DB::table($prep_data_type . '_TRANSACTION_STATUS')
+                            ->where($prep_data_type . '_TRANSACTION_STATUS_ID',
                                 '=',
-                                $query->$prep_transaction_status_id)
-                            ->update([$prep_data_type . '_transaction_status_name' => 'success']);
+                                $query->$prep_transaction_id)
+                            ->update([$prep_data_type . '_TRANSACTION_STATUS_NAME' => 'success']);
 
                         $data_type = $this->data_type;
 
                         Mail::send('payment::mail-templates.invoice', compact('result', 'query', 'data_type'), function ($message) use ($query, $prep_data_type) {
-                            $prep_transaction_code = strtoupper($prep_data_type . '_transaction_code');
-                            $message->to($query->COSTUMER_EMAIL,
-                                $query->COSTUMER_NAME)->subject('Invoice Rental ' . $query->$prep_transaction_code);
+                            $prep_transaction_code = strtoupper($prep_data_type . '_TRANSACTION_CODE');
+                            $message->to($query->costumer_email,
+                                $query->costumer_name)->subject('Invoice Rental ' . $query->$prep_transaction_code);
                         });
 
                         return view('payment::response.success', compact('result'));

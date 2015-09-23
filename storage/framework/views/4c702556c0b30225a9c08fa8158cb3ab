@@ -1,0 +1,16 @@
+<?php $__env->startSection('content'); ?>
+        <!-- SLIDER -->
+<div class="row">
+    <div class="col-md-12 slider"></div>
+</div>
+<!-- SLIDER CLOSE -->
+<!-- CONTENT OPEN -->
+<div class="row">
+    <div class="col-md-12 content_">
+        <div class="container">
+            <h2>Kami telah mengirimkan petunjuk transfer ke e-mail Anda.</h2>
+        </div>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('page_template', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -35,7 +35,8 @@ class RentpageController extends Controller {
 		$id_schedule=Input::get('RENT_SCHEDULE_ID');
 		$schedule=Rentschedule::findRentschedule($id_schedule);
 		$jadwal=$schedule->first();
-		session(['DATA_RENT'=>$jadwal]);
+		Session(['DATA_RENT'=>$jadwal]);
+	print_r(Session::get('DATA_RENT'));	
 		return view('rentpage::transaksi',compact('id_schedule'));
 	}
 	function transaksiSubmit()
@@ -71,13 +72,19 @@ class RentpageController extends Controller {
 	function preview()
 	{
 		$data=Input::all();
+
 //		$no_pemesanan=DB::select('select rent_code() as code_pesan')[0]->code_pesan;
+		if (Session::has('DATA_TRAVEL')){
+			Session::forget('NO_PEMESANAN');
+			Session::forget('DATA_TRAVEL');
+		}
 		if(!Session::has('NO_PEMESANAN'))
 		{
 			$no_pemesanan = 'R' . strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
 			session(['DATA_COSTUMER' => $data, 'NO_PEMESANAN' => $no_pemesanan]);
 		}
-		return view('rentpage::preview');
+	return view('rentpage::preview');
+
 	}
 	function scheduleSearchRentang(){
 				$data=Input::all();

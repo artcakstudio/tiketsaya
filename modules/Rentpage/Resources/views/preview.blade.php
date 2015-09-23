@@ -14,6 +14,7 @@
 <?php
 $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
 ?>
+<?php print_r(Session::get('DATA_RENT'))?>
             <!-- SLIDER -->
             <div class="row">
                 <div class="col-md-12 slider"></div>
@@ -24,6 +25,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                     <div class="row head_table">
                         <div class="col-md-4" style="padding-top: 0px"><h4><b>PROSES PEMESANAN</b><h4></div>
                         <div class="col-md-8" style="padding: 0;">
+
                              <p style="float: right;padding-top: 10px; margin-right: 10px;"> Rental | <?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]; echo " ".dateFormat(date('d-m-Y', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))?></p>
                         </div>
                     </div>

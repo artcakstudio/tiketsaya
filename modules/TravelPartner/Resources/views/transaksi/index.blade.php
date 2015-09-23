@@ -136,9 +136,14 @@ $(function() {
     $('#transaction-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "<?php echo url('travelpartner/transaksi/getTransaksi')?>",
+        ajax: {
+		"url": "<?php echo url('travelpartner/transaksi/getTransaksi')?>",
+		"type":"POST",
+		"data" : {"_token":token},
+		"datatype" : "JSON"
+	},
         columns: [
-            { data: 'TRAVEL_TRANSACTION_CODE', name: 'TRAVEL_TRANSACTION_CODE' },
+	    { data: 'TRAVEL_TRANSACTION_CODE', name: 'TRAVEL_TRANSACTION_CODE' },
             { data: 'COSTUMER_NAME', name: 'COSTUMER_NAME' },
             { data: 'TRAVEL_SCHEDULE_DEPARTTIME', name: 'TRAVEL_SCHEDULE_DEPARTTIME' },
             { data: 'ROUTE_DEPARTURE', name: 'ROUTE_DEPARTURE' },

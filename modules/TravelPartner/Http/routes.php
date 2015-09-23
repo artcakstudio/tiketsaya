@@ -8,7 +8,7 @@ Route::group(['prefix' => 'travelpartner', 'namespace' => 'Modules\TravelPartner
 	Route::get('logout','TravelPartnerController@logout');
 	Route::post('detail_jadwal','JadwalController@detail_jadwal');
 	Route::get('transaksi','TransaksiController@transaksi');
-	Route::get('transaksi/getTransaksi','TransaksiController@getTransaksi');
+	Route::post('transaksi/getTransaksi','TransaksiController@getTransaksi');
 
 	Route::group(['after'=>'route'],function(){
 		Route::get('route','RouteController@index');

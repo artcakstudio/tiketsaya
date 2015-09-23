@@ -16,32 +16,35 @@ class PesawatController extends Controller {
 		unset($input['_token']);
 		$input['depart_date']=date('Y-m-d',strtotime($input['depart_date']));
 		$input['return_date']=date('Y-m-d',strtotime($input['return_date']));
-		$input=json_encode($input);
+		$data=json_encode($input);
 //		$input=file_get_contents("/var/www/tiketsaya/jsonfile/input.json");
 		$schedule_search=[];
 		$link[0]='schedule/airasia';
 		$link[1]='schedule/citilink';
 		$link[2]='schedule/lionair';
 		$path=["/var/www/tiketsaya/jsonfile/example_airasia.json","/var/www/tiketsaya/jsonfile/example_citilink.json", "/var/www/tiketsaya/jsonfile/example_lionair.json"];
-		foreach ($path as $row) {
-			$ch = curl_init();
+		foreach ($link as $row) {
 			$url='localhost:6070/'.$row;
+			$ch = curl_init();
+	
 			curl_setopt($ch,CURLOPT_URL, $url);
-			curl_setopt($ch,CURLOPT_POST, count($input));
-			curl_setopt($ch,CURLOPT_POSTFIELDS, $input);
-			
-//			$result = curl_exec($ch);
-			
-#			print_r($result);
+			curl_setopt($ch,CURLOPT_POST, TRUE);
+			curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
+			curl_setopt($ch, CURLOPT_HEADER, 0); 
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+			$result = curl_exec($ch);
 			curl_close($ch);
-//			$result = json_decode($result,true);
-			array_push($schedule_search, json_decode(file_get_contents("$row"),true));
 
+//			print_r($result);
+			$result = json_decode($result,true);
+			array_push($schedule_search, $result);
+//print_r($result);
 			}
-			$type="pesawat";
+			$input["type"]="pesawat";
+		
 //		print_r($schedule_search);
-		Session::flash('tanggal',date('Y-m-d'));
-		return view('pesawat::hasil-search',compact('schedule_search'));
+		Session::flash('search',$input);
+		return view('pesawat::hasil-search',compact('schedule_search','type'));
 	}
 	function step1()
 	{

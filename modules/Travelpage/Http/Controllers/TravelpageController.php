@@ -80,10 +80,11 @@ class TravelpageController extends Controller {
 	{
 		$data=Input::all();
 //		$no_pemesanan=DB::select('select travel_code() as code_pesan')[0]->code_pesan;
-		if(!Session::has('NO_PEMESANAN')) {
+		
+		//if(!Session::has('NO_PEMESANAN')) {
 			$no_pemesanan = 'T' . strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
 			session(['DATA_COSTUMER' => $data, 'NO_PEMESANAN' => $no_pemesanan]);
-		}
+		//}
 		return view('travelpage::preview');
 	}
 	function scheduleSearchRentang(){
