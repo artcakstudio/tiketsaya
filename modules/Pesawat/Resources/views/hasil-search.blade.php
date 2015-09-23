@@ -74,7 +74,7 @@ $hari=date('D',strtotime($tanggal));
                         
                     </div>
                     <div class="row" style="margin-top: 30px;">
-                       
+
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         
                             <?php
@@ -123,7 +123,9 @@ $hari=date('D',strtotime($tanggal));
                                         </div>
                                     </div>
 				{!!Form::open(['route'=>'pesawat.transaksi.step1', 'method'=>'POST','name'=>'form_jadwal'])!!}
-                                    <input type="hidden" name="plane" value="$row['plane']">
+                                    <?php $data=json_encode($row,true);
+                                    ?>
+                                    <input type="hidden" name="data" value="{{$data}}">
                                     <div class="button_pesan" >
                                         <div class="butpesawat"></div>
                                     </div>
@@ -182,7 +184,7 @@ $hari=date('D',strtotime($tanggal));
                 
             </div>
 <script type="text/javascript">
-    $(".buttravel").click(function(){
+    $(".button_pesan").click(function(){
         var form=$(this.closest("form"));
         form.submit();
         

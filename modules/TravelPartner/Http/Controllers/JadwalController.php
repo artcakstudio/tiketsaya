@@ -165,7 +165,7 @@ public $partner_id;
 		//print_r($schedule);
         return Datatables::of($schedule)
          ->addColumn('action', function ($schedule) {
-         		return '<a href='.url("travelpartner/detail/bulanan/$schedule->TRAVEL_SCHEDULE_GROUP").'> <button class="btn  btn-xs btn-primary" id="'.$schedule->TRAVEL_SCHEDULE_GROUP.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_GROUP.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button>';
+         		return '<a href='.url("travelpartner/detail/bulanan/$schedule->TRAVEL_SCHEDULE_GROUP").'> <button class="btn  btn-xs btn-primary" id="'.$schedule->TRAVEL_SCHEDULE_GROUP.'"><i class="fa fa-pencil"></i> </button></a><button class="btn  btn-xs btn-danger" id="'.$schedule->TRAVEL_SCHEDULE_GROUP.'" data-target="#hapusUser""><i class="fa fa-times"></i> </button><button class="btn  btn-xs btn-warning" id="'.$schedule->TRAVEL_SCHEDULE_GROUP.'" data-target="#hapusUser""><i class="fa fa-plus-circle"></i> </button>';
             })
          ->addColumn('photo', function ($schedule) use($path) {
          		return '<img src="'.$path.'/'.$schedule['VEHICLE_PHOTO'].'" style="width:50px; height:50px">';

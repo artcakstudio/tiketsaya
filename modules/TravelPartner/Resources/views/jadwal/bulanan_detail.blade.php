@@ -4,7 +4,7 @@
 	@include('travel_partner.sidebar')
     <?php $bulan=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];?>
                  <div class="header_backend">JADWAL UMUM DETAIL</div>
-                 <h3 style="text-align:center">Jadwal dari {{$data[0]['ROUTE_DEPARTURE']}} Ke {{$data[0]['ROUTE_DEST']}} </h3>
+                 <h3 style="text-align:center ">Jadwal dari {{$data[0]['ROUTE_DEPARTURE']}} Ke {{$data[0]['ROUTE_DEST']}} </h3>
                     <div class="row col-md-11" style="margin:auto;float:none">
                         @foreach($data as $row)
                         <div class="col-md-3 detail_bulan">

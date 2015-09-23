@@ -12,7 +12,7 @@ class PesawatController extends Controller {
 	public function search()
 	{
 //		$path=url('jsonfile/input.json');
-		$input=Input::all();
+		/*$input=Input::all();
 		unset($input['_token']);
 		$input['depart_date']=date('Y-m-d',strtotime($input['depart_date']));
 		$input['return_date']=date('Y-m-d',strtotime($input['return_date']));
@@ -40,13 +40,25 @@ class PesawatController extends Controller {
 			array_push($schedule_search, $result);
 //print_r($result);
 			}
-			$input["type"]="pesawat";
+			$input["type"]="pesawat";*/
 		
 //		print_r($schedule_search);
-		Session::flash('search',$input);
+			$input=Input::all();
+			unset($input['_token']);
+			Session(['input'=>$input]);
+			$path=url('jsonfile/example_lionair.json');
+			$schedule_search[0]=json_decode(file_get_contents("$path"),true);
+		//Session::flash('search',$input);
 		return view('pesawat::hasil-search',compact('schedule_search','type'));
 	}
 	function step1()
 	{
+		$data=Input::all();
+		$data=json_decode($data['data'],true);
+		Session(['DATA_PESAWAT'=>$data]);
+		print_r($data);
+		
+
+		return view('pesawat::step1');
 	}
 }

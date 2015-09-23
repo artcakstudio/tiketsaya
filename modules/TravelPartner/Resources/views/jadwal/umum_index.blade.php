@@ -14,7 +14,7 @@
                                     <th>Start</th>
                                     <th>Stop</th>
                                     <th>Photo</th>
-                                    <th>Action</th>
+                                    <th style="min-width:60px">Action</th>
                                 </tr>
                             </thead>
                         </table>    
@@ -22,8 +22,81 @@
             </div>
         </div>
     </div>
-  
-  @include('travelpartner::jadwal.mingguan_edit')
+
+<div class="modal fade" id="editSchedule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Schedule</h4>
+      </div>
+      <div class="modal-body">
+        {!!Form::open(['route'=>'travel..store','METHOD'=>'POST','class'=>'form-horizontal'])!!} 
+            <input type="hidden" name="date" value="{{$tanggal}}">
+            <input type="hidden" name="TRAVEL_SCHEDULE_GROUP">
+            <div class="form-group">
+              <label class="col-lg-3 control-label">Travel Route</label>
+              <div class="col-lg-8">
+                    <select class="form-control" name="ROUTE_ID">
+                      @foreach($route as $row)
+                        <option value="{{$row['ROUTE_ID']}}">{{$row['ROUTE_DEPARTURE']}} Ke {{$row['ROUTE_DEST']}} </option>
+                        @endforeach
+                    </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label">Vehicle</label>
+              <div class="col-lg-8">
+                    <select class="form-control" name="VEHICLE_ID">
+                      @foreach($vehicle as $row)
+                        <option value="{{$row['VEHICLE_ID']}}">{{$row['VEHICLE_NAME']}}</option>
+                        @endforeach
+                    </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label">Price</label>
+              <div class="col-lg-8">
+                    <input type="text" name="TRAVEL_SCHEDULE_PRICE" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label">Depart Time</label>
+              <div class="col-lg-4">
+                <input type="text" name="depart_date" class="form-control datepicker" placeholder="HH" value="{{$tanggal}}" disabled="disabled">
+              </div>
+              <div class="col-lg-2">
+                  <input type="text" name="depart_hour" class="form-control" placeholder="HH">
+              </div>
+              <div class="col-lg-2">
+                    <input type="text" name="depart_minute" class="form-control" placeholder="MM">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Estimation Time</label>
+              <div class="col-md-9">
+                <div class="col-md-3">
+                  <input type="text" class="form-control" name="hour_estimate" placeholder="HH">
+                </div>
+                <div class="col-md-3"><input type="text" class="form-control" name="minute_estimate" placeholder="MM"></div>
+              </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Add Schedule</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        {!!Form::close()!!}
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $("#schedule-table").on("click","button.btn.btn-warning",function(){
+        
+    })
+</script>
+
+
  <script>
 $(function() {
     $('#schedule-table').DataTable({
