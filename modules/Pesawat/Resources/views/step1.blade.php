@@ -5,7 +5,7 @@
    <div class="row">
 <?php
 $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
-print_r(Session::get('input'));
+
 ?>
                 <div class="col-md-12 content_">
                     <div class="row head_table">

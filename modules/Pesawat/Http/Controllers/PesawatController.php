@@ -43,22 +43,31 @@ class PesawatController extends Controller {
 			$input["type"]="pesawat";*/
 		
 //		print_r($schedule_search);
-			$input=Input::all();
-			unset($input['_token']);
-			Session(['input'=>$input]);
+			$input['input']=Input::all();
+			unset($input['input']['_token']);
+			Session(['PESAWAT'=>$input]);
 			$path=url('jsonfile/example_lionair.json');
 			$schedule_search[0]=json_decode(file_get_contents("$path"),true);
-		//Session::flash('search',$input);
+			
+			Session(['PESAWAT'=>$input]);
+		
 		return view('pesawat::hasil-search',compact('schedule_search','type'));
 	}
 	function step1()
 	{
 		$data=Input::all();
-		$data=json_decode($data['data'],true);
-		Session(['DATA_PESAWAT'=>$data]);
-		print_r($data);
 		
-
-		return view('pesawat::step1');
+		$data['DATA_PESAWAT']=json_decode($data['data'],true);
+		unset($data['data']);
+		print_r($data);	
+		array_push(Session::get('PESAWAT'), $data);
+		print_r(Session::get('PESAWAT')['DATA_PESAWAT']);
+//		return view('pesawat::step1');
+	}
+	function preview(){
+		$data=Input::all();
+		unset($data['_token']);
+		Session(['DATA_COSTUMER'=>$data]);
+		return view('pesawat::preview');
 	}
 }

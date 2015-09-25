@@ -9,7 +9,7 @@
 <?php
 
 
-$tanggal=Session::get('tanggal');
+$tanggal=Session::get('PESAWAT')['input']['depart_date'];
 $hari=date('D',strtotime($tanggal));
 ?>
 <!-- CONTENT OPEN -->

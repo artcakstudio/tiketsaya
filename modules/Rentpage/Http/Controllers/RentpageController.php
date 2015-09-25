@@ -96,6 +96,8 @@ class RentpageController extends Controller {
 		
 		$vehicle=Rentschedule::rentScheduleRentang($data['CITY_ID'],$start,$finish)->distinct()->get();
 		$duration=1;
+		Session(['duration'=>$duration]);
+		//print_r($vehicle);
 		return view('rentpage::hasil-search', compact('vehicle','city','duration'));
 	}
 }
