@@ -21,6 +21,7 @@ class TravelpageController extends Controller {
 	}
 	function scheduleSearch()
 	{
+		Session::forget('NO_PEMESANAN');
 		$city=City::all();
 		$data=Input::all();
 		//print_r($data);
@@ -36,7 +37,7 @@ class TravelpageController extends Controller {
 
 		$schedule=Travelschedule::getSchedule()->where('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID','=',$id_schedule);
 		$jadwal=$schedule->first();
-		session(['DATA_TRAVEL'=>['ROUTE_DEPARTURE'=>$jadwal['ROUTE_DEPARTURE'],'ROUTE_DEST'=>$jadwal['ROUTE_DEST'],'TRAVEL_SCHEDULE_ARRIVETIME'=>$jadwal['TRAVEL_SCHEDULE_ARRIVETIME'], 'TRAVEL_SCHEDULE_DEPARTTIME'=>$jadwal['TRAVEL_SCHEDULE_DEPARTTIME'] ,'TRAVEL_SCHEDULE_PRICE'=>$jadwal['TRAVEL_SCHEDULE_PRICE'],'VEHICLE_NAME'=>$jadwal['VEHICLE_NAME'],'VEHICLE_PHOTO'=>$jadwal['VEHICLE_PHOTO'], 'PARTNER_NAME'=>$jadwal['PARTNER_NAME'], 'PARTNER_PHOTO'=>$jadwal['PARTNER_PHOTO'] ] ]);
+		Session(['DATA_TRAVEL'=>['ROUTE_DEPARTURE'=>$jadwal['ROUTE_DEPARTURE'],'ROUTE_DEST'=>$jadwal['ROUTE_DEST'],'TRAVEL_SCHEDULE_ARRIVETIME'=>$jadwal['TRAVEL_SCHEDULE_ARRIVETIME'], 'TRAVEL_SCHEDULE_DEPARTTIME'=>$jadwal['TRAVEL_SCHEDULE_DEPARTTIME'] ,'TRAVEL_SCHEDULE_PRICE'=>$jadwal['TRAVEL_SCHEDULE_PRICE'],'VEHICLE_NAME'=>$jadwal['VEHICLE_NAME'],'VEHICLE_PHOTO'=>$jadwal['VEHICLE_PHOTO'], 'PARTNER_NAME'=>$jadwal['PARTNER_NAME'], 'PARTNER_PHOTO'=>$jadwal['PARTNER_PHOTO'] ] ]);
 		$sisa=$jadwal['VEHICLE_CAPACITY']-$passenger_count;
 	
 		return view('travelpage::transaksi',compact('id_schedule','sisa','harga'));
@@ -79,13 +80,14 @@ class TravelpageController extends Controller {
 	function preview()
 	{
 		$data=Input::all();
-//		$no_pemesanan=DB::select('select travel_code() as code_pesan')[0]->code_pesan;
-		
-		//if(!Session::has('NO_PEMESANAN')) {
+//	$no_pemesanan=DB::select('select travel_code() as code_pesan')[0]->code_pesan;
+		Session::forget('DATA_RENT');
+		if(!Session::has('NO_PEMESANAN')) {
 			$no_pemesanan = 'T' . strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
-			session(['DATA_COSTUMER' => $data, 'NO_PEMESANAN' => $no_pemesanan]);
-		//}
-		return view('travelpage::preview');
+			Session(['DATA_COSTUMER' => $data, 'NO_PEMESANAN' => $no_pemesanan]);
+		}
+print_r($data);
+//		return view('travelpage::preview');
 	}
 	function scheduleSearchRentang(){
 		$data=Input::all();

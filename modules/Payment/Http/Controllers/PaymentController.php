@@ -18,7 +18,7 @@ class PaymentController extends Controller {
 
 	public function index()
 	{
-//        dd(Session::all());
+        dd(Session::all());
         if(Session::has('DATA_RENT'))
         {
             $this->data_type = 'RENT';
@@ -168,7 +168,7 @@ class PaymentController extends Controller {
                 'COSTUMER_TELP' => Session::get('DATA_COSTUMER')['nohp_prefix'].Session::get('DATA_COSTUMER')['COSTUMER_TELP'],
             ]);
 
-            $rent_TRANSACTION_STATUS_ID = DB::table('RENT_TRANSACTION_STATUS')->insertGetId([
+            $rent_transaction_status_id = DB::table('RENT_TRANSACTION_STATUS')->insertGetId([
                 'RENT_TRANSACTION_STATUS_RENT' => $TRANSACTION_STATUS
             ]);
 
@@ -176,7 +176,7 @@ class PaymentController extends Controller {
                 'COSTUMER_ID' => $COSTUMER_ID,
                 'RENT_TRANSACTION_CODE' => Session::get('NO_PEMESANAN'),
                 'RENT_TRANSACTION_price' => Session::get('DATA_COSTUMER')['RENT_TRANSACTION_PRICE'],
-                'RENT_TRANSACTION_STATUS_ID' => $rent_TRANSACTION_STATUS_ID,
+                'RENT_TRANSACTION_STATUS_ID' => $rent_transaction_status_id,
                 'RENT_SCHEDULE_ID' => Session::get('DATA_COSTUMER')['RENT_SCHEDULE_ID'],
             ]);
         }
