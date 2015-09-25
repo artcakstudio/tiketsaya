@@ -12,7 +12,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                         <div class="col-md-4" style="padding-top: 0px; font-weight: bold" ><h4><b>PROSES PEMESANAN</b><h4></div>
                         <div class="col-md-8" style="padding: 0">
                              <button style="float: right" type="button" data-target="#pencarian_data_tabel" data-toggle="collapse" aria-expanded="true" class="btn remove_border themecolor">Ubah Pencarian</button>
-                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Pesawat Booking  <?php echo "|  ".$datashare['Bandara'][Session::get('DATA_PESAWAT')['ports'][0]]['DisplayName']." | ".date('Y-m-d')?></p>
+                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Pesawat Booking  <?php echo "|  ".$datashare['Bandara'][Session::get('PESAWAT')['DATA_PESAWAT']['ports'][0]]['DisplayName']." | ".date('Y-m-d')?></p>
                         </div>
                     </div>
 
@@ -43,13 +43,13 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                         <!-- Info Maskapai Pojok Kiri Atas -->
                         <div class="col-md-4 remove_padding"  style="background-color:#fff;border: 1px solid #ddd; border-left: 5px solid #00cd00">
                             <div class="info_logo_merk_travel">
-                                <img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public/Assets/pesawatlogo/'.Session::get('DATA_PESAWAT')['airline'].'.png')?>" width=92 height=50></img>
+                                <img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public/Assets/pesawatlogo/'.Session::get('PESAWAT')['DATA_PESAWAT']['airline'].'.png')?>" width=92 height=50></img>
                             </div>
                             <div class="info_travel" style="background-color: #fff; margin-top:10px; padding-left:20px">
-                                <p>{{$datashare['Bandara'][Session::get('DATA_PESAWAT')['ports'][0]]['DisplayName'] }} Ke {{$datashare['Bandara'][Session::get('DATA_PESAWAT')['ports'][1]]['DisplayName'] }}</p>
+                                <p>{{$datashare['Bandara'][Session::get('PESAWAT')['DATA_PESAWAT']['ports'][0]]['DisplayName'] }} Ke {{$datashare['Bandara'][Session::get('PESAWAT')['DATA_PESAWAT']['ports'][1]]['DisplayName'] }}</p>
                                 <p>Fasilitas : AC, Wifi, Musik, Makan 1x</p>
-                                <p>{{date('H:i', strtotime(Session::get('DATA_PESAWAT')['time'][0]))}}  {{Session::get('DATA_PESAWAT')['ports'][0]}}</p>
-                                <p>{{date('H:i', strtotime(Session::get('DATA_PESAWAT')['time'][1]))}}  {{Session::get('DATA_PESAWAT')['ports'][1]}}</p>
+                                <p>{{date('H:i', strtotime(Session::get('PESAWAT')['DATA_PESAWAT']['time'][0]))}}  {{Session::get('PESAWAT')['DATA_PESAWAT']['ports'][0]}}</p>
+                                <p>{{date('H:i', strtotime(Session::get('PESAWAT')['DATA_PESAWAT']['time'][1]))}}  {{Session::get('PESAWAT')['DATA_PESAWAT']['ports'][1]}}</p>
                             </div>
                         </div>
                         <!-- Isian  Data Penumpang -->
@@ -58,8 +58,8 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                             <div class="judul">
                                 <h4>Isi data pemesan yang dapat dihubungi<h4>
                             </div>
-                            <input type="hidden" name="plane" value="{{Session::get('DATA_PESAWAT')['plane']}}">
-                            <input type="hidden" id="totalHargaHidden" name="TICKET_TRANSACTION_PRICE" value="{{Session::get('DATA_PESAWAT')['price']}}">
+                            <input type="hidden" name="plane" value="{{Session::get('PESAWAT')['DATA_PESAWAT']['plane']}}">
+                            <input type="hidden" id="totalHargaHidden" name="TICKET_TRANSACTION_PRICE" value="{{Session::get('PESAWAT')['DATA_PESAWAT']['price']}}">
                             <div class="form_data_penumpang" style="padding-top:10px">
                                 <label>Nama</label>
                                 <div class="kotak_nama">
@@ -115,7 +115,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                             </div>
                             <div class="daftar_harga col-md-5" style="width:45%;position:absolute;margin-left:55%; padding-right:10px ">
                                 <div class="harga_1">
-                                    <span style="float:left">Rp</span><p><b id="harga_adult">{{Session::get('DATA_PESAWAT')['price']}}</b></p>
+                                    <span style="float:left">Rp</span><p><b id="harga_adult">{{Session::get('PESAWAT')['DATA_PESAWAT']['price']}}</b></p>
                                 </div>
                                 <div class="harga_1">
                                     <span style="float:left">Rp</span><p><b id="harga_children">0</b></p>
@@ -130,11 +130,13 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                     <p>0<p>
                                 </div>
                                 <div class="harga_4" style="font-size:16px">
-                                    <span style="float:left"><b>Rp</b></span><p><b id="totalharga"><?php echo (Session::get('input')['adult']+Session::get('input')['infant']+Session::get('input')['children'] )*Session::get('DATA_PESAWAT')['price'] ?></b></p>
+                                    <span style="float:left"><b>Rp</b></span><p><b id="totalharga"><?php echo (Session::get('input')['adult']+Session::get('input')['infant']+Session::get('input')['children'] )*Session::get('PESAWAT')['DATA_PESAWAT']['price'] ?></b></p>
                                 </div>
                             </div>
                         </div>
                      </div>
+
+
                      <div class="row" style="">
                         <!-- Notes_1 -->
                         <!-- Data Tambahan Penumpang-->
@@ -150,6 +152,40 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                   <li>Anda akan membayar dalam mata uang yang Anda pilih: <u>IDR</u></li>
                               </ul>
                             </div>
+                             <div class="box_data_tambahan_penumpang" style="border: 1px solid #ddd">
+                                <div class="tulisan_penumpang_dewasa" style="text-align:center">
+                                    <h4>Penumpang Dewasa (12 Tahun Ke Atas)</h4>
+                                </div>
+                                <div class="form_data_penumpang_tambahan">
+                                    <!-- Kolom Titel -->
+                                    <div class="tulisan_titel" style="padding-left:10px; padding-top:10px">
+                                        <label>Titel</label>
+                                        <div class="kotak_titel">
+                                            <select style="height:30px" name="PASSENGER_DETAIL_TITTLE[]">
+                                              <option value="Mr">Mr.</option>
+                                              <option value="Mrs">Mrs.</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Kolom Nama -->
+                                    <div class="tulisan_nama_tambahan" style="margin-left:100px; margin-top:-55px" >
+                                        <label>Nama Lengkap (sesuai KTP/SIM/Paspor)</label>
+                                        <div class="kotak_nama_tambahan">
+                                            <input type="text" name="PASSENGER_DETAIL_NAME[]" style="height:30px; width:70%">
+                                            <p>Tanpa gelar dan tanda baca</p>
+                                        </div>
+                                    </div>
+                                    <div class="tulisan_bagasi" style="padding:10px 0px 10px 10px">
+                                        <label>Jumlah Bagasi</label>
+                                        <div class="kotak_bagasi">
+                                            <select style="height:30px" name="PASSENGER_DETAIL_BAGGAGE">
+                                              <option value="20"> 20 kg (Rp 0)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 <div class="Tombol_Next" style="float:right; padding:10px; margin-top:30px">
                     <button type="submit" class="btn remove_border themecolor">Lanjutkan</button>
                 </div>
@@ -158,7 +194,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
             <!-- CONTENT CLOSE -->
             
             
-            <div class="row subscribe_" style="background: #eee; height: 100px;margin-bottom: 10px; margin-top:205px">
+            <div class="row subscribe_" style="background: #eee; height: 100px;margin-bottom: 10px;">
                 <div class="col-md-6">
                     <h3>Daftarkan email anda sekarang untuk mendapatkan diskon Rp 100.000,-</h3>
                 </div>
