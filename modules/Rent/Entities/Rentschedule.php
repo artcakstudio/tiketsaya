@@ -2,7 +2,7 @@
    
 use Illuminate\Database\Eloquent\Model;
 use DB;
-class rentschedule extends Model {
+class Rentschedule extends Model {
 
     protected $fillable = [];
     public $timestamps=false;

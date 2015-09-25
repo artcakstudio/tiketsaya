@@ -1,5 +1,52 @@
 [
     {
+        "name": "nikic/php-parser",
+        "version": "v1.4.1",
+        "version_normalized": "1.4.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nikic/PHP-Parser.git",
+            "reference": "f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51",
+            "reference": "f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51",
+            "shasum": ""
+        },
+        "require": {
+            "ext-tokenizer": "*",
+            "php": ">=5.3"
+        },
+        "time": "2015-09-19 14:15:08",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "lib/bootstrap.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Nikita Popov"
+            }
+        ],
+        "description": "A PHP parser written in PHP",
+        "keywords": [
+            "parser",
+            "php"
+        ]
+    },
+    {
         "name": "classpreloader/classpreloader",
         "version": "2.0.0",
         "version_normalized": "2.0.0.0",
@@ -1803,89 +1850,6 @@
         ]
     },
     {
-        "name": "league/flysystem",
-        "version": "1.0.12",
-        "version_normalized": "1.0.12.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/flysystem.git",
-            "reference": "7323424a9d39c24e597ed3f2144419dfbb52e086"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/7323424a9d39c24e597ed3f2144419dfbb52e086",
-            "reference": "7323424a9d39c24e597ed3f2144419dfbb52e086",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "ext-fileinfo": "*",
-            "mockery/mockery": "~0.9",
-            "phpspec/phpspec": "^2.2",
-            "phpspec/prophecy-phpunit": "~1.0",
-            "phpunit/phpunit": "~4.1"
-        },
-        "suggest": {
-            "ext-fileinfo": "Required for MimeType",
-            "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
-            "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
-            "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
-            "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
-            "league/flysystem-copy": "Allows you to use Copy.com storage",
-            "league/flysystem-dropbox": "Allows you to use Dropbox storage",
-            "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
-            "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
-            "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
-            "league/flysystem-webdav": "Allows you to use WebDAV storage",
-            "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter"
-        },
-        "time": "2015-09-05 12:06:41",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.1-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "League\\Flysystem\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Frank de Jonge",
-                "email": "info@frenky.net"
-            }
-        ],
-        "description": "Filesystem abstraction: Many filesystems, one API.",
-        "keywords": [
-            "Cloud Files",
-            "WebDAV",
-            "abstraction",
-            "aws",
-            "cloud",
-            "copy.com",
-            "dropbox",
-            "file systems",
-            "files",
-            "filesystem",
-            "filesystems",
-            "ftp",
-            "rackspace",
-            "remote",
-            "s3",
-            "sftp",
-            "storage"
-        ]
-    },
-    {
         "name": "jeremeamia/SuperClosure",
         "version": "2.1.0",
         "version_normalized": "2.1.0.0",
@@ -2499,6 +2463,57 @@
         "homepage": "http://sky.pingpong-labs.com"
     },
     {
+        "name": "veritrans/veritrans-php",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/veritrans/veritrans-php.git",
+            "reference": "06b84aa1749cdc200af6f3ad37f1cda18e922539"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/veritrans/veritrans-php/zipball/06b84aa1749cdc200af6f3ad37f1cda18e922539",
+            "reference": "06b84aa1749cdc200af6f3ad37f1cda18e922539",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.5.*",
+            "psy/psysh": "0.4.*"
+        },
+        "time": "2015-07-28 07:39:47",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                ""
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Andri Setiawan",
+                "email": "andri.setiawan@veritrans.co.id"
+            },
+            {
+                "name": "Alvin Litani",
+                "email": "alvin.litani@veritrans.co.id"
+            },
+            {
+                "name": "Ismail Faruqi",
+                "email": "ismail.faruqi@veritrans.co.id"
+            }
+        ],
+        "description": "PHP Wraper for Veritrans VT-Web Payment API.",
+        "homepage": "https://veritrans.co.id"
+    },
+    {
         "name": "league/fractal",
         "version": "0.12.0",
         "version_normalized": "0.12.0.0",
@@ -2561,63 +2576,6 @@
             "json",
             "league",
             "rest"
-        ]
-    },
-    {
-        "name": "yajra/laravel-datatables-oracle",
-        "version": "v5.11.8",
-        "version_normalized": "5.11.8.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/yajra/laravel-datatables.git",
-            "reference": "f034660014fa8759c324bb5970e36faa4d76786c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/f034660014fa8759c324bb5970e36faa4d76786c",
-            "reference": "f034660014fa8759c324bb5970e36faa4d76786c",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/database": "~5.0",
-            "illuminate/filesystem": "~5.0",
-            "illuminate/http": "~5.0",
-            "illuminate/support": "~5.0",
-            "illuminate/view": "~5.0",
-            "laravelcollective/html": "~5.0",
-            "league/fractal": "0.12.*",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "~0.9",
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2015-09-15 01:44:55",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "yajra\\Datatables": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Arjay Angeles",
-                "email": "aqangeles@gmail.com"
-            }
-        ],
-        "description": "jQuery DataTables API for Laravel 4|5",
-        "keywords": [
-            "datatable",
-            "datatables",
-            "datatables jquery plugin",
-            "laravel",
-            "laravel4",
-            "laravel5"
         ]
     },
     {
@@ -3817,18 +3775,161 @@
         ]
     },
     {
-        "name": "phpunit/phpunit",
-        "version": "4.8.8",
-        "version_normalized": "4.8.8.0",
+        "name": "league/flysystem",
+        "version": "1.0.14",
+        "version_normalized": "1.0.14.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "521720279261e5b14799cf1bb895d4b55e516f26"
+            "url": "https://github.com/thephpleague/flysystem.git",
+            "reference": "202c7775d959f377e2e302d93e7127c47604438a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/521720279261e5b14799cf1bb895d4b55e516f26",
-            "reference": "521720279261e5b14799cf1bb895d4b55e516f26",
+            "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/202c7775d959f377e2e302d93e7127c47604438a",
+            "reference": "202c7775d959f377e2e302d93e7127c47604438a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "conflict": {
+            "league/flysystem-sftp": "<1.0.6"
+        },
+        "require-dev": {
+            "ext-fileinfo": "*",
+            "mockery/mockery": "~0.9",
+            "phpspec/phpspec": "^2.2",
+            "phpspec/prophecy-phpunit": "~1.0",
+            "phpunit/phpunit": "~4.1"
+        },
+        "suggest": {
+            "ext-fileinfo": "Required for MimeType",
+            "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
+            "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
+            "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
+            "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
+            "league/flysystem-copy": "Allows you to use Copy.com storage",
+            "league/flysystem-dropbox": "Allows you to use Dropbox storage",
+            "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
+            "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
+            "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
+            "league/flysystem-webdav": "Allows you to use WebDAV storage",
+            "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter"
+        },
+        "time": "2015-09-22 19:18:28",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.1-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "League\\Flysystem\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Frank de Jonge",
+                "email": "info@frenky.net"
+            }
+        ],
+        "description": "Filesystem abstraction: Many filesystems, one API.",
+        "keywords": [
+            "Cloud Files",
+            "WebDAV",
+            "abstraction",
+            "aws",
+            "cloud",
+            "copy.com",
+            "dropbox",
+            "file systems",
+            "files",
+            "filesystem",
+            "filesystems",
+            "ftp",
+            "rackspace",
+            "remote",
+            "s3",
+            "sftp",
+            "storage"
+        ]
+    },
+    {
+        "name": "yajra/laravel-datatables-oracle",
+        "version": "v5.11.9",
+        "version_normalized": "5.11.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/yajra/laravel-datatables.git",
+            "reference": "73651c4f33b68a48463bdf94eecf1fc811fd1a8c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/73651c4f33b68a48463bdf94eecf1fc811fd1a8c",
+            "reference": "73651c4f33b68a48463bdf94eecf1fc811fd1a8c",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/database": "~5.0",
+            "illuminate/filesystem": "~5.0",
+            "illuminate/http": "~5.0",
+            "illuminate/support": "~5.0",
+            "illuminate/view": "~5.0",
+            "laravelcollective/html": "~5.0",
+            "league/fractal": "0.12.*",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9",
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2015-09-21 09:40:45",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "yajra\\Datatables": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Arjay Angeles",
+                "email": "aqangeles@gmail.com"
+            }
+        ],
+        "description": "jQuery DataTables API for Laravel 4|5",
+        "keywords": [
+            "datatable",
+            "datatables",
+            "datatables jquery plugin",
+            "laravel",
+            "laravel4",
+            "laravel5"
+        ]
+    },
+    {
+        "name": "phpunit/phpunit",
+        "version": "4.8.9",
+        "version_normalized": "4.8.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/phpunit.git",
+            "reference": "73fad41adb5b7bc3a494bb930d90648df1d5e74b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/73fad41adb5b7bc3a494bb930d90648df1d5e74b",
+            "reference": "73fad41adb5b7bc3a494bb930d90648df1d5e74b",
             "shasum": ""
         },
         "require": {
@@ -3855,7 +3956,7 @@
         "suggest": {
             "phpunit/php-invoker": "~1.1"
         },
-        "time": "2015-09-19 05:44:37",
+        "time": "2015-09-20 12:56:44",
         "bin": [
             "phpunit"
         ],
@@ -3889,103 +3990,5 @@
             "testing",
             "xunit"
         ]
-    },
-    {
-        "name": "nikic/php-parser",
-        "version": "v1.4.1",
-        "version_normalized": "1.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/nikic/PHP-Parser.git",
-            "reference": "f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51",
-            "reference": "f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51",
-            "shasum": ""
-        },
-        "require": {
-            "ext-tokenizer": "*",
-            "php": ">=5.3"
-        },
-        "time": "2015-09-19 14:15:08",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/bootstrap.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Nikita Popov"
-            }
-        ],
-        "description": "A PHP parser written in PHP",
-        "keywords": [
-            "parser",
-            "php"
-        ]
-    },
-    {
-        "name": "veritrans/veritrans-php",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/veritrans/veritrans-php.git",
-            "reference": "06b84aa1749cdc200af6f3ad37f1cda18e922539"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/veritrans/veritrans-php/zipball/06b84aa1749cdc200af6f3ad37f1cda18e922539",
-            "reference": "06b84aa1749cdc200af6f3ad37f1cda18e922539",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.5.*",
-            "psy/psysh": "0.4.*"
-        },
-        "time": "2015-07-28 07:39:47",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                ""
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Andri Setiawan",
-                "email": "andri.setiawan@veritrans.co.id"
-            },
-            {
-                "name": "Alvin Litani",
-                "email": "alvin.litani@veritrans.co.id"
-            },
-            {
-                "name": "Ismail Faruqi",
-                "email": "ismail.faruqi@veritrans.co.id"
-            }
-        ],
-        "description": "PHP Wraper for Veritrans VT-Web Payment API.",
-        "homepage": "https://veritrans.co.id"
     }
 ]

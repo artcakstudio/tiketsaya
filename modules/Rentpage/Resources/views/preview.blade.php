@@ -213,7 +213,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                             </div>
                             <div class="daftar_harga_total col-md-3" style="width:25%;  border-right: 2px dashed #bbb; ">
                                 <div class="harga_1_a">
-                                    <span style="float:left">Rp</span><p><b>{{Session::get('DATA_RENT')['RENT_SCHEDULE_PRICE']**Session::get('duration')}}</b></p>
+                                    <span style="float:left">Rp</span><p><b>{{Session::get('DATA_RENT')['RENT_SCHEDULE_PRICE']*Session::get('duration')}}</b></p>
                                 </div>
                                 <div class="harga_2_a">
                                     <span style="float:left">Rp</span><p><b>0</b></p>

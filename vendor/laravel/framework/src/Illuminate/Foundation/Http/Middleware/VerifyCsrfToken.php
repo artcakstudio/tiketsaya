@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Cookie;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Session\TokenMismatchException;
-use Exception;
+
 class VerifyCsrfToken
 {
     /**
@@ -49,13 +49,8 @@ class VerifyCsrfToken
         if ($this->isReading($request) || $this->shouldPassThrough($request) || $this->tokensMatch($request)) {
             return $this->addCookieToResponse($request, $next($request));
         }
-        else{
-/*        throw new TokenMismatchException;
-            throw new Exception("Error Processing Request", 1);*/
-            
-         //   return $next($request);
-             return response()->view('errors.503', ['error'=>'Your Session Form Expired, Please Try Again'], 404);
-        }
+
+        throw new TokenMismatchException;
     }
 
     /**
