@@ -1,16 +1,7 @@
-<<<<<<< HEAD
-vendor
-node_modules
-Homestead.yaml
-Homestead.json
-.env
-.gitignore
-=======
-/vendor/
+vendor/
 node_modules/
 Homestead.yaml
 Homestead.json
 .env
-/storage/
-/config/
->>>>>>> b8c0bfcd40ad3565526158cee0397a0db6023c94
+storage/
+config/
