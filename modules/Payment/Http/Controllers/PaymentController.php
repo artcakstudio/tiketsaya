@@ -8,6 +8,11 @@ use Session;
 use Mail;
 use DB;
 
+define("SUCCESS", "1");
+define("PENDING", "2");
+define("DENIED", "3");
+define("CHALLENGE", "4");
+
 class PaymentController extends Controller {
 	
 	protected $transaction_details;
@@ -30,7 +35,7 @@ class PaymentController extends Controller {
 //print_r(Session::get('DATA_COSTUMER'));
 
 		$gross_amount = Session::get('DATA_COSTUMER')[$this->data_type.'_TRANSACTION_PRICE'];
-	return view('payment::index', compact('gross_amount'));
+	    return view('payment::index', compact('gross_amount'));
 
 	}
 
@@ -122,19 +127,19 @@ class PaymentController extends Controller {
         $TRANSACTION_STATUS = null;
         if($payment_method == "credit_card" && $status_code == "201")
         {
-            $TRANSACTION_STATUS = "challenge";
+            $TRANSACTION_STATUS = CHALLENGE;
         }
         else if($status_code == "200")
         {
-            $TRANSACTION_STATUS = "success";
+            $TRANSACTION_STATUS = SUCCESS;
         }
         else if($status_code == "201")
         {
-            $TRANSACTION_STATUS = "pending";
+            $TRANSACTION_STATUS = PENDING;
         }
         else if($status_code == "202")
         {
-            $TRANSACTION_STATUS = "denied";
+            $TRANSACTION_STATUS = DENIED;
         }
 
         if(Session::has('DATA_TRAVEL'))
@@ -145,16 +150,12 @@ class PaymentController extends Controller {
                     'COSTUMER_TELP' => Session::get('DATA_COSTUMER')['nohp_prefix'].Session::get('DATA_COSTUMER')['COSTUMER_TELP'],
                 ]);
 
-            $TRAVEL_TRANSACTION_STATUS_ID = DB::table('TRAVEL_TRANSACTION_STATUS')->insertGetId([
-                'TRAVEL_TRANSACTION_STATUS_NAME' => $TRANSACTION_STATUS
-            ]);
-
             // Where is TRAVEL SCHEDULE ID?
             DB::table('TRAVEL_TRANSACTION')->insert([
                 'COSTUMER_ID' => $COSTUMER_ID,
                 'TRAVEL_TRANSACTION_CODE' => Session::get('NO_PEMESANAN'),
                 'TRAVEL_TRANSACTION_PRICE' => Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PRICE'],
-                'TRAVEL_TRANSACTION_STATUS_ID' => $TRAVEL_TRANSACTION_STATUS_ID,
+                'TRAVEL_TRANSACTION_STATUS_ID' => $TRANSACTION_STATUS,
                 'TRAVEL_SCHEDULE_ID' => Session::get('DATA_COSTUMER')['TRAVEL_SCHEDULE_ID'],
 		'TRAVEL_TRANSACTION_PASSENGER'=>Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER'],
             ]);
@@ -168,15 +169,11 @@ class PaymentController extends Controller {
                 'COSTUMER_TELP' => Session::get('DATA_COSTUMER')['nohp_prefix'].Session::get('DATA_COSTUMER')['COSTUMER_TELP'],
             ]);
 
-            $rent_transaction_status_id = DB::table('RENT_TRANSACTION_STATUS')->insertGetId([
-                'RENT_TRANSACTION_STATUS_RENT' => $TRANSACTION_STATUS
-            ]);
-
             DB::table('RENT_TRANSACTION')->insert([
                 'COSTUMER_ID' => $COSTUMER_ID,
                 'RENT_TRANSACTION_CODE' => Session::get('NO_PEMESANAN'),
                 'RENT_TRANSACTION_price' => Session::get('DATA_COSTUMER')['RENT_TRANSACTION_PRICE'],
-                'RENT_TRANSACTION_STATUS_ID' => $rent_transaction_status_id,
+                'STATUS_TRANSACTION_RENT_ID' => $TRANSACTION_STATUS,
                 'RENT_SCHEDULE_ID' => Session::get('DATA_COSTUMER')['RENT_SCHEDULE_ID'],
             ]);
         }
@@ -208,13 +205,16 @@ class PaymentController extends Controller {
         }
         else if($result->status_code == "202")
         {
-            //deny
-
+            // denied
         }
         else if($result->status_code == "201")
         {
-            //challenge
-
+            // challenge: transaksi berhasil, tetapi oleh sistem veritrans masih dicurigai
+            // sementara kirim invoice
+            Mail::send('payment::mail-templates.invoice', compact('result'), function($message) use ($result) {
+                $message->to(Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
+                    Session::get('DATA_COSTUMER')['COSTUMER_NAME'])->subject('Invoice '.$result->order_id);
+            });
         }
         else
         {
@@ -249,7 +249,6 @@ class PaymentController extends Controller {
         }
         return $result->status_code;
     }
-
 
     public function confirm($method, $order_id)
     {
@@ -395,5 +394,14 @@ class PaymentController extends Controller {
                 }
             }
         }
+    }
+
+    public function receiveNotification(){
+
+        $input = Input::all();
+        DB::table('RECEIVE_TEST')->insert([
+            'ORDER_ID' => $input['order_id'],
+            'TRANSACTION_STATUS' => $input['transaction_status']
+        ]);
     }
 }
