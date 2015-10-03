@@ -7,8 +7,9 @@ Route::group(['prefix' => 'payment', 'namespace' => 'Modules\Payment\Http\Contro
 	    ['as' => 'payment.checkout', 'uses' => 'PaymentController@checkout']);
 	Route::get('confirm/{method}/{order_id}',
 		['as' => 'payment.confirm', 'uses' => 'PaymentController@confirm']);
-
 	Route::get('flush', function () {
 		Session::flush();
 	});
+	Route::post('notification/receive',
+		['as' => 'payment.notification.receive','uses' => 'PaymentController@receiveNotification']);
 });
