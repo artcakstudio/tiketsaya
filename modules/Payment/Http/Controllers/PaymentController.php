@@ -185,7 +185,7 @@ class PaymentController extends Controller {
         $transaction_data = array(
           'payment_type'    => 'credit_card', 
           'credit_card'     => array(
-            'token_id'      => $this->token_ID,
+            'token_id'      => $this->token_id,
             'bank'          => 'bni'
             ),
           'transaction_details'   => $this->transaction_details,
