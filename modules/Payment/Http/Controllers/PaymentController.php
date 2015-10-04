@@ -250,7 +250,7 @@ class PaymentController extends Controller {
                     ->join('costumer',
                         $this->data_type . '_TRANSACTION.COSTUMER_ID',
                         '=',
-                        'COSTUMER.COSTUMER_ID')
+                        'costumer.COSTUMER_ID')
                     ->join($this->data_type . '_TRANSACTION_STATUS',
                         $this->data_type . '_TRANSACTION.' . $this->data_type . '_TRANSACTION_STATUS_ID',
                         '=',
@@ -316,7 +316,7 @@ class PaymentController extends Controller {
                     ->join('costumer',
                         $this->data_type . '_TRANSACTION.COSTUMER_ID',
                         '=',
-                        'COSTUMER.COSTUMER_ID')
+                        'costumer.COSTUMER_ID')
                     ->join('STATUS_TRANSACTION_'.$this->data_type,
                         $this->data_type . '_TRANSACTION.' .'STATUS_TRANSACTION_'.$this->data_type .'_ID',
                         '=',
