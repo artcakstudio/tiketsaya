@@ -237,10 +237,10 @@ class PaymentController extends Controller {
 
     public function receiveNotification(){
 
-        $input = Input::all();
-        $status_code = $input['status_code'];
-        $payment_type = $input['payment_type'];
-        $order_id = $input['order_id'];
+        $result = Input::all();
+        $status_code = $result['status_code'];
+        $payment_type = $result['payment_type'];
+        $order_id = $result['order_id'];
         $this->setOrderIdType($order_id);
 
         if($payment_type == "bank_transfer") {
