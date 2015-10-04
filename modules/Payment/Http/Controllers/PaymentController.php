@@ -357,8 +357,8 @@ class PaymentController extends Controller {
 
                     Mail::send('payment::mail-templates.invoice', compact('result', 'query', 'data_type'), function ($message) use ($query) {
                         $prep_transaction_code = $this->data_type . '_TRANSACTION_CODE';
-                        $message->to($query->costumer_email,
-                            $query->costumer_name)->subject('Invoice Rental ' . $query->$prep_transaction_code);
+                        $message->to($query->COSTUMER_EMAIL,
+                            $query->COSTUMER_NAME)->subject('Invoice Rental ' . $query->$prep_transaction_code);
                     });
                 }
                 else if($status_code == "201") {
