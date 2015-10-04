@@ -320,7 +320,7 @@ class PaymentController extends Controller {
                     ->join('STATUS_TRANSACTION_'.$this->data_type,
                         $this->data_type . '_TRANSACTION.' .'STATUS_TRANSACTION_'.$this->data_type .'_ID',
                         '=',
-                        $this->data_type . '_TRANSACTION_STATUS.' .'STATUS_TRANSACTION_'.$this->data_type .'_ID')
+                        'STATUS_TRANSACTION_'.$this->data_type.'.STATUS_TRANSACTION_'.$this->data_type .'_ID')
                     ->join($this->data_type . '_SCHEDULE',
                         $this->data_type . '_TRANSACTION.' . $this->data_type . '_SCHEDULE_ID',
                         '=',
