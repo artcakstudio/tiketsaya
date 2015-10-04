@@ -74,7 +74,7 @@ class PesawatController extends Controller {
 
 		Session(['PESAWAT.DATA_COSTUMER'=>$data]);
 
-		
+		//dd(Session::all());
 		return view('pesawat::preview');
 	}
 }

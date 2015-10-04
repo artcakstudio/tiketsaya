@@ -1,16 +1,21 @@
 @extends('page_template')
 @section('content')
     @parent
+    <?php
+$pesawat=Session::get('PESAWAT');
+
+?>
                 <div class="row">
                 <div class="col-md-12 slider"></div>
             </div>            
 <!-- CONTENT OPEN -->
             <div class="row">
+
                 <div class="col-md-12 content_">
                     <div class="row head_table">
                         <div class="col-md-4" style="padding-top: 0px"><h4><b>PROSES PEMESANAN</b><h4></div>
                         <div class="col-md-8" style="padding: 0;">
-                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Pesawat | Surabaya (SBY) ke Jakarta (CGK) | Kamis 15 Desember 2015</p>
+                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Pesawat |   <?php echo $pesawat['DATA_PESAWAT']['ports'][0]." Ke ".$pesawat['DATA_PESAWAT']['ports'][1];?>|  <?php echo $pesawat['input']['depart_date']?></p>
                         </div>
                     </div>
 
@@ -113,7 +118,7 @@
                                 <div class="box_tanggal_rincian_penerbangan" style="background-color:#eee;border: 1px solid #ddd; border-left: 4px solid #00cd00; width:320px; margin-bottom:10px">
                                     <div class="tulisan_tanggal_rincian_penerbangan" style="padding:10px">
                                         Penerbangan :
-                                        <p><b>Kamis, 26 Nov 2015</b></p>
+                                        <p><b><?php echo date('D',strtotime($pesawat['input']['depart_date']))." , ".$pesawat['input']['depart_date']?></b></p>
                                     </div>
                                 </div>
                                 <!-- Penerbangan_1 -->
@@ -126,8 +131,8 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="kota_asal_1" >
-                                                        <b>Surabaya</b>
-                                                        (SUB)
+                                                        <b>{{$pesawat['DATA_PESAWAT']['ports']['0']}}</b>
+                                                        
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -137,24 +142,25 @@
                                                         </div>
                                                     </td>
                                                     <td class="kode_penerbangan_asal_1">
-                                                        QG-800
+                                                        {{$pesawat['DATA_PESAWAT']['plane']}}
                                                     </td>
                                                     <td class="waktu_penerbangan_asal_1">
-                                                        <b>05:55</b> | Kamis
+                                                        <b>{{$pesawat['DATA_PESAWAT']['time'][0]}}</b> 
                                                     </td>
                                                     
                                                 </tr>
                                                 <tr>
                                                     <td class="waktu_penerbangan_tujuan_1">
                                                         <div class="tulisan_waktu_tujuan_1">
-                                                            <b>07.15</b> | Kamis
+                                                            <b>{{$pesawat['DATA_PESAWAT']['time'][1]}}</b> 
                                                         </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="kota_tujuan_1">
-                                                        <b>Jakarta</b>
-                                                        (CGK)
+                                                         
+                                                         <b> <?php echo $pesawat['DATA_PESAWAT']['ports'][1];?></b>
+                                                        
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -171,7 +177,7 @@
                                 </div>
 
                                 <!-- Penerbangan_2 -->
-                                <div class="rincian_penerbangan_2">
+                                <!-- <div class="rincian_penerbangan_2">
                                     <div class="logo_jangkauan">
                                         <img src="<?php echo url('assets/images/gambar_jangkauan.png')?>">
                                     </div>
@@ -211,10 +217,10 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- Keterangan Waktu -->
                                 <div class="keterangan_waktu" style="margin-left:20px; color:#bbb">
-                                <p>Semua waktu adalah waktu lokal bandara</p>
+                                <p>Semua waktu adalah waktu lokal Bandara</p>
                                 </div>
                             </div>
                         </div>
@@ -226,17 +232,17 @@
                                     
                                 <div class="rincian_harga" style="padding-left:10px">
                                     <div class="rincian_harga_1_a">
-                                        <p>Citilink (Dewasa) x1:</p>
+                                        <p>{{$pesawat['DATA_PESAWAT']['airline']}} (Dewasa) x {{$pesawat['input']['adult']}}:</p>
                                     </div>
                                     <div class="rincian_harga_2_a">
-                                        <p>Bagasi SUB - CGK</p>
+                                        <p>Bagasi {{$pesawat['DATA_PESAWAT']['ports']['0']}} - {{$pesawat['DATA_PESAWAT']['ports']['1']}}</p>
                                     </div>
-                                    <div class="rincian_harga_1_b">
+                                    <!-- <div class="rincian_harga_1_b">
                                         <p>Lion Air (Dewasa) x1:</p>
                                     </div>
                                     <div class="rincian_harga_2_b">
                                         <p>Bagasi CGK - JOG</p>
-                                    </div>
+                                    </div> -->
                                     <div class="rincian_harga_3">
                                         <p>Convenience Fee</p>
                                     </div>
@@ -249,23 +255,23 @@
                             </div>
                             <div class="col-md-4 daftar_harga_total" style="width:45%;; padding-right:10px ">
                                 <div class="harga_1_a">
-                                    <span style="float:left">Rp</span><p><b>571.300</b></p>
+                                    <span style="float:left">Rp</span><p><b>{{$pesawat['DATA_PESAWAT']['price']}}</b></p>
                                 </div>
                                 <div class="harga_2_a">
                                     <span style="float:left">Rp</span><p><b>0</b></p>
                                 </div>
-                                <div class="harga_1_b">
+                                <!-- <div class="harga_1_b">
                                     <span style="float:left">Rp</span><p><b>436.600</b></p>
                                 </div>
                                 <div class="harga_2_b">
                                     <span style="float:left">Rp</span><p><b>0</b></p>
                                 </div>
-                                <div class="harga_3">
-                                    <span style="float:left">Rp</span><p><b>-321</b></p>
+                                 --><div class="harga_3">
+                                    <span style="float:left">Rp</span><p><b>0</b></p>
                                 </div>
                                 
                                 <div class="harga_4" style="font-size:16px">
-                                    <span style="float:left"><b>Rp</b></span><p><b>1.007.579</b></p>
+                                    <span style="float:left"><b>Rp</b></span><p><b><span id="harga_total">1.007.579</span></b></p>
                                 </div>
                             </div>
                         </div>
@@ -276,12 +282,13 @@
 
                             <!-- Kotak Daftar Penumpang -->
                             <div class="box_daftar_penumpang" style="background-color:#fff;border: 1px solid #ddd; border-left: 4px solid #00cd00">
+                            @for($i=0; $i < sizeof($pesawat['DATA_COSTUMER']['PASSENGER_DETAIL_BAGGAGE']); $i++)
                                 <div class="rincian_daftar_penumpang" style="padding:10px">
                                     <div class="rincian_daftar_penumpang_1">
-                                        <span style="float:left; padding-right:10px"><b>1</b></span>Tuan
+                                        <span style="float:left; padding-right:10px"><b>1</b></span>{{$pesawat['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i]}}
                                     </div>
                                     <div class="rincian_daftar_penumpang_2" style="padding-left:20px">
-                                        <b>ANDRE AMINO</b>
+                                        <b>{{$pesawat['DATA_COSTUMER']['PASSENGER_DETAIL_NAME'][$i]}}</b>
                                     </div>
                                     <div class="rincian_daftar_penumpang_3" style="padding-left:20px; margin-bottom:10px">
                                         Dewasa
@@ -289,13 +296,14 @@
                                     <div class="gambar_batas_daftar_penumpang">
                                     </div>
                                     <div class="rincian_daftar_penumpang_bagasi_1" style="padding-left:20px">
-                                        Bagasi Ke Jakarta<span style="float:right"><b>20</b></span>
+                                        Bagasi Ke Jakarta<span style="float:right"><b>{{$pesawat['DATA_COSTUMER']['PASSENGER_DETAIL_BAGGAGE'][$i]}}</b></span>
                                     </div>
 
-                                    <div class="rincian_daftar_penumpang_bagasi_2" style="padding-left:20px">
+                                    <!-- <div class="rincian_daftar_penumpang_bagasi_2" style="padding-left:20px">
                                         Bagasi ke Yogya<span style="float:right"><b>20</b></span>
-                                    </div>
+                                    </div> -->
                                 </div>
+                                @endfor
                             </div>
                         </div>
                         <div class="Tombol_Next" style="float:right; margin-top:40px; margin-right:15px; margin-bottom: 10px; padding:10px; position:center">

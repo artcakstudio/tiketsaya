@@ -79,21 +79,35 @@
                                           <div class="row">
                                               <div class="col-md-4">
                                                   <div class="input-group" >
-                                                    <input type="text" class="form-control remove_border" name="adult" value=1>
+                                                  <select name="adult" class="form-control remove_border" onchange="adult_check()">
+                                                        @for($i=0; $i <= 7; $i++)
+                                                          <option value="{{$i}}">{{$i}} Orang</option>
+                                                        @endfor
+                                                    </select>
+                                                    
                                                     <div class="input-group-btn">
                                                     </div><!-- /btn-group -->
                                                   </div>
                                               </div>
                                               <div class="col-md-4">
                                                   <div class="input-group ">
-                                                    <input type="text" class="form-control remove_border" name="children" value=0>
+                                                  <select name="children" class="form-control remove_border" onchange="children_check()">
+                                                        @for($i=0; $i <= 7; $i++)
+                                                          <option value="{{$i}}">{{$i}} Orang</option>
+                                                        @endfor
+                                                    </select>
+                                                    
                                                     <div class="input-group-btn">
                                                    </div><!-- /btn-group -->
                                                   </div>
                                               </div>
                                               <div class="col-md-4">
                                                   <div class="input-group ">
-                                                    <input type="text" class="form-control remove_border" name="infant" value=0>
+                                                    <select name="infant" class="form-control remove_border" onchange="infant_check()">
+                                                        @for($i=0; $i <= 7; $i++)
+                                                          <option value="{{$i}}">{{$i}} Orang</option>
+                                                        @endfor
+                                                    </select>
                                                     <div class="input-group-btn">
                                                    </div><!-- /btn-group -->
                                                   </div>
@@ -258,6 +272,7 @@
                         </div>
                     </div>
             </div>            
+            <button onclick="tes()"></button>
 <?php
 if (Session::has('search')){
   if (Session::get('search')['type']=='travel'){
@@ -280,7 +295,49 @@ if (Session::has('search')){
 </script>
 <script type="text/javascript">
  $(document).ready(function(){
-     $('a[href=#' + type + ']').tab('show');
+     //$('a[href=#' + type + ']').tab('show');
 });
+ //input error handling checking
+ var adult=$("#pesawat  select[name='adult']");
+ var children=$("#pesawat select[name='children']");
+ var infant=$("#pesawat select[name='infant']")
+ function tes (argument) {
+   console.log(adult);
+ }
+function adult_check  (argument) {
+
+    if(parseInt(adult.val())>7){
+      adult.val(0);
+      alert("Jumlah Penumpang dewasa tidak boleh lebih dari 7");
+    }
+     if((parseInt(children.val())+parseInt(adult.val))>7){
+      adult.val(0);
+      alert("Jumlah Penumpang dewasa dan anak-anak tidak boleh lebih dari 7");
+    }
+    if(infant.val()>adult.val()){
+      infant.val(adult.val());
+      alert("Jumlah Penumpang dewasa tidak boleh kurang dari bayi"); 
+    }
+ };
+function children_check(argument) {
+    if(children.val()>7){
+      adult.val(0);
+      alert("Jumlah Penumpang anak-anak tidak boleh lebih dari 7");
+    }
+     if((parseInt(children.val())+parseInt(adult.val))>7){
+      children.val(0);
+      alert("Jumlah Penumpang dewasa dan anak-anak tidak boleh lebih dari 7");
+    }
+ };
+function infant_check (argument) {
+    if(infant.val()>4){
+      adult.val(0);
+      alert("Jumlah Penumpang bayi tidak boleh lebih dari 7");
+    }
+    if(parseInt(infant.val())<parseInt(adult.val())){
+      infant.val(adult.val());
+      alert("Jumlah Penumpang dewasa tidak boleh kurang dari bayi"); 
+    }
+ };
 </script>
             <!-- SEARCH BOX CLOSE -->

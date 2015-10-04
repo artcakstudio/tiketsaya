@@ -7,7 +7,7 @@
 $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
 
 ?>
-                <div class="col-md-12 content_">
+    <div class="col-md-12 content_">
                     <div class="row head_table">
                         <div class="col-md-4" style="padding-top: 0px; font-weight: bold" ><h4><b>PROSES PEMESANAN</b><h4></div>
                         <div class="col-md-8" style="padding: 0">
@@ -86,6 +86,9 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                     <p>Contoh: email@example.com kami akan mengirimkan konfirmasi ke email Anda</p>
                                 </div>
                             </div>
+                            <div class="Tombol_Next" style="float:right; padding:10px; margin-top:30px">
+                                <div  class="btn remove_border themecolor">Lanjutkan</div>
+                            </div>
                         </div>
                         <!-- Rincian Harga -->
                        <div class="col-md-4 remove_padding"  style="background-color:#eee; margin-top:20%; position:absolute">
@@ -144,7 +147,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                             <!-- <div class="tulisan_data_penumpang">
                                 <h3>Data Penumpang<h3>
                             </div> -->
-                            <div class="notes_data_tambahan_penumpang" style="background-color:#ffff9a; font-size: 16px; margin-top:27%">
+                            <div class="notes_data_tambahan_penumpang" style="background-color:#ffff9a; font-size: 16px; margin-top:27%; visibility:none" >
                                 <!-- <p>Perhatian: Nama Penumpang rute Internasional <b>harus</b> tepat dan sesuai Paspor,
                                 sedangkan domestik dapat sesuai KTP / SIM / Paspor. Data Penumpang tidak dapat diubah setelah halaman berpindah<p> -->
                                 <ul><h4><b>Tambahan: </b></h4>
@@ -152,7 +155,8 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                   <li>Anda akan membayar dalam mata uang yang Anda pilih: <u>IDR</u></li>
                               </ul>
                             </div>
-                             <div class="box_data_tambahan_penumpang" style="border: 1px solid #ddd">
+                            <div id="data_penumpang">
+                             <div class="box_data_tambahan_penumpang" style="border: 1px solid #ddd;visibility:hidden">
                                 <div class="tulisan_penumpang_dewasa" style="text-align:center">
                                     <h4>Penumpang Dewasa (12 Tahun Ke Atas)</h4>
                                 </div>
@@ -178,7 +182,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                     <div class="tulisan_bagasi" style="padding:10px 0px 10px 10px">
                                         <label>Jumlah Bagasi</label>
                                         <div class="kotak_bagasi">
-                                            <select style="height:30px" name="PASSENGER_DETAIL_BAGGAGE">
+                                            <select style="height:30px" name="PASSENGER_DETAIL_BAGGAGE[]">
                                               <option value="20"> 20 kg (Rp 0)</option>
                                             </select>
                                         </div>
@@ -186,7 +190,8 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                 </div>
                             </div>
                         </div>
-                <div class="Tombol_Next" style="float:right; padding:10px; margin-top:30px">
+                        </div>
+                <div class="Tombol_Next_submit" style="float:right; padding:10px; margin-top:30px;visibility:hidden">
                     <button type="submit" class="btn remove_border themecolor">Lanjutkan</button>
                 </div>
             </div>
@@ -207,15 +212,41 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                 
             </div>
 <script type="text/javascript">
-$("body").onload(function(){
-    alert('sdasd');
-updateHarga();
-});
+
     function updateHarga () {
      var adult=parseInt($("#harga_adult"))*parseInt($("totalOrang_adult"));
         var children=parseInt($("#harga_children"))*parseInt($("totalOrang_children"));
         var infant=parseInt($("#harga_infant"))*parseInt($("totalOrang_infant"));
         $("#totalharga").html(adult+children+infant);
-    }
+    };
+
+    $("div.Tombol_Next").click(function(){
+        
+        var adult=<?php echo Session::get('PESAWAT')['input']['adult'];?>;
+        var children=<?php echo Session::get('PESAWAT')['input']['children'];?>;
+        var infant=<?php echo Session::get('PESAWAT')['input']['infant'];?>;
+        $("div.box_data_tambahan_penumpang").css("visibility","visible");
+        console.log($("div.box_data_tambahan_penumpang"));
+        var form_penumpang=$("div.box_data_tambahan_penumpang").html();
+        $("div.Tombol_Next").remove();
+        $("div.Tombol_Next_submit").css("visibility","visible");
+        for (i=1; i<adult; i++){
+            $("#data_penumpang").append(form_penumpang);
+        }
+        $("#data_penumpang tulisan_penumpang_dewasa h4").html("Penumpang Anak-Anak");
+        var form_penumpang=$("div.box_data_tambahan_penumpang").html();
+         for (i=1; i<children; i++){
+            $("#data_penumpang").append(form_penumpang);
+        }
+        if (infant>0){
+        $("#data_penumpang tulisan_penumpang_dewasa h4").html("Penumpang Balita");
+        $("#data_penumpang div.box_data_tambahan_penumpang").append('<div><label>Tanggal Lahir</label><div class="kotak_nama_tambahan"><input type="text" name="tanggal_lahir[]" class="datepicker"></div></div>')
+    
+        }
+        var form_penumpang=$("div.box_data_tambahan_penumpang").html();
+         for (i=1; i<infant; i++){
+            $("#data_penumpang").append(form_penumpang);
+        }
+    });
 </script>
 @stop
