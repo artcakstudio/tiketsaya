@@ -149,35 +149,35 @@
     @endif
 @endif
 
-@if($result->payment_type == "credit_card")
+@if($result['payment_type'] == "credit_card")
     <br>
     <h3>Detil Pembayaran</h3>
     <hr>
     <table>
         <tr><td class="right">Masked Card :</td>
-            <td class="left">{!! $result->masked_card !!}</td></tr>
+            <td class="left">{!! $result['masked_card'] !!}</td></tr>
         <tr><td class="right">Metode Pembayaran :</td>
-            <td class="left">{!! $result->payment_type !!} </td></tr>
+            <td class="left">{!! $result['payment_type'] !!} </td></tr>
         <tr><td class="right">Waktu Transaksi :</td>
-            <td class="left">{!! $result->transaction_time !!} </td></tr>
+            <td class="left">{!! $result['transaction_time'] !!} </td></tr>
         <tr><td class="right">Nominal Transaksi :</td>
-            <td class="left">{!! $result->gross_amount !!} </td></tr>
+            <td class="left">{!! $result['gross_amount'] !!} </td></tr>
     </table>
     <br>
     <p style="margin-left: 100px;">
         <strong>Status : LUNAS</strong></p>
 
-@elseif($result->payment_type == "bank_transfer")
+@elseif($result['payment_type'] == "bank_transfer")
     <br>
     <h3>Detil Pembayaran</h3>
     <hr>
     <table>
         <tr><td class="right">Metode Pembayaran :</td>
-            <td class="left">{!! $result->payment_type !!} </td></tr>
+            <td class="left">{!! $result['payment_type'] !!} </td></tr>
         <tr><td class="right">Waktu Transaksi :</td>
-            <td class="left">{!! $result->transaction_time !!} </td></tr>
+            <td class="left">{!! $result['transaction_time'] !!} </td></tr>
         <tr><td class="right">Nominal Transaksi :</td>
-            <td class="left">{!! $result->gross_amount !!} </td></tr>
+            <td class="left">{!! $result['gross_amount'] !!} </td></tr>
     </table>
     <br>
     <p style="margin-left: 100px;">
