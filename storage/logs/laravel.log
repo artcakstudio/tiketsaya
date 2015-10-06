@@ -18033,3 +18033,30 @@ Stack trace:
 #50 /var/www/tiketsaya/index.php(54): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
 #51 {main}  
 >>>>>>> b8c0bfcd40ad3565526158cee0397a0db6023c94
+[2015-10-06 11:42:34] production.ERROR: exception 'PDOException' with message 'SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)' in /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:50
+Stack trace:
+#0 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(50): PDO->__construct('mysql:host=loca...', 'root', '', Array)
+#1 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(22): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#2 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(60): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#3 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(49): Illuminate\Database\Connectors\ConnectionFactory->createSingleConnection(Array)
+#4 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/DatabaseManager.php(175): Illuminate\Database\Connectors\ConnectionFactory->make(Array, 'mysql')
+#5 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/DatabaseManager.php(67): Illuminate\Database\DatabaseManager->makeConnection('mysql')
+#6 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(3209): Illuminate\Database\DatabaseManager->connection(NULL)
+#7 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(3175): Illuminate\Database\Eloquent\Model::resolveConnection(NULL)
+#8 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1908): Illuminate\Database\Eloquent\Model->getConnection()
+#9 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1851): Illuminate\Database\Eloquent\Model->newBaseQueryBuilder()
+#10 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1825): Illuminate\Database\Eloquent\Model->newQueryWithoutScopes()
+#11 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(667): Illuminate\Database\Eloquent\Model->newQuery()
+#12 /var/www/tiketsaya/app/Providers/AppServiceProvider.php(19): Illuminate\Database\Eloquent\Model::all()
+#13 [internal function]: App\Providers\AppServiceProvider->boot()
+#14 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Container/Container.php(502): call_user_func_array(Array, Array)
+#15 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(734): Illuminate\Container\Container->call(Array)
+#16 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(717): Illuminate\Foundation\Application->bootProvider(Object(App\Providers\AppServiceProvider))
+#17 [internal function]: Illuminate\Foundation\Application->Illuminate\Foundation\{closure}(Object(App\Providers\AppServiceProvider), 18)
+#18 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(718): array_walk(Array, Object(Closure))
+#19 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/BootProviders.php(17): Illuminate\Foundation\Application->boot()
+#20 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(203): Illuminate\Foundation\Bootstrap\BootProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#21 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(206): Illuminate\Foundation\Application->bootstrapWith(Array)
+#22 /var/www/tiketsaya/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(98): Illuminate\Foundation\Console\Kernel->bootstrap()
+#23 /var/www/tiketsaya/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#24 {main}  
