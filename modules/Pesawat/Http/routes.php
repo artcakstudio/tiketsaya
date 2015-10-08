@@ -8,5 +8,5 @@ Route::group(['prefix' => 'pesawat', 'namespace' => 'Modules\Pesawat\Http\Contro
 		Route::post('transaksi/step1',['as'=>'pesawat.transaksi.step1', 'uses'=>'PesawatController@step1']);
 		Route::post('transaksi/preview',['as'=>'pesawat.transaksi.preview', 'uses'=>'PesawatController@preview']);
 	});
-
+	Route::post('search-ajax','PesawatController@hasil_search');
 });

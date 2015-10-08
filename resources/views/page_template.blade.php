@@ -154,6 +154,45 @@
         var img=this;
         this.attr("src","<?php echo url('assets/images/noimage.png')?>");
     });
+
+    $(document).ready(function(){
+        //Rupiah Function
+       updateView();
+    });
+    function updateView(){
+         var div=$(".rupiah");
+
+        for(i=0; i<div.length; i++){
+            var rupiah= $(div[i]).html();
+            harga=parseInt(rupiah.split(' ')[1]);
+            harga=harga.toString();
+            var temp='';
+            for(j=0; j<harga.length; j++){
+                if (j%3==0 && j!=0){
+                    temp=temp+'.';
+                }
+                temp=temp+harga.charAt(harga.length-j-1);
+            }
+            harga=temp;
+            temp='';
+            for(j=0; j<harga.length; j++){
+                temp=temp+harga.charAt(harga.length-j-1);
+            }
+            temp='Rp. '+temp+',-';
+            $(div[i]).html(temp);
+        }
+
+        var tanggal_obj=$(".tanggal");
+        var bulan=["Januari", "Februari", "Maret", "April","Mei","Juni","Juli","Agustus","September","Oktober", "Nopember","Desember"];
+        for(i=0; i<tanggal_obj.length; i++){
+            var tanggal= $(tanggal_obj[i]).html();
+            tanggal=tanggal.split('-');
+            if (parseInt(tanggal[1]<=12)){
+            $(tanggal_obj[i]).html(tanggal[0]+' '+bulan[parseInt(tanggal[1])-1]);
+            }
+            console.log(tanggal);
+        }
+    }
     </script>
 </body>
 </html>

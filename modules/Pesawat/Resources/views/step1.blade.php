@@ -12,7 +12,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                         <div class="col-md-4" style="padding-top: 0px; font-weight: bold" ><h4><b>PROSES PEMESANAN</b><h4></div>
                         <div class="col-md-8" style="padding: 0">
                              <button style="float: right" type="button" data-target="#pencarian_data_tabel" data-toggle="collapse" aria-expanded="true" class="btn remove_border themecolor">Ubah Pencarian</button>
-                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Pesawat Booking  <?php echo "|  ".$datashare['Bandara'][Session::get('PESAWAT')['DATA_PESAWAT']['ports'][0]]['DisplayName']." | ".date('Y-m-d')?></p>
+                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Pesawat Booking  <?php echo "|  ".$datashare['Bandara'][Session::get('PESAWAT')['DATA_PESAWAT']['ports'][0]]['DisplayName']." | <span class='tanggal'>".date('d-m-Y').'</span>'?></p>
                         </div>
                     </div>
 
@@ -118,7 +118,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                             </div>
                             <div class="daftar_harga col-md-5" style="width:45%;position:absolute;margin-left:55%; padding-right:10px ">
                                 <div class="harga_1">
-                                    <span style="float:left">Rp</span><p><b id="harga_adult">{{Session::get('PESAWAT')['DATA_PESAWAT']['price']}}</b></p>
+                                    <span style="float:left">Rp</span><p><b id="harga_adult" class="rupiah">{{Session::get('PESAWAT')['DATA_PESAWAT']['price']}}</b></p>
                                 </div>
                                 <div class="harga_1">
                                     <span style="float:left">Rp</span><p><b id="harga_children">0</b></p>
@@ -133,7 +133,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                     <p>0<p>
                                 </div>
                                 <div class="harga_4" style="font-size:16px">
-                                    <span style="float:left"><b>Rp</b></span><p><b id="totalharga"><?php echo (Session::get('input')['adult']+Session::get('input')['infant']+Session::get('input')['children'] )*Session::get('PESAWAT')['DATA_PESAWAT']['price'] ?></b></p>
+                                    <span style="float:left"></span><p><b id="totalharga" class="rupiah"><?php echo (Session::get('input')['adult']+Session::get('input')['infant']+Session::get('input')['children'] )*Session::get('PESAWAT')['DATA_PESAWAT']['price'] ?></b></p>
                                 </div>
                             </div>
                         </div>

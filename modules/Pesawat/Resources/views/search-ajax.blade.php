@@ -1,89 +1,4 @@
-@extends('page_template')
 
-@section('search-colomn')
-    @parent
-        @include('column_search_hidden')
-    @stop
-@section('content')
-
-<?php
-$tanggal=Session::get('PESAWAT')['input']['depart_date'];
-$hari=date('D',strtotime($tanggal));
-?>
-<!-- CONTENT OPEN -->
-                <div class="col-md-12 content_">
-                    <div class="row head_table">
-                        <div class="col-md-4" style="padding-top: 10px; font-weight: bold" >HASIL PENCARIAN</div>
-                        <div class="col-md-8" style="padding: 0;" >
-                             <button style="float: right" type="button" data-target="#pencarian_data_tabel" data-toggle="collapse" aria-expanded="true" class="btn remove_border themecolor">Ubah Pencarian</button>
-                            
-                        </div>
-                    </div>
-                    
-
-                    <div class="row" style="margin-top: 5px; height: 50px;">
-                        @for($i=1; $i <= 7; $i++)
-                        <div class="kotakrekom">
-                            @if($i==4)
-                            <div class="rekom_harga_selected">
-                            @else
-                            <div class="rekom_harga">
-                            @endif
-                            <?php
-                            $hari=date('D',strtotime($tanggal));
-                            $tanggal=date('d-m-Y',strtotime('+1 day', strtotime($tanggal)));?>
-                                <h4>{{$hari}}, <span class="tanggal">{{$tanggal}}</span></h4>
-                                <!-- <h5>Rp. 199.000,-</h5> -->
-                            </div>
-                        </div>
-                        @endfor
-                        
-                    </div>
-                    
-                    
-                    <div class="row" style="margin-top: 15px;">
-                        
-                        <div class="kotakfilter" onclick="sorting('airline')" id="airline">
-                            <div class="filter_data">
-                                <h4>Maskapai</h4>
-                            </div>
-                        </div>
-                        <div class="kotakfilter" style="width:14%" onclick="sorting('berangkat')">
-                            <div class="filter_data">
-                                <h4>Berangkat</h4>
-                            </div>
-                        </div>
-                        <div class="kotakfilter" style="width:10%" onclick="sorting('tiba')">
-                            <div class="filter_data">
-                                <h4>Tiba</h4>
-                            </div>
-                        </div>
-                        <div class="kotakfilter" style="width:10%" onclick="sorting('durasi')">
-                            <div class="filter_data">
-                                <h4>Durasi</h4>
-                            </div>
-                        </div>
-                        <div class="kotakfilter" style="width:17%">
-                            <div class="filter_data">
-                                <h4>Fasilitas</h4>
-                            </div>
-                        </div>
-                        <div class="kotakfilter" style="width:14%" onclick="sorting('price')">
-                            <div class="filter_data">
-                                <h4>Harga</h4>
-                            </div>
-                        </div>
-                        <div class="kotakfilter" style="width:15%">
-                            <div class="filter_data">
-                                <h4></h4>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="row" style="margin-top: 30px;">
-
-                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        
                             <?php
                             $i=0;
                             foreach ($schedule_search as $row) {
@@ -127,7 +42,7 @@ $hari=date('D',strtotime($tanggal));
                                             <h6><del>IDR 450.000</del></h6>
                                         </div>
                                     </div>
-				{!!Form::open(['route'=>'pesawat.transaksi.step1', 'method'=>'POST','name'=>'form_jadwal'])!!}
+        {!!Form::open(['route'=>'pesawat.transaksi.step1', 'method'=>'POST','name'=>'form_jadwal'])!!}
                                     <?php $data=json_encode($row,true);
                                     ?>
                                     <input type="hidden" name="data" value="{{$data}}">
@@ -171,49 +86,3 @@ $hari=date('D',strtotime($tanggal));
                             <?php 
                             $i++; 
                             }?>
-                          </div> 
-                    </div>
-                </div>
-            </div>   
-            
-            
-            <div class="row subscribe_" style="background: #eee; height: 80px;margin-bottom: 10px;">
-                <div class="col-md-6">
-                    <h3>Daftarkan email anda sekarang untuk mendapatkan diskon Rp 100.000,-</h3>
-                </div>
-                <div class="col-md-4">
-                    <input type="email" class="form-control remove_border" id="exampleInputEmail3" placeholder="Email"/>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn remove_border themecolor">Subscribe</button>
-                </div>
-                
-            </div>
-<script type="text/javascript">
-    $(".button_pesan").click(function(){
-        var form=$(this.closest("form"));
-        form.submit();
-        
-    });
-
-
-//sorting hasil pencarian
-var sort={"airline":1,"price":1,"berangkat":1, "tiba":1, "durasi":1};
-
-function sorting(parameter){
-  var data=<?php echo json_encode($schedule_search)?>;
-  sort[parameter]=3-sort[parameter];
-  console.log(sort);
-  $.ajax({
-    url : "<?php echo url('pesawat/search-ajax')?>",
-    type : "POST",
-    data : {"schedule_search":data,"_token":token,"parameter":parameter, "x":sort[parameter]},
-    success:function(data){
-      $("#accordion").empty();
-      $("#accordion").append(data);
-      updateView();
-    }
-  });
-}
-</script>
-@stop

@@ -15,7 +15,7 @@ $pesawat=Session::get('PESAWAT');
                     <div class="row head_table">
                         <div class="col-md-4" style="padding-top: 0px"><h4><b>PROSES PEMESANAN</b><h4></div>
                         <div class="col-md-8" style="padding: 0;">
-                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Pesawat |   <?php echo $pesawat['DATA_PESAWAT']['ports'][0]." Ke ".$pesawat['DATA_PESAWAT']['ports'][1];?>|  <?php echo $pesawat['input']['depart_date']?></p>
+                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Pesawat |   <?php echo $pesawat['DATA_PESAWAT']['ports'][0]." Ke ".$pesawat['DATA_PESAWAT']['ports'][1];?>|  <?php echo '<span class="tanggal">'.$pesawat['input']['depart_date'].'</span>'?></p>
                         </div>
                     </div>
 
@@ -118,7 +118,7 @@ $pesawat=Session::get('PESAWAT');
                                 <div class="box_tanggal_rincian_penerbangan" style="background-color:#eee;border: 1px solid #ddd; border-left: 4px solid #00cd00; width:320px; margin-bottom:10px">
                                     <div class="tulisan_tanggal_rincian_penerbangan" style="padding:10px">
                                         Penerbangan :
-                                        <p><b><?php echo date('D',strtotime($pesawat['input']['depart_date']))." , ".$pesawat['input']['depart_date']?></b></p>
+                                        <p><b><?php echo date('D',strtotime($pesawat['input']['depart_date']))." , <span class='tanggal'>".$pesawat['input']['depart_date'].'</span>'?></b></p>
                                     </div>
                                 </div>
                                 <!-- Penerbangan_1 -->
@@ -255,7 +255,7 @@ $pesawat=Session::get('PESAWAT');
                             </div>
                             <div class="col-md-4 daftar_harga_total" style="width:45%;; padding-right:10px ">
                                 <div class="harga_1_a">
-                                    <span style="float:left">Rp</span><p><b>{{$pesawat['DATA_PESAWAT']['price']}}</b></p>
+                                    <span style="float:left">Rp</span><p><b class="rupiah">{{$pesawat['DATA_PESAWAT']['price']}}</b></p>
                                 </div>
                                 <div class="harga_2_a">
                                     <span style="float:left">Rp</span><p><b>0</b></p>

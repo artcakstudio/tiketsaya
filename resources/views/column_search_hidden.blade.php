@@ -280,8 +280,8 @@ if (Session::has('search')){
 ?>
 </script>
 <script type="text/javascript">
- $(document).ready(function(){
+/* $(document).ready(function(){
      $('a[href=#' + type + ']').tab('show');
-});
+});*/
 </script>
             <!-- SEARCH BOX CLOSE -->

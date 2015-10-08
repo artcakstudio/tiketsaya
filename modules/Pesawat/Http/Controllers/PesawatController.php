@@ -3,8 +3,10 @@
 use Pingpong\Modules\Routing\Controller;
 use Input;
 use Session;
+use View;
 class PesawatController extends Controller {
 	
+	public $schedule_search=[];
 	public function index()
 	{
 		return view('pesawat::index');
@@ -46,11 +48,25 @@ class PesawatController extends Controller {
 			$input=Input::all();
 			unset($input['input']['_token']);
 			$path=url('jsonfile/example_lionair.json');
-			$schedule_search[0]=json_decode(file_get_contents("$path"),true);
+			$temp=json_decode(file_get_contents("$path"),true);
+			$schedule_search=$temp['depart'];
+			
+			$path=url('jsonfile/example_citilink.json');
+			$temp=json_decode(file_get_contents("$path"),true);
+			//$schedule_search=$schedule_search+$temp['depart'];
+			$schedule_search=array_merge($schedule_search , $temp['depart']);
 			
 			Session(['PESAWAT.input'=>$input]);
-		
+			$schedule_search=$this->bubbleSort($schedule_search,'price',1);
+		//dd($schedule_search);
 		return view('pesawat::hasil-search',compact('schedule_search','type'));
+	}
+
+	function hasil_search(){
+		
+		$data=Input::all();
+		$schedule_search=$this->bubbleSort($data['schedule_search'],$data['parameter'],$data['x']);
+		return view::make('pesawat::search-ajax',compact('schedule_search'));
 	}
 	function step1()
 	{
@@ -77,4 +93,77 @@ class PesawatController extends Controller {
 		//dd(Session::all());
 		return view('pesawat::preview');
 	}
+	
+function bubbleSort($arr,$parameter,$sort) {
+    $sorted = false;
+
+    if($sort==1)
+    {
+	    while (false === $sorted) {
+	        $sorted = true;
+	        for ($i = 0; $i < count($arr)-1; ++$i) {
+	            $current = $arr[$i];
+	            $next = $arr[$i+1];
+			
+
+				if ($parameter=="berangkat"){
+		            $current_compare=date('H:i', strtotime($current['time'][0]));
+		            $next_compare=date('H:i', strtotime($next['time'][0]));
+	            }
+	            elseif ($parameter=="tiba") {
+	            	$current_compare=date("H:i", strtotime($current['time'][1]));
+	            	$next_compare=date('H:i', strtotime($next['time'][1]));
+	            }
+	            elseif ($parameter=="durasi") {
+	            	$current_compare=$current['time'][1]-$current['time'][0];
+	            	$next_compare=$next['time'][1]-$next['time'][0];	
+	            }
+	            else{
+	            	$current_compare=$current[$parameter];
+	            	$next_compare=$next[$parameter];
+	            }
+
+	            if ($next_compare < $current_compare) {
+	                $arr[$i] = $next;
+	                $arr[$i+1] = $current;
+	                $sorted = false;
+	            }
+	        }
+	    }
+    }
+    else{
+    	while (false === $sorted) {
+	        $sorted = true;
+	        for ($i = 0; $i < count($arr)-1; ++$i) {
+	            $current = $arr[$i];
+	            $next = $arr[$i+1];
+
+
+	            if ($parameter=="berangkat"){
+	            $current_compare=date('H:i', strtotime($current['time'][0]));
+	            $next_compare=date('H:i', strtotime($next['time'][0]));
+	            }
+	            elseif ($parameter=="tiba") {
+	            	$current_compare=date("H:i", strtotime($current['time'][1]));
+	            	$next_compare=date('H:i', strtotime($next['time'][1]));
+	            }
+	            elseif ($parameter=="durasi") {
+	            	$current_compare=$current['time'][1]-$current['time'][0];
+	            	$next_compare=$next['time'][1]-$next['time'][0];	
+	            }
+	            else{
+	            	$current_compare=$current[$parameter];
+	            	$next_compare=$next[$parameter];
+	            }
+
+	            if ($next_compare > $current_compare) {
+	                $arr[$i] = $next;
+	                $arr[$i+1] = $current;
+	                $sorted = false;
+	            }
+	        }
+	    }	
+    }
+    return $arr;
+}
 }
