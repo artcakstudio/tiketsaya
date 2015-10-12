@@ -178,7 +178,8 @@ function filter_harga(){
 		}
 	}
 	
-	//print_r($schedule_search);
+	echo json_encode($schedule_search);
+	echo "\n\r\n\r";
 	return view::make('pesawat::search-ajax',compact('schedule_search'));
 }
 

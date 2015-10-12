@@ -241,13 +241,14 @@ $hari=date('D',strtotime($tanggal));
 var sort={"airline":1,"price":1,"berangkat":1, "tiba":1, "durasi":1};
 
 var data=<?php echo json_encode($schedule_search)?>;
+var data_filter=data;
 function sorting(parameter){
   sort[parameter]=3-sort[parameter];
   console.log(sort);
   $.ajax({
     url : "<?php echo url('pesawat/search-ajax')?>",
     type : "POST",
-    data : {"schedule_search":data,"_token":token,"parameter":parameter, "x":sort[parameter]},
+    data : {"schedule_search":data_filter,"_token":token,"parameter":parameter, "x":sort[parameter]},
     success:function(data){
       $("#accordion").empty();
       $("#accordion").append(data);
@@ -285,10 +286,14 @@ $.ajax({
   url : "<?php echo url('pesawat/filter_harga')?>",
   type : "POST",
   data : {"schedule_search":data,"_token":token,"parameter":'price', 'harga_maksimum':harga},
-  success:function(data){
+  success:function(hasil){
+    hasil=hasil.split("\n\r\n\r");
+    hasil[0]=jQuery.parseJSON(hasil[0]);
+    console.log(hasil);
     $("#accordion").empty();
-    $("#accordion").append(data);
+    $("#accordion").append(hasil[1]);
     updateView();
+    data_filter=hasil[0];
   }
 })
 });
