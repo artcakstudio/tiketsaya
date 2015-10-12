@@ -166,4 +166,21 @@ function bubbleSort($arr,$parameter,$sort) {
     }
     return $arr;
 }
+
+function filter_harga(){
+	$data=Input::all();
+	//print_r($data);
+	$harga_maksimum = preg_replace('/\D/', '', $data['harga_maksimum']);
+	$schedule_search=[];
+	foreach ($data['schedule_search'] as $row) {
+		if($row['price']<=$harga_maksimum){
+			array_push($schedule_search, $row);
+		}
+	}
+	
+	//print_r($schedule_search);
+	return view::make('pesawat::search-ajax',compact('schedule_search'));
+}
+
+
 }

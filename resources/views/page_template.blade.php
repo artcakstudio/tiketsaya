@@ -6,10 +6,12 @@
     {!! Html::style('assets/css/bootstrap.css')!!}
     {!! Html::style('assets/css/datepicker.css')!!}
     {!! Html::style('assets/css/bootstrap.min.css')!!}
+    {!! HTML::script('assets/css/bootstrap-datetimepicker.<min class="css"></min>')!!} 
     {!! Html::style('assets/css/font-awesome.min.css')!!}
     {!! Html::style('assets/css/jquery.dataTables.css')!!}
     {!! Html::style('assets/css/jquery.dataTables.min.css')!!}
-    {!! Html::style('assets/css/jquery-ui.css')!!}
+    {!! Html::style('assets/css/bootstrap-slider.css')!!}
+    
     {!! Html::style('assets/css/partner.css')!!}
     {!! Html::style('assets/css/style-page.css')!!}
     {!! Html::style('assets/css/travel.css')!!}
@@ -19,7 +21,8 @@
     
     @yield('custom_css')
     {!! HTML::script('assets/js/jquery.dataTables.min.js')!!} <!-- Data tables -->
-   <!--  {!! HTML::script('assets/js/jquery-ui.js')!!} --> <!-- jQuery UI -->
+    {!! HTML::script('assets/js/bootstrap-slider.js')!!}
+    {!! HTML::script('assets/js/bootstrap-datepicker.js')!!} <!-- jQuery UI -->
     @yield('custom_js')
 </head>
 <body>
