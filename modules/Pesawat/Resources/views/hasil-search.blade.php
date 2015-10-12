@@ -7,6 +7,7 @@
 @section('content')
 
 <?php
+$airline=[];
 $tanggal=Session::get('PESAWAT')['input']['depart_date'];
 $hari=date('D',strtotime($tanggal));
 ?>
@@ -81,17 +82,17 @@ $hari=date('D',strtotime($tanggal));
                         
                     </div>
                     <div class="row" style="margin-top:10px">
-                      <div class="kotakfilter">
-                          <div class="filter_data   " >
+                      <div class="kotakfilter" data_filter="filter_transit">
+                          <div class="filter_data" >
                               <h4>Pilih  Pemberhentian</h4>
                           </div>
                       </div>
-                      <div class="kotakfilter" >
+                      <div class="kotakfilter" data_filter="filter_waktu" >
                           <div class="filter_data">
                               <h4>Pilih Waktu</h4>
                           </div>
                       </div>
-                      <div class="kotakfilter" >
+                      <div class="kotakfilter"  data_filter="filter_maskapai">
                           <div class="filter_data">
                               <h4>Pilih Maskapai</h4>
                           </div>
@@ -101,24 +102,42 @@ $hari=date('D',strtotime($tanggal));
                               <h4>Pilih Tanggal</h4>
                           </div>
                       </div>
-                      <div class="kotakfilter" >
-                          <div class="filter_data selected">
+                      <div class="kotakfilter"  data_filter="filter_harga">
+                          <div class="filter_data">
                               <h4>Pilih Harga</h4>
                           </div>
                       </div>
                     </div>
 
-                    <div class="row data-filter">
-                      <div class="row">
-                        <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="<?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?>" data-slider-step="1000" data-slider-value="<?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?>"/>
+                      <div class="row data_filter"  id="filter_harga" style="display:none">
+                        <div class="row">
+                          <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="<?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?>" data-slider-step="1000" data-slider-value="<?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?>"/>
+                        </div>
+                        <div class="col-md-3">
+                          <h4 id="harga_minimum" class="">Rp. 0</h4>
+                        </div>
+                        <div class="col-md-3" style="float:right">
+                          <h4 id="harga_maksimum" style="float:right"><?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?></h4>
+                        </div>
                       </div>
-                      <div class="col-md-3">
-                        <h4 id="harga_minimum" class="">Rp. 0</h4>
+
+                      <div id="filter_maskapai" style="display:none" class="row data_filter">
+                        
                       </div>
-                      <div class="col-md-3" style="float:right">
-                        <h4 id="harga_maksimum" style="float:right"><?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?></h4>
+                      
+
+                      <div class="row data_filter col-md-12" id="filter_waktu" style="display:none;">
+                        <div class="row" >
+                          <input id="waktu_slider" data-slider-id='ex1Slider' type="text" data-slider-min="180" data-slider-max="1440" data-slider-step="10" data-slider-value="1440"/>
+                        </div>
+                        <div class="col-md-3">
+                          <h4 id="waktu_minimum" class="">03:00</h4>
+                        </div>
+                        
+                        <div class="col-md-3" style="float:right">
+                          <h4 id="waktu_maksimum" style="float:right">24:00</h4>
+                        </div>                        
                       </div>
-                    </div>
 
                     <div class="row" style="margin-top: 30px;">
 
@@ -129,16 +148,17 @@ $hari=date('D',strtotime($tanggal));
                             foreach ($schedule_search as $row) {
                              /*foreach($key as $row) { */?>
                               <div class="panel kotakdata" style="border-radius: inherit">
+                             <h1 style="display:none" class="harga_tiket">{{$row['price']}}</h1>
                                 <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $i ?>">
                                     <div class="data_maskapai">
                                         <div><center><img src="<?php echo url('public/Assets/pesawatlogo/'.$row['airline'].'.png')?>"/></center></div>
                                     </div>
                                     <div class="data_maskapai">
-                                        <div><h3>{{$row['plane']}}</h3></div>
+                                        <div><h3 >{{$row['plane']}}</h3></div>
                                     </div>
                                     <div class="data_maskapai">
                                         <div>
-                                            <h4>{{$row['time'][0]}}</h4>
+                                            <h4 class="waktu_berangkat">{{$row['time'][0]}}</h4>
                                             <h5>{{$row['ports'][0]}}</h5>
                                         </div>
                                     </div>
@@ -182,7 +202,7 @@ $hari=date('D',strtotime($tanggal));
                                               <center>
 
                                               <img src="<?php echo url('public/Assets/pesawatlogo/'.$row['airline'].'.png')?>"/>
-                                              <p>{{$row['airline']}}</p>
+                                              <p class="nama_maskapai">{{$row['airline']}}</p>
                                               </center>
                                           </div>
                                           <div class="col-md-2" style="text-align: center">
@@ -209,14 +229,23 @@ $hari=date('D',strtotime($tanggal));
                                 </div>
                             </div>
                             <?php 
+                            if (!in_array($row['airline'], $airline)){
+                              array_push($airline, $row['airline']);
+                            }
                             $i++; 
                             }?>
                           </div> 
                     </div>
                 </div>
             </div>   
-            
-            
+<script type="text/javascript">
+  var maskapai=<?php echo json_encode($airline);?>;
+  for(i=0; i<maskapai.length;i++){
+    var path="<?php echo url('public/Assets/pesawatlogo');?>";
+    $("#filter_maskapai").append("<div class='col-md-3'><img src='"+path+"/"+maskapai[i]+".png'><div class='row col-md-12'><input type='checkbox' value='"+maskapai[i]+"'></div></div>");
+  }
+  console.log(maskapai);
+</script>        
             <div class="row subscribe_" style="background: #eee; height: 80px;margin-bottom: 10px;">
                 <div class="col-md-6">
                     <h3>Daftarkan email anda sekarang untuk mendapatkan diskon Rp 100.000,-</h3>
@@ -281,21 +310,86 @@ $('#ex1').slider({
 });
 
 $("#ex1Slider").mouseup(function(){
-  var harga=$("#harga_maksimum").html();
-$.ajax({
-  url : "<?php echo url('pesawat/filter_harga')?>",
-  type : "POST",
-  data : {"schedule_search":data,"_token":token,"parameter":'price', 'harga_maksimum':harga},
-  success:function(hasil){
-    hasil=hasil.split("\n\r\n\r");
-    hasil[0]=jQuery.parseJSON(hasil[0]);
-    console.log(hasil);
-    $("#accordion").empty();
-    $("#accordion").append(hasil[1]);
-    updateView();
-    data_filter=hasil[0];
-  }
+   $('#ex1').slider({
+    formatter: function(value) {
+      var hasil_search=$(".kotakdata");
+      var harga;
+      for(i=0; i<hasil_search.length; i++){
+        harga=$(hasil_search[i]).find("h1.harga_tiket")[0].innerHTML;
+        if(harga>=value){
+          $(hasil_search[i]).hide();
+        }
+        else{
+          $(hasil_search[i]).show();
+        }
+      }
+      
+
+      return 'Current value: ' + value;
+    }
+
+  });
+});
+$("#filter_maskapai input[type='checkbox']").change(function(){
+  var hasil_search=$(".kotakdata");
+  var nama_maskapai=[];
+  $("#filter_maskapai input[type='checkbox']:checked").each(function(){
+    nama_maskapai.push($(this).val());
+  });
+    for(i=0; i<hasil_search.length; i++){
+      if(nama_maskapai.length>0){
+        
+        if(nama_maskapai.indexOf($(hasil_search[i]).find(".nama_maskapai")[0].innerHTML)!=-1 ){
+          $(hasil_search[i]).show();
+        }
+        else{
+          $(hasil_search[i]).hide();
+        }
+      }
+      else{
+        $(hasil_search[i]).show();
+      }
+    }
 })
+
+//filter waktu
+$('#waktu_slider').slider({
+  formatter: function(value) {
+    var jam=parseInt(value/60);
+    var menit=value%60;
+    if(menit==0){
+      menit="00";
+    }
+    var hour=jam+":"+menit;
+
+    var hasil_search=$(".kotakdata");
+      for(i=0; i<hasil_search.length; i++){
+
+        var waktu=$(hasil_search[i]).find(".waktu_berangkat")[0].innerHTML;
+        var waktu=waktu.split(":");
+        var waktu=parseInt(waktu[0]*60)+parseInt(waktu[1]);
+          if(value>=waktu){
+            $(hasil_search[i]).show();
+          }
+          else{
+            $(hasil_search[i]).hide();
+          }
+      }
+    return hour;
+  }
+});
+
+
+$(".kotakfilter").click(function(){
+  var filter=$(this)[0].attributes[1].value;
+  console.log(filter);
+  $("div.data_filter").each(function(){
+    $(this).hide();
+  });
+  $("#"+filter).show();
+  $($(".kotakfilter").find(".filter_data")).removeClass("selected");
+  console.log($("div.data_filter"));
+  $($(this).find(".filter_data")).addClass("selected");
 });
 </script>
 @stop
