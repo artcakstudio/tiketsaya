@@ -33,13 +33,18 @@
                                       <div class="konten3_">
                                           <div class="head_konten3">Kota Asal</div>
                                           <div class="input-group isi_konten3">
-                                            <select class="form-control remove_border" name="origin">
-                                                    @foreach($datashare['Bandara'] as $row)
-                                                        <option value="{{$row['Code']}}" class="remove_border">{{$row['DisplayName']}}</option>
-                                                    @endforeach
-                                            </select>
+                                            <input class="form-control remove_border" name="origin1" autocomplete="off">
+                                            <input class="form-control remove_border" name="origin" type="hidden">
+                                            <div id="depart-search" class="flight-search">
+                                              <ul id="depart-list" class="flight-list">
+                                                @foreach($datashare['Bandara'] as $row)
+                                                    <a href="javascript:void(0)"><li value="{{$row['Code']}}" class="remove_border">{{$row['DisplayName']}}</li></a>
+                                                @endforeach
+                                              </ul>
+                                              
+                                            </div>
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor"  aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor"  aria-haspopup="true" aria-expanded="false">Pilih </button>
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>
@@ -48,13 +53,18 @@
                                       <div class="konten3_">
                                           <div class="head_konten3">Kota Tujuan</div>
                                           <div class="input-group isi_konten3">
-                                            <select class="form-control remove_border" name="destination">
-                                                    @foreach($datashare['Bandara'] as $row)
-                                                        <option value="{{$row['Code']}}" class="remove_border">{{$row['DisplayName']}}</option>
-                                                    @endforeach
-                                            </select>
+                                            <input class="form-control remove_border" name="destination1">
+                                            <input class="form-control remove_border" name="destination" type="hidden">
+                                              <div id="destination-search" class="flight-search">
+                                              <ul id="destination-list" class="flight-list">
+                                                @foreach($datashare['Bandara'] as $row)
+                                                    <a href="javascript:void(0)"><li value="{{$row['Code']}}" class="remove_border">{{$row['DisplayName']}}</li></a>
+                                                @endforeach
+                                              </ul>
+                                              
+                                            </div>
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor"  aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor"  aria-haspopup="true" aria-expanded="false">Pilih </button>
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>
@@ -67,7 +77,7 @@
                                           <div class="input-group isi_konten3">
                                             <input type="text" class="form-control remove_border datepicker" name="depart_date" />
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih </button>
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>
@@ -145,7 +155,7 @@
                                                     @endforeach
                                             </select>
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih </button>
                                                 <ul class="dropdown-menu">
 
                                                   </ul>
@@ -163,7 +173,7 @@
                                                     @endforeach
                                             </select>
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih </button>
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>
@@ -174,7 +184,7 @@
                                           <div class="input-group isi_konten3">
                                             <input class="form-control remove_border datepicker" type="text" name="TRAVEL_SCHEDULE_DATE" />
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih </button>
                                             </div>
                                           </div>
                                       </div>
@@ -213,7 +223,7 @@
                                                     @endforeach
                                                   </select>
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih </button>
                                                 
                                             </div><!-- /btn-group -->
                                           </div>
@@ -225,7 +235,7 @@
                                           <div class="input-group isi_konten3">
                                             <input type="text" class="form-control remove_border datepicker" name="DATE" />
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih </button>
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>
@@ -241,7 +251,7 @@
                                               </select>
                                             <!-- <input type="text" class="form-control remove_border" /> -->
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih <span class="caret"></span></button>
+                                                <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih </button>
                                             </div><!-- /btn-group -->
                                           </div>
                                       </div>
@@ -272,7 +282,6 @@
                         </div>
                     </div>
             </div>            
-            <button onclick="tes()"></button>
 <?php
 if (Session::has('search')){
   if (Session::get('search')['type']=='travel'){
@@ -300,7 +309,8 @@ if (Session::has('search')){
  //input error handling checking
  var adult=$("#pesawat  select[name='adult']");
  var children=$("#pesawat select[name='children']");
- var infant=$("#pesawat select[name='infant']")
+ var infant=$("#pesawat select[name='infant']");
+var data=<?php echo json_encode($datashare['Bandara']);?>;
  function tes (argument) {
    console.log(adult);
  }
@@ -339,5 +349,54 @@ function infant_check (argument) {
       alert("Jumlah Penumpang dewasa tidak boleh kurang dari bayi"); 
     }
  };
+
+ //depart search
+ $("form").on('click', "input[name='origin1']",function(){ 
+  $("#depart-search").show();
+ });
+ $("form input[name='origin1']").keyup(function(){
+    var search=$("form input[name='origin1']").val();
+
+    $("#depart-list").empty();
+    for(x in data){
+      var nama=data[x].DisplayName.toUpperCase();
+      var search=search.toUpperCase();
+      if (nama.indexOf(search)>=0 || search==''){
+        $("#depart-list").append('<a href="javascript:void(0)"><li value="'+data[x].Code+'" class="remove_border">'+data[x].DisplayName+'</li></a>');
+      }
+    }
+ });
+$("#depart-list").on('click', 'li',function(){
+  $("#depart-search").hide();
+  $("form input[name='origin1']").val(data[$(this)[0].attributes['value'].value].DisplayName);
+  $("form input[name='origin']").val($(this)[0].attributes['value'].value);
+});
+
+
+ //destination search
+  $("form").on('click', "input[name='destination1']",function(){ 
+  $("#destination-search").show();
+ });
+ $("form input[name='destination1']").keyup(function(){
+    var search=$("form input[name='destination1']").val();
+    var data=<?php echo json_encode($datashare['Bandara']);?>;
+    $("#destination-list").empty();
+    for(x in data){
+      var nama=data[x].DisplayName.toUpperCase();
+      var search=search.toUpperCase();
+      if (nama.indexOf(search)>=0 || search==''){
+        $("#destination-list").append('<a href="javascript:void(0)"><li value="'+data[x].Code+'" class="remove_border">'+data[x].DisplayName+'</li></a>');
+      }
+    }
+ });
+$("#destination-list").on('click', 'li',function(){
+  $("#destination-search").hide();
+  $("form input[name='destination1']").val(data[$(this)[0].attributes['value'].value].DisplayName);
+  $("form input[name='destination']").val($(this)[0].attributes['value'].value);
+});
+$("form input[name='destination1']").input(function(){
+  ("#destination-search").hide();
+});
+ 
 </script>
             <!-- SEARCH BOX CLOSE -->

@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Travelbaik | pelayanan baik dengan harga terbaik</title>
     {!! Html::style('assets/css/bootstrap.css')!!}
+    {!! Html::style('assets/css/datepicker.css')!!}
     {!! Html::style('assets/css/bootstrap.min.css')!!}
     {!! Html::style('assets/css/font-awesome.min.css')!!}
     {!! Html::style('assets/css/jquery.dataTables.css')!!}
@@ -14,9 +15,11 @@
     {!! Html::style('assets/css/travel.css')!!}
     {!! Html::script('assets/js/jquery.min.js')!!}
     {!! Html::script('assets/js/bootstrap.min.js')!!}
+    {!! Html::script('assets/js/bootstrap-datepicker.js')!!}
+    
     @yield('custom_css')
     {!! HTML::script('assets/js/jquery.dataTables.min.js')!!} <!-- Data tables -->
-    {!! HTML::script('assets/js/jquery-ui.js')!!} <!-- jQuery UI -->
+   <!--  {!! HTML::script('assets/js/jquery-ui.js')!!} --> <!-- jQuery UI -->
     @yield('custom_js')
 </head>
 <body>

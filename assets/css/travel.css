@@ -616,3 +616,18 @@ body {
     text-align: center;
     font-size: 16px;
 }
+.flight-search{
+    width: 273px;
+    height: 250px;
+    background: white;
+    overflow: auto;
+    position: absolute;
+    z-index: 3;
+    margin-top: 35px;
+    display: none;
+}
+.flight-list li{
+    list-style:  none;
+    text-decoration: initial;
+    color: black;
+}
