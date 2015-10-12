@@ -616,3 +616,16 @@ body {
     text-align: center;
     font-size: 16px;
 }
+
+.data-filter{
+    border:1px solid black;
+    height: 90px;  
+    margin-top: 10px;
+}
+.selected{
+    background-color: #16ac59;
+    padding-bottom: 10px;
+}
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}

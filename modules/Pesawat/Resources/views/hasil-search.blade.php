@@ -80,6 +80,46 @@ $hari=date('D',strtotime($tanggal));
                         </div>
                         
                     </div>
+                    <div class="row" style="margin-top:10px">
+                      <div class="kotakfilter">
+                          <div class="filter_data   " >
+                              <h4>Pilih  Pemberhentian</h4>
+                          </div>
+                      </div>
+                      <div class="kotakfilter" >
+                          <div class="filter_data">
+                              <h4>Pilih Waktu</h4>
+                          </div>
+                      </div>
+                      <div class="kotakfilter" >
+                          <div class="filter_data">
+                              <h4>Pilih Maskapai</h4>
+                          </div>
+                      </div>
+                      <div class="kotakfilter" >
+                          <div class="filter_data">
+                              <h4>Pilih Tanggal</h4>
+                          </div>
+                      </div>
+                      <div class="kotakfilter" >
+                          <div class="filter_data selected">
+                              <h4>Pilih Harga</h4>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="row data-filter">
+                      <div class="row">
+                        <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="<?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?>" data-slider-step="1000" data-slider-value="<?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?>"/>
+                      </div>
+                      <div class="col-md-3">
+                        <h4 id="harga_minimum" class="">Rp. 0</h4>
+                      </div>
+                      <div class="col-md-3" style="float:right">
+                        <h4 id="harga_maksimum" style="float:right"><?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?></h4>
+                      </div>
+                    </div>
+
                     <div class="row" style="margin-top: 30px;">
 
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -190,7 +230,7 @@ $hari=date('D',strtotime($tanggal));
                 
             </div>
 <script type="text/javascript">
-    $(".button_pesan").click(function(){
+    $("#accordion").on('click', ".button_pesan", function(){
         var form=$(this.closest("form"));
         form.submit();
         
@@ -200,8 +240,8 @@ $hari=date('D',strtotime($tanggal));
 //sorting hasil pencarian
 var sort={"airline":1,"price":1,"berangkat":1, "tiba":1, "durasi":1};
 
+var data=<?php echo json_encode($schedule_search)?>;
 function sorting(parameter){
-  var data=<?php echo json_encode($schedule_search)?>;
   sort[parameter]=3-sort[parameter];
   console.log(sort);
   $.ajax({
@@ -215,5 +255,42 @@ function sorting(parameter){
     }
   });
 }
+
+//filter
+$('#ex1').slider({
+  formatter: function(value) {
+
+    value=String(value);
+    var temp='';
+      for(j=0; j<value.length; j++){
+          if (j%3==0 && j!=0){
+              temp=temp+'.';
+          }
+          temp=temp+value.charAt(value.length-j-1);
+      }
+      value=temp;
+      temp='';
+      for(j=0; j<value.length; j++){
+          temp=temp+value.charAt(value.length-j-1);
+      }
+      temp='Rp. '+temp+',-';
+    $("#harga_maksimum").html(temp);
+    return temp;
+  }
+});
+
+$("#ex1Slider").mouseup(function(){
+  var harga=$("#harga_maksimum").html();
+$.ajax({
+  url : "<?php echo url('pesawat/filter_harga')?>",
+  type : "POST",
+  data : {"schedule_search":data,"_token":token,"parameter":'price', 'harga_maksimum':harga},
+  success:function(data){
+    $("#accordion").empty();
+    $("#accordion").append(data);
+    updateView();
+  }
+})
+});
 </script>
 @stop
