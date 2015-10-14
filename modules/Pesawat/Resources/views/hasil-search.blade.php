@@ -154,7 +154,7 @@ $hari=date('D',strtotime($tanggal));
                                         <div><center><img src="<?php echo url('public/Assets/pesawatlogo/'.$row['airline'].'.png')?>"/></center></div>
                                     </div>
                                     <div class="data_maskapai">
-                                        <div><h3 >{{$row['plane']}}</h3></div>
+                                        <div><h3 class="id_maskapai">{{$row['plane']}}</h3></div>
                                     </div>
                                     <div class="data_maskapai">
                                         <div>
@@ -244,7 +244,6 @@ $hari=date('D',strtotime($tanggal));
     var path="<?php echo url('public/Assets/pesawatlogo');?>";
     $("#filter_maskapai").append("<div class='col-md-3'><img src='"+path+"/"+maskapai[i]+".png'><div class='row col-md-12'><input type='checkbox' value='"+maskapai[i]+"'></div></div>");
   }
-  console.log(maskapai);
 </script>        
             <div class="row subscribe_" style="background: #eee; height: 80px;margin-bottom: 10px;">
                 <div class="col-md-6">
@@ -266,14 +265,40 @@ $hari=date('D',strtotime($tanggal));
     });
 
 
+
 //sorting hasil pencarian
 var sort={"airline":1,"price":1,"berangkat":1, "tiba":1, "durasi":1};
 
 var data=<?php echo json_encode($schedule_search)?>;
-var data_filter=data;
+var data_filter=data.slice(0);
+
+
+function find_schedule(id_penerbangan, flag){
+  var object;
+  if(flag==0){
+    for(indeks=0; indeks<data_filter.length; indeks++){
+      if (data_filter[indeks].plane==id_penerbangan){
+        data_filter.splice(indeks,1);
+        break;
+      }
+    }  
+  }
+  else{
+    for(indeks=0; indeks<data.length; indeks++){
+        if (data[indeks].plane==id_penerbangan){
+          object=data[indeks];
+          data_filter.push(object);
+          break;
+        }
+    }
+  }
+  console.log(data_filter.length);
+}
+
+
 function sorting(parameter){
   sort[parameter]=3-sort[parameter];
-  console.log(sort);
+  console.log(data);
   $.ajax({
     url : "<?php echo url('pesawat/search-ajax')?>",
     type : "POST",
@@ -287,6 +312,9 @@ function sorting(parameter){
 }
 
 //filter
+$("#waktu_slider").slider({
+
+});
 $('#ex1').slider({
   formatter: function(value) {
 
@@ -353,42 +381,57 @@ $("#filter_maskapai input[type='checkbox']").change(function(){
 })
 
 //filter waktu
-$('#waktu_slider').slider({
-  formatter: function(value) {
-    var jam=parseInt(value/60);
-    var menit=value%60;
-    if(menit==0){
-      menit="00";
-    }
-    var hour=jam+":"+menit;
 
-    var hasil_search=$(".kotakdata");
-      for(i=0; i<hasil_search.length; i++){
-
-        var waktu=$(hasil_search[i]).find(".waktu_berangkat")[0].innerHTML;
-        var waktu=waktu.split(":");
-        var waktu=parseInt(waktu[0]*60)+parseInt(waktu[1]);
-          if(value>=waktu){
-            $(hasil_search[i]).show();
-          }
-          else{
-            $(hasil_search[i]).hide();
-          }
+$("#waktu_slider").on("slideStop",function(value){
+    value=value.value;
+  $('#waktu_slider').slider({
+    formatter: function(nilai) {
+    
+      value=nilai;
+      var jam=parseInt(value/60);
+      var menit=value%60;
+      if(menit==0){
+        menit="00";
       }
-    return hour;
-  }
+      var hour=jam+":"+menit;
+      return hour;
+    }
+  });
+
+      var hasil_search=$(".kotakdata");
+        for(i=0; i<hasil_search.length; i++){
+
+          var waktu=$(hasil_search[i]).find(".waktu_berangkat")[0].innerHTML;
+          var waktu=waktu.split(":");
+          var waktu=parseInt(waktu[0]*60)+parseInt(waktu[1]);
+          var id_maskapai=$(hasil_search[i]).find(".id_maskapai");
+            if(value>=waktu){
+              if($(hasil_search[i]).is(":hidden")) {
+            //    console.log(id_maskapai[0].innerText);
+                find_schedule(id_maskapai[0].innerText,1);
+              $(hasil_search[i]).show();
+                
+              }
+            }
+            else{
+                if ($(hasil_search[i]).is(":visible")) {
+                  //console.log(id_maskapai[0].innerText);
+                  find_schedule(id_maskapai[0].innerText,0);
+                  $(hasil_search[i]).hide();
+                };
+            }
+        }
 });
 
 
 $(".kotakfilter").click(function(){
   var filter=$(this)[0].attributes[1].value;
-  console.log(filter);
   $("div.data_filter").each(function(){
     $(this).hide();
   });
   $("#"+filter).show();
   $($(".kotakfilter").find(".filter_data")).removeClass("selected");
-  console.log($("div.data_filter"));
+  //console.log($("div.data_filter"));
   $($(this).find(".filter_data")).addClass("selected");
 });
 </script>

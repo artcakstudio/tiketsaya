@@ -6,7 +6,6 @@
     {!! Html::style('assets/css/bootstrap.css')!!}
     {!! Html::style('assets/css/datepicker.css')!!}
     {!! Html::style('assets/css/bootstrap.min.css')!!}
-    {!! HTML::script('assets/css/bootstrap-datetimepicker.<min class="css"></min>')!!} 
     {!! Html::style('assets/css/font-awesome.min.css')!!}
     {!! Html::style('assets/css/jquery.dataTables.css')!!}
     {!! Html::style('assets/css/jquery.dataTables.min.css')!!}
@@ -151,11 +150,15 @@
         form.submit();
         
     });
-    $(".datepicker").datepicker({changeMonth: true,
+    var nowDate = new Date();
+    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+    /*$(".datepicker").datepicker({changeMonth: true,
         changeYear: true,
-        dateFormat: "dd-mm-yy", 
-        minDate: 0
-    });
+        format: "dd-mm-yy", 
+        startDate: today 
+    });*/
+
+
     $('img').error(function(){
         var img=this;
         this.attr("src","<?php echo url('assets/images/noimage.png')?>");
@@ -196,7 +199,6 @@
             if (parseInt(tanggal[1]<=12)){
             $(tanggal_obj[i]).html(tanggal[0]+' '+bulan[parseInt(tanggal[1])-1]);
             }
-            console.log(tanggal);
         }
     }
     </script>

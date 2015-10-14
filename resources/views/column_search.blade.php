@@ -394,9 +394,10 @@ $("#destination-list").on('click', 'li',function(){
   $("form input[name='destination1']").val(data[$(this)[0].attributes['value'].value].DisplayName);
   $("form input[name='destination']").val($(this)[0].attributes['value'].value);
 });
-$("form input[name='destination1']").input(function(){
+
+/*$("form input[name='destination1']").input(function(){
   ("#destination-search").hide();
-});
+});*/
  
 </script>
             <!-- SEARCH BOX CLOSE -->
