@@ -1,19 +1,19 @@
-
 <?php
 $i=0;
 foreach ($schedule_search as $row) {
  /*foreach($key as $row) { */?>
   <div class="panel kotakdata" style="border-radius: inherit">
+ <h1 style="display:none" class="harga_tiket">{{$row['price']}}</h1>
     <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $i ?>">
         <div class="data_maskapai">
             <div><center><img src="<?php echo url('public/Assets/pesawatlogo/'.$row['airline'].'.png')?>"/></center></div>
         </div>
         <div class="data_maskapai">
-            <div><h3>{{$row['plane']}}</h3></div>
+            <div><h3 class="id_maskapai">{{$row['plane']}}</h3></div>
         </div>
         <div class="data_maskapai">
             <div>
-                <h4>{{$row['time'][0]}}</h4>
+                <h4 class="waktu_berangkat">{{$row['time'][0]}}</h4>
                 <h5>{{$row['ports'][0]}}</h5>
             </div>
         </div>
@@ -57,7 +57,7 @@ foreach ($schedule_search as $row) {
                   <center>
 
                   <img src="<?php echo url('public/Assets/pesawatlogo/'.$row['airline'].'.png')?>"/>
-                  <p>{{$row['airline']}}</p>
+                  <p class="nama_maskapai">{{$row['airline']}}</p>
                   </center>
               </div>
               <div class="col-md-2" style="text-align: center">
@@ -84,5 +84,8 @@ foreach ($schedule_search as $row) {
     </div>
 </div>
 <?php 
+if (!in_array($row['airline'], $airline)){
+  array_push($airline, $row['airline']);
+}
 $i++; 
 }?>

@@ -271,6 +271,7 @@ var sort={"airline":1,"price":1,"berangkat":1, "tiba":1, "durasi":1};
 
 var data=<?php echo json_encode($schedule_search)?>;
 var data_filter=data.slice(0);
+var data_filter_temp=[];
 
 
 function find_schedule(id_penerbangan, flag){
@@ -278,34 +279,35 @@ function find_schedule(id_penerbangan, flag){
   if(flag==0){
     for(indeks=0; indeks<data_filter.length; indeks++){
       if (data_filter[indeks].plane==id_penerbangan){
+        data_filter_temp.push(data_filter[indeks]);
         data_filter.splice(indeks,1);
         break;
       }
     }  
   }
   else{
-    for(indeks=0; indeks<data.length; indeks++){
+    for(indeks=0; indeks<data_filter_temp.length; indeks++){
         if (data[indeks].plane==id_penerbangan){
           object=data[indeks];
           data_filter.push(object);
+          data_filter_temp.splice(indeks,1);
           break;
         }
     }
   }
-  console.log(data_filter.length);
 }
 
 
 function sorting(parameter){
   sort[parameter]=3-sort[parameter];
-  console.log(data);
+  console.log(data_filter);h
   $.ajax({
     url : "<?php echo url('pesawat/search-ajax')?>",
     type : "POST",
     data : {"schedule_search":data_filter,"_token":token,"parameter":parameter, "x":sort[parameter]},
-    success:function(data){
+    success:function(hasil_ajax){
       $("#accordion").empty();
-      $("#accordion").append(data);
+      $("#accordion").append(hasil_ajax);
       updateView();
     }
   });
@@ -337,44 +339,45 @@ $('#ex1').slider({
   }
 });
 
-$("#ex1Slider").mouseup(function(){
-   $('#ex1').slider({
-    formatter: function(value) {
-      var hasil_search=$(".kotakdata");
-      var harga;
-      for(i=0; i<hasil_search.length; i++){
-        harga=$(hasil_search[i]).find("h1.harga_tiket")[0].innerHTML;
-        if(harga>=value){
-          $(hasil_search[i]).hide();
-        }
-        else{
-          $(hasil_search[i]).show();
-        }
-      }
-      
-
-      return 'Current value: ' + value;
+$("#ex1Slider").on("slideStop",function(value){
+  var hasil_search=$(".kotakdata");
+  var harga;
+  var value=value.value;
+  var id_maskapai=$(hasil_search[i]).find(".id_maskapai");
+  console.log(id_maskapai);
+  for(i=0; i<hasil_search.length; i++){
+    harga=$(hasil_search[i]).find("h1.harga_tiket")[0].innerHTML;
+    if(harga>=value && $(hasil_search[i]).is(":visible")){
+      find_schedule(id_maskapai[0].innerText,0);
+      $(hasil_search[i]).hide();
     }
-
-  });
+    else if(harga<=value && $(hasil_search[i]).is(":hidden")) {
+      find_schedule(id_maskapai[0].innerText,1);
+      $(hasil_search[i]).show();
+    }
+  }
 });
 $("#filter_maskapai input[type='checkbox']").change(function(){
   var hasil_search=$(".kotakdata");
   var nama_maskapai=[];
+  var id_maskapai=$(hasil_search[i]).find(".id_maskapai");
   $("#filter_maskapai input[type='checkbox']:checked").each(function(){
     nama_maskapai.push($(this).val());
   });
     for(i=0; i<hasil_search.length; i++){
       if(nama_maskapai.length>0){
-        
-        if(nama_maskapai.indexOf($(hasil_search[i]).find(".nama_maskapai")[0].innerHTML)!=-1 ){
+        if(nama_maskapai.indexOf($(hasil_search[i]).find(".nama_maskapai")[0].innerHTML)!=-1 && $(hasil_search[i]).is(":hidden")) {
+          find_schedule(id_maskapai[0].innerText,1);
           $(hasil_search[i]).show();
         }
-        else{
+        else if(nama_maskapai.indexOf($(hasil_search[i]).find(".nama_maskapai")[0].innerHTML)==-1 && $(hasil_search[i]).is(":visible"))
+        {
+          find_schedule(id_maskapai[0].innerText,0);
           $(hasil_search[i]).hide();
         }
       }
       else{
+        find_schedule(id_maskapai[0].innerText,1);
         $(hasil_search[i]).show();
       }
     }
@@ -382,8 +385,6 @@ $("#filter_maskapai input[type='checkbox']").change(function(){
 
 //filter waktu
 
-$("#waktu_slider").on("slideStop",function(value){
-    value=value.value;
   $('#waktu_slider').slider({
     formatter: function(nilai) {
     
@@ -394,9 +395,12 @@ $("#waktu_slider").on("slideStop",function(value){
         menit="00";
       }
       var hour=jam+":"+menit;
+      $("#waktu_maksimum").html(hour);
       return hour;
     }
   });
+$("#waktu_slider").on("slideStop",function(value){
+    value=value.value;
 
       var hasil_search=$(".kotakdata");
         for(i=0; i<hasil_search.length; i++){

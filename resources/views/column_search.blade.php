@@ -125,7 +125,7 @@
                                           </div>
                                   </div>
                                   <div class="col-md-4">
-                                      <div style="float: right" class="btn-group" role="group" aria-label="...">
+                                      <div style="float: right" class="btn-group" role="group" aria-label="..." id="return_button">
                                             <button type="button" class="btn remove_border themecolor">Sekali Jalan</button>
                                             <button type="button" class="btn remove_border">Pulang Pergi</button>
                                       </div>
@@ -393,6 +393,11 @@ $("#destination-list").on('click', 'li',function(){
   $("#destination-search").hide();
   $("form input[name='destination1']").val(data[$(this)[0].attributes['value'].value].DisplayName);
   $("form input[name='destination']").val($(this)[0].attributes['value'].value);
+});
+
+$("#return_button").on("click", "button",function(){
+  $("#return_button button").removeClass("themecolor");
+  $(this).addClass("themecolor");
 });
 
 /*$("form input[name='destination1']").input(function(){

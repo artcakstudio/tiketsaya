@@ -150,13 +150,16 @@
         form.submit();
         
     });
+
     var nowDate = new Date();
-    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
-    /*$(".datepicker").datepicker({changeMonth: true,
+    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0); 
+
+    $(".datepicker").datepicker({changeMonth: true,
         changeYear: true,
         format: "dd-mm-yy", 
-        startDate: today 
-    });*/
+        startDate: today ,
+        minDate: 0
+    });
 
 
     $('img').error(function(){
