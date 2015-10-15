@@ -69,7 +69,7 @@ $hari=date('D',strtotime($tanggal));
                                 <h4>Fasilitas</h4>
                             </div>
                         </div>
-                        <div class="kotakfilter" style="width:14%" onclick="sorting('price')">
+                        <div class="kotakfilter" style="width:14%" onclick='sorting("price")'>
                             <div class="filter_data">
                                 <h4>Harga</h4>
                             </div>
@@ -82,34 +82,34 @@ $hari=date('D',strtotime($tanggal));
                         
                     </div>
                     <div class="row" style="margin-top:10px">
-                      <div class="kotakfilter" data_filter="filter_transit">
+                      <div class="kotakfilter" data-filter="filter_transit">
                           <div class="filter_data" >
                               <h4>Pilih  Pemberhentian</h4>
                           </div>
                       </div>
-                      <div class="kotakfilter" data_filter="filter_waktu" >
+                      <div class="kotakfilter" data-filter="filter_waktu" >
                           <div class="filter_data">
                               <h4>Pilih Waktu</h4>
                           </div>
                       </div>
-                      <div class="kotakfilter"  data_filter="filter_maskapai">
+                      <div class="kotakfilter"  data-filter="filter_maskapai">
                           <div class="filter_data">
                               <h4>Pilih Maskapai</h4>
                           </div>
                       </div>
-                      <div class="kotakfilter" >
-                          <div class="filter_data">
-                              <h4>Pilih Tanggal</h4>
-                          </div>
-                      </div>
-                      <div class="kotakfilter"  data_filter="filter_harga">
+                      <div class="kotakfilter"  data-filter="filter_harga">
                           <div class="filter_data">
                               <h4>Pilih Harga</h4>
                           </div>
                       </div>
+                      <div class="kotakfilter" data-filter="clear_filter">
+                          <div class="filter_data" >
+                              <h4>Clear Filter</h4>
+                          </div>
+                      </div>
                     </div>
 
-                      <div class="row data_filter"  id="filter_harga" style="display:none">
+                      <div class="row data-filter"  id="filter_harga" style="display:none">
                         <div class="row">
                           <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="<?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?>" data-slider-step="1000" data-slider-value="<?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?>"/>
                         </div>
@@ -121,12 +121,12 @@ $hari=date('D',strtotime($tanggal));
                         </div>
                       </div>
 
-                      <div id="filter_maskapai" style="display:none" class="row data_filter">
+                      <div id="filter_maskapai" style="display:none" class="row data-filter">
                         
                       </div>
                       
 
-                      <div class="row data_filter col-md-12" id="filter_waktu" style="display:none;">
+                      <div class="row data-filter col-md-12" id="filter_waktu" style="display:none;">
                         <div class="row" >
                           <input id="waktu_slider" data-slider-id='ex1Slider' type="text" data-slider-min="180" data-slider-max="1440" data-slider-step="10" data-slider-value="1440"/>
                         </div>
@@ -274,7 +274,7 @@ var data_filter=data.slice(0);
 var data_filter_temp=[];
 
 
-function find_schedule(id_penerbangan, flag){
+function find_schedule(id_penerbangan, flag,element){
   var object;
   if(flag==0){
     for(indeks=0; indeks<data_filter.length; indeks++){
@@ -283,7 +283,8 @@ function find_schedule(id_penerbangan, flag){
         data_filter.splice(indeks,1);
         break;
       }
-    }  
+    } 
+        $(element).hide();
   }
   else{
     for(indeks=0; indeks<data_filter_temp.length; indeks++){
@@ -291,6 +292,7 @@ function find_schedule(id_penerbangan, flag){
           object=data[indeks];
           data_filter.push(object);
           data_filter_temp.splice(indeks,1);
+          $(element).show();
           break;
         }
     }
@@ -300,12 +302,12 @@ function find_schedule(id_penerbangan, flag){
 
 function sorting(parameter){
   sort[parameter]=3-sort[parameter];
-  console.log(data_filter);h
   $.ajax({
     url : "<?php echo url('pesawat/search-ajax')?>",
     type : "POST",
     data : {"schedule_search":data_filter,"_token":token,"parameter":parameter, "x":sort[parameter]},
     success:function(hasil_ajax){
+      //console.log(hasil_ajax);
       $("#accordion").empty();
       $("#accordion").append(hasil_ajax);
       updateView();
@@ -314,6 +316,31 @@ function sorting(parameter){
 }
 
 //filter
+var price=1000000000;
+var time=10000000000;
+var nama_maskapai=<?php echo json_encode($airline)?>;
+function filter_function(){
+  var hasil_search=$(".kotakdata");
+  console.log(nama_maskapai);
+  for(i=0; i<hasil_search.length; i++){
+    var id_maskapai=$(hasil_search[i]).find(".id_maskapai");
+    var harga=$(hasil_search[i]).find("h1.harga_tiket")[0].innerHTML;
+    var waktu=$(hasil_search[i]).find(".waktu_berangkat")[0].innerHTML;
+    var waktu=waktu.split(":");
+    var waktu=parseInt(waktu[0]*60)+parseInt(waktu[1]);
+    if(harga<=price && waktu<=time && nama_maskapai.indexOf($(hasil_search[i]).find(".nama_maskapai")[0].innerHTML)!=-1) {
+      find_schedule(id_maskapai[0].innerText,1); //filter harga
+      $(hasil_search[i]).show();
+    }
+    else{
+      find_schedule(id_maskapai[0].innerText,0);
+      $(hasil_search[i]).hide();
+    }
+  }
+}
+
+
+
 $("#waktu_slider").slider({
 
 });
@@ -342,46 +369,30 @@ $('#ex1').slider({
 $("#ex1Slider").on("slideStop",function(value){
   var hasil_search=$(".kotakdata");
   var harga;
-  var value=value.value;
-  var id_maskapai=$(hasil_search[i]).find(".id_maskapai");
-  console.log(id_maskapai);
-  for(i=0; i<hasil_search.length; i++){
-    harga=$(hasil_search[i]).find("h1.harga_tiket")[0].innerHTML;
-    if(harga>=value && $(hasil_search[i]).is(":visible")){
-      find_schedule(id_maskapai[0].innerText,0);
-      $(hasil_search[i]).hide();
-    }
-    else if(harga<=value && $(hasil_search[i]).is(":hidden")) {
-      find_schedule(id_maskapai[0].innerText,1);
-      $(hasil_search[i]).show();
-    }
-  }
+  price=value.value;
+  filter_function();
 });
+
 $("#filter_maskapai input[type='checkbox']").change(function(){
-  var hasil_search=$(".kotakdata");
-  var nama_maskapai=[];
-  var id_maskapai=$(hasil_search[i]).find(".id_maskapai");
-  $("#filter_maskapai input[type='checkbox']:checked").each(function(){
-    nama_maskapai.push($(this).val());
-  });
-    for(i=0; i<hasil_search.length; i++){
-      if(nama_maskapai.length>0){
-        if(nama_maskapai.indexOf($(hasil_search[i]).find(".nama_maskapai")[0].innerHTML)!=-1 && $(hasil_search[i]).is(":hidden")) {
-          find_schedule(id_maskapai[0].innerText,1);
-          $(hasil_search[i]).show();
-        }
-        else if(nama_maskapai.indexOf($(hasil_search[i]).find(".nama_maskapai")[0].innerHTML)==-1 && $(hasil_search[i]).is(":visible"))
-        {
-          find_schedule(id_maskapai[0].innerText,0);
-          $(hasil_search[i]).hide();
-        }
-      }
-      else{
-        find_schedule(id_maskapai[0].innerText,1);
-        $(hasil_search[i]).show();
+
+  console.log($("#filter_maskapai input[type='checkbox']"));
+  $("#filter_maskapai input[type='checkbox']").each(function(){
+    if(this.checked==false){
+      if(nama_maskapai.indexOf($(this).val())!=-1) {        
+        nama_maskapai.splice(nama_maskapai.indexOf($(this).val()),1);
       }
     }
-})
+    else{
+      if(nama_maskapai.indexOf($(this).val())==-1) {        
+      nama_maskapai.push(this.value);
+      }
+    }
+  });
+  if ($("#filter_maskapai input[type='checkbox']:checked").length==0){
+    nama_maskapai=<?php echo json_encode($airline)?>;
+  }
+  filter_function();
+});
 
 //filter waktu
 
@@ -400,43 +411,28 @@ $("#filter_maskapai input[type='checkbox']").change(function(){
     }
   });
 $("#waktu_slider").on("slideStop",function(value){
-    value=value.value;
-
-      var hasil_search=$(".kotakdata");
-        for(i=0; i<hasil_search.length; i++){
-
-          var waktu=$(hasil_search[i]).find(".waktu_berangkat")[0].innerHTML;
-          var waktu=waktu.split(":");
-          var waktu=parseInt(waktu[0]*60)+parseInt(waktu[1]);
-          var id_maskapai=$(hasil_search[i]).find(".id_maskapai");
-            if(value>=waktu){
-              if($(hasil_search[i]).is(":hidden")) {
-            //    console.log(id_maskapai[0].innerText);
-                find_schedule(id_maskapai[0].innerText,1);
-              $(hasil_search[i]).show();
-                
-              }
-            }
-            else{
-                if ($(hasil_search[i]).is(":visible")) {
-                  //console.log(id_maskapai[0].innerText);
-                  find_schedule(id_maskapai[0].innerText,0);
-                  $(hasil_search[i]).hide();
-                };
-            }
-        }
+    time=value.value;
+    filter_function();
 });
 
 
 $(".kotakfilter").click(function(){
   var filter=$(this)[0].attributes[1].value;
-  $("div.data_filter").each(function(){
-    $(this).hide();
-  });
-  $("#"+filter).show();
-  $($(".kotakfilter").find(".filter_data")).removeClass("selected");
-  //console.log($("div.data_filter"));
-  $($(this).find(".filter_data")).addClass("selected");
+  if(filter=="clear_filter"){
+    var price=1000000000;
+    var time=10000000000;
+    var nama_maskapai=<?php echo json_encode($airline)?>;
+     filter_function();
+     console.log(price,time,nama_maskapai);
+  }
+  else{
+    $("div.data-filter").each(function(){
+      $(this).hide();
+    });
+    $("#"+filter).show();
+    $($(".kotakfilter").find(".filter_data")).removeClass("selected");
+    $($(this).find(".filter_data")).addClass("selected");
+  }
 });
 </script>
 @stop

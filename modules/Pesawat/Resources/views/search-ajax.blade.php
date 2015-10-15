@@ -1,5 +1,7 @@
+
 <?php
 $i=0;
+$airline=[];
 foreach ($schedule_search as $row) {
  /*foreach($key as $row) { */?>
   <div class="panel kotakdata" style="border-radius: inherit">
@@ -9,7 +11,7 @@ foreach ($schedule_search as $row) {
             <div><center><img src="<?php echo url('public/Assets/pesawatlogo/'.$row['airline'].'.png')?>"/></center></div>
         </div>
         <div class="data_maskapai">
-            <div><h3 class="id_maskapai">{{$row['plane']}}</h3></div>
+              <div><h3 class="id_maskapai">{{$row['plane']}}</h3></div>
         </div>
         <div class="data_maskapai">
             <div>
