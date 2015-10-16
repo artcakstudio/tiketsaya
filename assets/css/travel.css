@@ -643,3 +643,10 @@ body {
 #ex1Slider .slider-selection {
     background: #BABABA;
 }
+.box_data_tambahan_penumpang{
+    border: 1px solid #ddd;visibility:hidden;margin-bottom:10px
+}
+.error_form{
+    color:red;
+    margin-left: 10px;
+}

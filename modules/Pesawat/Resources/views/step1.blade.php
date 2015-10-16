@@ -54,7 +54,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                         </div>
                         <!-- Isian  Data Penumpang -->
                         {!!Form::open(['route'=>'pesawat.transaksi.preview','method'=>'post'])!!}
-                        <div class="col-md-8"style=" padding-left:30px; margin-top:-10px;z-index:1000">
+                        <div class="col-md-8 data_pemesan" style=" padding-left:30px; margin-top:-10px;z-index:1000">
                             <div class="judul">
                                 <h4>Isi data pemesan yang dapat dihubungi<h4>
                             </div>
@@ -64,8 +64,8 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                 <label>Nama</label>
                                 <div class="kotak_nama">
                                     <input type="text" name="COSTUMER_NAME" style="width:90%" >
-                                    <p>Sesuai KTP/Paspor/SIM (tanpa tanda baca atau gelar)</p>
                                 </div>
+                                    <p>Sesuai KTP/Paspor/SIM (tanpa tanda baca atau gelar)</p>
                             </div>
                             <div class="form_data_penumpang">
                                 <label>No HP Pemesan (Kontak)</label>
@@ -156,29 +156,35 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                               </ul>
                             </div>
                             <div id="data_penumpang">
-                             <div class="box_data_tambahan_penumpang" style="border: 1px solid #ddd;visibility:hidden">
+                             <div class="box_data_tambahan_penumpang" style="">
                                 <div class="tulisan_penumpang_dewasa" style="text-align:center">
-                                    <h4>Penumpang Dewasa (12 Tahun Ke Atas)</h4>
+                                    <h4>Penumpang Dewasa</h4>
                                 </div>
                                 <div class="form_data_penumpang_tambahan">
                                     <!-- Kolom Titel -->
-                                    <div class="tulisan_titel" style="padding-left:10px; padding-top:10px">
-                                        <label>Titel</label>
-                                        <div class="kotak_titel">
-                                            <select style="height:30px" name="PASSENGER_DETAIL_TITTLE[]">
-                                              <option value="Mr">Mr.</option>
-                                              <option value="Mrs">Mrs.</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                     <!-- Kolom Nama -->
-                                    <div class="tulisan_nama_tambahan" style="margin-left:100px; margin-top:-55px" >
-                                        <label>Nama Lengkap (sesuai KTP/SIM/Paspor)</label>
-                                        <div class="kotak_nama_tambahan">
-                                            <input type="text" name="PASSENGER_DETAIL_NAME[]" style="height:30px; width:70%">
-                                            <p>Tanpa gelar dan tanda baca</p>
+                                    <div class="row">
+                                        <div class="tulisan_titel col-md-4" style="margin-left:10px; padding-top:10px">
+                                            <label>Titel</label>
+                                            <div class="kotak_titel">
+                                                <select style="height:30px" name="PASSENGER_DETAIL_TITTLE[]">
+                                                  <option value="Mr">Mr.</option>
+                                                  <option value="Mrs">Mrs.</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                            
+                                        <div class="tulisan_nama_tambahan col-md-12" style="margin-left:100px; margin-top:-55px" >
+                                            <label>Nama Lengkap (sesuai KTP/SIM/Paspor)</label>
+                                            <div class="kotak_nama_tambahan">
+                                                <input type="text" name="PASSENGER_DETAIL_NAME[]" style="height:30px; width:70%">
+                                                <p>Tanpa gelar dan tanda baca</p>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="row tanggal_lahir">
+                                    </div>
+                                </div>
                                     <div class="tulisan_bagasi" style="padding:10px 0px 10px 10px">
                                         <label>Jumlah Bagasi</label>
                                         <div class="kotak_bagasi">
@@ -187,7 +193,6 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                             </select>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                         </div>
@@ -221,32 +226,50 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
     };
 
     $("div.Tombol_Next").click(function(){
+        var name=jQuery.parseJSON('{"form":[{"nama":"Nama Pemesan","name":"COSTUMER_NAME"},{"nama":"Telepon Pemesan","name":"COSTUMER_TELP"},{"nama":"Email Pemesan","name":"COSTUMER_EMAIL"}]}');
+        var flag=0;
+        console.log(name.form.length);
+        for(i=0; i<name.form.length;i++){
+            var name_value=$("div.data_pemesan input[name='"+name.form[i].name+"']")[0].value;
+            console.log(name_value);
+            if(name_value==""){
+                console.log($("div.data_pemesan input[name='"+name.form[i].name+"']").parent());
+                $("div.data_pemesan input[name='"+name.form[i].name+"']").parent().append("<h1 class='error_form row'>"+name.form[i].nama+" belum di isi</h1>");
+                flag=1;
+                return;
+            }
+        }
         
         var adult=<?php echo Session::get('PESAWAT')['input']['adult'];?>;
         var children=<?php echo Session::get('PESAWAT')['input']['children'];?>;
         var infant=<?php echo Session::get('PESAWAT')['input']['infant'];?>;
         $("div.box_data_tambahan_penumpang").css("visibility","visible");
         console.log($("div.box_data_tambahan_penumpang"));
-        var form_penumpang=$("div.box_data_tambahan_penumpang").html();
+        var form_penumpang=$("#data_penumpang").html();
         $("div.Tombol_Next").remove();
         $("div.Tombol_Next_submit").css("visibility","visible");
         for (i=1; i<adult; i++){
             $("#data_penumpang").append(form_penumpang);
         }
-        $("#data_penumpang tulisan_penumpang_dewasa h4").html("Penumpang Anak-Anak");
-        var form_penumpang=$("div.box_data_tambahan_penumpang").html();
-         for (i=1; i<children; i++){
+
+        for (i=1; i<children; i++){
+
             $("#data_penumpang").append(form_penumpang);
+            var box_data_tambahan_penumpang=$($("div.box_data_tambahan_penumpang")[$("div.box_data_tambahan_penumpang").length-1]).find("div.tulisan_penumpang_dewasa h4");
+            box_data_tambahan_penumpang.html("Penumpang Anak Anak");
+            $($("div.box_data_tambahan_penumpang")[$("div.box_data_tambahan_penumpang").length-1]).find("div.tanggal_lahir").append('<div class="tulisan_nama_tambahan col-md-5" style="margin-left:100px;" ><label>Tanggal Lahir</label><div class="kotak_nama_tambahan"><input type="text" class="datepicker" name="PASSENGER_DETAIL_BIRTHDAY[]" class="datepicker" style="height:30px; width:70%"></div></div>');
         }
-        if (infant>0){
-        $("#data_penumpang tulisan_penumpang_dewasa h4").html("Penumpang Balita");
-        $("#data_penumpang div.box_data_tambahan_penumpang").append('<div><label>Tanggal Lahir</label><div class="kotak_nama_tambahan"><input type="text" name="tanggal_lahir[]" class="datepicker"></div></div>')
-    
-        }
-        var form_penumpang=$("div.box_data_tambahan_penumpang").html();
-         for (i=1; i<infant; i++){
-            $("#data_penumpang").append(form_penumpang);
+
+        form_penumpang.replace("Penumpang Anak-Anak","Penumpang Balita");
+         for (i=0; i<infant; i++){
+            var box_data_tambahan_penumpang=$($("div.box_data_tambahan_penumpang")[$("div.box_data_tambahan_penumpang").length-1]).find("div.tulisan_penumpang_dewasa h4");
+            box_data_tambahan_penumpang.html("Penumpang Balita");
+            $($("div.box_data_tambahan_penumpang")[$("div.box_data_tambahan_penumpang").length-1]).find("div.tanggal_lahir").append('<div class="tulisan_nama_tambahan col-md-5" style="margin-left:100px; ><label>Tanggal Lahir</label><div class="kotak_nama_tambahan"><input type="date" class="datepicker" name="PASSENGER_DETAIL_BIRTHDAY[]" class="datepicker" style="height:30px; width:70%"></div></div>');
         }
     });
+
+//form step 1 validation
+
+
 </script>
 @stop

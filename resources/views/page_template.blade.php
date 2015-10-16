@@ -154,11 +154,14 @@
     var nowDate = new Date();
     var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0); 
 
-    $(".datepicker").datepicker({changeMonth: true,
-        changeYear: true,
-        format: "dd-mm-yy", 
-        startDate: today ,
-        minDate: 0
+    $("body").on('focus',".datepicker", function(){
+        $(this).datepicker({changeMonth: true,
+            changeYear: true,
+            format: "dd-mm-yy", 
+            startDate: today ,
+            minDate: 0
+        });
+
     });
 
 

@@ -271,28 +271,23 @@ var sort={"airline":1,"price":1,"berangkat":1, "tiba":1, "durasi":1};
 
 var data=<?php echo json_encode($schedule_search)?>;
 var data_filter=data.slice(0);
-var data_filter_temp=[];
 
 
-function find_schedule(id_penerbangan, flag,element){
+function find_schedule(id_penerbangan, flag){
   var object;
   if(flag==0){
     for(indeks=0; indeks<data_filter.length; indeks++){
       if (data_filter[indeks].plane==id_penerbangan){
-        data_filter_temp.push(data_filter[indeks]);
         data_filter.splice(indeks,1);
         break;
       }
     } 
-        $(element).hide();
   }
   else{
-    for(indeks=0; indeks<data_filter_temp.length; indeks++){
+    for(indeks=0; indeks<data.length; indeks++){
         if (data[indeks].plane==id_penerbangan){
           object=data[indeks];
           data_filter.push(object);
-          data_filter_temp.splice(indeks,1);
-          $(element).show();
           break;
         }
     }
@@ -331,6 +326,7 @@ function filter_function(){
     if(harga<=price && waktu<=time && nama_maskapai.indexOf($(hasil_search[i]).find(".nama_maskapai")[0].innerHTML)!=-1) {
       find_schedule(id_maskapai[0].innerText,1); //filter harga
       $(hasil_search[i]).show();
+      console.log(i);
     }
     else{
       find_schedule(id_maskapai[0].innerText,0);
@@ -339,11 +335,6 @@ function filter_function(){
   }
 }
 
-
-
-$("#waktu_slider").slider({
-
-});
 $('#ex1').slider({
   formatter: function(value) {
 
@@ -394,6 +385,7 @@ $("#filter_maskapai input[type='checkbox']").change(function(){
   filter_function();
 });
 
+
 //filter waktu
 
   $('#waktu_slider').slider({
@@ -419,11 +411,13 @@ $("#waktu_slider").on("slideStop",function(value){
 $(".kotakfilter").click(function(){
   var filter=$(this)[0].attributes[1].value;
   if(filter=="clear_filter"){
+    alert('lalala');
     var price=1000000000;
     var time=10000000000;
     var nama_maskapai=<?php echo json_encode($airline)?>;
-     filter_function();
-     console.log(price,time,nama_maskapai);
+    filter_function();
+    data_filter=data.slice(0);
+    console.log(price,time,nama_maskapai);
   }
   else{
     $("div.data-filter").each(function(){
