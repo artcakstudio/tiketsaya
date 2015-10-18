@@ -20,6 +20,7 @@ class PaymentController extends Controller {
 	protected $data_type;
     protected $server_key = "VT-server-vcxip7_cFu7fcbymYowGQa9Y";
     protected $is_production = false;
+    protected $code_booking;
 
 	public function index()
 	{
@@ -30,13 +31,23 @@ class PaymentController extends Controller {
         else if(Session::has('DATA_TRAVEL'))
         {
             $this->data_type = 'TRAVEL';
+
+        }
+        else if(Session::has('PESAWAT')){
+            $this->data_type='TICKET';
+            $gross_amount = Session::get('PESAWAT')['DATA_COSTUMER'][$this->data_type.'_TRANSACTION_PRICE'];\
+            Session(['type'=>'PESAWAT']);
         }
 //print_r(Session::get('DATA_COSTUMER'));
-
-		$gross_amount = Session::get('DATA_COSTUMER')[$this->data_type.'_TRANSACTION_PRICE'];
+//dd(Session::all());
 	    return view('payment::index', compact('gross_amount'));
 
 	}
+
+    public function getCodeBooking()
+    {
+        
+    }
 
     public function setOrderIdType($order_id)
     {
@@ -52,14 +63,53 @@ class PaymentController extends Controller {
 
 	public function checkout()
 	{
-        $this->setOrderIdType(Session::get('NO_PEMESANAN'));
+        $link=["Citilink"=>"citilink","'Sriwijaya Air"=>"sriwijaya"];
+        $data=Session::get('PESAWAT')['input'];
+        $data=["depart_value"=>Session::get('PESAWAT')['DATA_PESAWAT']['input']['value'],
+        'return_value'=>'0~P~~P~RGFR~~1~X|QG~ 819~ ~~CGK~02/13/2016 21:10~SUB~02/13/2016 22:40~'];
+        $data_booking['adult']=[];
+        $data_booking['children']=[];
+        $data_booking['infant']=[];
+
+        for($i=0; $i<sizeof(Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE']); $i++){
+ 
+                $data_booking[Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]][$i]['first_name']=Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_NAME'][$i];
+                $data_booking['adult'][$i]['last_name']="";
+                $data_booking['adult'][$i]['title']=Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i];
+                $data_booking['adult'][$i]['wheelchair']=false;
+                $data_booking['adult'][$i]['id']="5104032709940003";
+
+        }
+        $data_booking['contact']=["first_name"=>Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_NAME'], "last_name"=>"","origin_phone"=>Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_TELP']];
+   
+     //  echo json_encode($data_booking);
+        
+        $data=array_merge($data,$data_booking);
+        $data= json_encode($data);
+
+        $url='localhost:6070/'.$link[Session::get('PESAWAT')['DATA_PESAWAT']['airline']].'/reserve';
+            $ch = curl_init();
+    
+            curl_setopt($ch,CURLOPT_URL, $url);
+            curl_setopt($ch,CURLOPT_POST, TRUE);
+            curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_HEADER, 0); 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            
+            $result = json_decode($result,true);
+            print_r($result);
+      //  echo $data;
+        dd(Session::all());
+        /*$this->setOrderIdType(Session::get('NO_PEMESANAN'));
 
         \Veritrans_Config::$serverKey = $this->server_key;
         \Veritrans_Config::$isProduction = $this->is_production;
 
         $transaction_details = array(
-            'order_id' => Session::get('NO_PEMESANAN'),
-            'gross_amount' => Session::get('DATA_COSTUMER')[$this->data_type.'_TRANSACTION_PRICE']
+            'order_id' => Session::get(Session::get('type'))['DATA_COSTUMER']['NO_PEMESANAN'] ,
+            'gross_amount' => Session::get(Session::get('type'))['DATA_'.Session::get('type')]['price'],
             );
 
         $input = Input::except('_token');
@@ -101,6 +151,7 @@ class PaymentController extends Controller {
                 return view('payment::response.fail');
             }
         }
+        Session::forget("PESAWAT");*/
 	}
 
 
@@ -135,9 +186,9 @@ class PaymentController extends Controller {
         if(Session::has('DATA_TRAVEL'))
         {
             $COSTUMER_ID = DB::table('costumer')->insertGetId([
-                    'COSTUMER_NAME' => Session::get('DATA_COSTUMER')['COSTUMER_NAME'],
-                    'COSTUMER_EMAIL' => Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
-                    'COSTUMER_TELP' => Session::get('DATA_COSTUMER')['nohp_prefix'].Session::get('DATA_COSTUMER')['COSTUMER_TELP'],
+                    'COSTUMER_NAME' => Session::get(Session::get('type'))['DATA_COSTUMER']['COSTUMER_NAME'],
+                    'COSTUMER_EMAIL' => Session::get(Session::get('type'))['DATA_COSTUMER']['COSTUMER_EMAIL'],
+                    'COSTUMER_TELP' => Session::get(Session::get('type'))['DATA_COSTUMER']['nohp_prefix'].Session::get(Session::get('type'))['DATA_COSTUMER']['COSTUMER_TELP'],
                 ]);
 
             // Where is TRAVEL SCHEDULE ID?
@@ -151,11 +202,11 @@ class PaymentController extends Controller {
             ]);
 
         }
-        else if(Session::has('DATA_RENT'))
+   /*     else if(Session::has('DATA_RENT'))
         {
             $COSTUMER_ID = DB::table('costumer')->insertGetId([
                 'COSTUMER_NAME' => Session::get('DATA_COSTUMER')['COSTUMER_NAME'],
-                'COSTUMER_EMAIL' => Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
+                'COSTUMER_EMAIL' => Session::get(Session::get('type'))['DATA_COSTUMER']['COSTUMER_EMAIL'],
                 'COSTUMER_TELP' => Session::get('DATA_COSTUMER')['nohp_prefix'].Session::get('DATA_COSTUMER')['COSTUMER_TELP'],
             ]);
 
@@ -166,6 +217,40 @@ class PaymentController extends Controller {
                 'STATUS_TRANSACTION_RENT_ID' => $TRANSACTION_STATUS,
                 'RENT_SCHEDULE_ID' => Session::get('DATA_COSTUMER')['RENT_SCHEDULE_ID'],
             ]);
+        }*/
+        else if(Session::get('type')=='PESAWAT'){
+             $COSTUMER_ID = DB::table('costumer')->insertGetId([
+                'COSTUMER_NAME' => Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_NAME'],
+                'COSTUMER_EMAIL' => Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_EMAIL'],
+                'COSTUMER_TELP' => Session::get('PESAWAT')['DATA_COSTUMER']['nohp_prefix'].Session::get('DATA_COSTUMER')['COSTUMER_TELP'],
+            ]);
+
+           $TICKET_ID=DB::table('TICKET_TRANSACTION')->insertGetId([
+                'COSTUMER_ID' => $COSTUMER_ID,
+                'TICKET_TRANSACTION_CODE' => Session::get('PESAWAT')['DATA_COSTUMER']['NO_PEMESANAN'],
+                'TICKET_TRANSACTION_PRICE' => Session::get('PESAWAT')['DATA_PESAWAT']['price'],
+                'TICKET_TRANSACTION_STATUS_ID' => '1',
+            ]);
+                for($i=0; $i<sizeof(Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE']); $i++){
+                    DB::table('PASSENGER_DETAIL')->insert([
+                        'TICKET_TRANSACTION_ID'=>$TICKET_ID,
+                        'PASSENGER_DETAIL_NAME'=>Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_NAME'][$i],
+                        'PASSENGER_DETAIL_KTP'=>'',
+                        'PASSENGER_DETAIL_TITTLE'=>Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i],
+                    ]);
+                }
+
+                DB::table('TICKET_TRANSACTION_DETAIL')->insert([
+                    'TICKET_TRANSACTION_ID'=>$TICKET_ID,
+                    'TICKET_TRANSACTION_DETAIL_CODE_PESAWAT'=>Session::get('PESAWAT')['DATA_PESAWAT']['plane'],
+                    'TICKET_TRANSACTION_DETAIL_DEPARTURE'=>Session::get('PESAWAT')['DATA_PESAWAT']['ports'][0],
+                    'TICKET_TRANSACTION_DETAIL_DESTINATION'=>Session::get('PESAWAT')['DATA_PESAWAT']['ports'][1],
+                    'TICKET_TRANSACTION_DETAIL_AIRLINE'=>Session::get('PESAWAT')['DATA_PESAWAT']['airline'],
+                    'TICKET_TRANSACTION_DETAIL_TIMEDEPART'=>Session::get('PESAWAT')['DATA_PESAWAT']['time'][0],
+                    'TICKET_TRANSACTION_DETAIL_TIMEARRIVE'=>Session::get('PESAWAT')['DATA_PESAWAT']['time'][1],
+                    'TICKET_TRANSACTION_DETAIL_TOTAL_PASSENGER'=>sizeof(Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE']),
+                    'TICKET_TRANSACTION_DETAIL_DETAIL'=>json_encode(Session::get('PESAWAT')['DATA_PESAWAT']),
+                    ]);
         }
     }
 	
@@ -189,7 +274,7 @@ class PaymentController extends Controller {
             // success
             // kirim invoice
             Mail::send('payment::mail-templates.invoice', compact('result'), function($message) use ($result) {
-                $message->to(Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
+                $message->to(Session::get(Session::get('type'))['DATA_COSTUMER']['COSTUMER_EMAIL'],
                     Session::get('DATA_COSTUMER')['COSTUMER_NAME'])->subject('Invoice '.$result->order_id);
             });
         }
@@ -228,7 +313,7 @@ class PaymentController extends Controller {
         {
             // pending
             Mail::send('payment::mail-templates.va-instruction', compact('result'), function($message) use ($result) {
-                $message->to(Session::get('DATA_COSTUMER')['COSTUMER_EMAIL'],
+                $message->to(Session::get(Session::get('type'))['DATA_COSTUMER']['COSTUMER_EMAIL'],
                     Session::get('DATA_COSTUMER')['COSTUMER_NAME'])->subject('Instruksi Pembayaran '.$result->order_id);
             });
         }
@@ -243,7 +328,7 @@ class PaymentController extends Controller {
         $order_id = $result['order_id'];
         $this->setOrderIdType($order_id);
 
-<<<<<<< HEAD
+
         Mail::send('payment::mail-templates.dummy', array(), function ($message) {
             $prep_transaction_code = $this->data_type . '_TRANSACTION_CODE';
             $message->to('reisuke.raizan@gmail.com',
@@ -381,7 +466,6 @@ class PaymentController extends Controller {
 //                }
 //            }
 //        }
-=======
         if($payment_type == "bank_transfer") {
             if($this->data_type == "TRAVEL") {
 
@@ -513,6 +597,5 @@ class PaymentController extends Controller {
                 }
             }
         }
->>>>>>> 7e41878d693415115aeca07c9e38f3de7db27529
     }
 }

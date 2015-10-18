@@ -97,13 +97,13 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                             </div>
                             <div class="rincian_harga col-md-7" style="padding-left:10px">
                                 <div class="rincian_harga_1">
-                                    <p> Remaja x <tag id="totalOrang_adult">{{Session::get('input')['adult']}} Orang</tag> : </p>
+                                    <p> Remaja x <tag id="totalOrang_adult">{{Session::get('PESAWAT')['input']['adult']}} Orang</tag> : </p>
                                 </div>
                                 <div class="rincian_harga_1">
-                                    <p> Anak Anak x <tag id="totalOrang_children">{{Session::get('input')['children']}} Orang</tag> : </p>
+                                    <p> Anak Anak x <tag id="totalOrang_children">{{Session::get('PESAWAT')['input']['children']}} Orang</tag> : </p>
                                 </div>
                                 <div class="rincian_harga_1">
-                                    <p> Manula x <tag id="totalOrang_infant">{{Session::get('input')['infant']}} Orang</tag> : </p>
+                                    <p> Manula x <tag id="totalOrang_infant">{{Session::get('PESAWAT')['input']['infant']}} Orang</tag> : </p>
                                 </div>
                                 <div class="rincian_harga_2">
                                     <p>Harga Bagasi:</p>
@@ -119,13 +119,13 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                             </div>
                             <div class="daftar_harga col-md-5" style="width:45%;position:absolute;margin-left:55%; padding-right:10px ">
                                 <div class="harga_1">
-                                    <span style="float:left">Rp</span><p><b id="harga_adult" class="rupiah">{{Session::get('PESAWAT')['DATA_PESAWAT']['price']}}</b></p>
+                                    <span style="float:left">Rp</span><p><b id="harga_adult" class="">{{Session::get('PESAWAT')['DATA_PESAWAT']['price']*Session::get('PESAWAT')['input']['adult']}}</b></p>
                                 </div>
                                 <div class="harga_1">
-                                    <span style="float:left">Rp</span><p><b id="harga_children">0</b></p>
+                                    <span style="float:left">Rp</span><p><b id="harga_children">{{Session::get('PESAWAT')['DATA_PESAWAT']['price']*Session::get('PESAWAT')['input']['children']}}</b></p>
                                 </div>
                                 <div class="harga_1">
-                                    <span style="float:left">Rp</span><p><b id="harga_infant">0</b></p>
+                                    <span style="float:left">Rp</span><p><b id="harga_infant">{{Session::get('PESAWAT')['DATA_PESAWAT']['price']*Session::get('PESAWAT')['input']['infant']}}</b></p>
                                 </div>
                                 <div class="harga_2">
                                     <span style="float:left">Rp</span><p><b>0</b></p>
@@ -134,7 +134,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                     <p>0<p>
                                 </div>
                                 <div class="harga_4" style="font-size:16px">
-                                    <span style="float:left"></span><p><b id="totalharga" class="rupiah"><?php echo (Session::get('input')['adult']+Session::get('input')['infant']+Session::get('input')['children'] )*Session::get('PESAWAT')['DATA_PESAWAT']['price'] ?></b></p>
+                                    <span style="float:left"></span><p><b id="totalharga" class=""><?php echo (Session::get('PESAWAT')['input']['adult']+Session::get('PESAWAT')['input']['infant']+Session::get('PESAWAT')['input']['children'] )*Session::get('PESAWAT')['DATA_PESAWAT']['price'] ?></b></p>
                                 </div>
                             </div>
                         </div>

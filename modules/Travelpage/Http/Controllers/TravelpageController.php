@@ -86,8 +86,8 @@ class TravelpageController extends Controller {
 			$no_pemesanan = 'T' . strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
 			Session(['DATA_COSTUMER' => $data, 'NO_PEMESANAN' => $no_pemesanan]);
 		}
-print_r($data);
-//		return view('travelpage::preview');
+//print_r($data);
+		return view('travelpage::preview');
 	}
 	function scheduleSearchRentang(){
 		$data=Input::all();

@@ -90,7 +90,8 @@
                                               <div class="col-md-4">
                                                   <div class="input-group" >
                                                   <select name="adult" class="form-control remove_border" onchange="adult_check()" value="1">
-                                                        @for($i=0; $i <= 7; $i++)
+                                                        <option value="1" selected>1 Orang</option>
+                                                        @for($i=2; $i <= 7; $i++)
                                                           <option value="{{$i}}">{{$i}} Orang</option>
                                                         @endfor
                                                     </select>
@@ -102,7 +103,8 @@
                                               <div class="col-md-4">
                                                   <div class="input-group ">
                                                   <select name="children" class="form-control remove_border" onchange="children_check()">
-                                                        @for($i=0; $i <= 7; $i++)
+                                                        <option value="0" selected>0 Orang</option>
+                                                        @for($i=1; $i <= 7; $i++)
                                                           <option value="{{$i}}">{{$i}} Orang</option>
                                                         @endfor
                                                     </select>
@@ -114,7 +116,8 @@
                                               <div class="col-md-4">
                                                   <div class="input-group ">
                                                     <select name="infant" class="form-control remove_border" onchange="infant_check()">
-                                                        @for($i=0; $i <= 7; $i++)
+                                                        <option value="0" selected>0 Orang</option>
+                                                        @for($i=1; $i <= 7; $i++)
                                                           <option value="{{$i}}">{{$i}} Orang</option>
                                                         @endfor
                                                     </select>

@@ -14,7 +14,7 @@ class PesawatController extends Controller {
 	public function search()
 	{
 //		$path=url('jsonfile/input.json');
-		$input=Input::all();
+		/*$input=Input::all();
 		unset($input['_token'],$input['origin1'],$input['destination1']);
 		$input['depart_date']=date('Y-m-d',strtotime($input['depart_date']));
 		$input['return_date']=date('Y-m-d',strtotime('2015-10-30'));
@@ -32,7 +32,7 @@ class PesawatController extends Controller {
 		$link[1]='schedule/sriwijaya';
 			/*	$link[2]='schedule/lionair'*/;
 		//$path=["/var/www/tiketsaya/jsonfile/example_airasia.json","/var/www/tiketsaya/jsonfile/example_citilink.json", "/var/www/tiketsaya/jsonfile/example_lionair.json"];
-		foreach ($link as $row) {
+		/*foreach ($link as $row) {
 			$url='localhost:6070/'.$row;
 			$ch = curl_init();
 	
@@ -54,12 +54,12 @@ class PesawatController extends Controller {
 			if(isset($result['return'])){
 				array_merge($schedule_search_return, $result['return']);
 			}
-		}
+		}*/
 			$input["type"]="pesawat";
 		
 //		print_r($schedule_search);
-			/*$input=Input::all();
-			unset($input['input']['_token']);
+			$input=Input::all();
+			unset($input['_token']);
 			$path=url('jsonfile/example_lionair.json');
 			$temp=json_decode(file_get_contents("$path"),true);
 			$schedule_search=$temp['depart'];
@@ -69,7 +69,7 @@ class PesawatController extends Controller {
 			//$schedule_search=$schedule_search+$temp['depart'];
 			$schedule_search=array_merge($schedule_search , $temp['depart']);
 					
-			*/
+			
 	//		print_r($input);
 		//dd($schedule_search);
 
@@ -82,6 +82,7 @@ class PesawatController extends Controller {
 		
 		$data=Input::all();
 		$schedule_search=$this->bubbleSort($data['schedule_search'],$data['parameter'],$data['x']);
+
 		return view::make('pesawat::search-ajax',compact('schedule_search'));
 	}
 	function step1()
@@ -95,18 +96,21 @@ class PesawatController extends Controller {
 		if(!isset(Session::get('PESAWAT')['DATA_PESAWAT'])){
 			session(['PESAWAT.DATA_PESAWAT'=>$temp]);
 		}
+
 		
 //Session::flush();
-	//	dd(Session::all());
+		//dd(Session::all());
 		return view('pesawat::step1');
 	}
 	function preview(){
 		$data=Input::all();
 		unset($data['_token']);
+$no_pemesanan = 'P' . strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
+	/*	if(!isset(Session::get('PESAWAT')['DATA_COSTUMER']['NO_PEMESANAN'])) {
+			$no_pemesanan = 'P' . strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
+		}*/
+			Session(['PESAWAT.DATA_COSTUMER' => $data, 'PESAWAT.DATA_COSTUMER.NO_PEMESANAN' => $no_pemesanan]);
 
-		Session(['PESAWAT.DATA_COSTUMER'=>$data]);
-
-			//dd(Session::all());
 		return view('pesawat::preview');
 	}
 	

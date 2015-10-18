@@ -54,7 +54,7 @@ $pesawat=Session::get('PESAWAT');
                                     <p>No. Pesanan</p>
                                 </div>
                                 <div class="no_pesanan" style="margin-left:220px; margin-top:-28px">
-                                    <p><b>49458579</b></p>
+                                    <p><b>{{Session::get('PESAWAT')['DATA_COSTUMER']['NO_PEMESANAN']}}</b></p>
                                 </div>
                             </div>
                          </div>
@@ -69,7 +69,7 @@ $pesawat=Session::get('PESAWAT');
                                     <p>Dengan mengklik tombol di bawah, Anda menyetujui <u>Syarat & Ketentuan</u> dan <u>Kebijakan Privasi</u> Traveloka</p>
                                 </div>
                                 <div class="logo_lanjut" style="margin-bottom:15px">
-                                    <img src="<?php echo url('assets/images/lanjut_bayar.png')?>">
+                                     <a href="{!! url('payment') !!}"><img src="<?php echo url('assets/images/lanjut_bayar.png')?>"></a>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@ $pesawat=Session::get('PESAWAT');
                                 <div class="box_tanggal_rincian_penerbangan" style="background-color:#eee;border: 1px solid #ddd; border-left: 4px solid #00cd00; width:320px; margin-bottom:10px">
                                     <div class="tulisan_tanggal_rincian_penerbangan" style="padding:10px">
                                         Penerbangan :
-                                        <p><b>Kamis, 26 Nov 2015</b></p>
+                                        <p><b>{{date('D',strtotime(Session::get('PESAWAT')['input']['depart_date']))}},<span class="tanggal">{{Session::get('PESAWAT')['input']['depart_date']}}</b></p>
                                     </div>
                                 </div>
 
@@ -255,7 +255,7 @@ $pesawat=Session::get('PESAWAT');
                             </div>
                             <div class="col-md-4 daftar_harga_total" style="width:45%;; padding-right:10px ">
                                 <div class="harga_1_a">
-                                    <span style="float:left">Rp</span><p><b class="rupiah">{{$pesawat['DATA_PESAWAT']['price']}}</b></p>
+                                    <span style="float:left">Rp</span><p><b class="">{{$pesawat['DATA_PESAWAT']['price']}}</b></p>
                                 </div>
                                 <div class="harga_2_a">
                                     <span style="float:left">Rp</span><p><b>0</b></p>
@@ -267,11 +267,11 @@ $pesawat=Session::get('PESAWAT');
                                     <span style="float:left">Rp</span><p><b>0</b></p>
                                 </div>
                                  --><div class="harga_3">
-                                    <span style="float:left">Rp</span><p><b>0</b></p>
+                                    <span style="float:left"></span><p><b>0</b></p>
                                 </div>
                                 
                                 <div class="harga_4" style="font-size:16px">
-                                    <span style="float:left"><b>Rp</b></span><p><b><span id="harga_total">1.007.579</span></b></p>
+                                    <span style="float:left"><b></b></span><p><b><span id="harga_total" class=""><?php echo (Session::get('PESAWAT')['input']['adult']+Session::get('PESAWAT')['input']['infant']+Session::get('PESAWAT')['input']['children'] )*Session::get('PESAWAT')['DATA_PESAWAT']['price'] ?></span></b></p>
                                 </div>
                             </div>
                         </div>
@@ -284,8 +284,8 @@ $pesawat=Session::get('PESAWAT');
                             <div class="box_daftar_penumpang" style="background-color:#fff;border: 1px solid #ddd; border-left: 4px solid #00cd00">
                             @for($i=0; $i < sizeof($pesawat['DATA_COSTUMER']['PASSENGER_DETAIL_BAGGAGE']); $i++)
                                 <div class="rincian_daftar_penumpang" style="padding:10px">
-                                    <div class="rincian_daftar_penumpang_1">
-                                        <span style="float:left; padding-right:10px"><b>1</b></span>{{$pesawat['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i]}}
+                                    <div class="rincian_daftar_penumpang_1 col-md-4">
+                                        <span style="float:left; padding-right:10px"><b>{{$i+1}}</b></span>{{$pesawat['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i]}}
                                     </div>
                                     <div class="rincian_daftar_penumpang_2" style="padding-left:20px">
                                         <b>{{$pesawat['DATA_COSTUMER']['PASSENGER_DETAIL_NAME'][$i]}}</b>
@@ -306,9 +306,9 @@ $pesawat=Session::get('PESAWAT');
                                 @endfor
                             </div>
                         </div>
-                        <div class="Tombol_Next" style="float:right; margin-top:40px; margin-right:15px; margin-bottom: 10px; padding:10px; position:center">
+                       <!--  <div class="Tombol_Next" style="float:right; margin-top:40px; margin-right:15px; margin-bottom: 10px; padding:10px; position:center">
                             <button type="button" class="btn remove_border themecolor">Lanjutkan</button>
-                        </div>
+                        </div> -->
                     </div>
             <!-- CONTENT CLOSE -->
 

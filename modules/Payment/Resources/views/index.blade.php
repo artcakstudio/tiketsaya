@@ -160,7 +160,7 @@
                         <p>No. Pesanan</p>
                     </div>
                     <div class="no_pesanan" style="margin-left:220px; margin-top:-28px">
-                        <p><b>{{  Session::get('NO_PEMESANAN') }}</b></p>
+                        <p><b>{{  Session::get(Session::get('type'))['DATA_COSTUMER']['NO_PEMESANAN'] }}</b></p>
                     </div>
                 </div>
             </div>
