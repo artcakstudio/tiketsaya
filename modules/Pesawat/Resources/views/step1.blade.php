@@ -7,6 +7,7 @@
 $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
 
 ?>
+ {!!Form::open(['route'=>'pesawat.transaksi.preview','method'=>'post','id'=>'form_data_penumpang'])!!}
     <div class="col-md-12 content_">
                     <div class="row head_table">
                         <div class="col-md-4" style="padding-top: 0px; font-weight: bold" ><h4><b>PROSES PEMESANAN</b><h4></div>
@@ -53,7 +54,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                             </div>
                         </div>
                         <!-- Isian  Data Penumpang -->
-                        {!!Form::open(['route'=>'pesawat.transaksi.preview','method'=>'post'])!!}
+
                         <div class="col-md-8 data_pemesan" style=" padding-left:30px; margin-top:-10px;z-index:1000">
                             <div class="judul">
                                 <h4>Isi data pemesan yang dapat dihubungi<h4>
@@ -140,7 +141,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                      </div>
 
 
-                     <div class="row" style="">
+
                         <!-- Notes_1 -->
                         <!-- Data Tambahan Penumpang-->
                         <div class="col-md-8" style="margin-left:325px; margin-top:-150px; margin-bottom:20px">
@@ -163,6 +164,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
                                 <div class="form_data_penumpang_tambahan">
                                     <!-- Kolom Titel -->
                                     <!-- Kolom Nama -->
+                                    <input type="hidden" name="passenger_type[]" value="adult" class="passenger_type">
                                     <div class="row">
                                         <div class="tulisan_titel col-md-4" style="margin-left:10px; padding-top:10px">
                                             <label>Titel</label>
@@ -218,6 +220,19 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
             </div>
 <script type="text/javascript">
 
+$('#form_data_penumpang').submit(function() {
+    // get all the inputs into an array.
+    var $inputs = $('#myForm :input');
+
+    // not sure if you wanted this, but I thought I'd add it.
+    // get an associative array of just the values.
+    var values = {};
+    $inputs.each(function() {
+        values[this.name] = $(this).val();
+    });
+
+});
+
     function updateHarga () {
      var adult=parseInt($("#harga_adult"))*parseInt($("totalOrang_adult"));
         var children=parseInt($("#harga_children"))*parseInt($("totalOrang_children"));
@@ -228,14 +243,11 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
     $("div.Tombol_Next").click(function(){
         var name=jQuery.parseJSON('{"form":[{"nama":"Nama Pemesan","name":"COSTUMER_NAME"},{"nama":"Telepon Pemesan","name":"COSTUMER_TELP"},{"nama":"Email Pemesan","name":"COSTUMER_EMAIL"}]}');
         var flag=0;
-        console.log(name.form.length);
         for(i=0; i<name.form.length;i++){
             var name_value=$("div.data_pemesan input[name='"+name.form[i].name+"']")[0].value;
-            console.log(name_value);
             if(name_value==""){
-                console.log($("div.data_pemesan input[name='"+name.form[i].name+"']").parent());
                 $("div.data_pemesan input[name='"+name.form[i].name+"']").parent().append("<h1 class='error_form row'>"+name.form[i].nama+" belum di isi</h1>");
-                flag=1;
+                alert('lala');
                 return;
             }
         }
@@ -244,27 +256,34 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
         var children=<?php echo Session::get('PESAWAT')['input']['children'];?>;
         var infant=<?php echo Session::get('PESAWAT')['input']['infant'];?>;
         $("div.box_data_tambahan_penumpang").css("visibility","visible");
-        console.log($("div.box_data_tambahan_penumpang"));
+       console.log(children);
         var form_penumpang=$("#data_penumpang").html();
         $("div.Tombol_Next").remove();
         $("div.Tombol_Next_submit").css("visibility","visible");
-        for (i=1; i<adult; i++){
-            $("#data_penumpang").append(form_penumpang);
+
+        for (i=0; i<adult; i++){
+            var box_data_tambahan_penumpang=$($("div.box_data_tambahan_penumpang")[$("div.box_data_tambahan_penumpang").length-1]).find("div.tulisan_penumpang_dewasa h4");
+            box_data_tambahan_penumpang.html("Penumpang Dewasa");
+            if(i>0){
+                $("#data_penumpang").append(form_penumpang);            
+            }
         }
 
-        for (i=1; i<children; i++){
-
+        for (i=0; i<children; i++){
             $("#data_penumpang").append(form_penumpang);
             var box_data_tambahan_penumpang=$($("div.box_data_tambahan_penumpang")[$("div.box_data_tambahan_penumpang").length-1]).find("div.tulisan_penumpang_dewasa h4");
             box_data_tambahan_penumpang.html("Penumpang Anak Anak");
+            $(box_data_tambahan_penumpang).find("input.passenger_type").attr("name","children");
             $($("div.box_data_tambahan_penumpang")[$("div.box_data_tambahan_penumpang").length-1]).find("div.tanggal_lahir").append('<div class="tulisan_nama_tambahan col-md-5" style="margin-left:100px;" ><label>Tanggal Lahir</label><div class="kotak_nama_tambahan"><input type="text" class="datepicker" name="PASSENGER_DETAIL_BIRTHDAY[]" class="datepicker" style="height:30px; width:70%"></div></div>');
         }
 
         form_penumpang.replace("Penumpang Anak-Anak","Penumpang Balita");
          for (i=0; i<infant; i++){
+	$("#data_penumpang").append(form_penumpang);
             var box_data_tambahan_penumpang=$($("div.box_data_tambahan_penumpang")[$("div.box_data_tambahan_penumpang").length-1]).find("div.tulisan_penumpang_dewasa h4");
             box_data_tambahan_penumpang.html("Penumpang Balita");
-            $($("div.box_data_tambahan_penumpang")[$("div.box_data_tambahan_penumpang").length-1]).find("div.tanggal_lahir").append('<div class="tulisan_nama_tambahan col-md-5" style="margin-left:100px; ><label>Tanggal Lahir</label><div class="kotak_nama_tambahan"><input type="date" class="datepicker" name="PASSENGER_DETAIL_BIRTHDAY[]" class="datepicker" style="height:30px; width:70%"></div></div>');
+            $(box_data_tambahan_penumpang).find("input.passenger_type").attr("name","infant");
+            $($("div.box_data_tambahan_penumpang")[$("div.box_data_tambahan_penumpang").length-1]).find("div.tanggal_lahir").append('<div class="tulisan_nama_tambahan col-md-5" style="margin-left:100px; ><label>Tanggal Lahir</label><div class="kotak_nama_tambahan"><input type="text" class="datepicker" name="PASSENGER_DETAIL_BIRTHDAY[]" class="datepicker" style="height:30px; width:70%"></div></div>');
         }
     });
 

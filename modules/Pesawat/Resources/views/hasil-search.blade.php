@@ -8,7 +8,8 @@
 
 <?php
 $airline=[];
-$tanggal=Session::get('PESAWAT')['input']['depart_date'];
+$tanggal=date('d-m-Y', strtotime('-4 day', strtotime(Session::get('PESAWAT')['input']['depart_date'])));
+
 $hari=date('D',strtotime($tanggal));
 ?>
 <!-- CONTENT OPEN -->

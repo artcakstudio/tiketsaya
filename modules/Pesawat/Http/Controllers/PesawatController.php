@@ -14,17 +14,24 @@ class PesawatController extends Controller {
 	public function search()
 	{
 //		$path=url('jsonfile/input.json');
-		/*$input=Input::all();
-		unset($input['_token']);
+		$input=Input::all();
+		unset($input['_token'],$input['origin1'],$input['destination1']);
 		$input['depart_date']=date('Y-m-d',strtotime($input['depart_date']));
-		$input['return_date']=date('Y-m-d',strtotime($input['return_date']));
+		$input['return_date']=date('Y-m-d',strtotime('2015-10-30'));
+		$input['adult']=intval($input['adult']);
+		$input['children']=intval($input['children']);
+		$input['infant']=intval($input['infant']);
 		$data=json_encode($input);
-//		$input=file_get_contents("/var/www/tiketsaya/jsonfile/input.json");
+		//$input=file_get_contents("/var/www/tiketsaya/jsonfile/input.json");
+		$data=json_encode($input);
+
 		$schedule_search=[];
-		$link[0]='schedule/airasia';
-		$link[1]='schedule/citilink';
-		$link[2]='schedule/lionair';
-		$path=["/var/www/tiketsaya/jsonfile/example_airasia.json","/var/www/tiketsaya/jsonfile/example_citilink.json", "/var/www/tiketsaya/jsonfile/example_lionair.json"];
+		$schedule_search_return=[];
+		//;
+		$link[0]='schedule/citilink';
+		$link[1]='schedule/sriwijaya';
+			/*	$link[2]='schedule/lionair'*/;
+		//$path=["/var/www/tiketsaya/jsonfile/example_airasia.json","/var/www/tiketsaya/jsonfile/example_citilink.json", "/var/www/tiketsaya/jsonfile/example_lionair.json"];
 		foreach ($link as $row) {
 			$url='localhost:6070/'.$row;
 			$ch = curl_init();
@@ -36,16 +43,22 @@ class PesawatController extends Controller {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 			$result = curl_exec($ch);
 			curl_close($ch);
-
-//			print_r($result);
+			
 			$result = json_decode($result,true);
-			array_push($schedule_search, $result);
-//print_r($result);
+			if(sizeof($schedule_search)>0){
+				$schedule_search= array_merge($schedule_search, $result['depart']);
 			}
-			$input["type"]="pesawat";*/
+			else{
+				$schedule_search=$result['depart'];
+			}
+			if(isset($result['return'])){
+				array_merge($schedule_search_return, $result['return']);
+			}
+		}
+			$input["type"]="pesawat";
 		
 //		print_r($schedule_search);
-			$input=Input::all();
+			/*$input=Input::all();
 			unset($input['input']['_token']);
 			$path=url('jsonfile/example_lionair.json');
 			$temp=json_decode(file_get_contents("$path"),true);
@@ -55,10 +68,13 @@ class PesawatController extends Controller {
 			$temp=json_decode(file_get_contents("$path"),true);
 			//$schedule_search=$schedule_search+$temp['depart'];
 			$schedule_search=array_merge($schedule_search , $temp['depart']);
-			
+					
+			*/
+	//		print_r($input);
+		//dd($schedule_search);
+
 			Session(['PESAWAT.input'=>$input]);
 			$schedule_search=$this->bubbleSort($schedule_search,'price',1);
-		//dd($schedule_search);
 		return view('pesawat::hasil-search',compact('schedule_search','type'));
 	}
 
@@ -81,7 +97,7 @@ class PesawatController extends Controller {
 		}
 		
 //Session::flush();
-		//dd(Session::all());
+	//	dd(Session::all());
 		return view('pesawat::step1');
 	}
 	function preview(){
@@ -90,7 +106,7 @@ class PesawatController extends Controller {
 
 		Session(['PESAWAT.DATA_COSTUMER'=>$data]);
 
-		//dd(Session::all());
+			//dd(Session::all());
 		return view('pesawat::preview');
 	}
 	

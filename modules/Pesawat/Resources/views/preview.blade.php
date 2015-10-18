@@ -69,7 +69,7 @@ $pesawat=Session::get('PESAWAT');
                                     <p>Dengan mengklik tombol di bawah, Anda menyetujui <u>Syarat & Ketentuan</u> dan <u>Kebijakan Privasi</u> Traveloka</p>
                                 </div>
                                 <div class="logo_lanjut" style="margin-bottom:15px">
-                                    <img src="<?php echo url('assets/images/lanjut_ke_pembayaran.png')?>">
+                                    <img src="<?php echo url('assets/images/lanjut_bayar.png')?>">
                                 </div>
                             </div>
                         </div>

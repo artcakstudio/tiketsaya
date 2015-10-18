@@ -89,7 +89,7 @@
                                           <div class="row">
                                               <div class="col-md-4">
                                                   <div class="input-group" >
-                                                  <select name="adult" class="form-control remove_border" onchange="adult_check()">
+                                                  <select name="adult" class="form-control remove_border" onchange="adult_check()" value="1">
                                                         @for($i=0; $i <= 7; $i++)
                                                           <option value="{{$i}}">{{$i}} Orang</option>
                                                         @endfor

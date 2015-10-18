@@ -157,7 +157,7 @@
     $("body").on('focus',".datepicker", function(){
         $(this).datepicker({changeMonth: true,
             changeYear: true,
-            format: "dd-mm-yy", 
+            format: "dd-mm-yyyy", 
             startDate: today ,
             minDate: 0
         });

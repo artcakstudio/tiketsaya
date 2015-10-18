@@ -5,9 +5,9 @@
 <?php $__env->startSection('content'); ?>
 
 <?php
+$airline=[];
+$tanggal=date('d-m-Y', strtotime('-4 day', strtotime(Session::get('PESAWAT')['input']['depart_date'])));
 
-
-$tanggal=Session::get('tanggal');
 $hari=date('D',strtotime($tanggal));
 ?>
 <!-- CONTENT OPEN -->
@@ -32,7 +32,7 @@ $hari=date('D',strtotime($tanggal));
                             <?php
                             $hari=date('D',strtotime($tanggal));
                             $tanggal=date('d-m-Y',strtotime('+1 day', strtotime($tanggal)));?>
-                                <h4><?php echo e($hari); ?>, <?php echo e($tanggal); ?></h4>
+                                <h4><?php echo e($hari); ?>, <span class="tanggal"><?php echo e($tanggal); ?></span></h4>
                                 <!-- <h5>Rp. 199.000,-</h5> -->
                             </div>
                         </div>
@@ -43,53 +43,121 @@ $hari=date('D',strtotime($tanggal));
                     
                     <div class="row" style="margin-top: 15px;">
                         
-                        <div class="kotakfilter">
+                        <div class="kotakfilter" onclick="sorting('airline')" id="airline">
                             <div class="filter_data">
-                                <h4>Pilih Pemberhentian</h4>
+                                <h4>Maskapai</h4>
                             </div>
                         </div>
-                        <div class="kotakfilter">
+                        <div class="kotakfilter" style="width:14%" onclick="sorting('berangkat')">
                             <div class="filter_data">
-                                <h4>Pilih Waktu</h4>
+                                <h4>Berangkat</h4>
                             </div>
                         </div>
-                        <div class="kotakfilter">
+                        <div class="kotakfilter" style="width:10%" onclick="sorting('tiba')">
                             <div class="filter_data">
-                                <h4>Pilih Maskapai</h4>
+                                <h4>Tiba</h4>
                             </div>
                         </div>
-                        <div class="kotakfilter">
+                        <div class="kotakfilter" style="width:10%" onclick="sorting('durasi')">
                             <div class="filter_data">
-                                <h4>Pilih Tanggal</h4>
+                                <h4>Durasi</h4>
                             </div>
                         </div>
-                        <div class="kotakfilter">
+                        <div class="kotakfilter" style="width:17%">
                             <div class="filter_data">
-                                <h4>Pilih Harga</h4>
+                                <h4>Fasilitas</h4>
+                            </div>
+                        </div>
+                        <div class="kotakfilter" style="width:14%" onclick='sorting("price")'>
+                            <div class="filter_data">
+                                <h4>Harga</h4>
+                            </div>
+                        </div>
+                        <div class="kotakfilter" style="width:15%">
+                            <div class="filter_data">
+                                <h4></h4>
                             </div>
                         </div>
                         
                     </div>
+                    <div class="row" style="margin-top:10px">
+                      <div class="kotakfilter" data-filter="filter_transit">
+                          <div class="filter_data" >
+                              <h4>Pilih  Pemberhentian</h4>
+                          </div>
+                      </div>
+                      <div class="kotakfilter" data-filter="filter_waktu" >
+                          <div class="filter_data">
+                              <h4>Pilih Waktu</h4>
+                          </div>
+                      </div>
+                      <div class="kotakfilter"  data-filter="filter_maskapai">
+                          <div class="filter_data">
+                              <h4>Pilih Maskapai</h4>
+                          </div>
+                      </div>
+                      <div class="kotakfilter"  data-filter="filter_harga">
+                          <div class="filter_data">
+                              <h4>Pilih Harga</h4>
+                          </div>
+                      </div>
+                      <div class="kotakfilter" data-filter="clear_filter">
+                          <div class="filter_data" >
+                              <h4>Clear Filter</h4>
+                          </div>
+                      </div>
+                    </div>
+
+                      <div class="row data-filter"  id="filter_harga" style="display:none">
+                        <div class="row">
+                          <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="<?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?>" data-slider-step="1000" data-slider-value="<?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?>"/>
+                        </div>
+                        <div class="col-md-3">
+                          <h4 id="harga_minimum" class="">Rp. 0</h4>
+                        </div>
+                        <div class="col-md-3" style="float:right">
+                          <h4 id="harga_maksimum" style="float:right"><?php echo $schedule_search[sizeof($schedule_search)-1]['price'];?></h4>
+                        </div>
+                      </div>
+
+                      <div id="filter_maskapai" style="display:none" class="row data-filter">
+                        
+                      </div>
+                      
+
+                      <div class="row data-filter col-md-12" id="filter_waktu" style="display:none;">
+                        <div class="row" >
+                          <input id="waktu_slider" data-slider-id='ex1Slider' type="text" data-slider-min="180" data-slider-max="1440" data-slider-step="10" data-slider-value="1440"/>
+                        </div>
+                        <div class="col-md-3">
+                          <h4 id="waktu_minimum" class="">03:00</h4>
+                        </div>
+                        
+                        <div class="col-md-3" style="float:right">
+                          <h4 id="waktu_maksimum" style="float:right">24:00</h4>
+                        </div>                        
+                      </div>
+
                     <div class="row" style="margin-top: 30px;">
-                       
+
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         
                             <?php
                             $i=0;
-                            foreach ($schedule_search as $key) {
-				if (isset ($key['depart'])){
-                             foreach($key['depart'] as $row) { ?>
+                            foreach ($schedule_search as $row) {
+                             /*foreach($key as $row) { */?>
                               <div class="panel kotakdata" style="border-radius: inherit">
+                             <h1 style="display:none" class="harga_tiket"><?php echo e($row['price']); ?></h1>
                                 <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $i ?>">
                                     <div class="data_maskapai">
                                         <div><center><img src="<?php echo url('public/Assets/pesawatlogo/'.$row['airline'].'.png')?>"/></center></div>
                                     </div>
                                     <div class="data_maskapai">
-                                        <div><h3><?php echo e($row['plane']); ?></h3></div>
+                                        <div><h3 class="id_maskapai"><?php echo e($row['plane']); ?></h3></div>
                                     </div>
                                     <div class="data_maskapai">
                                         <div>
-                                            <h4><?php echo e($row['time'][0]); ?></h4>
+                                            <h4 class="waktu_berangkat"><?php echo e($row['time'][0]); ?></h4>
                                             <h5><?php echo e($row['ports'][0]); ?></h5>
                                         </div>
                                     </div>
@@ -102,8 +170,7 @@ $hari=date('D',strtotime($tanggal));
                                     <div class="data_maskapai">
                                         <div>
                                         <?php
-                                         $diff=abs(strtotime($row['time'][1]) - strtotime($row['time'][0]));
-                           
+                                         $diff=abs(strtotime($row['time'][1]) - strtotime($row['time'][0]));  
                                             $jam= intval($diff/3600);
                                             $menit= intval($diff-3600*$jam)/60;
                                             echo "<h4>".intval($jam)." J ".$menit;?> m</h4>   
@@ -115,13 +182,15 @@ $hari=date('D',strtotime($tanggal));
                                     </div>
                                     <div class="data_maskapai2">
                                         <div>
-                                            <h2>IDR <?php echo e($row['price']); ?>,-</h2>
+                                            <h2 class="rupiah">IDR <?php echo e($row['price']); ?>,-</h2>
                                             <h6><del>IDR 450.000</del></h6>
                                         </div>
                                     </div>
 				<?php echo Form::open(['route'=>'pesawat.transaksi.step1', 'method'=>'POST','name'=>'form_jadwal']); ?>
 
-                                    <input type="hidden" name="plane" value="$row['plane']">
+                                    <?php $data=json_encode($row,true);
+                                    ?>
+                                    <input type="hidden" name="data" value="<?php echo e($data); ?>">
                                     <div class="button_pesan" >
                                         <div class="butpesawat"></div>
                                     </div>
@@ -131,8 +200,9 @@ $hari=date('D',strtotime($tanggal));
                                       <div class="row detilpenerbangan_" >
                                           <div class="col-md-2">
                                               <center>
+
                                               <img src="<?php echo url('public/Assets/pesawatlogo/'.$row['airline'].'.png')?>"/>
-                                              <p><?php echo e($row['airline']); ?></p>
+                                              <p class="nama_maskapai"><?php echo e($row['airline']); ?></p>
                                               </center>
                                           </div>
                                           <div class="col-md-2" style="text-align: center">
@@ -159,14 +229,22 @@ $hari=date('D',strtotime($tanggal));
                                 </div>
                             </div>
                             <?php 
-                            $i++; } }
+                            if (!in_array($row['airline'], $airline)){
+                              array_push($airline, $row['airline']);
+                            }
+                            $i++; 
                             }?>
                           </div> 
                     </div>
                 </div>
             </div>   
-            
-            
+<script type="text/javascript">
+  var maskapai=<?php echo json_encode($airline);?>;
+  for(i=0; i<maskapai.length;i++){
+    var path="<?php echo url('public/Assets/pesawatlogo');?>";
+    $("#filter_maskapai").append("<div class='col-md-3'><img src='"+path+"/"+maskapai[i]+".png'><div class='row col-md-12'><input type='checkbox' value='"+maskapai[i]+"'></div></div>");
+  }
+</script>        
             <div class="row subscribe_" style="background: #eee; height: 80px;margin-bottom: 10px;">
                 <div class="col-md-6">
                     <h3>Daftarkan email anda sekarang untuk mendapatkan diskon Rp 100.000,-</h3>
@@ -180,11 +258,176 @@ $hari=date('D',strtotime($tanggal));
                 
             </div>
 <script type="text/javascript">
-    $(".buttravel").click(function(){
+    $("#accordion").on('click', ".button_pesan", function(){
         var form=$(this.closest("form"));
         form.submit();
         
     });
+
+
+
+//sorting hasil pencarian
+var sort={"airline":1,"price":1,"berangkat":1, "tiba":1, "durasi":1};
+
+var data=<?php echo json_encode($schedule_search)?>;
+var data_filter=data.slice(0);
+
+
+function find_schedule(id_penerbangan, flag){
+  var object;
+  if(flag==0){
+    for(indeks=0; indeks<data_filter.length; indeks++){
+      if (data_filter[indeks].plane==id_penerbangan){
+        data_filter.splice(indeks,1);
+        break;
+      }
+    } 
+  }
+  else{
+    for(indeks=0; indeks<data.length; indeks++){
+        if (data[indeks].plane==id_penerbangan){
+          object=data[indeks];
+          data_filter.push(object);
+          break;
+        }
+    }
+  }
+}
+
+
+function sorting(parameter){
+  sort[parameter]=3-sort[parameter];
+  $.ajax({
+    url : "<?php echo url('pesawat/search-ajax')?>",
+    type : "POST",
+    data : {"schedule_search":data_filter,"_token":token,"parameter":parameter, "x":sort[parameter]},
+    success:function(hasil_ajax){
+      //console.log(hasil_ajax);
+      $("#accordion").empty();
+      $("#accordion").append(hasil_ajax);
+      updateView();
+    }
+  });
+}
+
+//filter
+var price=1000000000;
+var time=10000000000;
+var nama_maskapai=<?php echo json_encode($airline)?>;
+function filter_function(){
+  var hasil_search=$(".kotakdata");
+  console.log(nama_maskapai);
+  for(i=0; i<hasil_search.length; i++){
+    var id_maskapai=$(hasil_search[i]).find(".id_maskapai");
+    var harga=$(hasil_search[i]).find("h1.harga_tiket")[0].innerHTML;
+    var waktu=$(hasil_search[i]).find(".waktu_berangkat")[0].innerHTML;
+    var waktu=waktu.split(":");
+    var waktu=parseInt(waktu[0]*60)+parseInt(waktu[1]);
+    if(harga<=price && waktu<=time && nama_maskapai.indexOf($(hasil_search[i]).find(".nama_maskapai")[0].innerHTML)!=-1) {
+      find_schedule(id_maskapai[0].innerText,1); //filter harga
+      $(hasil_search[i]).show();
+      console.log(i);
+    }
+    else{
+      find_schedule(id_maskapai[0].innerText,0);
+      $(hasil_search[i]).hide();
+    }
+  }
+}
+
+$('#ex1').slider({
+  formatter: function(value) {
+
+    value=String(value);
+    var temp='';
+      for(j=0; j<value.length; j++){
+          if (j%3==0 && j!=0){
+              temp=temp+'.';
+          }
+          temp=temp+value.charAt(value.length-j-1);
+      }
+      value=temp;
+      temp='';
+      for(j=0; j<value.length; j++){
+          temp=temp+value.charAt(value.length-j-1);
+      }
+      temp='Rp. '+temp+',-';
+    $("#harga_maksimum").html(temp);
+    return temp;
+  }
+});
+
+$("#ex1Slider").on("slideStop",function(value){
+  var hasil_search=$(".kotakdata");
+  var harga;
+  price=value.value;
+  filter_function();
+});
+
+$("#filter_maskapai input[type='checkbox']").change(function(){
+
+  console.log($("#filter_maskapai input[type='checkbox']"));
+  $("#filter_maskapai input[type='checkbox']").each(function(){
+    if(this.checked==false){
+      if(nama_maskapai.indexOf($(this).val())!=-1) {        
+        nama_maskapai.splice(nama_maskapai.indexOf($(this).val()),1);
+      }
+    }
+    else{
+      if(nama_maskapai.indexOf($(this).val())==-1) {        
+      nama_maskapai.push(this.value);
+      }
+    }
+  });
+  if ($("#filter_maskapai input[type='checkbox']:checked").length==0){
+    nama_maskapai=<?php echo json_encode($airline)?>;
+  }
+  filter_function();
+});
+
+
+//filter waktu
+
+  $('#waktu_slider').slider({
+    formatter: function(nilai) {
+    
+      value=nilai;
+      var jam=parseInt(value/60);
+      var menit=value%60;
+      if(menit==0){
+        menit="00";
+      }
+      var hour=jam+":"+menit;
+      $("#waktu_maksimum").html(hour);
+      return hour;
+    }
+  });
+$("#waktu_slider").on("slideStop",function(value){
+    time=value.value;
+    filter_function();
+});
+
+
+$(".kotakfilter").click(function(){
+  var filter=$(this)[0].attributes[1].value;
+  if(filter=="clear_filter"){
+    alert('lalala');
+    var price=1000000000;
+    var time=10000000000;
+    var nama_maskapai=<?php echo json_encode($airline)?>;
+    filter_function();
+    data_filter=data.slice(0);
+    console.log(price,time,nama_maskapai);
+  }
+  else{
+    $("div.data-filter").each(function(){
+      $(this).hide();
+    });
+    $("#"+filter).show();
+    $($(".kotakfilter").find(".filter_data")).removeClass("selected");
+    $($(this).find(".filter_data")).addClass("selected");
+  }
+});
 </script>
 <?php $__env->stopSection(); ?>
 
