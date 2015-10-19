@@ -63,31 +63,38 @@ class PaymentController extends Controller {
 
 	public function checkout()
 	{
-        $link=["Citilink"=>"citilink","'Sriwijaya Air"=>"sriwijaya"];
+        $link=["Citilink"=>"citilink","Sriwijaya Air"=>"sriwijaya"];
         $data=Session::get('PESAWAT')['input'];
-        $data=["depart_value"=>Session::get('PESAWAT')['DATA_PESAWAT']['input']['value'],
-        'return_value'=>'0~P~~P~RGFR~~1~X|QG~ 819~ ~~CGK~02/13/2016 21:10~SUB~02/13/2016 22:40~'];
-        $data_booking['adult']=[];
-        $data_booking['children']=[];
-        $data_booking['infant']=[];
-
+        unset($data['type']);
+        //print_r($data);
+        $data=array_merge($data, ["depart_value"=>Session::get('PESAWAT')['DATA_PESAWAT']['input']['value'],
+        'return_value'=>preg_replace('/[\-]/', '','0~P~~P~RGFR~~1~X|QG~ 819~ ~~CGK~02/13/2016 21:10~SUB~02/13/2016 22:40~')]);
+        $data_booking['passengers']['adults']=[];
+         $data_booking['passengers']['children']=[];
+         $data_booking['passengers']['infants']=[];
+         $passenger_type=["adult"=>'adults','children'=>'children','infant'=>'infants'];
         for($i=0; $i<sizeof(Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE']); $i++){
- 
-                $data_booking[Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]][$i]['first_name']=Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_NAME'][$i];
-                $data_booking['adult'][$i]['last_name']="";
-                $data_booking['adult'][$i]['title']=Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i];
-                $data_booking['adult'][$i]['wheelchair']=false;
-                $data_booking['adult'][$i]['id']="5104032709940003";
-
+                array_push($data_booking['passengers'][$passenger_type[Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]]], array("first_name"=>Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_NAME'][$i],
+                    "last_name"=>"Ripas", "title"=>Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i],
+                    "wheelchair"=>false, "id"=>"5104032709940003"));
+/*                array_push($data_booking['passenger'][Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]], array("last_name"=>""));
+                array_push($data_booking['passenger'][Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]], array("title"=>Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i]));
+                array_push($data_booking['passenger'][Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]], array("wheelchair"=>false));
+                array_push($data_booking['passenger'][Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]], array("id"=>"5104032709940003"));*/
         }
-        $data_booking['contact']=["first_name"=>Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_NAME'], "last_name"=>"","origin_phone"=>Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_TELP']];
-   
-     //  echo json_encode($data_booking);
-        
+        $data_booking['passengers']['contact']['first_name']=Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_NAME'];
+        $data_booking['passengers']['contact']['last_name']="Ripas";
+        $data_booking['passengers']['contact']['origin_phone']='0'.Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_TELP'];
+/*   
+      echo json_encode($data_booking);*/
+        echo json_encode('/');
         $data=array_merge($data,$data_booking);
-        $data= json_encode($data);
+      $data=json_encode($data);
+      $data=stripslashes($data);
+$data=str_replace(' ', '', $data);
+      echo $data;
 
-        $url='localhost:6070/'.$link[Session::get('PESAWAT')['DATA_PESAWAT']['airline']].'/reserve';
+        $url='localhost:6070/schedule/'.$link[Session::get('PESAWAT')['DATA_PESAWAT']['airline']].'/reserve';
             $ch = curl_init();
     
             curl_setopt($ch,CURLOPT_URL, $url);
@@ -100,9 +107,10 @@ class PaymentController extends Controller {
             
             $result = json_decode($result,true);
             print_r($result);
-      //  echo $data;
-        dd(Session::all());
-        /*$this->setOrderIdType(Session::get('NO_PEMESANAN'));
+           $this->code_booking=$result['booking_code'];
+           Session(['booking_code'=>$result['booking_code']]);
+     //  dd(Session::all());
+        $this->setOrderIdType(Session::get('NO_PEMESANAN'));
 
         \Veritrans_Config::$serverKey = $this->server_key;
         \Veritrans_Config::$isProduction = $this->is_production;
@@ -138,6 +146,7 @@ class PaymentController extends Controller {
         else if($payment_method == "bank_transfer")
         {
             $status_code = $this->payWithBankTransfer();
+            
 
             $this->saveData($payment_method, $status_code);
             $this->forgetSession();
@@ -151,7 +160,7 @@ class PaymentController extends Controller {
                 return view('payment::response.fail');
             }
         }
-        Session::forget("PESAWAT");*/
+        Session::forget("PESAWAT");
 	}
 
 
@@ -198,7 +207,8 @@ class PaymentController extends Controller {
                 'TRAVEL_TRANSACTION_PRICE' => Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PRICE'],
                 'TRAVEL_TRANSACTION_STATUS_ID' => $TRANSACTION_STATUS,
                 'TRAVEL_SCHEDULE_ID' => Session::get('DATA_COSTUMER')['TRAVEL_SCHEDULE_ID'],
-		'TRAVEL_TRANSACTION_PASSENGER'=>Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER'],
+                'TRAVEL_TRANSACTION_PASSENGER'=>Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER'],
+                'TICKET_TRANSACTION_BOOKING_CODE'=>$this->code_booking,
             ]);
 
         }
@@ -308,11 +318,11 @@ class PaymentController extends Controller {
           );
           
         $result = \Veritrans_VtDirect::charge($transaction_data);
-
+        $code_booking=$this->code_booking;
         if($result->status_code == "201")
         {
             // pending
-            Mail::send('payment::mail-templates.va-instruction', compact('result'), function($message) use ($result) {
+            Mail::send('payment::mail-templates.va-instruction', compact('result','code_booking'), function($message) use ($result) {
                 $message->to(Session::get(Session::get('type'))['DATA_COSTUMER']['COSTUMER_EMAIL'],
                     Session::get('DATA_COSTUMER')['COSTUMER_NAME'])->subject('Instruksi Pembayaran '.$result->order_id);
             });
@@ -329,12 +339,12 @@ class PaymentController extends Controller {
         $this->setOrderIdType($order_id);
 
 
-        Mail::send('payment::mail-templates.dummy', array(), function ($message) {
+    /*    Mail::send('payment::mail-templates.dummy', array(), function ($message) {
             $prep_transaction_code = $this->data_type . '_TRANSACTION_CODE';
             $message->to('reisuke.raizan@gmail.com',
                 'Reisuke')->subject('Ayam');
         });
-
+*/
 //        if($payment_type == "bank_transfer") {
 //            if($this->data_type == "TRAVEL") {
 //

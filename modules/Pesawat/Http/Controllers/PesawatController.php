@@ -14,10 +14,10 @@ class PesawatController extends Controller {
 	public function search()
 	{
 //		$path=url('jsonfile/input.json');
-		/*$input=Input::all();
+		$input=Input::all();
 		unset($input['_token'],$input['origin1'],$input['destination1']);
 		$input['depart_date']=date('Y-m-d',strtotime($input['depart_date']));
-		$input['return_date']=date('Y-m-d',strtotime('2015-10-30'));
+		$input['return_date']=date('Y-m-d',strtotime('2016-02-13'));
 		$input['adult']=intval($input['adult']);
 		$input['children']=intval($input['children']);
 		$input['infant']=intval($input['infant']);
@@ -30,9 +30,8 @@ class PesawatController extends Controller {
 		//;
 		$link[0]='schedule/citilink';
 		$link[1]='schedule/sriwijaya';
-			/*	$link[2]='schedule/lionair'*/;
 		//$path=["/var/www/tiketsaya/jsonfile/example_airasia.json","/var/www/tiketsaya/jsonfile/example_citilink.json", "/var/www/tiketsaya/jsonfile/example_lionair.json"];
-		/*foreach ($link as $row) {
+		foreach ($link as $row) {
 			$url='localhost:6070/'.$row;
 			$ch = curl_init();
 	
@@ -54,11 +53,11 @@ class PesawatController extends Controller {
 			if(isset($result['return'])){
 				array_merge($schedule_search_return, $result['return']);
 			}
-		}*/
+		}
 			$input["type"]="pesawat";
 		
 //		print_r($schedule_search);
-			$input=Input::all();
+		/*	$input=Input::all();
 			unset($input['_token']);
 			$path=url('jsonfile/example_lionair.json');
 			$temp=json_decode(file_get_contents("$path"),true);
@@ -67,7 +66,7 @@ class PesawatController extends Controller {
 			$path=url('jsonfile/example_citilink.json');
 			$temp=json_decode(file_get_contents("$path"),true);
 			//$schedule_search=$schedule_search+$temp['depart'];
-			$schedule_search=array_merge($schedule_search , $temp['depart']);
+			$schedule_search=array_merge($schedule_search , $temp['depart']);*/
 					
 			
 	//		print_r($input);
@@ -90,14 +89,13 @@ class PesawatController extends Controller {
 		
 		$data=Input::all();
 		
+		print_r($data['data']);
 		$temp=json_decode($data['data'],true);
 		unset($data['data']);
-
-		if(!isset(Session::get('PESAWAT')['DATA_PESAWAT'])){
-			session(['PESAWAT.DATA_PESAWAT'=>$temp]);
-		}
-
 		
+		session(['PESAWAT.DATA_PESAWAT'=>$temp]);
+	
+
 //Session::flush();
 		//dd(Session::all());
 		return view('pesawat::step1');

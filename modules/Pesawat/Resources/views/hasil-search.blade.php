@@ -191,7 +191,7 @@ $hari=date('D',strtotime($tanggal));
 				{!!Form::open(['route'=>'pesawat.transaksi.step1', 'method'=>'POST','name'=>'form_jadwal'])!!}
                                     <?php $data=json_encode($row,true);
                                     ?>
-                                    <input type="hidden" name="data" value="{{$data}}">
+                                    <input type="hidden" name="data" value="{{json_encode($row)}}">
                                     <div class="button_pesan" >
                                         <div class="butpesawat"></div>
                                     </div>
@@ -219,7 +219,9 @@ $hari=date('D',strtotime($tanggal));
                                           
                                           <div class="col-md-6">
                                               <p><?php
-                                              $data=( $row['input']['value']);
+                                  
+
+                                  
                                                 /*$hari=explode('~', $data);
                                             echo $hari." ".date('d-m-Y', strtotime($data[12]))."  | 2 Dewasa 0 Anak 0 Bayi/Balita</p>";*/?>
                                               <p>Berangkat : {{date('H:i', strtotime($row['time'][0]))}} WIB </p>

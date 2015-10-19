@@ -15,7 +15,9 @@
         <h3 >Rp {!! number_format(Session::get('DATA_COSTUMER')['RENT_TRANSACTION_PRICE']) !!}</h3>
     @elseif(Session::get('type')=='PESAWAT')
         <h3 >Rp {!! number_format(Session::get('PESAWAT')['DATA_PESAWAT']['price']) !!}</h3>
+        <h3>Kode Booking Anda adalah <b>{{Session::get('booking_code')}}</b></h3>
     @endif
+tes alalal wkwkk
     <div>
         <h3>Setelah melakukan transfer, silakan melakukan konfirmasi melalui link berikut:</h3>
         <h3><?php echo url('tiketsaya/payment/confirm/va/')?>{!! $result->order_id !!}</h3>

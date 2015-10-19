@@ -56,6 +56,7 @@
                             <?php if(sizeof($vehicle)==0): ?>
                             <h1 style="text-align:center">Kota yang anda pilih kosong, silahkan cari di kota atau hari lainnya</h1>
                             <?php endif; ?>
+                            
                             <?php foreach ($vehicle as $row) { ?>
                             <div class="row panel kotakdata" style="border-radius: inherit">
                                 <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $row['RENT_SCHEDULE_ID'] ?>">
@@ -115,7 +116,7 @@
                                           </div>
                                           
                                           <div class="col-md-6">
-                                               <p><?php echo date('D',strtotime($row['RENT_SCHEDULE_DATE']))."     ".dateFormat(date('d-m-Y',strtotime($row['RENT_SCHEDULE_DATE'])))?> </p>
+                                               <p><?php echo date('D',strtotime($row['RENT_SCHEDULE_DATE']))."     ".(date('Y-m-d',strtotime($row['RENT_SCHEDULE_DATE'])))?> </p>
                                               <p>Fasilitas : AC, Wifi, Music, Makan 1x</p>
                                               <p>Berangkat : <?php echo date('H:i',strtotime($row['RENT_SCHEDULE_DATE']))?> WIB </p>
                                               
