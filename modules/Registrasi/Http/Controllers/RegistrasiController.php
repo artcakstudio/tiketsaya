@@ -39,7 +39,6 @@ class RegistrasiController extends Controller {
 							->where('PARTNER_TYPE_ID','=',$data['PARTNER_TYPE_ID'])->first();
 							print_r($partner);
 		if(sizeof($partner)>0) {
-			print_r($partner);
 			if ($partner['PARTNER_TYPE_ID']==1){
 				Session(['id'=>$partner['PARTNER_ID'], 'hak'=>'partner_travel']);
 				return redirect::to('travelpartner');

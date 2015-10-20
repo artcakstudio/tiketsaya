@@ -21,7 +21,7 @@ class TicketPartnerController extends Controller {
 	{
 		$path=public_path().'/Assets/pesawatlogo';
 		$list_booking =TicketTransaction::join('TICKET_TRANSACTION_STATUS','TICKET_TRANSACTION_STATUS.TICKET_TRANSACTION_STATUS_ID','=','TICKET_TRANSACTION.TICKET_TRANSACTION_STATUS_ID')
-						->join('COSTUMER','COSTUMER.COSTUMER_ID','=','TICKET_TRANSACTION.COSTUMER_ID')
+						->join('costumer','costumer.COSTUMER_ID','=','TICKET_TRANSACTION.COSTUMER_ID')
 						->get();
         return Datatables::of($list_booking)
          ->addColumn('action', function ($list_booking) {

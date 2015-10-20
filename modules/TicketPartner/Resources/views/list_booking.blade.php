@@ -2,15 +2,15 @@
 
 @section('content')
 @parent
-  @include('travel_partner.sidebar')
+  @include('ticketpartner::sidebar')
           <div class="header_backend">ARMADA TRAVEL</div>
             <table class=" table table-bordered" id="list_booking-table">
               <thead>
                     <tr>
                       <th>Kode Transaksi</th>
+                      <th>Kode Booking</th>
                       <th>Total Pembayaran</th>
                       <th>Nama Pemesan</th>
-                      <th>Telepon Pemesan</th>
                       <th>Email Pemesan</th>
                       <th>Status</th>
                       <th>Action</th>
@@ -35,9 +35,9 @@ $(function() {
         ajax: "<?php echo url('ticketpartner/get_list_booking')?>",
         columns: [
             { data: 'TICKET_TRANSACTION_CODE', name: 'TICKET_TRANSACTION_CODE' },
+            { data: 'TICKET_TRANSACTION_BOOKING_CODE', name: 'TICKET_TRANSACTION_BOOKING_CODE' },
             { data: 'TICKET_TRANSACTION_PRICE', name: 'TICKET_TRANSACTION_PRICE' },
             { data: 'COSTUMER_NAME', name: 'COSTUMER_NAME' },
-            { data: 'COSTUMER_TELP', name: 'COSTUMER_TELP' },
             { data: 'COSTUMER_EMAIL', name: 'COSTUMER_EMAIL' },
             { data: 'TICKET_TRANSACTION_STATUS_NAME', name: 'TICKET_TRANSACTION_STATUS_NAME' },
             { data: 'action', name: 'action',orderable: false, searchable: false}

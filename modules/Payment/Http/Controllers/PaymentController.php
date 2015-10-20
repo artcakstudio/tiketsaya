@@ -87,12 +87,12 @@ class PaymentController extends Controller {
         $data_booking['passengers']['contact']['origin_phone']='0'.Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_TELP'];
 /*   
       echo json_encode($data_booking);*/
-        echo json_encode('/');
+        //echo json_encode('/');
         $data=array_merge($data,$data_booking);
       $data=json_encode($data);
       $data=stripslashes($data);
 $data=str_replace(' ', '', $data);
-      echo $data;
+//
 
         $url='localhost:6070/schedule/'.$link[Session::get('PESAWAT')['DATA_PESAWAT']['airline']].'/reserve';
             $ch = curl_init();
@@ -106,7 +106,7 @@ $data=str_replace(' ', '', $data);
             curl_close($ch);
             
             $result = json_decode($result,true);
-            print_r($result);
+            
            $this->code_booking=$result['booking_code'];
            Session(['booking_code'=>$result['booking_code']]);
      //  dd(Session::all());
@@ -208,7 +208,7 @@ $data=str_replace(' ', '', $data);
                 'TRAVEL_TRANSACTION_STATUS_ID' => $TRANSACTION_STATUS,
                 'TRAVEL_SCHEDULE_ID' => Session::get('DATA_COSTUMER')['TRAVEL_SCHEDULE_ID'],
                 'TRAVEL_TRANSACTION_PASSENGER'=>Session::get('DATA_COSTUMER')['TRAVEL_TRANSACTION_PASSENGER'],
-                'TICKET_TRANSACTION_BOOKING_CODE'=>$this->code_booking,
+                
             ]);
 
         }
@@ -240,6 +240,7 @@ $data=str_replace(' ', '', $data);
                 'TICKET_TRANSACTION_CODE' => Session::get('PESAWAT')['DATA_COSTUMER']['NO_PEMESANAN'],
                 'TICKET_TRANSACTION_PRICE' => Session::get('PESAWAT')['DATA_PESAWAT']['price'],
                 'TICKET_TRANSACTION_STATUS_ID' => '1',
+                'TICKET_TRANSACTION_BOOKING_CODE'=>Session::get('booking_code'),
             ]);
                 for($i=0; $i<sizeof(Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE']); $i++){
                     DB::table('PASSENGER_DETAIL')->insert([

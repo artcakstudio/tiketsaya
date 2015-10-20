@@ -138,7 +138,7 @@ $pesawat=Session::get('PESAWAT');
                                                 <tr>
                                                     <td class="box_logo_penerbangan_asal">
                                                         <div class="logo_penerbangan_asal">
-                                                            <img src="<?php echo url('assets/images/citilink_logo.png')?>">
+                                                            <img src="<?php echo url('public/Assets/pesawatlogo/'.$pesawat['DATA_PESAWAT']['airline'].'.png')?>">
                                                         </div>
                                                     </td>
                                                     <td class="kode_penerbangan_asal_1">

@@ -28,8 +28,8 @@ class PesawatController extends Controller {
 		$schedule_search=[];
 		$schedule_search_return=[];
 		//;
-		$link[0]='schedule/citilink';
-		$link[1]='schedule/sriwijaya';
+		$link[0]='schedule/sriwijaya';
+		$link[1]='schedule/citilink';
 		//$path=["/var/www/tiketsaya/jsonfile/example_airasia.json","/var/www/tiketsaya/jsonfile/example_citilink.json", "/var/www/tiketsaya/jsonfile/example_lionair.json"];
 		foreach ($link as $row) {
 			$url='localhost:6070/'.$row;
@@ -44,6 +44,7 @@ class PesawatController extends Controller {
 			curl_close($ch);
 			
 			$result = json_decode($result,true);
+//			print_r($result);
 			if(sizeof($schedule_search)>0){
 				$schedule_search= array_merge($schedule_search, $result['depart']);
 			}
