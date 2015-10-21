@@ -54,7 +54,7 @@
                                       <div class="konten3_">
                                           <div class="head_konten3">Kota Tujuan</div>
                                           <div class="input-group isi_konten3">
-                                            <input class="form-control remove_border" name="destination1">
+                                            <input class="form-control remove_border" name="destination1"  autocomplete="off">
                                             <input class="form-control remove_border" name="destination" type="hidden">
                                               <div id="destination-search" class="flight-search">
                                               <ul id="destination-list" class="flight-list">
@@ -76,7 +76,7 @@
                                       <div class="konten3_">
                                           <div class="head_konten3">Tanggal Keberangkatan</div>
                                           <div class="input-group isi_konten3">
-                                            <input type="text" class="form-control remove_border datepicker" name="depart_date" />
+                                            <input type="text" class="form-control remove_border datepicker" name="depart_date"  autocomplete="off"/>
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn dropdown-toggle themecolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih </button>
                                             </div><!-- /btn-group -->

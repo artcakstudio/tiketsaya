@@ -63,35 +63,51 @@ class PaymentController extends Controller {
 
 	public function checkout()
 	{
-        $link=["Citilink"=>"citilink","Sriwijaya Air"=>"sriwijaya"];
+        $link=["Citilink"=>"citilink","Sriwijaya Air"=>"sriwijaya","Air Asia"=>"airasia"];
         $data=Session::get('PESAWAT')['input'];
         unset($data['type']);
         //print_r($data);
+       // dd(Session::all());
         $data=array_merge($data, ["depart_value"=>Session::get('PESAWAT')['DATA_PESAWAT']['input']['value'],
-        'return_value'=>preg_replace('/[\-]/', '','0~P~~P~RGFR~~1~X|QG~ 819~ ~~CGK~02/13/2016 21:10~SUB~02/13/2016 22:40~')]);
+        'return_value'=>'0~P~~P~RGFR~~1~X|QG~ 819~ ~~CGK~02/13/2016 21:10~SUB~02/13/2016 22:40~']);  
         $data_booking['passengers']['adults']=[];
          $data_booking['passengers']['children']=[];
          $data_booking['passengers']['infants']=[];
          $passenger_type=["adult"=>'adults','children'=>'children','infant'=>'infants'];
         for($i=0; $i<sizeof(Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE']); $i++){
-                array_push($data_booking['passengers'][$passenger_type[Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]]], array("first_name"=>Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_NAME'][$i],
-                    "last_name"=>"Ripas", "title"=>Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i],
-                    "wheelchair"=>false, "id"=>"5104032709940003"));
+             $nama_penumpang=explode(" ", Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_NAME'][$i]);
+             $first_name='';
+             if(sizeof($nama_penumpang)==1)
+            $nama_penumpang[1]=$nama_penumpang[0];
+             for($j=0; $j<sizeof($nama_penumpang)-1; $j++){
+                $first_name=$first_name."".$nama_penumpang[$j]." ";
+             }
+                array_push($data_booking['passengers'][$passenger_type[Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]]], array("first_name"=>$first_name,
+                    "last_name"=>$nama_penumpang[sizeof($nama_penumpang)-1], "title"=>Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i],
+                    "wheelchair"=>false, "id"=>"5104032709940003","birthday"=>"1990-12-01"));
 /*                array_push($data_booking['passenger'][Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]], array("last_name"=>""));
                 array_push($data_booking['passenger'][Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]], array("title"=>Session::get('PESAWAT')['DATA_COSTUMER']['PASSENGER_DETAIL_TITTLE'][$i]));
                 array_push($data_booking['passenger'][Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]], array("wheelchair"=>false));
                 array_push($data_booking['passenger'][Session::get('PESAWAT')['DATA_COSTUMER']['passenger_type'][$i]], array("id"=>"5104032709940003"));*/
         }
-        $data_booking['passengers']['contact']['first_name']=Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_NAME'];
-        $data_booking['passengers']['contact']['last_name']="Ripas";
+        $nama_penumpang=explode(" ", Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_NAME']);
+        $first_name='';
+        if(sizeof($nama_penumpang)==1)
+            $nama_penumpang[1]=$nama_penumpang[0];
+        for($j=0; $j<sizeof($nama_penumpang)-1; $j++){
+            $first_name=$first_name."".$nama_penumpang[$j]." ";
+        }
+        $data_booking['passengers']['contact']['first_name']=$first_name;
+        $data_booking['passengers']['contact']['last_name']=$nama_penumpang[sizeof($nama_penumpang)-1];
         $data_booking['passengers']['contact']['origin_phone']='0'.Session::get('PESAWAT')['DATA_COSTUMER']['COSTUMER_TELP'];
 /*   
       echo json_encode($data_booking);*/
         //echo json_encode('/');
         $data=array_merge($data,$data_booking);
       $data=json_encode($data);
-      $data=stripslashes($data);
-$data=str_replace(' ', '', $data);
+$data=str_replace('\/', '/', $data);
+print_r($data);
+
 //
 
         $url='localhost:6070/schedule/'.$link[Session::get('PESAWAT')['DATA_PESAWAT']['airline']].'/reserve';
@@ -106,10 +122,9 @@ $data=str_replace(' ', '', $data);
             curl_close($ch);
             
             $result = json_decode($result,true);
-            
            $this->code_booking=$result['booking_code'];
            Session(['booking_code'=>$result['booking_code']]);
-     //  dd(Session::all());
+     
         $this->setOrderIdType(Session::get('NO_PEMESANAN'));
 
         \Veritrans_Config::$serverKey = $this->server_key;

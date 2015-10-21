@@ -144,6 +144,10 @@ $hari=date('D',strtotime($tanggal));
                         
                             <?php
                             $i=0;
+                            if(sizeof($schedule_search)==0){
+                              echo "<h1 style='text-align:center'>Kota yang anda pilih kosong, silahkan cari di kota atau hari lainnya</h1>";
+                            }
+                            else{
                             foreach ($schedule_search as $row) {
                              /*foreach($key as $row) { */?>
                               <div class="panel kotakdata" style="border-radius: inherit">
@@ -235,7 +239,8 @@ $hari=date('D',strtotime($tanggal));
                               array_push($airline, $row['airline']);
                             }
                             $i++; 
-                            }?>
+                            }
+                          }?>
                           </div> 
                     </div>
                 </div>
