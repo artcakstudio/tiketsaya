@@ -4,13 +4,13 @@
 @section('content')
 
 @section('search-colomn')
-  @include('column_search')
+  @include('column_search_hidden')
  <div class="row">
                 <div class="col-md-12 content_">
                     <div class="row head_table">
                         <div class="col-md-4" style="padding-top: 10px; font-weight: bold" >HASIL PENCARIAN</div>
                         <div class="col-md-8" style="padding: 0;" >
-                             <button style="float: right" type="button" class="btn remove_border themecolor">Ubah Pencarian</button>
+                             <button style="float: right" type="button" data-target="#pencarian_data_tabel" data-toggle="collapse" aria-expanded="true" class="btn remove_border themecolor">Ubah Pencarian</button>
                              @if(sizeof($schedule)>0)
                              <p style="float: right;padding-top: 10px; margin-right: 10px;"> Travel | {{$schedule[0]['ROUTE_DEPARTURE']}} Ke {{$schedule[0]['ROUTE_DEST']}}  | <?php echo date('Y-m-d', strtotime($schedule[0]['TRAVEL_SCHEDULE_DEPARTTIME']))?></p>
                               @endif
@@ -71,7 +71,7 @@
                                     </div>
                                     <div class="data_maskapai2">
                                         <div>
-                                            <h4><?php echo date('h:i', strtotime($row['TRAVEL_SCHEDULE_DEPARTTIME']))?></h4>
+                                            <h4><?php echo date('H:i', strtotime($row['TRAVEL_SCHEDULE_DEPARTTIME']))?></h4>
                                             <h5>{{ $row['ROUTE_DEPARTURE']}}</h5>
                                         </div>
                                     </div>
@@ -81,8 +81,8 @@
                                             <h4><?php 
                                             $diff=abs(strtotime($row['TRAVEL_SCHEDULE_ARRIVETIME']) - strtotime($row['TRAVEL_SCHEDULE_DEPARTTIME']) );
 
-                                            $jam= $diff/3600;
-                                            $menit= $diff%$jam/60;
+                                            $jam= intval($diff/3600);
+                                            $menit= intval($diff-3600*$jam)/60;
                                             echo $jam."Hour ".$menit;?> Menit
                                             </h4>
                                             <h5>Estimasi</h5>
@@ -124,10 +124,13 @@
                                           
                                           <div class="col-md-6">
                                               <p><?php echo date('D',strtotime($row['TRAVEL_SCHEDULE_DEPARTTIME']))."     ".date('d-m-Y',strtotime($row['TRAVEL_SCHEDULE_DEPARTTIME']))?> </p>
-                                              <p>Fasilitas : AC, Wifi, Music, Makan 1x</p>
-                                              <p>Berangkat : <?php echo date('h:i',strtotime($row['TRAVEL_SCHEDULE_ARRIVETIME']))?> WIB </p>
+                                              <p>Fasilitas : {{$row['VEHICLE_DESCRIPTION']}}</p>
+                                              <p>Berangkat : <?php echo date('H:i',strtotime($row['TRAVEL_SCHEDULE_ARRIVETIME']))?> WIB </p>
                                               <p>Estimasi : <?php $diff=abs(strtotime($row['TRAVEL_SCHEDULE_ARRIVETIME']) - strtotime($row['TRAVEL_SCHEDULE_DEPARTTIME']));
-                                                            echo $diff/60;?> </p>
+                                                            $diffhour= $diff/3600;
+                                                            $diffminute=$diff/60%$diffhour;
+                                                            echo $diffhour.' Jam '.$diffminute.' menit';
+                                                            ?></p>
                                               
                                           </div>
                                           
@@ -155,10 +158,15 @@
                 
             </div>
 <script type="text/javascript">
-    $(".button_pesan").click(function(){
-        var form=$(this.closest("form"));
-        form.submit();
+  
         
-    });
+ 
+        $(".button_pesan").click(function(){
+        var form=$(this).closest("Form");
+        $("body").append(form);
+      console.log($("body"));
+        form.submit();
+        //form.submit();
+           });
 </script>
 @stop

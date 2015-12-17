@@ -37,15 +37,19 @@ class RegistrasiController extends Controller {
 		
 		$partner=Partner::check_login($data['PARTNER_USERNAME'],md5($data['PARTNER_PASSWORD']))
 							->where('PARTNER_TYPE_ID','=',$data['PARTNER_TYPE_ID'])->first();
+							print_r($partner);
 		if(sizeof($partner)>0) {
-			print_r($partner);
 			if ($partner['PARTNER_TYPE_ID']==1){
 				Session(['id'=>$partner['PARTNER_ID'], 'hak'=>'partner_travel']);
 				return redirect::to('travelpartner');
 			}
-			else{
+			else if($partner['PARTNER_TYPE_ID']==2){
 				Session(['id'=>$partner['PARTNER_ID'], 'hak'=>'partner_rent']);
 				return redirect::to('rentpartner');	
+			}
+			else{
+				Session(['id'=>$partner['PARTNER_ID'], 'hak'=>'partner_ticket']);
+				return redirect::to('ticketpartner');
 			}
 		}
 		else{

@@ -1,0 +1,157 @@
+<?php $__env->startSection('search-colomn'); ?>
+    @parent
+        <?php echo $__env->make('column_search_hidden', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<!-- CONTENT OPEN -->
+            <div class="row">
+                <div class="col-md-12 content_">
+                    <div class="row head_table">
+                        <div class="col-md-4" style="padding-top: 10px; font-weight: bold" >HASIL PENCARIAN</div>
+                        <div class="col-md-8" style="padding: 0;" >
+                             <button style="float: right" type="button" data-target="#pencarian_data_tabel" data-toggle="collapse" aria-expanded="true" class="btn remove_border themecolor">Ubah Pencarian</button>
+                             <?php if(sizeof($vehicle)>0): ?>
+                             <p style="float: right;padding-top: 10px; margin-right: 10px;"> Sewa Mobil | <?php echo e($vehicle[0]['CITY_NAME']); ?>| <?php echo e(dateFormat(date('d-m-Y',strtotime($vehicle[0]['RENT_SCHEDULE_DATE'])))); ?></p>
+                                <?php endif; ?>
+
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <div class="row" style="margin-top: 15px;">
+                        
+                        <div class="kotakfilter">
+                            <div class="filter_data">
+                                <h4>Pilih Travel</h4>
+                            </div>
+                        </div>
+                        <div class="kotakfilter">
+                            <div class="filter_data">
+                                <h4>Pilih Waktu</h4>
+                            </div>
+                        </div>
+                        <div class="kotakfilter">
+                            <div class="filter_data">
+                                <h4>Pilih Tanggal</h4>
+                            </div>
+                        </div>
+                        <div class="kotakfilter">
+                            <div class="filter_data">
+                                <h4>Pilih Harga</h4>
+                            </div>
+                        </div>
+                        <div class="kotakfilter">
+                            <div class="filter_data">
+                               
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row" style="margin-top: 30px;">
+                       
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <?php if(sizeof($vehicle)==0): ?>
+                            <h1 style="text-align:center">Kota yang anda pilih kosong, silahkan cari di kota atau hari lainnya</h1>
+                            <?php endif; ?>
+                            
+                            <?php foreach ($vehicle as $row) { ?>
+                            <div class="row panel kotakdata" style="border-radius: inherit">
+                                <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $row['RENT_SCHEDULE_ID'] ?>">
+                                    
+                                    <div class="row data_maskapai">
+                                        <div class="row"><center><img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public\Assets\partnerPhoto/'.$row['PARTNER_PHOTO'])?>" width=80 height=60/></center></div>
+                                    </div>
+                                    <div class="data_maskapai2">
+                                        <div>
+                                            <img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('public\Assets\vehiclePhoto/'.$row['VEHICLE_PHOTO'])?>" width=250 height=160/>
+                                        </div>
+                                    </div>
+                                    <div class="data_maskapai2">
+                                       
+                                    </div>
+                                    
+                                    <div class="data_maskapai">
+                                         <div>
+                                            <h4><?php echo e($row['VEHICLE_TYPE_NAME']); ?></h4>
+                                            <h5><?php echo e($row['VEHICLE_NAME']); ?></h5>
+                                        </div>
+                                    </div>
+                                    <div class="data_maskapai2">
+                                        <div>
+                                            <h4><?php echo e($duration); ?> Hari</h4>
+                                            <h5>Lama Sewa</h5>
+                                        </div>
+                                    </div>
+                                    <div class="data_maskapai2">
+                                        <div>
+                                            <h2>IDR <?php echo e($row['RENT_SCHEDULE_PRICE']); ?>/Day</h2>
+                                            <h6><del>IDR 450.000</del></h6>
+                                        </div>
+                                    </div>
+                                    <?php echo Form::open(['route'=>'rentpage.transaksi.step1', 'method'=>'POST','name'=>'form_jadwal']); ?>
+
+                                    <input type="hidden" name="RENT_SCHEDULE_ID" value="<?php echo e($row['RENT_SCHEDULE_ID']); ?>">
+                                    <div class="button_pesan" >
+                                        <div class="buttravel"></div>
+                                    </div>
+                                    <?php echo Form::close(); ?>
+
+                                </div>
+                                <div id="data<?php echo $row['RENT_SCHEDULE_ID']?>" class="collapse" >
+                                  <div class="kotak_colaps">
+                                      <div class="row detilpenerbangan_" >
+                                          <div class="col-md-4">
+                                              <center>
+                                              
+                                              </center>
+                                          </div>
+                                          
+                                          <div class="col-md-2" style="text-align: center">
+                                              
+                                              <p><?php echo e($row['CITY_NAME']); ?></p>
+                                              
+                                          </div>
+                                          
+                                          <div class="col-md-6">
+                                               <p><?php echo date('D',strtotime($row['RENT_SCHEDULE_DATE']))."     ".(date('Y-m-d',strtotime($row['RENT_SCHEDULE_DATE'])))?> </p>
+                                              <p>Fasilitas : AC, Wifi, Music, Makan 1x</p>
+                                              <p>Berangkat : <?php echo date('H:i',strtotime($row['RENT_SCHEDULE_DATE']))?> WIB </p>
+                                              
+                                          </div>
+                                          
+                                      </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <?php } ?>
+                          </div> 
+                    </div>
+                </div>
+            </div>   
+            
+            
+            
+            <div class="row subscribe_" style="background: #eee; height: 80px;margin-bottom: 10px;">
+                <div class="col-md-6">
+                    <h3>Daftarkan email anda sekarang untuk mendapatkan diskon Rp 100.000,-</h3>
+                </div>
+                <div class="col-md-4">
+                    <input type="email" class="form-control remove_border" id="exampleInputEmail3" placeholder="Email"/>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn remove_border themecolor">Subscribe</button>
+                </div>
+                
+            </div>
+<script type="text/javascript">
+    $(".buttravel").click(function(){
+        var form=$(this).closest("Form");
+        form.submit();
+        
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('page_template', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

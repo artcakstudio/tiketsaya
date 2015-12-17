@@ -211,9 +211,13 @@ $(function() {
 
 
 $("#schedule-table").on("click","button.btn-primary",function(){
-    var tr=$(this.closest("tr")).get();
+    var tr=$(this).closest("tr");
     var depart_date="<?php echo $tanggal?>";
-
+    var berangkat=tr[0].cells[2].innerHTML.split(':');
+    var jam=berangkat[0].split(' ');
+    var tiba=tr[0].cells[3].innerHTML.split(':');
+    var jam=tiba[0].split(' ');
+        console.log(berangkat);
     $("#addSchedule form [name='TRAVEL_SCHEDULE_PRICE']").val(tr[0].cells[4].innerHTML);    
     $("#addSchedule form option:contains("+tr[0].cells[0].innerHTML+" Ke "+tr[0].cells[1].innerHTML+")").attr('selected','selected');
     $("#addSchedule form [name='date']").val(depart_date);
@@ -318,13 +322,20 @@ $("#schedule-table").on("click","button.btn-primary",function(){
   </div>
 </div>
 
+<?php
+if (Session::has("error")) {
+
+  echo "<script> alert('".Session::get("error") ."');</script>";
+}?>
 <script type="text/javascript">
     $("#schedule-table").on("click","button.btn.btn-warning",function(){
         var button=$(this.closest("tr"));
         console.log(button);
         var price=button[0].cells[4].innerHTML;
         var sisa=parseInt(button[0].cells[5].innerHTML);
-        var id=$(this).get()[0].id;  
+        var id=$(this).get()[0].id; 
+        
+
         console.log(sisa);
         $("#tambahPenumpangSchedule form input[name='harga']").val(price);
         $("#tambahPenumpangSchedule form input[name='TRAVEL_TRANSACTION_PRICE']").val(price);

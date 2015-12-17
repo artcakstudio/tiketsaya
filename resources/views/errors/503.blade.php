@@ -40,7 +40,8 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Be right back.</div>
+                <div class="title">{{$error}}</div>
+                <a href="<?php echo url('/')?>"><h3 style="text-align:centre">Go to Home</h3></a>
             </div>
         </div>
     </body>

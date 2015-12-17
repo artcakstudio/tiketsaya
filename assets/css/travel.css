@@ -207,7 +207,7 @@ body {
 }
 .rekom_harga h5{
     padding: 0;
-    padding-top: 10px;
+    padding-top: 0px;
     margin: 0;
     font-size: 13px;
     text-align: center;
@@ -232,7 +232,7 @@ body {
 
 .rekom_harga_selected h5{
     padding: 0;
-    padding-top: 10px;
+    padding-top: 0px;
     margin: 0;
     font-size: 13px;
     text-align: center;
@@ -310,6 +310,7 @@ body {
     height: 50px;
     float: left;
     padding: 1px;
+    z-index: 1000px;
 }
 
 .button_pesan div.butpesawat{
@@ -614,4 +615,38 @@ body {
     border-bottom: 2px solid #16ac59;
     text-align: center;
     font-size: 16px;
+}
+.flight-search{
+    width: 273px;
+    height: 250px;
+    background: white;
+    overflow: auto;
+    position: absolute;
+    z-index: 3;
+    margin-top: 35px;
+    display: none;
+}
+.flight-list li{
+    list-style:  none;
+    text-decoration: initial;
+    color: black;
+}
+.data-filter{
+    border:1px solid black;
+    height: 90px;  
+    margin-top: 10px;
+}
+.selected{
+    background-color: #16ac59;
+    padding-bottom: 10px;
+}
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}
+.box_data_tambahan_penumpang{
+    border: 1px solid #ddd;visibility:hidden;margin-bottom:10px
+}
+.error_form{
+    color:red;
+    margin-left: 10px;
 }

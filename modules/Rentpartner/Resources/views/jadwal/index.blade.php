@@ -196,6 +196,9 @@
       data : {"tanggal":jadwal_bulan,"ROUTE_ID":route,'_token':token, "hour_depart":hour_depart,"minute_depart":minute_depart,"hour_estimate":hour_estimate,"minute_estimate":minute_estimate, "RENT_SCHEDULE_PRICE":price,"VEHICLE_ID":vehicle},
       datatype : "JSON",
       success:function(data){       
+        data=jQuery.parseJSON(data);
+        console.log(data);
+        alert(data);
       window.location = window.location.href;
       }
     });
@@ -213,7 +216,8 @@
         console.log(data);
         var path="<?php echo url('public/Assets/vehiclePhoto/')?>";
         var path=path+'/'+data[0].VEHICLE_PHOTO;
-        $("#detail_jadwal table tbody tr").append('<td>'+data[0].CITY_NAME+'</td><td>'+data[0].VEHICLE_NAME+'</td><td>'+data[0].RENT_SCHEDULE_DATE+'</td><td><img src="'+path+'" width=90 height=50');
+          var patherror="<?php echo url('assets/images/noimage.png')?>";
+        $("#detail_jadwal table tbody tr").append('<td>'+data[0].CITY_NAME+'</td><td>'+data[0].VEHICLE_NAME+'</td><td>'+data[0].RENT_SCHEDULE_DATE+'</td><td><img src="'+path+'" width=90 height=50 onError=this.onerror=null;this.src="'+patherror+'" ');
         $("#detail_jadwal").modal("show");
       }
     });

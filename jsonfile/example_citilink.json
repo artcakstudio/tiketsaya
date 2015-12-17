@@ -1,0 +1,174 @@
+{
+  "depart": [
+    {
+      "time": [
+        "5:55",
+        "7:15"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "plane": "QG 800",
+      "price": "452000",
+      "input": {
+        "name": "ControlGroupScheduleSelectView$AvailabilityInputScheduleSelectView$market1",
+        "value": "0~P~~P~RGFR~~1~X|QG~ 800~ ~~SUB~09/23/2015 05:55~CGK~09/23/2015 07:15~"
+      },
+      "airline": "Citilink"
+    },
+    {
+      "time": [
+        "9:40",
+        "11:05"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "plane": "QG 802",
+      "price": "452000",
+      "input": {
+        "name": "ControlGroupScheduleSelectView$AvailabilityInputScheduleSelectView$market1",
+        "value": "0~P~~P~RGFR~~1~X|QG~ 802~ ~~SUB~09/23/2015 09:40~CGK~09/23/2015 11:05~"
+      },
+      "airline": "Citilink"
+    },
+    {
+      "time": [
+        "10:40",
+        "12:00"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "plane": "QG 810",
+      "price": "506000",
+      "input": {
+        "name": "ControlGroupScheduleSelectView$AvailabilityInputScheduleSelectView$market1",
+        "value": "0~O~~O~RGFR~~1~X|QG~ 810~ ~~SUB~09/23/2015 10:40~CGK~09/23/2015 12:00~"
+      },
+      "airline": "Citilink"
+    },
+    {
+      "time": [
+        "11:35",
+        "12:55"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "plane": "QG 804",
+      "price": "452000",
+      "input": {
+        "name": "ControlGroupScheduleSelectView$AvailabilityInputScheduleSelectView$market1",
+        "value": "0~P~~P~RGFR~~1~X|QG~ 804~ ~~SUB~09/23/2015 11:35~CGK~09/23/2015 12:55~"
+      },
+      "airline": "Citilink"
+    },
+    {
+      "time": [
+        "13:25",
+        "14:50"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "plane": "QG 808",
+      "price": "506000",
+      "input": {
+        "name": "ControlGroupScheduleSelectView$AvailabilityInputScheduleSelectView$market1",
+        "value": "0~O~~O~RGFR~~1~X|QG~ 808~ ~~SUB~09/23/2015 13:25~CGK~09/23/2015 14:50~"
+      },
+      "airline": "Citilink"
+    },
+    {
+      "time": [
+        "18:55",
+        "20:30"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "plane": "QG 818",
+      "price": "836000",
+      "input": {
+        "name": "ControlGroupScheduleSelectView$AvailabilityInputScheduleSelectView$market1",
+        "value": "0~F~~F~RGFR~~1~X|QG~ 818~ ~~SUB~09/23/2015 18:55~CGK~09/23/2015 20:30~"
+      },
+      "airline": "Citilink"
+    },
+    {
+      "time": [
+        "20:30",
+        "21:50"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "plane": "QG 900",
+      "price": "605000",
+      "input": {
+        "name": "ControlGroupScheduleSelectView$AvailabilityInputScheduleSelectView$market1",
+        "value": "0~L~~L~RGFR~~1~X|QG~ 900~ ~~SUB~09/23/2015 20:30~CGK~09/23/2015 21:50~"
+      },
+      "airline": "Citilink"
+    },
+    {
+      "time": [
+        "20:55",
+        "22:15"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "plane": "QG 806",
+      "price": "506000",
+      "input": {
+        "name": "ControlGroupScheduleSelectView$AvailabilityInputScheduleSelectView$market1",
+        "value": "0~O~~O~RGFR~~1~X|QG~ 806~ ~~SUB~09/23/2015 20:55~CGK~09/23/2015 22:15~"
+      },
+      "airline": "Citilink"
+    },
+    {
+      "time": [
+        "21:55",
+        "23:15"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "plane": "QG 814",
+      "price": "452000",
+      "input": {
+        "name": "ControlGroupScheduleSelectView$AvailabilityInputScheduleSelectView$market1",
+        "value": "0~P~~P~RGFR~~1~X|QG~ 814~ ~~SUB~09/23/2015 21:55~CGK~09/23/2015 23:15~"
+      },
+      "airline": "Citilink"
+    },
+    {
+      "time": [
+        "22:25",
+        "23:50"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "plane": "QG 902",
+      "price": "452000",
+      "input": {
+        "name": "ControlGroupScheduleSelectView$AvailabilityInputScheduleSelectView$market1",
+        "value": "0~P~~P~RGFR~~1~X|QG~ 902~ ~~SUB~09/23/2015 22:25~CGK~09/23/2015 23:50~"
+      },
+      "airline": "Citilink"
+    }
+  ]
+}

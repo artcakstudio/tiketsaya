@@ -5,7 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 class vehicle extends Model {
 
     protected $fillable = [];
-    protected $table="vehicle";
+    
+    protected $table='VEHICLE';
     public $timestamp=false;
     const UPDATED_AT = 'VEHICLE_UPDATE';
 

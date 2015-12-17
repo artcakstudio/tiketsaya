@@ -1,0 +1,11 @@
+{
+  "origin": "SUB",
+  "destination": "DPS",
+  "return": "one_way",
+  "date_flexibility": "must_travel",
+  "depart_date": "2015-10-30",
+  "return_date": "2016-02-13",
+  "adult": 1,
+  "children": 0,
+  "infant": 0
+}

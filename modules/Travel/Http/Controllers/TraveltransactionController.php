@@ -26,7 +26,7 @@ class traveltransactionController extends Controller {
 		$data=Input::all();
 		unset($data['_token']);
 		$transaction=Traveltransaction::findTransaction($data['TRAVEL_TRANSACTION_ID']);
-		$data['TRAVEL_TRANSACTION_UPDATE']=date('y-m-d h:i:s');
+		$data['TRAVEL_TRANSACTION_UPDATE']=date('y-m-d H:i:s');
 		print_r($data);
 		$transaction->update($data);
 		return back();

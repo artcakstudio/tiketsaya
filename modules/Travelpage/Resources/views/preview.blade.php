@@ -143,7 +143,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                                             <b>{{Session::get('DATA_TRAVEL')['ROUTE_DEPARTURE']}}</b>
                                                         </td>
                                                         <td class="waktu_penerbangan_asal_1">
-                                                            <b><?php echo date('h:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME'])))-1]?>
+                                                            <b><?php echo date('H:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_DEPARTTIME'])))-1]?>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -159,7 +159,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                                         </td>
                                                         <td class="waktu_penerbangan_tujuan_1">
                                                             <div class="tulisan_waktu_tujuan_1">
-                                                                <b><?php echo date('h:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME'])))-1]?>
+                                                                <b><?php echo date('H:i', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_TRAVEL')['TRAVEL_SCHEDULE_ARRIVETIME'])))-1]?>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -219,7 +219,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                 <p>Dengan mengklik tombol di bawah, Anda menyetujui <u>Syarat & Ketentuan</u> dan <u>Kebijakan Privasi</u> Travebaik</p>
                             </div>
                             <div class="logo_lanjut" style="margin-bottom:15px">
-                                <input type="image" value="submit "src="<?php echo url('assets/images/lanjut_ke_pembayaran.png')?>">
+                                <a href="{!! url('payment') !!}"><img src="{!! url('assets/images/lanjut_bayar.png') !!}"></a>
                             </div>
                         </div>
                         </div>

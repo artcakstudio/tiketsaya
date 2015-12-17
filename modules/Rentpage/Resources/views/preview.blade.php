@@ -14,6 +14,7 @@
 <?php
 $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
 ?>
+<?php print_r(Session::get('DATA_RENT'))?>
             <!-- SLIDER -->
             <div class="row">
                 <div class="col-md-12 slider"></div>
@@ -24,6 +25,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                     <div class="row head_table">
                         <div class="col-md-4" style="padding-top: 0px"><h4><b>PROSES PEMESANAN</b><h4></div>
                         <div class="col-md-8" style="padding: 0;">
+
                              <p style="float: right;padding-top: 10px; margin-right: 10px;"> Rental | <?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]; echo " ".dateFormat(date('d-m-Y', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))?></p>
                         </div>
                     </div>
@@ -156,7 +158,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                                             <b>{{Session::get('DATA_RENT')['ROUTE_DEPARTURE']}}</b>
                                                         </td>
                                                         <td class="waktu_penerbangan_asal_1">
-                                                            <b><?php echo date('h:i', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></b><?php echo "  ". $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]?>
+                                                            <b><?php echo date('H:i', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></b><?php echo "  ". $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]?>
                                                         </td>
                                                     </tr> -->
                                                     <tr>
@@ -172,7 +174,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                                         </td>
                                                         <td class="waktu_penerbangan_tujuan_1">
                                                             <div class="tulisan_waktu_tujuan_1">
-                                                                <b><?php echo date('h:i', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]?>
+                                                                <b><?php echo date('H:i', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE']))?></b><?php echo $day[date('N',strtotime('D', strtotime(Session::get('DATA_RENT')['RENT_SCHEDULE_DATE'])))-1]?>
                                                             </div>
                                                         </td>
                                                     </tr> -->
@@ -211,7 +213,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                             </div>
                             <div class="daftar_harga_total col-md-3" style="width:25%;  border-right: 2px dashed #bbb; ">
                                 <div class="harga_1_a">
-                                    <span style="float:left">Rp</span><p><b>{{Session::get('DATA_RENT')['RENT_SCHEDULE_PRICE']**Session::get('duration')}}</b></p>
+                                    <span style="float:left">Rp</span><p><b>{{Session::get('DATA_RENT')['RENT_SCHEDULE_PRICE']*Session::get('duration')}}</b></p>
                                 </div>
                                 <div class="harga_2_a">
                                     <span style="float:left">Rp</span><p><b>0</b></p>
@@ -232,7 +234,7 @@ $day=["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
                                 <p>Dengan mengklik tombol di bawah, Anda menyetujui <u>Syarat & Ketentuan</u> dan <u>Kebijakan Privasi</u> Travebaik</p>
                             </div>
                             <div class="logo_lanjut" style="margin-bottom:15px">
-                                <input type="image" value="submit "src="<?php echo url('assets/images/lanjut_ke_pembayaran.png')?>">
+                                <a href="{!! url('payment') !!}"><img src="{!! url('assets/images/lanjut_bayar.png') !!}"></a>
                             </div>
                         </div>
                         </div>

@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Travelbaik | pelayanan baik dengan harga terbaik</title>
+    <?php echo Html::style('assets/css/bootstrap.css'); ?>
+
+    <?php echo Html::style('assets/css/datepicker.css'); ?>
+
+    <?php echo Html::style('assets/css/bootstrap.min.css'); ?>
+
+    <?php echo Html::style('assets/css/font-awesome.min.css'); ?>
+
+    <?php echo Html::style('assets/css/jquery.dataTables.css'); ?>
+
+    <?php echo Html::style('assets/css/jquery.dataTables.min.css'); ?>
+
+    <?php echo Html::style('assets/css/bootstrap-slider.css'); ?>
+
+    
+    <?php echo Html::style('assets/css/partner.css'); ?>
+
+    <?php echo Html::style('assets/css/style-page.css'); ?>
+
+    <?php echo Html::style('assets/css/travel.css'); ?>
+
+    <?php echo Html::script('assets/js/jquery.min.js'); ?>
+
+    <?php echo Html::script('assets/js/bootstrap.min.js'); ?>
+
+    <?php echo Html::script('assets/js/bootstrap-datepicker.js'); ?>
+
+    
+    <?php echo $__env->yieldContent('custom_css'); ?>
+    <?php echo HTML::script('assets/js/jquery.dataTables.min.js'); ?> <!-- Data tables -->
+    <?php echo HTML::script('assets/js/bootstrap-slider.js'); ?>
+
+    <?php echo HTML::script('assets/js/bootstrap-datepicker.js'); ?> <!-- jQuery UI -->
+    <?php echo $__env->yieldContent('custom_js'); ?>
+</head>
+<body>
+
+<?php echo '<script>var token="'.csrf_token().'"</script>';
+
+
+?>
+
+    <div class="container-large_">
+        <div class="container">
+            <!-- HEADER OPEN --> 
+            <div class="row header_" style="display:block">
+                <div class="col-md-4 remove_padding">
+                    <a href="<?php echo url('/')?>"> 
+                        <img class="logoimg" src="<?php echo url('assets/images/logo-h.png')?>">
+                    </a>
+                </div>
+                <div class="col-md-8 remove_padding">
+                    <div class="header-top hidden-sm hidden-xs">
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-2">Cara Pemesanan</div>
+                            <div class="col-md-3">Cek Pemesanan</div>
+                            <div class="col-md-4">(031) 211 355</div>
+                        </div>
+                    </div>
+                    <div class="menu">
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-1">Travel</div>
+                            <div class="col-md-2">Pesawat</div>
+                            <div class="col-md-2">Tour</div>
+                            <div class="col-md-2">Sewa Mobil</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- HEADER CLOSE-->
+                              <!-- SLIDER -->
+            
+            <!-- SLIDER CLOSE -->
+            <?php echo $__env->yieldContent('search-colomn'); ?>
+            <!-- SEARCH BOX OPEN -->
+            
+            
+        
+            <?php echo $__env->yieldContent('content'); ?>
+
+
+
+            <!--Footer Open-->
+
+            </div>
+    </div>
+    <div class="footer_large">
+        <div class="footer_page">
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="group_list_">
+                        <li class="group_list_item_head_">TIKET PESAWAT MURAH</li>
+                        <li class="group_list_item_">Tiket Murah Jakarta Bali</li>
+                        <li class="group_list_item_">Tiket Murah Surabaya Jakarta</li>
+                        <li class="group_list_item_">Tiket Murah Surabaya Bandung</li>
+                        <li class="group_list_item_">Tiket Murah Surabaya Bali</li>
+                        <li class="group_list_item_">Tiket Murah Jakarta Bali</li>
+                        <li class="group_list_item_">Tiket Murah Surabaya Jakarta</li>
+                        <li class="group_list_item_">Tiket Murah Surabaya Bandung</li>
+                        <li class="group_list_item_">Tiket Murah Surabaya Bali</li>
+                        
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul class="group_list_">
+                        <li class="group_list_item_head_">Tiket Travel Murah</li>
+                        <?php
+                            $link_travel=DB::select('select LINK_TRAVEL_DEPARTURE,LINK_TRAVEL_DEST ,getCityName(LINK_TRAVEL_DEPARTURE) as DEPARTURE, getCityName(LINK_TRAVEL_DEST) as DEST from LINK_TRAVEL');
+                        ?>
+                        <?php $tanggal=date('m/d/Y');?>
+                        <?php foreach($link_travel as $row): ?>
+                        <?php echo Form::open(['route'=>'travelpage.search.footer','method'=>'POST']); ?>
+
+                        <input type="hidden" value="<?php echo e($row->LINK_TRAVEL_DEPARTURE); ?>" name="depart">
+                        <input type="hidden" value="<?php echo e($row->LINK_TRAVEL_DEST); ?>" name="dest">
+                        <input type="hidden" value="<?php echo e($tanggal); ?>" name="TRAVEL_SCHEDULE_DATE">
+                        <a href="#"> <li class="group_list_item_">Tiket Travel <?php echo e($row->DEPARTURE); ?> Ke <?php echo e($row->DEST); ?> </li></a>
+                        <?php echo Form::close(); ?>
+
+                        <?php endforeach; ?>
+                        
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul class="group_list_">
+                        <li class="group_list_item_head_">Sewa Mobil Murah</li>
+                        <?php
+                            $link_rent=DB::select('select LINK_RENT.* ,getCityName(LINK_RENT_CITY) as CITY_NAME from LINK_RENT');
+                        ?>
+                        <?php $tanggal=date('m/d/Y');?>
+                        <?php foreach($link_rent as $row): ?>
+                        <?php echo Form::open(['route'=>'rentpage.search.footer','method'=>'POST']); ?>
+
+                        <input type="hidden" value="<?php echo e($row->LINK_RENT_CITY); ?>" name="CITY_ID">
+                        <input type="hidden" value="<?php echo e($tanggal); ?>" name="RENT_SCHEDULE_DATE">
+                        <a href="#"> <li class="group_list_item_">Tiket Rent <?php echo e($row->CITY_NAME); ?> </li></a>
+                        <?php endforeach; ?>
+                        <?php echo Form::close(); ?>
+
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul class="group_list_">
+                        <li class="group_list_item_head_">Paket Tour Wisata</li>
+                        <li class="group_list_item_">Paket Tour Bali</li>
+                        <li class="group_list_item_">Paket Tour Jogjakarta</li>
+                        <li class="group_list_item_">Paket Tour Jakarta Bandung</li>
+                        <li class="group_list_item_">Paket Tour Lombok</li>
+                        <li class="group_list_item_">Paket Tour Jogjakarta</li>
+                        <li class="group_list_item_">Paket Tour Jakarta Bandung</li>
+                        <li class="group_list_item_">Paket Tour Lombok</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <script type="text/javascript">
+    $(".group_list_item_").click(function(){
+
+        var form=$(this).closest("Form");
+        
+        form.submit();
+        
+    });
+
+    var nowDate = new Date();
+    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0); 
+
+    $("body").on('focus',".datepicker", function(){
+        $(this).datepicker({changeMonth: true,
+            changeYear: true,
+            format: "dd-mm-yyyy", 
+            startDate: today ,
+            minDate: 0
+        });
+
+    });
+
+
+    $('img').error(function(){
+        var img=this;
+        this.attr("src","<?php echo url('assets/images/noimage.png')?>");
+    });
+
+    $(document).ready(function(){
+        //Rupiah Function
+       updateView();
+    });
+    function updateView(){
+         var div=$(".rupiah");
+
+        for(i=0; i<div.length; i++){
+            var rupiah= $(div[i]).html();
+            harga=parseInt(rupiah.split(' ')[1]);
+            harga=harga.toString();
+            var temp='';
+            for(j=0; j<harga.length; j++){
+                if (j%3==0 && j!=0){
+                    temp=temp+'.';
+                }
+                temp=temp+harga.charAt(harga.length-j-1);
+            }
+            harga=temp;
+            temp='';
+            for(j=0; j<harga.length; j++){
+                temp=temp+harga.charAt(harga.length-j-1);
+            }
+            temp='Rp. '+temp+',-';
+            $(div[i]).html(temp);
+        }
+
+        var tanggal_obj=$(".tanggal");
+        var bulan=["Januari", "Februari", "Maret", "April","Mei","Juni","Juli","Agustus","September","Oktober", "Nopember","Desember"];
+        for(i=0; i<tanggal_obj.length; i++){
+            var tanggal= $(tanggal_obj[i]).html();
+            tanggal=tanggal.split('-');
+            if (parseInt(tanggal[1]<=12)){
+            $(tanggal_obj[i]).html(tanggal[0]+' '+bulan[parseInt(tanggal[1])-1]);
+            }
+        }
+    }
+    </script>
+</body>
+</html>

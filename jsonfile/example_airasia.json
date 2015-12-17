@@ -1,0 +1,140 @@
+{
+  "depart": [
+    {
+      "plane": "QZ 7681",
+      "time": [
+        "05:30",
+        "06:45"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "576298",
+      "input": {
+        "name": "airAsiaAvailability.MarketFareKeys[0]",
+        "value": "0~O~~O02H02~AAB1~~71~X|QZ~7681~ ~~SUB~09/23/2015 05:30~CGK~09/23/2015 06:45~"
+      },
+      "airline": "Air Asia"
+    },
+    {
+      "plane": "QZ 7681",
+      "time": [
+        "05:30",
+        "06:45"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "845930",
+      "input": {
+        "name": "airAsiaAvailability.MarketFareKeys[0]",
+        "value": "0~ZF~~ZF1F00H~AAB1~~5~X|QZ~7681~ ~~SUB~09/23/2015 05:30~CGK~09/23/2015 06:45~"
+      },
+      "airline": "Air Asia"
+    },
+    {
+      "plane": "QZ 7693",
+      "time": [
+        "09:30",
+        "10:45"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "576298",
+      "input": {
+        "name": "airAsiaAvailability.MarketFareKeys[0]",
+        "value": "0~O~~O02H02~AAB1~~71~X|QZ~7693~ ~~SUB~09/23/2015 09:30~CGK~09/23/2015 10:45~"
+      },
+      "airline": "Air Asia"
+    },
+    {
+      "plane": "QZ 7693",
+      "time": [
+        "09:30",
+        "10:45"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "845930",
+      "input": {
+        "name": "airAsiaAvailability.MarketFareKeys[0]",
+        "value": "0~ZF~~ZF1F00H~AAB1~~5~X|QZ~7693~ ~~SUB~09/23/2015 09:30~CGK~09/23/2015 10:45~"
+      },
+      "airline": "Air Asia"
+    },
+    {
+      "plane": "QZ 7683",
+      "time": [
+        "12:55",
+        "14:15"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "576298",
+      "input": {
+        "name": "airAsiaAvailability.MarketFareKeys[0]",
+        "value": "0~O~~O02H02~AAB1~~71~X|QZ~7683~ ~~SUB~09/23/2015 12:55~CGK~09/23/2015 14:15~"
+      },
+      "airline": "Air Asia"
+    },
+    {
+      "plane": "QZ 7683",
+      "time": [
+        "12:55",
+        "14:15"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "845930",
+      "input": {
+        "name": "airAsiaAvailability.MarketFareKeys[0]",
+        "value": "0~ZF~~ZF1F00H~AAB1~~5~X|QZ~7683~ ~~SUB~09/23/2015 12:55~CGK~09/23/2015 14:15~"
+      },
+      "airline": "Air Asia"
+    },
+    {
+      "plane": "QZ 7689",
+      "time": [
+        "20:35",
+        "21:55"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "694900",
+      "input": {
+        "name": "airAsiaAvailability.MarketFareKeys[0]",
+        "value": "0~I~~I01H00H~AAB1~~2~X|QZ~7689~ ~~SUB~09/23/2015 20:35~CGK~09/23/2015 21:55~"
+      },
+      "airline": "Air Asia"
+    },
+    {
+      "plane": "QZ 7689",
+      "time": [
+        "20:35",
+        "21:55"
+      ],
+      "ports": [
+        "SUB",
+        "CGK"
+      ],
+      "price": "914900",
+      "input": {
+        "name": "airAsiaAvailability.MarketFareKeys[0]",
+        "value": "0~IF~~IF1F00H~AAB1~~5~X|QZ~7689~ ~~SUB~09/23/2015 20:35~CGK~09/23/2015 21:55~"
+      },
+      "airline": "Air Asia"
+    }
+  ]
+}

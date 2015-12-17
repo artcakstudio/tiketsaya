@@ -18,9 +18,9 @@
                     </tr>
                 </thead>
             </table>    
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahVehicle">Add Vehicle</button>
                     </div>
             <div class="row col-md-5" style="margin-left:5%; margin-top:1%">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahVehicle">Add Vehicle</button>
             </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
 <script type="text/javascript">
     $("#vehicle-table").on("click","button.btn.btn-danger",function(){
         var button=this;
-        var tr=$(button.closest("tr")).get();
+        var tr=$(button).closest("tr");
         var name=tr[0].firstChild.innerHTML;
       
         $("#hapusUser h2.modalbody").html('Apakah Anda Yakin Menghapus Vehicle '+name+'?');
@@ -106,6 +106,7 @@
                     <input type="file" name="VEHICLE_PHOTO" class="form-control">
               </div>
             </div>
+            
 
             <div class="form-group">
               <label class="col-lg-3 control-label">City</label>
@@ -141,7 +142,7 @@
 
 <script>
 $("#vehicle-table").on("click","button.btn.btn-primary",function(){
-  var tr=$(this.closest("tr"));
+  var tr=$(this).closest("tr");
 
   $("#tambahVehicle form input[name='VEHICLE_NAME']").val(tr[0].cells[0].innerHTML);
   $("#tambahVehicle form input[name='VEHICLE_CAPACITY']").val(tr[0].cells[3].innerHTML);

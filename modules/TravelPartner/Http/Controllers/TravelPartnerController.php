@@ -19,11 +19,11 @@ class TravelPartnerController extends Controller {
 	 	$data=Input::all();
 	 	$partner=Partner::where('PARTNER_ID','=',$data['PARTNER_ID']);
 	 	unset($data['_token']);
-	 	if (!is_null($data['PARTNER_PHOTO'])){
+	 	if (isset($data['PARTNER_PHOTO'])){
 	 		$data['PARTNER_PHOTO']=md5(time()).'.png';;
-		 	$destPath=public_path().'\Assets\PartnerPhoto';
+		 	$destPath=public_path().'/Assets/partnerPhoto/';
 		 	Input::file('PARTNER_PHOTO')->move($destPath,$data['PARTNER_PHOTO']);
-		 	@unlink(public_path().'\Assets\partnerPhoto/'.$partner->first()['PARTNER_PHOTO']);
+		 	@unlink(public_path().'/Assets/partnerPhoto/'.$partner->first()['PARTNER_PHOTO']);
 	 	}
 	 	else{
 	 		unset($data['PARTNER_PHOTO']);

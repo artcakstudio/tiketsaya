@@ -2,7 +2,7 @@
 
 @section('search-colomn')
     @parent
-        @include('column_search')
+        @include('column_search_hidden')
     @stop
 
 @section('content')
@@ -13,7 +13,7 @@
                     <div class="row head_table">
                         <div class="col-md-4" style="padding-top: 10px; font-weight: bold" >HASIL PENCARIAN</div>
                         <div class="col-md-8" style="padding: 0;" >
-                             <button style="float: right" type="button" class="btn remove_border themecolor">Ubah Pencarian</button>
+                             <button style="float: right" type="button" data-target="#pencarian_data_tabel" data-toggle="collapse" aria-expanded="true" class="btn remove_border themecolor">Ubah Pencarian</button>
                              @if(sizeof($vehicle)>0)
                              <p style="float: right;padding-top: 10px; margin-right: 10px;"> Sewa Mobil | {{$vehicle[0]['CITY_NAME']}}| {{dateFormat(date('d-m-Y',strtotime($vehicle[0]['RENT_SCHEDULE_DATE'])))}}</p>
                                 @endif
@@ -58,6 +58,7 @@
                             @if(sizeof($vehicle)==0)
                             <h1 style="text-align:center">Kota yang anda pilih kosong, silahkan cari di kota atau hari lainnya</h1>
                             @endif
+                            
                             <?php foreach ($vehicle as $row) { ?>
                             <div class="row panel kotakdata" style="border-radius: inherit">
                                 <div class="kotak_datatabel" data-toggle="collapse" data-parent="#accordion" data-target="#data<?php echo $row['RENT_SCHEDULE_ID'] ?>">
@@ -115,9 +116,9 @@
                                           </div>
                                           
                                           <div class="col-md-6">
-                                               <p><?php echo date('D',strtotime($row['RENT_SCHEDULE_DATE']))."     ".dateFormat(date('d-m-Y',strtotime($row['RENT_SCHEDULE_DATE'])))?> </p>
+                                               <p><?php echo date('D',strtotime($row['RENT_SCHEDULE_DATE']))."     ".(date('Y-m-d',strtotime($row['RENT_SCHEDULE_DATE'])))?> </p>
                                               <p>Fasilitas : AC, Wifi, Music, Makan 1x</p>
-                                              <p>Berangkat : <?php echo date('h:i',strtotime($row['RENT_SCHEDULE_DATE']))?> WIB </p>
+                                              <p>Berangkat : <?php echo date('H:i',strtotime($row['RENT_SCHEDULE_DATE']))?> WIB </p>
                                               
                                           </div>
                                           
@@ -146,8 +147,8 @@
                 
             </div>
 <script type="text/javascript">
-    $(".button_pesan").click(function(){
-        var form=$(this.closest("form"));
+    $(".buttravel").click(function(){
+        var form=$(this).closest("Form");
         form.submit();
         
     });

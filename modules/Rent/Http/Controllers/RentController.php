@@ -1,8 +1,8 @@
 <?php namespace Modules\Rent\Http\Controllers;
 
 use Pingpong\Modules\Routing\Controller;
-use Modules\rent\Entities\RentSchedule;
-use Modules\vehicle\Entities\Vehicle;
+use Modules\Rent\Entities\RentSchedule;
+use Modules\Vehicle\Entities\Vehicle;
 use Input;
 use Session;
 use Datatables;
@@ -21,7 +21,13 @@ class RentController extends Controller {
 		$data['RENT_SCHEDULE_CREATEBY']=session::get('id');
 		$data['RENT_SCHEDULE_DATE']=date('Y-m-d',strtotime($data['RENT_SCHEDULE_DATE']));
 		print_r($data);
-		rentschedule::insert($data);
+		$flag=Rentschedule::whereDate('RENT_SCHEDULE_DATE','=',date('Y-m-d',strtotime($data['RENT_SCHEDULE_DATE'])))
+								->where('VEHICLE_ID','=',$data['VEHICLE_ID'])->count();
+			if($flag==0) {
+				Rentschedule::insert($data);			}
+			else {
+				Session::flash("error","Ada jadwal yang bentrok, mohon periksa kembali");
+			}
 		return redirect::back();
 	}
 	function show($tanggal)

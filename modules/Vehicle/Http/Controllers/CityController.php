@@ -1,7 +1,7 @@
 <?php namespace Modules\Vehicle\Http\Controllers;
 
 use Pingpong\Modules\Routing\Controller;
-use Modules\vehicle\Entities\City;
+use Modules\Vehicle\Entities\City;
 use Datatables;
 use Input;
 use Session;

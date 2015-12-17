@@ -3,21 +3,21 @@
 @parent
 	@include('travel_partner.sidebar')
     <?php $bulan=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];?>
-                 <div class="header_backend">JADWAL TRAVEL BULANAN</div>
+                 <div class="header_backend">JADWAL HARIAN</div> 
            
                     <div class="row col-md-12" style="padding-right: 0px;width: 100%;">
 
                     <div class="col-md-3">      
-                      <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' -1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/back.png')?>"></a>
                       <h4>back</h4>
                     </div>
                     <div  class="col-md-5">
-                        <h2 style="text-align:center">   <?php echo $bulan[date('m',strtotime($date))-1]?> {{date('Y')}}</h2>
+                        <h2 style="text-align:center">   <?php echo $bulan[date('m')-1]?> {{date('Y')}}</h2>
                     </div>
 
                     <div class="col-md-3" style="float:right" >
                     <div style="float:right">
-                      <a href="<?php echo date('Y-m-d', strtotime(' +1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/images/noimage.png')?>'" src="<?php echo url('assets/images/next.png')?>"></a>
+                      <a href="<?php echo date('Y-m-d', strtotime(' +1 month',strtotime($date)))?>"><img onError="this.onerror=null;this.src='<?php echo url('assets/image/noimage.png')?>'" src="<?php echo url('assets/images/next.png')?>"></a>
                       <h4>Next</h4>      
                     </div>
                     </div>
@@ -65,13 +65,13 @@
                             
                         </tr> 
                      </table>
+                     <button class="btn btn-primary" id="schedule_bulanan" >Tambah Schedule</button>
+                     <button class="btn btn-primary"  data-toggle="modal" data-target="#addScheduleMingguan">Tambah Schedule Mingguan</button>
                      </div>       
                      </div>
                      </div>
                      <div class="col-md-8" style="margin-left:25%">
                        
-                     <button class="btn btn-primary" id="schedule_bulanan" >Tambah Schedule</button>
-                     <button class="btn btn-primary"  data-toggle="modal" data-target="#addScheduleMingguan">Tambah Schedule Mingguan</button>
                      </div>
                     </div>
                 </div>
@@ -225,13 +225,17 @@
       data : {"tanggal":jadwal_bulan,"ROUTE_ID":route,'_token':token, "hour_depart":hour_depart,"minute_depart":minute_depart,"hour_estimate":hour_estimate,"minute_estimate":minute_estimate, "TRAVEL_SCHEDULE_PRICE":price,"VEHICLE_ID":vehicle},
       datatype : "JSON",
       success:function(data){       
-      window.location = window.location.href;
+              data=jQuery.parseJSON(data);
+        console.log(data);
+        alert(data);
+       window.location = window.location.href;
       }
     });
   });
   $("#jadwal_bulanan").on("click","h6.jadwal_harian",function(){
     var jadwal=$(this).get();
     var id=jadwal[0].id;
+    $("#detail_jadwal table tbody tr").empty();
     $.ajax({
       url : "<?php echo url('travelpartner/detail_jadwal')?>",
       type : "post",
@@ -242,7 +246,9 @@
         console.log(data);
         var path="<?php echo url('public/Assets/vehiclePhoto/')?>";
         var path=path+'/'+data[0].VEHICLE_PHOTO;
-        $("#detail_jadwal table tbody tr").append('<td>'+data[0].ROUTE_DEPARTURE+'</td><td>'+data[0].ROUTE_DEST+'</td><td>'+data[0].TRAVEL_SCHEDULE_DEPARTTIME+'</td><td>'+data[0].TRAVEL_SCHEDULE_ARRIVETIME+'</td><td>'+data[0].VEHICLE_NAME+'</td><td><img src="'+path+'" width=90 height=50');
+        var patherror="<?php echo url('assets/images/noimage.png')?>";
+        
+        $("#detail_jadwal table tbody tr").append('<td>'+data[0].ROUTE_DEPARTURE+'</td><td>'+data[0].ROUTE_DEST+'</td><td>'+data[0].TRAVEL_SCHEDULE_DEPARTTIME+'</td><td>'+data[0].TRAVEL_SCHEDULE_ARRIVETIME+'</td><td>'+data[0].VEHICLE_NAME+'</td><td><img src="'+path+'" width=90 height=50  onError=this.onerror=null;this.src="'+patherror+'"  ' );
         $("#detail_jadwal").modal("show");
       }
     });

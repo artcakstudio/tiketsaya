@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class submodule extends Model {
 
     protected $fillable = [];
-    protected $table='sub_modules';
+    protected $table='SUB_MODULES';
 
     public function scopegetModuleNotIn($query, $id)
     {

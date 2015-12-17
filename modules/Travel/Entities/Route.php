@@ -5,7 +5,7 @@ use DB;
 class route extends Model {
 
     protected $fillable = [];
-    protected $table='route';
+    protected $table='ROUTE';
     const update_at='ROUTE_UPDATE';
     public $timestamps = false;
 

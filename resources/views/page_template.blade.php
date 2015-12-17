@@ -3,25 +3,26 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Travelbaik | pelayanan baik dengan harga terbaik</title>
-    <!-- {!! Html::style('assets/css/bootstrap.min.css')!!} -->
     {!! Html::style('assets/css/bootstrap.css')!!}
+    {!! Html::style('assets/css/datepicker.css')!!}
+    {!! Html::style('assets/css/bootstrap.min.css')!!}
     {!! Html::style('assets/css/font-awesome.min.css')!!}
     {!! Html::style('assets/css/jquery.dataTables.css')!!}
     {!! Html::style('assets/css/jquery.dataTables.min.css')!!}
-    {!! Html::style('assets/css/jquery-ui.css')!!}
+    {!! Html::style('assets/css/bootstrap-slider.css')!!}
+    
     {!! Html::style('assets/css/partner.css')!!}
     {!! Html::style('assets/css/style-page.css')!!}
     {!! Html::style('assets/css/travel.css')!!}
     {!! Html::script('assets/js/jquery.min.js')!!}
-    {!! Html::script('assets/js/script.js')!!}
     {!! Html::script('assets/js/bootstrap.min.js')!!}
+    {!! Html::script('assets/js/bootstrap-datepicker.js')!!}
     
+    @yield('custom_css')
     {!! HTML::script('assets/js/jquery.dataTables.min.js')!!} <!-- Data tables -->
-    {!! HTML::script('assets/js/jquery-ui.js')!!} <!-- jQuery UI -->
-
-
-
-
+    {!! HTML::script('assets/js/bootstrap-slider.js')!!}
+    {!! HTML::script('assets/js/bootstrap-datepicker.js')!!} <!-- jQuery UI -->
+    @yield('custom_js')
 </head>
 <body>
 
@@ -33,7 +34,7 @@
     <div class="container-large_">
         <div class="container">
             <!-- HEADER OPEN --> 
-            <div class="row header_">
+            <div class="row header_" style="display:block">
                 <div class="col-md-4 remove_padding">
                     <a href="<?php echo url('/')?>"> 
                         <img class="logoimg" src="<?php echo url('assets/images/logo-h.png')?>">
@@ -141,20 +142,71 @@
                 </div>
             </div>
         </div>
-    </div>
     <script type="text/javascript">
     $(".group_list_item_").click(function(){
 
-        var form=$(this.closest("Form"));
+        var form=$(this).closest("Form");
         
         form.submit();
         
     });
-    $(".datepicker").datepicker({changeMonth: true,
-        changeYear: true,
-        dateFormat: "yy-mm-dd", 
-        minDate: 0
+
+    var nowDate = new Date();
+    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0); 
+
+    $("body").on('focus',".datepicker", function(){
+        $(this).datepicker({changeMonth: true,
+            changeYear: true,
+            format: "dd-mm-yyyy", 
+            startDate: today ,
+            minDate: 0
+        });
+
     });
+
+
+    $('img').error(function(){
+        var img=this;
+        this.attr("src","<?php echo url('assets/images/noimage.png')?>");
+    });
+
+    $(document).ready(function(){
+        //Rupiah Function
+       updateView();
+    });
+    function updateView(){
+         var div=$(".rupiah");
+
+        for(i=0; i<div.length; i++){
+            var rupiah= $(div[i]).html();
+            harga=parseInt(rupiah.split(' ')[1]);
+            harga=harga.toString();
+            var temp='';
+            for(j=0; j<harga.length; j++){
+                if (j%3==0 && j!=0){
+                    temp=temp+'.';
+                }
+                temp=temp+harga.charAt(harga.length-j-1);
+            }
+            harga=temp;
+            temp='';
+            for(j=0; j<harga.length; j++){
+                temp=temp+harga.charAt(harga.length-j-1);
+            }
+            temp='Rp. '+temp+',-';
+            $(div[i]).html(temp);
+        }
+
+        var tanggal_obj=$(".tanggal");
+        var bulan=["Januari", "Februari", "Maret", "April","Mei","Juni","Juli","Agustus","September","Oktober", "Nopember","Desember"];
+        for(i=0; i<tanggal_obj.length; i++){
+            var tanggal= $(tanggal_obj[i]).html();
+            tanggal=tanggal.split('-');
+            if (parseInt(tanggal[1]<=12)){
+            $(tanggal_obj[i]).html(tanggal[0]+' '+bulan[parseInt(tanggal[1])-1]);
+            }
+        }
+    }
     </script>
 </body>
 </html>

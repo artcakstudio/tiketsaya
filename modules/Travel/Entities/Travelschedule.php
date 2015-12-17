@@ -2,6 +2,7 @@
    
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Carbon;
 class travelschedule extends Model {
 
 	protected $fillable = [];
@@ -11,7 +12,7 @@ class travelschedule extends Model {
 
     function scopegetScheduleDay($query,$tanggal){
     	return $query->select([DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'TRAVEL_SCHEDULE.*','VEHICLE_NAME'])
-                ->where('TRAVEL_SCHEDULE_DEPARTTIME','LIKE',$tanggal.'%')
+                ->whereDate('TRAVEL_SCHEDULE_DEPARTTIME','=',date('Y-m-d', strtotime($tanggal)))
     			->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID');
 
@@ -21,7 +22,7 @@ class travelschedule extends Model {
     }
     function scopetravelSchedule($query,$depart, $dest, $date){
         return $query->select(['TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'), 'PARTNER.*', 'VEHICLE_TYPE_NAME'])
-                ->where('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME','LIKE',$date.'%')
+                ->whereDate('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME','=', date('Y-m-d',strtotime($date)))
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
                 ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
                 ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
@@ -37,9 +38,19 @@ class travelschedule extends Model {
                 })*/;
     }
 
-    function scopepartnerSchedule($query,$partner_id)
+    function scopepartnerScheduleMax($query,$partner_id)
     {
-        return $query->select([DB::raw('DATE(TRAVEL_SCHEDULE_DEPARTTIME) AS DATE'), DB::raw('TIME(TRAVEL_SCHEDULE_DEPARTTIME) AS TIME'),'TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'PARTNER.*','VEHICLE.*' ]) 
+        return $query->select([DB::raw('DATE(TRAVEL_SCHEDULE_DEPARTTIME) AS DATE'), DB::raw('TIME(TRAVEL_SCHEDULE_DEPARTTIME) AS TIME'),'TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'PARTNER.*','VEHICLE.*',DB::raw('min(TRAVEL_SCHEDULE_DEPARTTIME) as min'), DB::raw('max(TRAVEL_SCHEDULE_DEPARTTIME) as max') ]) 
+                    ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
+                    ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
+                    ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
+                    ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
+                    ->where('PARTNER.PARTNER_ID','=',$partner_id)
+                    ->orderBy('TRAVEL_SCHEDULE_DEPARTTIME');
+    }
+        function scopepartnerSchedule($query,$partner_id)
+    {
+        return $query->select([DB::raw('DATE(TRAVEL_SCHEDULE_DEPARTTIME) AS DATE'), DB::raw('TIME(TRAVEL_SCHEDULE_DEPARTTIME) AS TIME'),'TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'PARTNER.*','VEHICLE.*']) 
                     ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
                     ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
                     ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
@@ -49,7 +60,7 @@ class travelschedule extends Model {
     }
     function scopegetScheduleDayPartner($query,$tanggal,$partner_id){
         return $query->select([DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'),'TRAVEL_SCHEDULE.*','VEHICLE_NAME', DB::raw('vehicle.VEHICLE_CAPACITY-totalpenumpang(TRAVEL_SCHEDULE_ID) as penumpang')])
-                ->where('TRAVEL_SCHEDULE_DEPARTTIME','LIKE',$tanggal.'%')
+                ->whereDate('TRAVEL_SCHEDULE_DEPARTTIME','=',date('Y-m-d',strtotime($tanggal)))
                 ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
                 ->where('VEHICLE.PARTNER_ID','=',$partner_id)
@@ -67,13 +78,14 @@ class travelschedule extends Model {
     }
     function scopetravelScheduleRentang($query,$depart, $dest, $start, $finish){
         return $query->select(['TRAVEL_SCHEDULE.*','VEHICLE.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST'), 'PARTNER.*', 'VEHICLE_TYPE_NAME'])
-                ->whereBetween('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME',array($start,$finish))
+                ->whereDate('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME','>=',date('Y-m-d',strtotime($start)))
+                ->whereDate('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_DEPARTTIME','<=',date('Y-m-d',strtotime($finish)))
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','TRAVEL_SCHEDULE.VEHICLE_ID')
                 ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
                 ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID')
-/*                ->where('ROUTE.ROUTE_DEPARTURE','=',$depart)
-                ->where('ROUTE.ROUTE_DEST','=',$dest)   */
-                ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
-                ->groupBy('TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID');
+                  ->where('ROUTE.ROUTE_DEPARTURE','=',$depart)
+                ->where('ROUTE.ROUTE_DEST','=',$dest)  
+                ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID');
+
     }
 }

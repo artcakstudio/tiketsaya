@@ -17,7 +17,6 @@ class Kernel extends HttpKernel
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \App\Http\Middleware\VerifyCsrfToken::class,
     ];
 
     /**
@@ -32,5 +31,6 @@ class Kernel extends HttpKernel
         'partnercheck'=> \Modules\TravelPartner\Http\Middleware\Partnercheck::class,
         'rentcheck'=> \Modules\Rentpartner\Http\Middleware\Partnercheck::class,
         'admincheck'=> \Modules\Usermanagement\Http\Middleware\Admincheck::class,
+        'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
     ];
 }

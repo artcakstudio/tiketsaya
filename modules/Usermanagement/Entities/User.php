@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class user extends Model {
 
-	protected $table='users';
+	protected $table='USERS';
 	public $timestamps=false;    
 
 	function scopechecklogin($query, $data)

@@ -1,0 +1,15 @@
+{
+    "name": "TicketPartner",
+    "alias": "ticketpartner",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\TicketPartner\\Providers\\TicketPartnerServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

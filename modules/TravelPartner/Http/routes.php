@@ -8,7 +8,7 @@ Route::group(['prefix' => 'travelpartner', 'namespace' => 'Modules\TravelPartner
 	Route::get('logout','TravelPartnerController@logout');
 	Route::post('detail_jadwal','JadwalController@detail_jadwal');
 	Route::get('transaksi','TransaksiController@transaksi');
-	Route::get('transaksi/getTransaksi','TransaksiController@getTransaksi');
+	Route::post('transaksi/getTransaksi','TransaksiController@getTransaksi');
 
 	Route::group(['after'=>'route'],function(){
 		Route::get('route','RouteController@index');
@@ -18,14 +18,18 @@ Route::group(['prefix' => 'travelpartner', 'namespace' => 'Modules\TravelPartner
 		Route::get('armada','RouteController@armada');
 		Route::get('armada/getarmada','RouteController@getarmada');
 	});
+	Route::get('detail/bulanan/{id}','JadwalController@umum_bulanan_detail');
+	Route::group(['after'=>'jadwal-umum'],function(){
+		Route::get('jadwal-umum','JadwalController@jadwalUmum');
+		Route::get('jadwal-umum/bulanan','JadwalController@umum_bulanan');
+	});
+
 	Route::group(['after'=>'jadwal'],function(){
-		Route::get('jadwal/mingguan','JadwalController@mingguan');
-		Route::post('jadwal/mingguan_detail','JadwalController@mingguan_detail');
-		Route::get('jadwal/umum','JadwalController@jadwalUmum');
-		Route::get('jadwal/umum_mingguan','JadwalController@umum_mingguan');
 		Route::get('jadwal/{id}','JadwalController@jadwal');
+		Route::get('jadwal/mingguan','JadwalController@mingguan');
 		Route::get('jadwal/jadwalharian/{tanggal}','JadwalController@jadwalharian');
 		Route::get('jadwal/harian/{id}','JadwalController@jadwal_harian');
+		Route::post('jadwal/mingguan_detail','JadwalController@mingguan_detail');
 		Route::post('jadwal/add',['as'=>'travelpartner.jadwal.add','uses'=>'JadwalController@addJadwal']);
 		Route::post('jadwal/mingguan/','JadwalController@addJadwalMingguan');
 	});

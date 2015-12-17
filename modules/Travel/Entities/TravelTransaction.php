@@ -15,8 +15,8 @@ class Traveltransaction extends Model {
     }
     public function scopegetAllTransaction($query)
 	{
-    	return $query->select(['TRAVEL_SCHEDULE.*','TRAVEL_TRANSACTION.*','TRAVEL_TRANSACTION_STATUS_NAME','COSTUMER.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST')])
-    			->join('COSTUMER','COSTUMER.COSTUMER_ID','=','TRAVEL_TRANSACTION.COSTUMER_ID')
+    	return $query->select(['TRAVEL_SCHEDULE.*','TRAVEL_TRANSACTION.*','TRAVEL_TRANSACTION_STATUS_NAME','costumer.*',DB::raw('getCityName(ROUTE_DEPARTURE) as ROUTE_DEPARTURE'), DB::raw('getCityName(ROUTE_DEST) as ROUTE_DEST')])
+    			->join('costumer','costumer.costumer_ID','=','TRAVEL_TRANSACTION.costumer_ID')
     			->join('TRAVEL_TRANSACTION_STATUS','TRAVEL_TRANSACTION_STATUS.TRAVEL_TRANSACTION_STATUS_ID','=','TRAVEL_TRANSACTION.TRAVEL_TRANSACTION_STATUS_ID')
                 ->join('TRAVEL_SCHEDULE','TRAVEL_SCHEDULE.TRAVEL_SCHEDULE_ID','=','TRAVEL_TRANSACTION.TRAVEL_SCHEDULE_ID')
                 ->join('ROUTE','ROUTE.ROUTE_ID','=','TRAVEL_SCHEDULE.ROUTE_ID');

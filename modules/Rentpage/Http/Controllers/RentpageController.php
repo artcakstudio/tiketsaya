@@ -20,12 +20,12 @@ class RentpageController extends Controller {
 	public function scheduleSearch()
 	{
 		$data=Input::all();	
-		
+		Session::forget('NO_PEMESANAN');		
 		$finish=date('y-m-d',strtotime('+'.$data['DURATION'], strtotime($data['DATE'])));
 		$vehicle=Rentschedule::rentSchedule($data['CITY_ID'],$data['DATE'],$finish)->get();
 		$city=City::all();
 		$duration=$data['DURATION'];
-		session(['duration'=>$duration]);
+		Session(['duration'=>$duration]);
 		Session::flash('search',['type'=>'sewamob','date'=>$data['DATE'], 'city'=>$data['CITY_ID']]);
 		return view('rentpage::hasil-search', compact('vehicle','city','duration'));
 	}
@@ -33,10 +33,11 @@ class RentpageController extends Controller {
 	{
 		
 		$id_schedule=Input::get('RENT_SCHEDULE_ID');
-		$schedule=Rentschedule::findRentschedule($id_schedule);
-		$jadwal=$schedule->first();
-		session(['DATA_RENT'=>$jadwal]);
-		return view('rentpage::transaksi',compact('id_schedule'));
+		$schedule=Rentschedule::findRentschedule($id_schedule)->first();
+		Session::forget('DATA_TRAVEL');
+
+		Session(['DATA_RENT'=>$schedule]);
+	return view('rentpage::transaksi',compact('id_schedule'));
 	}
 	function transaksiSubmit()
 	{
@@ -50,13 +51,13 @@ class RentpageController extends Controller {
 		$data['RENT_TRANSACTION_PRICE']=$schedule['RENT_SCHEDULE_PRICE'];
 		unset($data['_token']);
 		$data['RENT_TRANSACTION_DATE']=date('y-m-d');
-		$data['RENT_TRANSACTION_CREATEBY']=session::get('id');
+		$data['RENT_TRANSACTION_CREATEBY']=Session::get('id');
 		unset($data['COSTUMER_EMAIL'],$data['COSTUMER_NAME'], $data['COSTUMER_TELP']);
-		$data['RENT_TRANSACTION_PRICE']=session::get('duration');
+		$data['RENT_TRANSACTION_PRICE']=Session::get('duration');
 		
-		if(!is_null(session::get('id')) and session::get('hak')=='COSTUMER')
+		if(!is_null(Session::get('id')) and Session::get('hak')=='COSTUMER')
 		{
-			$data['MEMBER_ID']=session::get('id');
+			$data['MEMBER_ID']=Session::get('id');
 		}
 		else{
 			Costumer::insert($costumer);
@@ -70,11 +71,15 @@ class RentpageController extends Controller {
 	}
 	function preview()
 	{
+		Session::forget('DATA_TRAVEL');
 		$data=Input::all();
-		$no_pemesanan=DB::select('select rent_code() as code_pesan')[0]->code_pesan;
-		
-		session(['DATA_COSTUMER'=>$data,'NO_PEMESANAN'=>$no_pemesanan]);
-		return view('rentpage::preview');
+	if(!Session::has('NO_PEMESANAN'))
+		{
+			$no_pemesanan = 'R' . strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
+			Session(['DATA_COSTUMER' => $data, 'NO_PEMESANAN' => $no_pemesanan]);
+		}
+	return view('rentpage::preview');
+
 	}
 	function scheduleSearchRentang(){
 				$data=Input::all();
@@ -86,6 +91,8 @@ class RentpageController extends Controller {
 		
 		$vehicle=Rentschedule::rentScheduleRentang($data['CITY_ID'],$start,$finish)->distinct()->get();
 		$duration=1;
+		Session(['duration'=>$duration]);
+		//print_r($vehicle);
 		return view('rentpage::hasil-search', compact('vehicle','city','duration'));
 	}
 }

@@ -2,7 +2,7 @@
    
 use Illuminate\Database\Eloquent\Model;
 use DB;
-class rentschedule extends Model {
+class Rentschedule extends Model {
 
     protected $fillable = [];
     public $timestamps=false;
@@ -11,7 +11,7 @@ class rentschedule extends Model {
     function scopegetScheduleDay($query,$tanggal){
     	return $query->select(['VEHICLE.*','RENT_SCHEDULE.*'])
     			->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')
-                ->where('RENT_SCHEDULE.RENT_SCHEDULE_DATE','LIKE','%'.$tanggal)	;
+                ->whereDate('RENT_SCHEDULE.RENT_SCHEDULE_DATE','=',date('Y-m-d',strtotime($tanggal)));
 
     }
     function scopefindRentSchedule($query,$id){
@@ -24,11 +24,10 @@ class rentschedule extends Model {
     }
      function scoperentSchedule($query,$city, $date,$finish){
         return $query->select(['RENT_SCHEDULE.*','VEHICLE.*', 'PARTNER.*','CITY_NAME','VEHICLE_TYPE_NAME'])
-                ->where('RENT_SCHEDULE_DATE','=',$date)
+                ->whereDate('RENT_SCHEDULE_DATE','=',date('Y-m-d',strtotime($date)))
                 ->whereNotIn('RENT_SCHEDULE_ID',function($query) use($date,$finish) {
-                    $query->select(['RENT_TRANSACTION_DETAIL.RENT_SCHEDULE_ID'])
-                        ->from('RENT_TRANSACTION_DETAIL')
-                        ->join('RENT_SCHEDULE','RENT_SCHEDULE.RENT_SCHEDULE_ID','=','RENT_TRANSACTION_DETAIL.RENT_SCHEDULE_ID')
+                    $query->select(['RENT_TRANSACTION.RENT_SCHEDULE_ID'])
+                        ->from('RENT_TRANSACTION')
                         ->whereBetween('RENT_SCHEDULE_DATE',[$date,$finish])
                         ;})
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')
@@ -57,12 +56,14 @@ class rentschedule extends Model {
     }*/
         function scoperentScheduleRentang($query, $city, $start, $finish){
         return $query->select(['RENT_SCHEDULE.*','VEHICLE.*', 'PARTNER.*', 'VEHICLE_TYPE_NAME','CITY.*'])
-                ->whereBetween('RENT_SCHEDULE.RENT_SCHEDULE_DATE',array($start,$finish))
+                ->whereDate('RENT_SCHEDULE.RENT_SCHEDULE_DATE','>=',date('Y-m-d',strtotime($start)))
+                ->whereDate('RENT_SCHEDULE.RENT_SCHEDULE_DATE','<=',date('Y-m-d',strtotime($finish)))
                 ->join('VEHICLE','VEHICLE.VEHICLE_ID','=','RENT_SCHEDULE.VEHICLE_ID')
                 ->join('VEHICLE_TYPE','VEHICLE_TYPE.VEHICLE_TYPE_ID','=','VEHICLE.VEHICLE_TYPE_ID')
                 ->join('CITY','CITY.CITY_ID','=','VEHICLE.CITY_ID')
                 ->where('CITY.CITY_ID','=',$city)
                 ->join('PARTNER','PARTNER.PARTNER_ID','=','VEHICLE.PARTNER_ID')
+                ->orderBy('RENT_SCHEDULE_DATE')
                 ->groupBy('RENT_SCHEDULE.RENT_SCHEDULE_ID');
     }
 }
